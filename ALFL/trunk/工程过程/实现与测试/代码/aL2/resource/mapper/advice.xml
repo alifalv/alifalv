@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Advice">
+  <!-- 因为不是物理删除 ，只是把状态改为 已删除-->
+   <update id="deleteAdvice" parameterType="int">
+   			 update ali_advice set is_delete =1 where adviceId =#{adviceId};
+   </update>
+   
+   <update id="updateAdvice" parameterType="map" >
+   			UPDATE  ali_advice
+   				<set>
+   						<if test="null != adviceId and adviceId !=''">
+   								adviceId = #{adviceId},
+   						</if>
+   						<if test="null != userId and userId !=''">
+   								userId = #{userId},
+   						</if>
+   						<if test="null != userName and userName !=''">
+   								userName = #{userName},
+   						</if>
+   						<if test="null != caseType and caseType !=''">
+   								caseType = #{caseType},
+   						</if>
+   						<if test="null != reward and reward !=''">
+   								reward = #{reward},
+   						</if>
+   						<if test="null != state and state !=''">
+   								state = #{state},
+   						</if>
+   						<if test="null != readNum and readNum !=''">
+   								readNum = #{readNum},
+   						</if>
+   						<if test="null != adviceContent and adviceContent !=''">
+   								adviceContent = #{adviceContent},
+   						</if>
+   							<if test="null != title and title !=''">
+   								title = #{title},
+   						</if>
+   							<if test="null != imgs and imgs !=''">
+   								imgs = #{imgs},
+   						</if>
+   							<if test="null != is_delete and is_delete !=''">
+   								is_delete = #{is_delete},
+   						</if>
+   							<if test="null != columnCode and columnCode !=''">
+   								columnCode = #{columnCode},
+   						</if>
+   				</set>
+   				where adviceId = #{adviceId}  
+   </update>
+   
+   <select id="findAdviceById" parameterType="int" resultType="map">
+   		 select * from ali_advice where adviceId = #{adviceId}
+   </select>
+   <!-- 根据咨询id 查询出 -->
+   <select id="adviceReplyList"  parameterType="int" resultType="map">
+         select  *  from  ali_advice_reply where adviceId = #{adviceId}
+   </select>
+   
+
+	<select id="findAdviceList" resultType="map" parameterType="map">
+	 select * from (
+	  select t.*,
+	    (select COUNT(replyId) from ali_advice_reply where adviceId = t.adviceId) as replyNum
+	    from (
+		select adviceId,title,userId,userName,userImg,caseType,reward,state,sendTime
+		  from ali_advice where 1=1
+		    <if test="is_delete !=null and is_dell !=''">
+		    	and is_delete = #{is_delete}
+		    </if>
+		    <if test="state !=null and state !=''">
+		    	and state = #{state}
+		    </if>
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != null and caseId !='' ">
+		  	and caseType = #{caseId}
+		  </if>
+		  <if test="privateUserId != null and privateUserId !='' ">
+		  	and privateUserId = #{privateUserId}
+		  </if> 
+		  	<if test="queryType == 1">
+		  		order by sendTime desc
+		  	   limit #{PAGE_START},#{PAGE_LENGTH}
+		  	</if> 
+	  ) t 
+	  ) as a 
+	  <if  test="queryType == 2"> 
+	 	 order by replyNum desc ,sendTime desc
+	 	  limit #{PAGE_START},#{PAGE_LENGTH}
+	  </if>
+	   
+	</select>
+	
+	<select id="findAdviceList_COUNT_TOTAL" parameterType="map" resultType="int">
+	
+		select COUNT(adviceId) from ali_advice where 1=1
+		 	<if test="is_delete !=null and is_dell !=''">
+		    	and is_delete = #{is_delete}
+		    </if>
+		    <if test="state !=null and state !=''">
+		    	and state = #{state}
+		    </if>
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		   <if test="caseId != null and caseId !='' ">
+		  	and caseType = #{caseId}
+		  </if>
+		  <if test="privateUserId != null and privateUserId !='' ">
+		  	and privateUserId = #{privateUserId}
+		  </if>
+	</select>
+	
+	<!--  根据法律咨询id 查询出它的详情 与  需要展示出的上一页与下一页的 数据；  -->
+	<select id="findAdviceDetails" resultType="map" parameterType="map">
+			select 
+				a.*,  
+		        (select count(*) from (select  userId from ali_advice_reply where  adviceId =  #{adviceId}     GROUP BY userId) as s ) as counts,
+		       (SELECT CONCAT_WS("8m_m_8",adviceId,IFNULL(title,""))   from 	ali_advice where   adviceId &gt;  #{adviceId}  and  is_delete = 0 and state=0  and  privateUserId = 0  ORDER BY adviceId  LIMIT 0,1) as next,
+		       (SELECT CONCAT_WS("8m_m_8",adviceId, IFNULL(title,""))   from 	ali_advice where   adviceId &lt;  #{adviceId}  and  is_delete = 0 and state=0  and privateUserId = 0   ORDER BY adviceId  DESC LIMIT 0,1) as last
+			from 
+				ali_advice  as a  
+		  where   
+		     adviceId =  #{adviceId}  
+	
+	</select>
+	
+	<!-- 根据id获取咨询内容 -->
+	<select id="findAdviceByAdviceId" resultType="map" parameterType="int">
+		select t.*
+		  ,(select COUNT(replyId) from ali_advice_reply where adviceId = t.adviceId) as replyNum 
+		  from ali_advice t where adviceId = #{adviceId}
+	</select>
+	
+	<!-- 根据id集合获取所有的证据图片信息 -->
+	<select id="findImgsByAdviceIds" resultType="map">
+		select adviceId,img from ali_advice_img 
+		where adviceId in
+		<foreach collection="array" item="adviceId" open="(" close=")" separator=",">
+			#{adviceId}
+		</foreach>
+	</select>
+	
+	<insert id="addAdvice"  parameterType="map" useGeneratedKeys="true" keyProperty="adviceId">
+		insert into ali_advice 
+		(userId,userName,userImg,adviceContent,caseType,reward,sendTime,state,readNum,imgs,is_delete,title,privateUserId,columnCode) values
+		(#{userId},#{userName},#{userImg},#{adviceContent},#{caseType},#{reward},NOW(),#{state},0,#{imgs},#{is_delete},#{title},#{privateUserId},'14') 
+	</insert>
+	
+	<select id="listByAdviceId" parameterType="int"  resultType="map">
+		select * from ali_advice  where  adviceId = #{adviceId}
+	</select>
+	
+	<insert id="addAdviceImgs" parameterType="map">
+		insert into ali_advice_img (adviceId,img) values
+		<foreach collection="imgs" item="img" separator=",">
+			(#{adviceId},#{img})
+		</foreach>
+	</insert>
+	
+	
+	<!-- 获取上一章下一章信息 -->
+	<select id="findPreAndNextAdviceInfo" resultType="map" parameterType="map">
+		(select 'pre' as infoType ,adviceId,title
+		  from ali_advice where 1=1
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != 0">
+		  	and caseType = #{caseId}
+		  </if>
+		    and adviceId &lt; #{adviceId}
+		  <choose>
+		  	<when test="queryType == 1">
+		  		order by sendTime desc
+		  	</when>
+		  	<when test="queryType == 2">
+		  		order by sendTime desc,readNum desc
+		  	</when>
+		  </choose>
+		  limit 1
+		  )
+		  union all
+		  
+		 ( select 'next' as infoType , adviceId,title
+		  from ali_advice where 1=1
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != 0">
+		  	and caseType = #{caseId}
+		  </if>
+		    and adviceId &gt; #{adviceId}
+		  <choose>
+		  	<when test="queryType == 1">
+		  		order by sendTime desc
+		  	</when>
+		  	<when test="queryType == 2">
+		  		order by sendTime desc,readNum desc
+		  	</when>
+		  </choose>
+		  limit 1)
+	</select>
+	
+	
+	<select id="findAdviceReplyList" resultType="map" parameterType="map">
+			SELECT
+				r.replyId,r.adviceId,r.userId,r.rankValue,r.rewardNum,
+				  d.*,
+				  u.userName,
+				  u.nickName,
+				  u.mobile, 
+				  u.userImg,
+				  u.vipLevel,
+				  u.isAuthentication,
+				  u.is_contract,
+				  u.userType,
+				  g.carType as gCarType,
+				  z.carType as zCarType,
+				  z.job,z.realName,
+			  	 (select COUNT(l.likeId) from ali_advice_like l where l.userId = r.userId AND r.replyId = l.replyId) as isLike 
+				FROM
+					ali_advice_reply as r
+			  LEFT JOIN
+         			 ali_advice_details as d on d.replyId = r.replyId
+			  LEFT JOIN
+				   ali_user as u on u.userId = r.userId
+			  LEFT JOIN
+				   ali_consultant as g on g.userid = u.userid
+			   LEFT JOIN
+				   ali_counselor as z on z.userid = u.userid  
+				WHERE
+					adviceId = #{adviceId} 
+				ORDER BY
+					d.replyTime 
+			   	limit #{PAGE_START},#{PAGE_LENGTH}    
+	</select>
+	<select id="findAdviceReplyList_COUNT_TOTAL"  parameterType="map" resultType="int">
+			SELECT
+				 count(*)
+				FROM
+					ali_advice_reply as r 
+				WHERE
+					adviceId = #{adviceId}  
+	</select>
+	
+	
+	<select id="findAdviceReplyListNextReply" resultType="map" parameterType="map">
+				SELECT
+					r.* ,
+				  u.userName,
+				  u.nickName, 
+				  u.userImg,
+				  u.vipLevel,
+				  u.isAuthentication,
+				  u.is_contract,
+				  u.userType,
+				  g.carType as gCarType,
+				  z.carType as zCarType,
+				  z.job
+				FROM
+					ali_common_reply as r   
+			   LEFT JOIN
+				   ali_user as u on u.userId = r.userId
+			  LEFT JOIN
+				   ali_consultant as g on g.userid = u.userid
+			   LEFT JOIN
+				   ali_counselor as z on z.userid = u.userid  
+				WHERE
+					 businessType = #{businessType}
+					AND isDelete = 0
+					AND upId = 0
+					AND relativeId in (
+							select * from (
+										SELECT
+												r.replyId  
+											FROM
+												ali_advice_reply as r
+											LEFT JOIN
+												ali_advice_details as d on d.replyId = r.replyId 
+											WHERE
+													adviceId = #{adviceId} 
+												ORDER BY
+													d.replyTime DESC
+											
+							) as x 
+					)
+				ORDER BY
+					r.replyTime 
+	</select>
+	
+	<insert id="addLike" parameterType="map">
+		insert into ali_advice_like (replyId,userId)
+		  values (#{replyId},#{userId})
+	</insert>
+	
+	<update id="updateLikeNum"  parameterType="map" >
+		update ali_advice_details set 
+		likeNum = likeNum+#{likeNum} where replyId = #{replyId}
+	</update>
+	
+	<delete id="deleteReplyLike" parameterType="map" >
+			delete  from ali_advice_like where userId=${userId} and replyId=${replyId};
+	</delete>
+	
+	<select id="findLikeNumByReplyId" parameterType="int" resultType="int">
+		select IFNULL(likeNum,0) from ali_advice_details where replyId = #{replyId}
+	</select>
+	
+	<!-- 查询这个咨询者是否点赞过 -->
+	<select id="findLikeNumList" parameterType="map" resultType="map">
+		select * from ali_advice_like where userId=${userId} and replyId=${replyId};
+	</select>
+	<!-- 我的咨询列表 -->
+	<select id="myConsultList" parameterType="map" resultType="map">
+	 		 select 
+				a.* ,
+			  u.userName,
+			  u.nickName,
+			  u.userType,
+			  u.userImg, u.vipLevel, u.userState, u.isAuthentication,
+			  (
+					select count(DISTINCT userId) from ali_advice_reply as re where  re.adviceId = a.adviceId 
+				) as counts
+			from 
+				ali_advice  as a
+			LEFT JOIN
+			  ali_user as u on u.userId = a.userId
+			where 
+				a.userId =#{userId}
+			and 
+			  a.is_delete = 0
+			and
+				a.state=0
+			  ORDER BY a.sendTime DESC 
+			limit #{PAGE_START},#{PAGE_LENGTH}    
+			  
+	</select>
+	<select id="myConsultList_COUNT_TOTAL" parameterType="map" resultType="int">
+	  select 
+				count(*)
+			from 
+				ali_advice  as a 
+			where 
+				a.userId =#{userId}
+			and 
+			  a.is_delete = 0 
+	</select>
+	
+	
+	<select id="findAdviceByUserId" parameterType="int" resultType="map">
+		SELECT a.*,
+			(SELECT COUNT(b.detailsId) FROM ali_advice_details b INNER JOIN 
+			 ali_advice_reply c ON b.replyId = c.replyId WHERE c.adviceId = a.adviceId)
+			 AS replyNum
+		 FROM ali_advice a WHERE a.userId = #{userId}
+	</select>
+	
+	
+	<select id="myAnswerAdvice" parameterType="map" resultType="map">
+		select a.*,
+			(select count(DISTINCT userId) from ali_advice_reply as r where r.adviceId = a.adviceId)as counts
+		from ali_advice  as a    where a.adviceId in( 
+				select distinct adviceId from ali_advice_reply where userId=#{userId}   
+			) 	ORDER BY sendTime DESC
+			limit #{PAGE_START},#{PAGE_LENGTH}    
+			
+	<!-- 
+		select a.* from ali_advice a 
+		  inner join 
+		  ali_advice_reply b on a.adviceId = b.adviceId
+		  where b.userId = #{userId}
+	limit #{PAGE_START},#{PAGE_LENGTH}  
+	-->
+	</select> 
+	
+	<select id="myAnswerAdvice_COUNT_TOTAL" parameterType="map" resultType="int">
+		select count(*) 
+		from ali_advice  as a    where a.adviceId in( 
+				select distinct adviceId from ali_advice_reply where userId=#{userId}   
+			) 
+	
+	<!-- 
+		select count(1) from ali_advice a 
+		  inner join 
+		  ali_advice_reply b on a.adviceId = b.adviceId
+		  where b.userId = #{userId}
+		   -->
+	</select> 
+	
+	<insert   id="saveAdviceReplyDetails"     parameterType="map"    useGeneratedKeys="true"  keyProperty="detailsId">
+				 INSERT INTO ali_advice_details ( 
+							`replyId`,
+							`replyContent`,
+							`replyTime`,
+							`likeNum`
+						)
+						VALUES
+							( 
+								#{replyId},
+								#{replyContent},
+								NOW(),
+								#{likeNum}
+							)
+	</insert>
+	
+	<!-- 保存法律咨询的解答  -->
+	<insert id="saveAdviceReply"  parameterType="map"    useGeneratedKeys="true"  keyProperty="replyId" >
+		 INSERT INTO ali_advice_reply ( 
+					adviceId,
+					userId,
+					rankValue,
+					nickName,
+					userImg,
+					rewardNum
+				)
+				VALUES
+					( 
+					#{adviceId},
+					#{userId},
+					#{rankValue},
+					#{nickName},
+					#{userImg},
+					#{rewardNum}
+					)
+	</insert>
+	<update id="updateAdviceReply" parameterType="map">
+			UPDATE  ali_advice_reply
+				<set>
+					<if test="null != replyId and replyId !='' ">
+						replyId = #{replyId},
+					</if>
+					<if test="null != adviceId and adviceId !='' ">
+						adviceId = #{adviceId},
+					</if>
+					<if test="null != userId and userId !='' ">
+						userId = #{userId},
+					</if>
+					<if test="null != rankValue and rankValue !='' ">
+						rankValue = #{rankValue},
+					</if>
+					<if test="null != nickName and nickName !='' ">
+						nickName = #{nickName},
+					</if>
+					<if test="null != userImg and userImg !='' ">
+						userImg = #{userImg},
+					</if>
+					<if test="null != rewardNum and rewardNum !='' ">
+						rewardNum = (IFNULL(rewardNum,0))+#{rewardNum},
+					</if>
+				</set>
+				where  replyId = #{replyId} 
+	</update>
+	
+
+	<!-- 查询当前帖子的解答排名与登陆者是否已经解答  -->
+	<select id="findRankValueAndIsReply" parameterType="map" resultType="map">
+			select 
+			IFNULL(max(case WHEN rankValue then rankValue end),0)  as  rankValue,
+		    count(case WHEN userId = #{userId} then userId end ) as  replyId
+		    
+		from 
+			ali_advice_reply
+		    where adviceId =#{adviceId}
+	</select>
+	
+	<select id="findUserInfo" parameterType="int" resultType="map">
+		select nickName,userImg from ali_user where userId = #{userId}
+	</select>
+	
+	
+	<!-- 我的最近回复 ，  -->
+	<select id="myReplyRecently" parameterType="int" resultType="map">
+			select 
+				t.*,
+				users.userName,
+				users.nickName, 
+				users.userImg
+				from (
+					 (
+						select 
+							re.userId as userId, 
+							deta.replyTime as sendTime
+							from ali_advice_reply as re
+							LEFT JOIN ali_advice_details as deta on  deta.replyId = re.replyId
+						where adviceId in (select adviceId as id from ali_advice  where userId = #{userId} and is_delete = 0)
+						ORDER BY  replyTime
+					 ) 
+						union all
+					 (
+						 SELECT userId as userId,offerTime as sendTime from ali_case_offer where caseId in 
+							(select caseId as id  from ali_case_depute where userId =#{userId}  and is_delete = 0) ORDER BY  offerTime
+					 )
+				) as t
+				LEFT JOIN ali_user  as users on  users.userId = t.userId
+				group by userId
+				ORDER BY sendtime  desc 
+	
+	
+			<!-- 
+			SELECT * from ( 
+					 (
+					select  
+						a.deputeTime as sendTime,
+						u.userName ,
+						u.nickName, 
+						u.userImg,
+						u.userId 
+					from 
+						ali_case_depute  as a
+					LEFT JOIN
+						ali_user as u on u.userId = a.userId
+					where 
+						a.userId = #{userId} 
+					and 
+						a.is_delete = 0  
+					GROUP BY a.userId
+					)
+					 union all 
+					(
+					select  
+						a.sendTime,
+						u.userName,
+						u.nickName, 
+						u.userImg,
+						u.userId 
+					from 
+						ali_advice  as a
+					LEFT JOIN
+						ali_user as u on u.userId = a.userId
+					where 
+						a.userId = #{userId} 
+					and 
+						a.is_delete = 0 
+					GROUP BY a.userId
+					 ) 
+			  ) as t 
+			group by userId
+			ORDER BY sendtime 
+			-->
+	
+	</select>
+	<update id="updateCounselorInfo" parameterType="map">
+		update ali_counselor set complateAdviceNum = complateAdviceNum+1 where userId = #{userId} 
+	</update>
+	
+	
+
+</mapper>

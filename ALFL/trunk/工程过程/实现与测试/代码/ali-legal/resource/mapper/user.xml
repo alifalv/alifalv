@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+    <resultMap id="BaseResultMap" type="User" >
+        <id column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="userPwd" property="userPwd" jdbcType="VARCHAR" />
+        <result column="nickName" property="nickName" jdbcType="VARCHAR" />
+        <result column="userType" property="userType" jdbcType="INTEGER" />
+        <result column="userImg" property="userImg" jdbcType="VARCHAR" />
+        <result column="vipLevel" property="vipLevel" jdbcType="INTEGER" />
+        <result column="registerTime" property="registerTime" jdbcType="TIMESTAMP" />
+        <result column="inVipTime" property="inVipTime" jdbcType="TIMESTAMP" />
+        <result column="expireTime" property="expireTime" jdbcType="TIMESTAMP" />
+        <result column="isWeChat" property="isWeChat" jdbcType="INTEGER" />
+        <result column="isWeiBo" property="isWeiBo" jdbcType="INTEGER" />
+        <result column="isQQ" property="isQQ" jdbcType="INTEGER" />
+        <result column="is_contract" property="isContract" jdbcType="INTEGER" />
+        <result column="userState" property="userState" jdbcType="INTEGER" />
+        <result column="isAuthentication" property="isAuthentication" jdbcType="INTEGER" />
+        <result column="weChat" property="WeChat" jdbcType="VARCHAR" />
+        <result column="weiBo" property="WeiBo" jdbcType="VARCHAR" />
+        <result column="qq" property="QQ" jdbcType="VARCHAR" />
+        <result column="userScore" property="userScore" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectUserPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT * FROM (SELECT u.*,acs.realName,acs.city,acs.qq,acs.weChat,'' as weiBo,acs.carType,'' as userScore
+        FROM ali_user u LEFT join ali_consultant acs ON u.userId = acs.userId WHERE u.userType=1 and (typeState is null or typeState=0)
+		UNION ALL 
+        SELECT u.*,acs.realName,acs.city,acs.qq,acs.weChat,'' as weiBo,acs.carType,acs.userScore
+        FROM ali_user u LEFT join ali_counselor acs ON u.userId = acs.userId WHERE u.userType=1 and typeState=1
+		UNION ALL 
+        SELECT u.*,ac.realName,ac.city,ac.qq,ac.weChat,'' as weiBo,ac.carType,ac.userScore
+        FROM ali_user u LEFT JOIN ali_counselor ac ON u.userId = ac.userId WHERE u.userType=2 
+		UNION ALL 
+        SELECT u.*,acom.realName,acom.city,acom.qq,acom.weChat,'' as weiBo,'' as carType,'' as userScore
+        FROM ali_user u LEFT JOIN ali_company acom ON u.userId = acom.userId WHERE u.userType=3) U
+      <where>
+        <if test="userId != null and userId != ''">
+            and userId = #{userId,jdbcType=INTEGER}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile like '%${mobile}%'
+        </if>
+        <if test="realName != null and realName != ''">
+            and realName like '%${realName}%'
+        </if>
+        <if test="userType != null and userType != 0">
+            and userType = #{userType,jdbcType=INTEGER}
+        </if>
+        <if test="isAuthentication != null">
+            and isAuthentication = #{isAuthentication,jdbcType=INTEGER}
+        </if>
+        <if test="userState != null">
+            and userState = #{userState,jdbcType=INTEGER}
+        </if>
+        <if test="isContract != null">
+            and is_contract = #{isContract,jdbcType=INTEGER}
+        </if>
+      </where>
+      	ORDER BY registerTime DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectUserPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT count(userId) FROM (SELECT u.*,acs.realName,acs.city,acs.qq,acs.weChat,'' as weiBo,acs.carType,'' as userScore
+        FROM ali_user u LEFT join ali_consultant acs ON u.userId = acs.userId WHERE u.userType=1 and (typeState is null or typeState=0)
+		UNION ALL 
+        SELECT u.*,acs.realName,acs.city,acs.qq,acs.weChat,'' as weiBo,acs.carType,acs.userScore
+        FROM ali_user u LEFT join ali_counselor acs ON u.userId = acs.userId WHERE u.userType=1 and typeState=1
+		UNION ALL 
+        SELECT u.*,ac.realName,ac.city,ac.qq,ac.weChat,'' as weiBo,ac.carType,ac.userScore
+        FROM ali_user u LEFT JOIN ali_counselor ac ON u.userId = ac.userId WHERE u.userType=2 
+		UNION ALL 
+        SELECT u.*,acom.realName,acom.city,acom.qq,acom.weChat,'' as weiBo,'' as carType,'' as userScore
+        FROM ali_user u LEFT JOIN ali_company acom ON u.userId = acom.userId WHERE u.userType=3) U
+      <where>
+        <if test="userId != null and userId != ''">
+            and userId = #{userId,jdbcType=INTEGER}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile like '%${mobile}%'
+        </if>
+        <if test="realName != null and realName != ''">
+            and realName like '%${realName}%'
+        </if>
+        <if test="userType != null and userType != 0">
+            and userType = #{userType,jdbcType=INTEGER}
+        </if>
+        <if test="isAuthentication != null">
+            and isAuthentication = #{isAuthentication,jdbcType=INTEGER}
+        </if>
+        <if test="userState != null">
+            and userState = #{userState,jdbcType=INTEGER}
+        </if>
+        <if test="isContract != null">
+            and is_contract = #{isContract,jdbcType=INTEGER}
+        </if>
+        </where>
+    </select>
+    <select id="queryUser" parameterType="map" resultMap="BaseResultMap">
+        SELECT * FROM (SELECT u.*,acs.realName,acs.city,acs.qq,acs.weChat,'' as weiBo,acs.carType,'' as userScore
+        FROM ali_user u LEFT join ali_consultant acs ON u.userId = acs.userId WHERE u.userType=1 
+		UNION ALL 
+        SELECT u.*,ac.realName,ac.city,ac.qq,ac.weChat,'' as weiBo,ac.carType,ac.userScore
+        FROM ali_user u LEFT JOIN ali_counselor ac ON u.userId = ac.userId WHERE u.userType=2 
+		UNION ALL 
+        SELECT u.*,acom.realName,acom.city,acom.qq,acom.weChat,'' as weiBo,'' as carType,'' as userScore
+        FROM ali_user u LEFT JOIN ali_company acom ON u.userId = acom.userId WHERE u.userType=3) U
+      <where>
+        <if test="userId != null and userId != ''">
+            and userId = #{userId,jdbcType=INTEGER}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile like '%${mobile}%'
+        </if>
+        <if test="realName != null and realName != ''">
+            and realName like '%${realName}%'
+        </if>
+        <if test="userType != null and userType != 0">
+            and userType = #{userType,jdbcType=INTEGER}
+        </if>
+        <if test="isAuthentication != null">
+            and isAuthentication = #{isAuthentication,jdbcType=INTEGER}
+        </if>
+        <if test="userState != null">
+            and userState = #{userState,jdbcType=INTEGER}
+        </if>
+        <if test="isContract != null">
+            and is_contract = #{isContract,jdbcType=INTEGER}
+        </if>
+      </where>
+    </select>
+    <select id="queryInfo" parameterType="User" resultMap="BaseResultMap">
+      select * from ali_user
+        <where>
+            <if test="userId != null">
+                and userId = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="User" >
+        update ali_user
+        <set>
+            <if test="userType != null" >
+                userType = #{userType},
+            </if>
+            <if test="typeState != null" >
+                typeState = #{typeState},
+            </if>
+            <if test="userState != null" >
+                userState = #{userState,jdbcType=INTEGER},
+            </if>
+            <if test="isAuthentication != null" >
+                isAuthentication = #{isAuthentication,jdbcType=INTEGER},
+            </if>
+            <if test="isContract != null" >
+                is_contract = #{isContract,jdbcType=INTEGER},
+            </if>
+            <if test="isPush != null" >
+                is_push = #{isPush,jdbcType=INTEGER},
+            </if>
+        </set>
+        where userId = #{userId,jdbcType=INTEGER}
+    </update>
+    <select id="numberOfMembers" resultType="Integer">
+        select count(userId) from ali_user;
+    </select>
+    <select id="currentRenewalFeeVip" resultType="Integer">
+        select count(userId) from ali_user where expireTime &gt; inVipTime and vipLevel != 0;
+    </select>
+    <select id="numbersOfPersonalConsultant" resultType="Integer">
+        select count(userId) from ali_user where userType = 1;
+    </select>
+    <select id="numbersOfConsultant" resultType="Integer">
+        select count(userId) from ali_user where userType = 2;
+    </select>
+    <select id="numbersOfBusinessConsultant" resultType="Integer">
+        select count(userId) from ali_user where userType = 3;
+    </select>
+    <select id="goldMember" resultType="Integer">
+        select count(userId) from ali_user where expireTime &gt; inVipTime and vipLevel = 1;
+    </select>
+    <select id="platinumMember" resultType="Integer">
+        select count(userId) from ali_user where expireTime &gt; inVipTime and vipLevel = 2;
+    </select>
+    <select id="diamondMembership" resultType="Integer">
+        select count(userId) from ali_user where expireTime &gt; inVipTime and vipLevel = 3;
+    </select>
+    <select id="numberOfNotAuthentication" resultType="Integer">
+        select count(userId) from ali_user where isAuthentication = 1;
+    </select>
+</mapper>

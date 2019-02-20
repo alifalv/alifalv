@@ -1,0 +1,286 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>举报管理</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<div class="form-group">
+							<label class="control-label" for="addTimeStart">时间:</label>
+							<div style="display: inline; margin-left: 10px; margin-right: 10px;">
+								<input type="text" style="border: 1px solid #ccc;" value="" id="addTimeStart" readonly /> 到 
+								<input type="text" style="border: 1px solid #ccc;" value="" id="addTimeEnd" readonly />
+							</div>
+						</div>
+						<label class="my-1 mr-2">类型</label> 
+						<select class="form-control my-1 mr-sm-2" id="reportType" title="">
+							<option selected value="0">全部</option>
+							<option value="1">法律培训</option>
+							<option value="2">招聘岗位</option>
+						</select>
+						<div class="form-group">
+							<input type="text" id="content" class="form-control mx-sm-4"
+								aria-describedby="passwordHelpInline" placeholder="内容关键词" />
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="table_id">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>反馈信息</th>
+								<th>类型</th>
+								<th>姓名</th>
+								<th>联系方式</th>
+								<th>时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">提醒</h6>
+				<input type="text" id="id_type" style="display: none;"> 
+				<input type="text" id="id_del" style="display: none;"> 
+				<input type="text" id="id_userId" style="display: none;" /> 
+				<input type="text" id="id_reportType" style="display: none;" /> 
+				<input type="text" id="id_reportBusinessId" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link ensuredelete">确认删除？</span></li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#addTimeStart").jeDate(start);
+	$("#addTimeEnd").jeDate(end);
+	//时间控件 结束
+	
+	var tableData;
+	$(document).ready(function () {
+		tableData = showdata(false);
+	});
+	
+	function showdata(TorF){
+		return $('#table_id').DataTable({
+			"destroy": TorF,
+	    		//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 10,
+			"lengthChange": false,
+			"language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	   			url:requestUrl+"report/list",
+	   			type:'POST',
+                data:function(d){
+                    d.reportTimeStart=$("#addTimeStart").val();
+                    d.reportTimeEnd=$("#addTimeEnd").val();
+                    d.reportType=$("#reportType").val();
+                    d.content=$("#content").val();
+                }
+	   		}, 
+	   		columns: [
+	           	{ "data": "reportId" },
+	           	{ "data": "reportTitle" ,
+					"visible": true,
+					"render":function(data,type,full){
+						if(full.reportTypeDescription == "招聘岗位"){
+							return '<a href="#" onclick="RedirectToPC(\'recruitment_jobinfo.html?advertiseId='+full.reportBusinessId+'\')">'+full.reportTitle + '</a>';
+						}else if(full.reportTypeDescription == "法律培训"){
+							return '<a href="#" onclick="RedirectToPC(\'lawtraininginfo.html?articleId='+full.reportBusinessId+'\')">'+full.reportTitle + '</a>';
+						}
+					}
+				},
+	           	{ "data": "reportTypeDescription" },
+	           	{ "data": "userName" },
+	           	{ "data": "mobile" },
+	           	{ "data": "reportTime" },
+	           	{ "data":null,
+	           		"visible": true,
+	                "render":function(data,type,full){
+	                	return  '<input type="button" class="btn btn-success" value="撤销" onclick="toDelete(\'C\',\''+full.reportId+'\',\''+full.userId+'\',\''+full.reportType+'\',\''+full.reportBusinessId+'\')"/>&nbsp;'+
+	                			'<input type="button" class="btn btn-success" value="删除" onclick="toDelete(\'S\',\''+full.reportId+'\',\''+full.userId+'\',\''+full.reportType+'\',\''+full.reportBusinessId+'\')"/>';
+					}
+				}
+			]
+		});
+	}
+	
+	//查询
+	function search(){
+		tableData = showdata(true);
+	}
+    function reload(){
+		var table = $('#table_id').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//重置
+	function reset(){
+		$("#addTimeStart").val("");
+		$('#addTimeEnd').val("");
+		$('#reportType').val("0");
+		$('#content').val("");
+	}
+	
+	//删除
+	function toDelete(type,reportId,userId,reportType,reportBusinessId){
+		if(type=='C'){
+			$(".ensuredelete").text("确认撤销？");
+		}else if(type=='S'){
+			$(".ensuredelete").text("确认删除？");
+		}
+        $("#id_type").val(type);
+        $("#id_del").val(reportId);
+        $("#id_userId").val(userId);
+        $("#id_reportType").val(reportType);
+        $("#id_reportBusinessId").val(reportBusinessId);
+        $("#mySmallModalLabel").modal("show");
+	}
+    //确认删除
+    function delResult(){
+        var reportId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"report/remove/"+reportId,
+	        data:{
+	        		type:$("#id_type").val(),
+        			reportId:$("#id_del").val(),
+	        		userId:$("#id_userId").val(),
+        			reportType:$("#id_reportType").val(),
+        			reportBusinessId:$("#id_reportBusinessId").val(),
+	        },
+	        success : function(data) {
+	            console.log(data);
+                if(data.code==1){
+		            alert("删除成功");
+        				showCounts();
+        				if($("#id_type").val()=='C'){sendMessage();}
+		            reload();//刷新表格
+                }
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("删除失败");
+	        }
+	    });
+    }
+	
+	//发站内消息
+	function sendMessage(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:"举报内容违规已删除",
+	            	businessType:1,
+	            	businessId:$("#id_del").val(),
+	            	messageType:"举报管理"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+</script>

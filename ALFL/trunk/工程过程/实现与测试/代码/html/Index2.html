@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>首页</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="swiper/swiper.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/footnav.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.cookie.min.js"></script>
+    <style type="text/css">
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        .img-lazyload {
+            -webkit-animation: fadeIn 350ms linear 0ms 1 normal both;
+            animation: fadeIn 350ms linear 0ms 1 normal both;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="Index">
+    <!--主体 begin-->
+    <div id="app" class="Conter page-slideright">
+        <div class="picshow">
+            <!--图片-->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="img">
+                            <a href="Register-main.html"><img src="images/index/banner.png" /></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <div class="idx-band-wrap">
+            <!--banner下面-->
+            <div class="idx-band-1">
+                <ul class="flex_Horizontal">
+                    <li class="flex_son">
+                        <a href="Lawask.html">
+                            <img src="images/index/idx-band1-1.png" />
+                            <p>
+                                <strong>法律咨询</strong>
+                                <span>有疑问，需要咨询</span>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="Lawbuy.html">
+                            <img src="images/index/idx-band1-2.png" />
+                            <p>
+                                <strong>案件委托</strong>
+                                <span>发布案源，打官司</span>
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="flex_Horizontal">
+                    <li class="flex_son">
+                        <a href="http://wenshu.court.gov.cn/">
+                            <img src="images/index/idx-band1-3.png" />
+                            <p>
+                                <strong>案例查询</strong>
+                                <span>快捷快速查案例</span>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="http://www.gsxt.gov.cn/">
+                            <img src="images/index/idx-band1-4.png" />
+                            <p>
+                                <strong>企业信息查询</strong>
+                                <span>快速精准获取企业信息</span>
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--新法导学-->
+            <div class="idx-newlaw">
+                <a href="" class="flex_Horizontal">
+                    <img src="images/index/idx-xfdx.png" />
+                    <div class="flex_Horizontal idx-newlaw-info">
+                        <div class="swiper-container2">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="flex_son flex_Horizontal idx-newlaw-top">
+                                        <span>财政部</span>
+                                        <span>2018-04-27</span>
+                                    </div>
+                                    <div class="flex_son idx-newlaw-bottom">
+                                        <p>关于将服务贸易创新发展试点地区技术先进型服务企业所得税政策推广至全国实施的通知 </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!--十个快捷入口-->
+            <div class="idx-band2">
+                <ul class="flex_Horizontal">
+                    <li>
+                        <a href="Caculater.html">
+                            <img src="images/index/idx-band2-1.png" />
+                            <span>诉讼费计算</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Alicaipan.html">
+                            <img src="images/index/idx-band2-2.png" />
+                            <span>阿里判决</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="DocList.html">
+                            <img src="images/index/idx-band2-3.png" />
+                            <span>文书模板</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="FindLawer.html">
+                            <img src="images/index/idx-band2-4.png" />
+                            <span>找律师</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://rmfygg.court.gov.cn">
+                            <img src="images/index/idx-band2-5.png" />
+                            <span>法院公告</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="flex_Horizontal">
+                    <li>
+                        <a href="http://www.gsxt.gov.cn/index.html">
+                            <img src="images/index/idx-band2-6.png" />
+                            <span>司法拍卖</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://zxgk.court.gov.cn/">
+                            <img src="images/index/idx-band2-7.png" />
+                            <span>执行信息</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="HighestPoints.html">
+                            <img src="images/index/idx-band2-8.png" />
+                            <span>最高院观点</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="TrainList.html">
+                            <img src="images/index/idx-band2-9.png" />
+                            <span>培训信息</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ZhaopinIdx.html">
+                            <img src="images/index/idx-band2-10.png" />
+                            <span>求职招聘</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="idx-band3">
+                <ul class="flex_Horizontal">
+                    <li class="flex_son">
+                        <a href="http://m.jialilaw.com/ask.html"><img src="images/index/idx-band3-1.png" /></a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="BaixingList.html"><img src="images/index/idx-band3-2.png" /></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--推荐律师-->
+            <div class="idx-band4">
+                <ul class="flex_Horizontal">
+                    <li class="flex_son">
+                        <a href="">
+                            <div class="idx-band4-top">
+                                <img src="images/index/idx-lawer1.png" />
+                            </div>
+                            <div class="idx-band4-center">
+                                <h3>刘俊军律师 </h3>
+                                <p>13577897489</p>
+                                <span>湖南省长沙市 </span>
+                            </div>
+                            <div class="idx-band4-bottom">
+                                <span>知识产权</span>
+                                <span>婚姻家庭</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="">
+                            <div class="idx-band4-top">
+                                <img src="images/index/idx-lawer1.png" />
+                            </div>
+                            <div class="idx-band4-center">
+                                <h3>刘俊军律师 </h3>
+                                <p>13577897489</p>
+                                <span>湖南省长沙市 </span>
+                            </div>
+                            <div class="idx-band4-bottom">
+                                <span>知识产权</span>
+                                <span>婚姻家庭</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="">
+                            <div class="idx-band4-top">
+                                <img src="images/index/idx-lawer1.png" />
+                            </div>
+                            <div class="idx-band4-center">
+                                <h3>刘俊军律师 </h3>
+                                <p>13577897489</p>
+                                <span>湖南省长沙市 </span>
+                            </div>
+                            <div class="idx-band4-bottom">
+                                <span>知识产权</span>
+                                <span>婚姻家庭</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--下面最新资讯-->
+        <div class="idx-band5">
+            <div class="newsBox-tit flex_Horizontal mui-segmented-control">
+                <a class="mui-control-item mui-active" href="#newAsk">最新咨询</a>
+                <a class="mui-control-item" href="#newCase">最新案源</a>
+            </div>
+            <div class="newsBox">
+                <div id="newAsk" class="mui-control-content mui-active">
+                    <van-list :loading="loading1" :finished="finished1" :offset="100" @load="loadMore1">
+                        <ul>
+                            <li class="flex_Horizontal" v-for="(item, index) in newAsk" :key="index">
+                                <div class="left">
+                                    <img :src="item.userImg" />
+                                </div>
+                                <div class="right">
+                                    <div class="t">
+                                        <span>{{item.nickName}}</span><span>{{item.sendTime}}</span>
+                                    </div>
+                                    <div class="c">
+                                        <h4>{{item.caseTypeName}}｜{{item.title}} </h4>
+                                        <p class="greyfont">{{item.articleContent}}</p>
+                                    </div>
+                                    <div class="b">
+                                        <p class="redfont">赏金：￥<span>{{item.reward}}</span>回复：<span>{{item.replyNum}}</span></p>
+                                        <a href="">查看详情</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </van-list>
+                </div>
+                <div id="newCase" class="mui-control-content">
+                    <van-list :loading="loading2" :finished="finished2" :offset="100" @load="loadMore2">
+                        <ul>
+                            <li class="flex_Horizontal" v-for="(item, index) in newCase" :key="index">
+                                <div class="left">
+                                    <img :src="item.userImg" />
+                                </div>
+                                <div class="right">
+                                    <div class="t">
+                                        <span>{{item.nickName}}</span><span>{{item.cityName}}</span>
+                                    </div>
+                                    <div class="c">
+                                        <p>颯颯颯颯，卖方知情隐瞒，中介对所挂... </p>
+                                    </div>
+                                    <div class="b">
+                                        <p>报价：<span>卖方和中介方所赔偿金额的20%</span></p>
+                                        <a href="">我要竞拍</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </van-list>
+                </div>
+            </div>
+        </div>
+
+        <!--推荐列表-->
+        <!--<div class="intrlist" id="Lazyloadimg">
+				<ul>
+
+				</ul>
+			</div>-->
+    </div>
+    <!--主体 end-->
+
+    <!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		</div>-->
+
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="swiper/swiper.min.js"></script>
+    <script src="vue/vue.js"></script>
+    <script src="vue/vant-min.js"></script>
+    <script src="js/ajax/ajax.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Index.js"></script>
+</body>
+
+</html>

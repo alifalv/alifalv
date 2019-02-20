@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 法律文书制作</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/swiper.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+
+    <div class="ui-content ui-content-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ui-panel">
+                        <a href="javascript:void(0);">
+                            <img src="../img/banner_lawdocmark.jpg" class="img-responsive" alt="...">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 ui-margin-t-17">
+                    <dl class="ui-breadcrumb">
+                        <dt>当前位置：</dt>
+                        <dd><a href="index.html">首页</a></dd>
+                        <dd>法律文书制作</dd>
+                    </dl>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="ui-panel">
+                        <div class="ui-panel-content ui-regform ui-padding-30 ui-padding-b-10 ui-margin-b-10">
+                            <form class="form-horizontal ui-padding-lr-24">
+                                <input type="hidden" name="jump" value="true">
+                                <div class="form-group">
+                                    <label for="speciality" class="col-xs-1 control-label">专业领域：</label>
+                                    <div class="col-xs-2">
+                                        <select class="form-control" name="speciality" id="speciality">
+                                        <option value="">请选择</option>
+                                        <script id="caseListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.caseId}}">{{value.caseName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                    </div>
+
+                                    <label for="job" class="col-xs-1 control-label">所属职业：</label>
+                                    <div class="col-xs-2">
+                                        <select class="form-control" name="job" id="job">
+                                        <option value="">请选择</option>
+                                        <script id="jobListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.jobId}}">{{value.jobName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <input type="text" name="conditionValue" class="form-control" placeholder="请输入搜索关键字或律师姓名">
+                                            <span class="input-group-btn">
+                                            <button id="search_btn" type="button" class="btn btn-default ui-btn-lightblue ui-padding-lr-80" >搜索</button>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <ul class="ui-typelist">
+                                <!-- <li><div><a href="findlawyer.html">全程诉讼指导</a></div></li>
+                            <li><div><a href="findlawyer.html">起诉状</a></div></li>
+                            <li><div><a href="findlawyer.html">答辩状</a></div></li>
+                            <li><div><a href="findlawyer.html">证据整理</a></div></li>
+                            <li><div><a href="findlawyer.html">申请书</a></div></li>
+                            <li><div><a href="findlawyer.html">上诉状</a></div></li>
+                            <li><div><a href="findlawyer.html">律师函</a></div></li>
+                            <li><div><a href="findlawyer.html">催款函</a></div></li>
+                            <li><div><a href="findlawyer.html">撰写合同</a></div></li>
+                            <li><div><a href="findlawyer.html">代理词</a></div></li>
+                            <li><div><a href="findlawyer.html">辩论词</a></div></li>
+                            <li><div><a href="findlawyer.html">各种复议</a></div></li>
+                            <li><div><a href="findlawyer.html">协议书</a></div></li>
+                            <li><div><a href="findlawyer.html">担保书</a></div></li>
+                            <li><div><a href="findlawyer.html">见证书</a></div></li>
+                            <li><div><a href="findlawyer.html">控诉报告</a></div></li> -->
+                                <li>
+                                    <div>全程诉讼指导</div>
+                                </li>
+                                <li>
+                                    <div>起诉状</div>
+                                </li>
+                                <li>
+                                    <div>答辩状</div>
+                                </li>
+                                <li>
+                                    <div>证据整理</div>
+                                </li>
+                                <li>
+                                    <div>申请书</div>
+                                </li>
+                                <li>
+                                    <div>上诉状</div>
+                                </li>
+                                <li>
+                                    <div>律师函</div>
+                                </li>
+                                <li>
+                                    <div>催款函</div>
+                                </li>
+                                <li>
+                                    <div>撰写合同</div>
+                                </li>
+                                <li>
+                                    <div>代理词</div>
+                                </li>
+                                <li>
+                                    <div>辩论词</div>
+                                </li>
+                                <li>
+                                    <div>各种复议</div>
+                                </li>
+                                <li>
+                                    <div>协议书</div>
+                                </li>
+                                <li>
+                                    <div>担保书</div>
+                                </li>
+                                <li>
+                                    <div>见证书</div>
+                                </li>
+                                <li>
+                                    <div>控诉报告</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 ui-margin-t-17">
+                    <div class="ui-lawer-list ui-lawer-list-8" id="counselorRecommendList">
+                        <script id="counselorRecommendListTmpl" type="text/html">
+                            {{if (getLength(data) > 0)}} {{each data value i}}
+                            <a href="{{if value.userId}}home_index.html?userId={{value.userId}}{{else}}javascript:void(0);{{/if}}" target="_blank" class="ui-decoration-no ui-hover">
+                                <img src="{{value.userImg | createImgUrl}}" alt="..." class="img-circle">
+                                <p class="name ui-cut-1" title="{{value.userName}}">{{value.userName}}</p>
+                                <p class="address ui-cut-1" title="{{value.provinceName}} {{value.cityName}}">{{value.provinceName}} {{value.cityName}}</p>
+                                <p class="mobile">{{value.mobile}}</p>
+                            </a>
+                            {{/each}} {{else}}
+                            <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                            {{/if}}
+                        </script>
+                    </div>
+                </div>
+
+                <div class="col-xs-9">
+                    <!-- 文书制作知识 -->
+                    <div class="ui-panel" id="bookMakeKnowledgeList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">文书制作知识</span><a class="ui-panel-link ui-color-lightblue" href="docmark.html">更多</a></div>
+                        <div class="ui-panel-content">
+                            <div class="row" pagination="mask">
+                                <script id="bookMakeKnowledgeListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <div class="col-xs-6">
+                                        <div class="ui-margin-b-30 ui-margin-l-15">
+                                            <i class="iconfont icon-ring ui-bold ui-color-gray ui-padding-r-10"></i><a href="lawdocmarkinfo.html?articleId={{value.articleId}}" target="_blank">{{value.title}}</a>
+                                        </div>
+                                    </div>
+                                    {{/each}} {{else}}
+                                    <div class="col-xs-12 text-center">{{error || '暂无记录'}}</div>
+                                    {{/if}}
+                                </script>
+                            </div>
+                            <nav aria-label="..." class="ui-pagination" pagination="page"></nav>
+                        </div>
+                    </div>
+
+                    <!-- 常用文书模板   -->
+                    <div class="ui-panel" id="bookMakeModelList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">常用文书模板</span><a class="ui-panel-link ui-color-lightblue" href="doctemplate.html">模板搜索</a></div>
+                        <div class="ui-panel-content">
+                            <div class="row" pagination="mask">
+                                <script id="bookMakeModelListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <div class="col-xs-6">
+                                        <div class="ui-margin-b-30 ui-margin-l-15">
+                                            <i class="iconfont icon-ring ui-bold ui-color-gray ui-padding-r-10"></i><a href="doctemplateinfo.html?articleId={{value.articleId}}" target="_blank">{{value.title}}</a>
+                                        </div>
+                                    </div>
+                                    {{/each}} {{else}}
+                                    <div class="col-xs-12 text-center">{{error || '暂无记录'}}</div>
+                                    {{/if}}
+                                </script>
+                            </div>
+                            <nav aria-label="..." class="ui-pagination" pagination="page"></nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                    <!-- 人气文书制作师推荐 -->
+                    <div class="ui-panel" id="cityCounselorRecommendList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray"><span class="j-citname"></span>律师推荐</span>
+                        </div>
+                        <div class="ui-panel-content">
+                            <script id="cityCounselorRecommendListTmpl" type="text/html">
+                                {{if (getLength(data) > 0)}} {{each data value i}}
+                                <div class="ui-law-recommended">
+                                    <a href="home_index.html?userId={{value.userId}}">
+                                        <div class="ui-law-recommended-head">
+                                            <img src="{{value.userImg | createImgUrl}}" alt="" class="img-responsive ui-img-height-fill">
+                                        </div>
+                                        <div class="ui-law-recommended-info">
+                                            <h4 class="ui-law-recommended-name">{{value.userName}} {{if (value.is_contract == '1')}}
+                                                <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (value.isAuthentication == '2')}}
+                                                <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}}
+                                            </h4>
+                                            <p class="ui-law-recommended-phone">{{value.mobile}}</p>
+                                            <p class=" ui-cut-2" title="擅长：{{each value.specialityName sn i}}{{i == 0 ? '' : '，'}}{{sn.typeName}}{{/each}}">擅长： {{each value.specialityName sn i}} {{i == 0 ? '' : '，'}}{{sn.typeName}} {{/each}}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                {{/each}} {{else}}
+                                <div>
+                                    <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                </div>
+                                {{/if}}
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <!-- 广告 -->
+                    <div class="ui-panel" style="height: 145px;">
+                        <script ad="flwszz_left" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-panel">
+                        <script ad="flwszz_right" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

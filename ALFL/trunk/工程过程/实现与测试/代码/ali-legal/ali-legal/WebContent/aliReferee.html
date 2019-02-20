@@ -1,0 +1,934 @@
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>阿里裁判</h1>
+          </div>
+		  <div class="form-group" >
+			  <button type="button" class="btn btn-success" style="margin-left:10px;" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="publishContent()">发布内容</button>
+		  </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" id="content" style="display:block;">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+           
+				  <form class="form-inline">
+					  <!-- <div  style="display:inline;text-align: center; margin-left:20px;text-align:center;margin:0 auto;" >-->
+					  <div class="form-group">
+						<!-- <div style="display:inline;width:100px;font-size:16px;color:#999999;margin-left:20px;">时间</div>-->
+						<label class="control-label" for="starttime">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="starttime" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="endtime" readonly>
+						</div>
+					  </div>
+
+					  <div class="form-group">
+						  <label class="my-2 mr-2">类型</label>
+						  <select style="width:160px;" class="form-control my-1 mr-sm-2" id="type_cj">
+							<option selected value="">全部</option>
+							<option value="1">要案裁判</option>
+							<!-- <option value="2">事案不同判</option> -->
+							<option value="3">指导性裁判</option>
+							<!-- <option value="4">有意见的裁判</option> -->
+							<option value="5">枉法裁判</option>
+						  </select>
+				      </div>
+					  <!-- <div class="form-group">
+		  				  <label class="my-1 mr-2" >来源</label>
+						   <select class="form-control my-1 mr-sm-2" id="isofficial">
+							<option value="">全部</option>
+							<option value="0">后台</option>
+							<option value="1">PC</option>
+						  </select>	
+					  </div>
+					  <div class="form-group">
+						  <label class="my-1 mr-2" >状态</label>
+						   <select class="form-control my-1 mr-sm-2" id="isPush">
+							<option value="">全部</option>
+							<option value="0">待发布</option>
+							<option value="1">已通过</option>
+							<option value="2">未通过</option>
+						  </select>
+					  </div> -->
+
+					  <div class="form-group">
+						<input type="text" id="conditionValue" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" placeholder="标题、发布人">
+					  </div>
+
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="cpDT" class="table table-bordered table-hover">
+                <thead>
+					<tr>
+					  <th>编号</th>
+					  <th>标题</th>
+					  <th>类型</th>
+					  <!--<th>所属顺序</th>-->
+					  <th>发布人</th>
+					  <th>状态</th>
+					  <th>添加时间</th>
+					  <th>操作</th>
+					</tr>
+                </thead>
+                
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    
+    <!-- Main content -->
+    <section class="content" id="fabu" style="display:none">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">我要申报</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			<form id="formupload" onsubmit="return false" action="##" method="post">
+            <div class="card-header">
+				  <div class="form-inline">
+					  <div class="form-group">
+						  <label class="save-edit">类型</label>
+						  <select class="form-control mx-sm-3" name="declareType"  style="margin-top:10px;width:160px;">
+							<option selected value="1">要案裁判</option>
+							<!-- <option value="2">事案不同判</option> -->
+							<option value="3">指导性裁判</option>
+							<!-- <option value="4">有意见的裁判</option> -->
+							<option value="5">枉法裁判</option>
+						  </select>
+				      </div>
+				  </div>
+ 				<input type="hidden" name="articleId" value="">
+ 				<input type="hidden" name="declareId" value="">
+ 				<input type="hidden" name="userId" value="">
+ 				<input type="hidden" name="columnCode" value="">
+ 				<input type="hidden" name="isofficial" value="0">
+				  <div class="form-inline">
+						<label class="save-edit">标题</label>
+						<input type="text" name="title" id="title_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline"  placeholder="请输入标题内容"  style="margin-top:10px;width:80%;">
+				  </div>
+
+				   <!-- <div class="form-inline">
+						<label class="save-edit">申报人</label>
+						<input type="text" name="realName" id="userName_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+				   </div>
+
+				   <div class="form-inline">
+                    <label class="save-edit">理由</label>
+                    <textarea class="form-control mx-sm-3" name="reasonInfo" id="reason_publish" rows="3" placeholder="Enter ..." style="margin-top:10px;width:80%"></textarea>
+                   </div> -->
+                   
+                   <div class="form-inline">
+                    <label class="save-edit">案情</label>
+					<!-- style给定宽度可以影响编辑器的最终宽度 -->
+					<script type="text/plain" name="caseDesc" id="myEditor" class="form-control mx-sm-3" style="width:800px;height:400px;"></script>
+					<!-- 实例化编辑器 -->
+					<script type="text/javascript">UM.delEditor('myEditor');var um = UM.getEditor('myEditor');</script>
+                   </div>
+                   
+                   <div class="form-inline">
+						<label class="save-edit">案例链接</label>
+						<input type="text" name="caseUrl" id="url_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline"  placeholder="请输入此案件裁判链接地址"  style="margin-top:10px;width:80%">
+				   </div>
+
+				   <div class="form-inline">
+                    <label class="save-edit">裁判文书</label>
+					<input type="file" value="选择文件" id="upload_bookName" multiple class="form-control mx-sm-3" style="margin-top:10px;"/>
+					<input type="button" value="上传文件" onclick="uploadFile()" class="form-control mx-sm-3" style="margin-top:10px;"/>
+  					<input type="hidden" name="bookName" value="">
+                    	<!-- <section class=" img-section">
+					    <div class="z_photo upimg-div clear" >
+					        <section class="z_file fl">
+					            <input type="file" id="file_bookName" class="file" value="" accept="*" multiple />
+					        </section>
+					    </div>
+					</section> -->
+                   </div>
+
+				   <!-- <div class="form-inline">
+                    <label class="save-edit">判决书照片</label>
+                    	<section class="form-control mx-sm-3 img-section" style="margin-top:10px;">
+					    <div class="z_photo upimg-div clear declareImgs" >
+					        <section class="z_file fl">
+					            <input type="file" id="file_declareImgs" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+					        </section>
+					    </div>
+					</section>
+                   </div>
+
+				   <div class="form-inline">
+                    <label class="save-edit">证据照片</label>
+                    	<section class="form-control mx-sm-3 img-section" style="margin-top:10px;">
+					    <div class="z_photo upimg-div clear evidenceImgs" >
+					        <section class="z_file fl">
+					            <input type="file" id="file_evidenceImgs" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+					        </section>
+					    </div>
+					</section>
+                   </div> -->
+
+				   <div class="form-inline">
+                    <label class="save-edit">主题图片</label>
+                    	<section class="form-control mx-sm-3 img-section" style="margin-top:10px;">
+					    <div class="z_photo upimg-div clear primaryImg">
+					        <section class="z_file fl primaryImg">
+					            <input type="file" id="file_primaryImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+					        </section>
+					    </div>
+					</section>
+                   </div>
+				   
+				   <div class="form-inline center" style="margin-top:10px;">
+						<button type="button" class="btn btn-primary save" onclick="savePublish()">保存</button>&nbsp;
+						<button type="button" class="btn btn-primary edit" onclick="editPublish()">修改</button>&nbsp;
+						<button type="button" class="btn btn-primary" onclick="cancel()">取消</button>&nbsp;
+				   </div>
+
+            </div>
+		 </form>
+            
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+	<div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">审核</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-check form-check-inline" style="margin-left: 60px;">
+						<label class="form-check-label mx-sm-3" >审核结果</label>
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio1" value="1" checked="checked">
+						<label class="form-check-label" >通过</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio0" value="2">
+						<label class="form-check-label" >不通过</label>
+					</div>
+					<input type="text" id="id_examine" style="display:none;" tabindex="1">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+					<button type="button" class="btn btn-primary" onclick="saveResult()">保存</button>&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title" >删除提醒</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav justify-content-center">
+						<li class="nav-item">
+							<span class="nav-link">确认删除?</span>
+						</li>
+					</ul>
+					<input type="text" id="id_del" style="display:none;">
+        		<input type="text" id="id_userId" style="display:none;"/>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+					<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+
+<link href="upload/img.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf8" src="upload/imgUpload.js"></script>
+<!-- fabu script -->
+<script type="application/javascript" charset="utf-8">
+	function uploadFile() { 
+		var form = document.getElementById('upload_bookName');
+		formData = new FormData(form); 
+		var reader = new FileReader();
+		reader.readAsDataURL(form.files[0]);
+		reader.onload = function(e){
+			console.log(e.target.result);
+			$.ajax({ 
+				url:requestUrl_pc+'api/file/uploadFile',
+				type:"post", 
+				data:{"fileBase64Str":e.target.result}, 
+				dataType:"json",
+				success:function(res){ 
+					if(res.code==1){ 
+						alert("上传成功！"); 
+						$("input[name='bookName']").attr("value", res.data);
+					} 
+					console.log(res); 
+				}, 
+				error:function(err){ 
+					alert("网络连接失败,稍后重试",err); 
+				} 
+			}) 
+		};
+	}
+	 
+	$("#file_declareImgs").takungaeImgup({
+	    formData: {
+	        "name": 'declareImgs'
+	    },
+	    imageNum : 500,
+	    success: function(data) {},
+	    error: function(err) {
+	        alert(err.msg);
+	    }
+	});
+	$("#file_evidenceImgs").takungaeImgup({
+	    formData: {
+	        "name": 'evidenceImgs'
+	    },
+	    imageNum : 500,
+	    success: function(data) {},
+	    error: function(err) {
+	        alert(err.msg);
+	    }
+	});
+	$("#file_primaryImg").takungaeImgup({
+	    formData: {
+	        "name": 'primaryImg'
+	    },
+	    imageNum : 1,
+	    success: function(data) {},
+	    error: function(err) {
+	        alert(err.msg);
+	    }
+	});
+
+	function publishContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+        $(".btn.btn-primary").show();
+        $(".btn.btn-primary.edit").hide();
+        $(".up-section.fl").remove();
+        $("input[name='articleId']").val("");
+        $("input[name='userId']").val("");
+        $("input[name='title']").val("");
+        $("input[name='realName']").val("");
+        $("textarea[name='reasonInfo']").val("");
+        $("textarea[name='caseDesc']").val("");
+        UM.getEditor('myEditor').setContent("");
+        $("input[name='caseUrl']").val("");
+        $("#upload_bookName").val("");
+        $("input[name='bookName']").attr("value", "");
+		$(".z_file.fl.primaryImg").css('display','block');
+	}
+	function editContent(){
+        $("#fabu").css('display','block');
+        $("#content").css('display','none');
+        $(".btn.btn-primary").show();
+        $(".btn.btn-primary.save").hide();
+	}
+	function cancel(){
+		$("#fabu").css('display','none');
+	    $("#content").css('display','block');
+	}
+	function savePublish(){
+		$("input[name='userId']").val(sessionStorage.getItem('sys_userId'));
+		tempUrl = "api/article/aliDeclare";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:$('#formupload').serialize(),
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                alert("发布成功");
+	                $("#title_publish").val("");
+	                $("#reason_publish").val("");
+	                $("#userName_publish").val("");
+	                $("#aq_publish").val("");
+	                $("#url_publish").val("");
+	                $("#upload_bookName").val("");
+	                $("input[name='bookName']").attr("value", "");
+	                UM.getEditor('myEditor').setContent("");
+	                $(".up-section.fl").remove();
+	                $("#fabu").css('display','none');
+	                $("#content").css('display','block');
+	                reload();
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("发布失败");
+            }
+	    });
+	}
+</script>
+
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+	$("#outstarttime").jeDate(start);
+	$("#outendtime").jeDate(end);
+	$("#intime").jeDate(intime);
+	$("#addRecordTime").jeDate(addRecordTime);
+	//时间控件 结束
+	//显示审核对话框
+	function toExamine(id,userId){
+		$("#id_examine").val(id);
+        $("#id_userId").val(userId);
+		$("#examine").modal("show");
+	}
+	
+	//审核按钮
+	function saveResult(){
+		var is_pass = $("input[name='examineRadio']:checked").val();
+		var parameter = {
+			articleId:$("#id_examine").val(),
+			columnCode:9,
+			isPush:is_pass
+		};
+		var tempUrl = "api/article/updateArticle";
+        $.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+	        			$("#examine").modal("hide");
+		        			reload();
+		                alert("审核成功");
+		                if(is_pass=="1"){sendMessage("1");}
+		                else if(is_pass=="2"){sendMessage("2");}
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("审核失败");
+	            }
+	      });
+	}
+	
+	//发布按钮  表格操作
+	function publish(id){
+		var parameter = {
+			articleId:id,
+			columnCode:9,
+			isPush:1
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                reload();
+		                alert("发布成功");
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("发布失败");
+	            }
+	      });
+	}
+	
+	//撤销按钮  表格操作
+	function revoke(id){
+		var parameter = {
+			articleId:id,
+			columnCode:9,
+			isPush:0
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                reload();
+		                alert("撤销成功");
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("撤销失败");
+	            }
+	      });
+	}
+	
+	//编辑按钮  表格操作
+	function setEdit(userId,articleId,declareId){
+		var parameter = {
+			columnCode:9
+		};
+		tempUrl = "api/article/articleDetails/"+userId+"/"+articleId;
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+	                		editContent();
+			            $(".up-section.fl").remove();
+			            $("input[name='articleId']").val(data.data.articleId);
+			            $("input[name='declareId']").val(declareId);
+		                $("input[name='columnCode']").val(data.data.columnCode);
+		                $("input[name='userId']").val(data.data.userId);
+		                $("input[name='title']").val(data.data.title);
+		                $("select[name='declareType']").val(data.data.declareType);
+		                $("input[name='realName']").val(data.data.realName);
+			            $("textarea[name='reasonInfo']").val(data.data.reasonInfo);
+			            UM.getEditor('myEditor').setContent(data.data.caseDesc);
+			            //$("textarea[name='caseDesc']").val(data.data.caseDesc);
+			            $("input[name='caseUrl']").val(data.data.caseUrl);
+		                var declareImgs = data.data.declareImgs.split(",");
+		                for(var i in declareImgs){
+			                $(".z_photo.upimg-div.clear.declareImgs").append('<section class="up-section fl"><i class="close-upimg"></i>'+
+			                	'<img class="up-img" src="'+requestUrl_img+declareImgs[i]+'">'+
+			                	'<input type="hidden" name="declareImgs" value="'+declareImgs[i]+'"></section>');
+		                }
+		                var evidenceImgs = data.data.evidenceImgs.split(",");
+		                for(var i in evidenceImgs){
+			                $(".z_photo.upimg-div.clear.evidenceImgs").append('<section class="up-section fl"><i class="close-upimg"></i>'+
+			                	'<img class="up-img" src="'+requestUrl_img+evidenceImgs[i]+'">'+
+			                	'<input type="hidden" name="evidenceImgs" value="'+evidenceImgs[i]+'"></section>');
+		                }
+		                var primaryImg = data.data.primaryImg.split(",");
+		                for(var i in primaryImg){
+			                $(".z_photo.upimg-div.clear.primaryImg").append('<section class="up-section fl"><i class="close-upimg"></i>'+
+			                	'<img class="up-img" src="'+requestUrl_img+primaryImg[i]+'">'+
+			                	'<input type="hidden" name="primaryImg" value="'+primaryImg[i]+'"></section>');
+		                }
+		                delImg();
+        	    				$(".z_file.fl.primaryImg").css('display','none');
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	            }
+	      });
+	}
+	function delImg(){
+	    $(".close-upimg").click(function () {
+	        $(this).parent().remove();
+			$(".z_file.fl.primaryImg").css('display','block');
+	    });
+	}
+	
+	//修改
+	function editPublish(){
+		tempUrl = "api/article/updateAliDeclare";
+        $.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:$('#formupload').serialize(),
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                alert("修改成功");
+		                $("#title_publish").val("");
+		                $("#reason_publish").val("");
+		                $("#userName_publish").val("");
+		                $("#aq_publish").val("");
+		                $("#url_publish").val("");
+		                $("#upload_bookName").val("");
+		                $("input[name='bookName']").attr("value", "");
+		                UM.getEditor('myEditor').setContent("");
+		                $(".up-section.fl").remove();
+		                $("#fabu").css('display','none');
+		                $("#content").css('display','block');
+		                reload();
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("修改失败");
+	            }
+	      });
+	}
+	
+	//显示删除对话框
+	function delMsg(id,userId){
+		$("#id_del").val(id);
+        $("#id_userId").val(userId);
+		$("#mySmallModalLabel").modal("show");
+	}
+	
+	//删除按钮
+	function delResult(){
+		var id = $("#id_del").val();
+		$("#mySmallModalLabel").modal("hide");
+		var parameter = new FormData();
+        $.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+"api/article/deleteArticle/"+id,
+	            data:parameter,
+	            processData : false, // 告诉jQuery不要去处理发送的数据
+	            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                reload();
+		                alert("删除成功");
+		                sendMessage("0");
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("删除失败");
+	            }
+	      });
+	}
+	
+	//发站内消息
+	function sendMessage(type){
+		var yewuID = "";
+		var messageContent = "";
+		if(type=="0"){
+			yewuID = $("#id_del").val();
+			messageContent = "阿里裁判内容违规已删除";
+		}else if(type=="1"){
+			yewuID = $("#id_examine").val();
+			messageContent = "阿里裁判内容审核通过";
+		}else if(type=="2"){
+			yewuID = $("#id_examine").val();
+			messageContent = "阿里裁判内容审核不通过";
+		}
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:messageContent,
+	            	businessType:1,
+	            	businessId:yewuID,
+	            	messageType:"阿里裁判"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+	
+	//置顶按钮  表格操作
+	function setTop(id,index){
+		var parameter = {
+			articleId:id,
+			stickType:index
+		};
+		var tempUrl = "api/article/stickAliDeclare";
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                alert(data.msg);
+		                reload();
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("发布失败");
+	            }
+	      });
+	}
+	
+	//刷新表格
+    function reload(){
+		var table = $('#cpDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	//查找按钮
+	function search(){
+		cpDT.ajax.reload();
+	} 
+	
+	//重置按钮
+	function reset(){
+		$("#id_input").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
+		$("#type_cj").val("0");
+	}
+	
+</script>
+<script type="application/javascript" charset="utf-8">
+var cpDT;
+$(document).ready(function(){
+
+		cpDT=$('#cpDT').DataTable( {
+			//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 5,
+			"lengthChange": false,
+			"language": {
+				"sProcessing": "处理中...",
+				"sLengthMenu": "显示 _MENU_ 项结果",
+				"sZeroRecords": "没有匹配结果",
+				"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix": "",
+				"sSearch": "搜索:",
+				"sEmptyTable": "表中数据为空",
+				"sLoadingRecords": "载入中...",
+				"sInfoThousands": ",",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sPrevious": "上页",
+					"sNext": "下页",
+					"sLast": "末页"
+				},
+				"oAria": {
+					"sSortAscending": ": 以升序排列此列",
+					"sSortDescending": ": 以降序排列此列"
+				}
+			},
+			//----------------------------------------------
+			ajax:{
+				//url:requestUrl_pc+"api/article/aliAdjudicationMessageList",
+				type:'POST',
+				data:{
+					"start": 0,
+					"length": 5
+				}
+			},
+			"aoColumns": [
+				//编号
+				{ "data":"articleId",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.articleId  != null && full.articleId  !=""){
+							return full.articleId ;
+						}
+						return "";
+					}
+				},		
+				//标题
+				{ "data":"title",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.title  != null && full.title  !=""){
+							return '<a href="#" onclick="RedirectToPC(\'referee_info.html?articleId='+full.articleId+'\')">'+full.title+'</a>';
+						}
+						return "";
+					}
+				},
+				//类型
+				{ "data":"declareName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.declareName != null && full.declareName!=""){
+							return full.declareName;
+						}
+						return "";
+					}
+				},
+				//发布人
+				{ "data":"realName ",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.realName  != null && full.realName  !=""){
+							return full.realName ;
+						}
+						return "";
+					}
+				},
+				//状态
+				{ "data":"isPush",
+					"visible": true,
+					"render":function(data,type,full){
+						   	if(full.isPush==0 && full.isofficial==1){
+							   	return "待审核";
+						   	}else if(full.isPush==0 && full.isofficial==0){
+							   	return "待发布";
+						   	}
+						   	if(full.isPush==1){
+							   	return "已通过";
+						   	}else if(full.isPush==2){
+							   	return "未通过";
+						   	}else{
+								return '';
+						   	}
+					}
+				},
+				//添加时间
+				{ "data":"sendTime",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.sendTime != null && full.sendTime!=""){
+							return full.sendTime;
+						}
+						return "";
+					}
+				},
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						var texta = "";
+						var textb = "";
+						var textc = "";
+						var textd = "";
+						var texte = "";
+						if(full.isPush==0 && full.isofficial==1){
+							texta = '<input type="button" class="btn btn-success" value="审核" onclick="toExamine(\''+full.articleId+'\',\''+full.userId+'\')"/>&nbsp;';
+						}else if(full.isPush==0 && full.isofficial==0){
+							textb = '<input type="button" class="btn btn-success" value="发布" onclick="publish(\''+full.articleId+'\')"/>&nbsp;';
+						}else if(full.isPush==1 && full.isofficial==0){
+							textc = '<input type="button" class="btn btn-success" value="撤销" onclick="revoke(\''+full.articleId+'\')"/>&nbsp;';
+						}
+						if(full.isofficial==0){
+							textd = '<input type="button" class="btn btn-success" value="编辑" onclick="setEdit(\''+full.userId+'\',\''+full.articleId+'\',\''+full.declareId+'\')"/>&nbsp;';
+						}
+						if(full.indexs==0 || full.indexs==null){
+							texte = '<input type="button" class="btn btn-success" value="置顶" onclick="setTop(\''+full.articleId+'\',\'0\')"/>&nbsp;';
+						}else if(full.indexs>0){
+							texte = '<input type="button" class="btn btn-success" value="下架" onclick="setTop(\''+full.articleId+'\',\'1\')"/>&nbsp;';
+						}
+						return  texta+textb+textc+textd+texte+
+								'<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.articleId+'\',\''+full.userId+'\')"/>';
+					}
+				}
+			],
+            "fnServerData": function ( sSource, aoData, fnCallback ) {
+                aoData.push({'name':'conditionValue','value':$('#conditionValue').val()});
+                aoData.push({'name':'endTime','value':$('#endtime').val()});
+                aoData.push({'name':'startTime','value':$('#starttime').val()});
+                aoData.push({'name':'declareType','value':$('#type_cj').val()});
+                aoData.push({'name':'isofficial','value':$('#isofficial').val()});
+                aoData.push({'name':'isPush','value':$('#isPush').val()});
+                var oTable = $('#cpDT').dataTable();
+	        		var tableSetings=oTable.fnSettings();  
+	        		var paging_length=tableSetings._iDisplayLength;//当前每页显示多少  
+	        		var page_start=tableSetings._iDisplayStart;//当前页开始  
+	        		var pageNo = (page_start / paging_length)+1; //得到页码值
+	        		$.ajax( {
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": requestUrl_pc+"api/article/aliAdjudicationList/3/"+pageNo+"/5",
+                    "data": aoData,
+                    "success": fnCallback
+                } );
+            }
+		} );
+	//}
+});
+</script>
+

@@ -1,0 +1,383 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>用户管理</h1>
+			</div>
+			<div class="form-group" >
+			 	<button type="button" class="btn btn-success" onclick="showDialogModal()">新增</button>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="table_id">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>用户名</th>
+								<th>姓名</th>
+								<th>角色</th>
+								<th>手机</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">用户</h5>
+        		<input type="text" id="id_update" style="display:none;"/>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">角色</label>
+						<div class="col-sm-5">
+							<select class="form-control my-1 mr-sm-2" id="sys_roleId">
+								<!--角色实际对应的值，需问写后台的，之前约定是按原型从上到下，1，2，3排列-->
+								
+							</select>
+						</div>
+					</div>
+					<div class="form-group row" style="margin-top: 20px;">
+						<label class="col-sm-2 col-form-label">用户名</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="sys_userName"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">姓名</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="sys_nickName"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">手机号</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="mobile"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">密码</label>
+						<div class="col-sm-5">
+							<input type="password" class="form-control mx-sm-3" id="sys_userPassword"/>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary save" onclick="saveContinue()">保存</button>&nbsp;
+				<button type="button" class="btn btn-primary update" onclick="update()">修改</button>&nbsp;
+				<button type="button" class="btn btn-primary" onclick="saveClose()">关闭</button>&nbsp;
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" >删除提醒</h6>
+        <input type="text" id="id_del" style="display:none;"/>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <span class="nav-link">确认删除？</span>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="delResult()">确认</button>&nbsp;
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	var tableData;
+	$(document).ready(function () {
+        addRole();
+		tableData= $('#table_id').DataTable({
+	    	//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 5,
+			"lengthChange": false,
+			"language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	   			url:requestUrl+"system/user/list",
+	   			type:'POST'
+	   		}, 
+	   		columns: [
+	           	{ "data": "sys_userId" },
+	           	{ "data": "sys_userName" },
+	           	{ "data": "sys_nickName"},
+	           	{ "data": "sysRoleName"},
+	           	{ "data": "mobile"},
+	           	{ "data": "sysStateDescription"},
+	           	{ "data":null,
+	           		"visible": true,
+	                "render":function(data,type,full){
+	                	var LockOrUnlock;
+	                	if(full.sys_state=="1"){
+	                		LockOrUnlock = '<input type="button" class="btn btn-success" value="锁定" onclick="toLocking(\''+full.sys_userId+'\')"/>&nbsp;';
+	                	}else{
+	                		LockOrUnlock = '<input type="button" class="btn btn-success" value="解锁" onclick="toUnlock(\''+full.sys_userId+'\')"/>&nbsp;';
+	                	}
+	                	return  '<input type="button" class="btn btn-success" value="编辑" onclick="toEdit(\''+full.sys_userId+'\')"/>&nbsp;' +
+	                		LockOrUnlock + '<input type="button" class="btn btn-success" value="删除" onclick="toDelete(\''+full.sys_userId+'\')"/>';
+					}
+				}
+			]
+		});
+	});
+		
+	//重新加载
+	function search(){
+		tableData.ajax.reload();
+	}
+    function reload(){
+		var table = $('#table_id').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//加载角色
+	function addRole(){
+        Yajax({
+   			url:requestUrl+"system/role/param",
+   			type:'POST',
+	        data:JSON.stringify({
+    			"start": 0,
+         		"length": 100
+       		}),
+            contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+	        success : function(data) {
+	        		$('#sys_roleId').empty();
+	            console.log(data);
+		    		for(var i in data.aaData){
+		    			$('#sys_roleId').append("<option value="+data.aaData[i].sys_roleId+">"+data.aaData[i].sys_roleName+"</option>");
+		    		}
+	        }
+        });
+	}
+	//清空dialog的赋值
+	function dialogEmpty(){
+		$('#sys_roleId').val("1");
+        $('#sys_nickName').val("");
+        $('#sys_userName').val("");
+        $('#mobile').val("");
+        $('#sys_userPassword').val("");
+	}
+	
+	//新增 按钮 
+    function showDialogModal() {
+        $("#dialogModal").modal("show");
+        $(".btn.btn-primary").show();
+        $(".btn.btn-primary.update").hide();
+        dialogEmpty();
+    }
+
+    //保存继续 按钮
+    function saveContinue() {
+        saveData();
+    }
+
+    //保存关闭 按钮
+	function saveClose(){
+        $("#dialogModal").modal("hide");
+        dialogEmpty();
+	}
+
+	//新增
+	function saveData(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"system/user/add",
+            data:JSON.stringify({
+	            	"sys_roleId":$('#sys_roleId').val(),
+	            	"sysRoleName":$('#role_add').find("option:selected").text(),
+	            	"sys_nickName":$('#sys_nickName').val(),
+	            	"sys_userName":$('#sys_userName').val(),
+	            	"mobile":$('#mobile').val(),
+	            	"sys_userPassword":$('#sys_userPassword').val()
+            }),
+            contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                    alert("保存成功");
+                    $("#dialogModal").modal("hide");
+                    dialogEmpty();
+                    reload();//刷新表格
+                }else{
+                		alert(data.error);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("保存失败");
+            }
+        });
+	}
+	
+	//编辑 获取详情
+	function toEdit(sys_userId){
+        $("#dialogModal").modal("show");
+        $("#id_update").val(sys_userId);
+        $(".btn.btn-primary").show();
+        $(".btn.btn-primary.save").hide();
+        Yajax({
+            type:'GET',
+            url:requestUrl+"system/user/info/"+sys_userId,
+            success : function(data) {
+                console.log(data);
+                $('#sys_roleId').val(data.data.sys_roleId);
+                $('#sys_nickName').val(data.data.sys_nickName);
+                $('#sys_userName').val(data.data.sys_userName);
+                $('#mobile').val(data.data.mobile);
+                $('#sys_userPassword').val(data.data.sys_userPassword);
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("请求失败");
+            }
+        });
+	}
+	
+	//修改
+	function update(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"system/user/update",
+            data:JSON.stringify({
+	            	"sys_userId":$("#id_update").val(),
+	            	"sys_roleId":$('#sys_roleId').val(),
+	            	"sysRoleName":$('#sys_roleId').find("option:selected").text(),
+	            	"sys_nickName":$('#sys_nickName').val(),
+	            	"sys_userName":$('#sys_userName').val(),
+	            	"mobile":$('#mobile').val(),
+	            	"sys_userPassword":$('#sys_userPassword').val()
+            }),
+            contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("修改成功");
+                $("#dialogModal").modal("hide");
+                $("#id_update").val("");//重置
+                reload();//刷新表格
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("修改失败");
+            }
+        });
+	}
+	
+	//删除
+	function toDelete(sys_userId){
+        $("#id_del").val(sys_userId);
+        $("#mySmallModalLabel").modal("show");
+	}
+    //确认删除
+    function delResult(){
+        var sys_userId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+            type:'GET',
+            url:requestUrl+"system/user/remove/"+sys_userId,
+            success : function(data) {
+                console.log(data);
+                alert("删除成功");
+                reload();//刷新表格
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+        });
+    }
+	
+	//锁定
+	function toLocking(sys_userId){
+        Yajax({
+            type:'GET',
+            url:requestUrl+"system/user/lock/"+sys_userId,
+            success : function(data) {
+                console.log(data);
+                alert("锁定成功");
+                reload();//刷新表格
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("锁定失败");
+            }
+        });
+	}
+	
+	//解锁
+	function toUnlock(sys_userId){
+        Yajax({
+            type:'GET',
+            url:requestUrl+"system/user/unlock/"+sys_userId,
+            success : function(data) {
+                console.log(data);
+                alert("解锁成功");
+                reload();//刷新表格
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("解锁失败");
+            }
+        });
+	}
+	
+</script>

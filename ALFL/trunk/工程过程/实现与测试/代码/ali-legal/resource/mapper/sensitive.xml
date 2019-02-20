@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sensitive">
+    <resultMap id="BaseResultMap" type="Sensitive" >
+        <id column="sensitiveId" property="sensitiveId" jdbcType="INTEGER" />
+        <result column="sensitiveValue" property="sensitiveValue" jdbcType="VARCHAR" />
+        <result column="is_delete" property="is_delete" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        ali_sensitive
+        <where>
+            <if test="true">
+                and (is_delete != 1 or is_delete is null )
+            </if>
+            <if test="sensitiveValue != null and sensitiveValue != ''">
+                and sensitiveValue like '%${sensitiveValue}%'
+            </if>
+        </where>
+        ORDER BY sensitiveId DESC
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+          count(sensitiveId)
+        FROM
+        ali_sensitive
+        <where>
+            <if test="true">
+                and (is_delete != 1 or is_delete is null )
+            </if>
+            <if test="sensitiveValue != null and sensitiveValue != ''">
+                and sensitiveValue like '%${sensitiveValue}%'
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="Sensitive" resultMap="BaseResultMap">
+        select * from ali_sensitive
+        <where>
+            <if test="sensitiveId != null">
+                and sensitiveId = #{sensitiveId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="Sensitive" useGeneratedKeys="true" keyProperty="sensitiveId" >
+      insert into ali_sensitive (sensitiveValue)
+      values (#{sensitiveValue,jdbcType=VARCHAR})
+    </insert>
+    <update id="update" parameterType="Sensitive" >
+        update ali_sensitive
+        <set >
+            <if test="sensitiveValue != null">
+                sensitiveValue = #{sensitiveValue,jdbcType=VARCHAR},
+            </if>
+            <if test="is_delete != null" >
+                is_delete = #{is_delete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sensitiveId = #{sensitiveId,jdbcType=INTEGER}
+    </update>
+</mapper>

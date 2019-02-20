@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 管理中心 - 个人主页设置</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+    <link href="../css/img.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-person-wrapper">
+    <div><script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script></div>
+</div>
+<div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+    <div class="container ">
+        <div class="ui-padding-b-no">
+            <div class="row">
+
+                <div class="col-xs-3">
+                    <div><script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script></div>
+                </div>
+
+                <div class="col-xs-9">
+                    <div class="ui-bg-white">
+
+                        <ul class="nav nav-tabs ui-person-panel-top">
+                            <script class="user_managetabs" type="text/html" src="../tmpl/user_managetabs.html"></script>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content ui-person-panel-content">
+                            <div role="tabpanel" class="tab-pane active ui-block">
+
+                                <div class="ui-regform ui-padding-30 ui-padding-l-no">
+                                    <form class="form-horizontal" id="url_form" method="post">
+
+                                        <div class="form-group ui-margin-b-30">
+                                            <div class="col-xs-12">
+                                                <div class="ui-margin-l-30 ui-padding-30" style="background: #f5f4f6">
+                                                    <p ><img src="../img/smallhome.png" class="ui-margin-r-20" alt="">您的个人主页地址：http://<input name="personUrl" type="text" data-rule="个人主页地址:required;szzm"><span class="j-home-sld"></span><button type="submit" class="btn ui-inline-block ui-btn-red ui-margin-l-15 ui-radius-5">申请开通</button></p>
+                                                    <p class="ui-color-gray ui-margin-l-30 ui-padding-lr-20 ui-size-12">提示：个人主页域名请设置简短的字母数字组合，成功开通后拥有自己的主页</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form class="form-horizontal" id="info_form" method="post">
+
+                                        <div class="form-group ui-padding-b-10">
+                                            <label  class="col-xs-3 control-label">我的二维码：</label>
+                                            <div class="col-xs-7">
+                                                <section class="img-section" style="background: #f5f4f6">
+                                                    <div class="z_photo upimg-div clear" >
+                                                        <section class="z_file fl" style="background-color: #fff">
+                                                            <input type="file" id="codeImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-rule="我的二维码:required"/>
+                                                        </section>
+                                                    </div>
+                                                    <div class="img-tips ui-color-gray">请上传本人清晰的微信二维码，在个人主页中展示</div>
+                                                </section>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ui-padding-b-10">
+                                            <label for="characterSign" class="col-xs-3 control-label">个性签名：</label>
+                                            <div class="col-xs-7">
+                                                <input name="characterSign" id="characterSign" type="text" class="form-control" placeholder="请填写个性签名" data-rule="个性签名:required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ui-padding-b-10">
+                                            <label for="personDesc" class="col-xs-3 control-label">个人简介：</label>
+                                            <div class="col-xs-7">
+                                                <textarea name="personDesc" id="personDesc" class="form-control" rows="8" placeholder="请填写个人简介" data-rule="个人简介:required"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ui-margin-b-30">
+                                            <div class="col-xs-offset-8 col-xs-2 text-right">
+                                                <button type="submit" class="btn btn-block ui-btn-red">保存</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

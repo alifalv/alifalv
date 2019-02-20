@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Advertising">
+    <resultMap id="BaseResultMap" type="Advertising" >
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="column_type" jdbcType="INTEGER" property="columnType" />
+        <result column="place" jdbcType="VARCHAR" property="place" />
+        <result column="image" jdbcType="VARCHAR" property="image" />
+        <result column="is_available" jdbcType="INTEGER" property="isAvailable" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+          ali_advertising 
+        <where>
+            <if test="true">
+                and is_available=1
+            </if>
+            <if test="columnType != null">
+                and column_type = #{columnType,jdbcType=INTEGER}
+            </if>
+            <if test="name != null">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(id)
+        FROM
+        ali_advertising 
+        <where>
+            <if test="true">
+                and is_available=1
+            </if>
+            <if test="columnType != null">
+                and column_type = #{columnType,jdbcType=INTEGER}
+            </if>
+            <if test="name != null">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="Advertising" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        ali_advertising 
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="Advertising" useGeneratedKeys="true" keyProperty="id" >
+      insert into ali_advertising (`name`, url,
+          column_type, place, image,
+          is_available, content)
+        values (#{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+          #{columnType,jdbcType=INTEGER}, #{place,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR},
+          #{isAvailable,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <update id="update" parameterType="Advertising" >
+        update ali_advertising
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="columnType != null">
+                column_type = #{columnType,jdbcType=INTEGER},
+            </if>
+            <if test="place != null">
+                place = #{place,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                image = #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="isAvailable != null">
+                is_available = #{isAvailable,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

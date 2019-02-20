@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 法律疑难问题与观点 - 详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header"  type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+
+<div class="ui-content ui-content-row">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <dl class="ui-breadcrumb">
+                    <dt>当前位置：</dt>
+                    <dd><a href="index.html">首页</a></dd>
+                    <dd><a href="articles_problem.html">法律疑难问题与观点</a></dd>
+                    <dd>详情</dd>
+                </dl>
+            </div>
+            <div class="col-xs-9">
+                <div class="ui-article">
+                    <script id="activeTmpl" type="text/html">
+                        <div class="ui-article-top ui-padding-b-30">
+                            <h3>{{data.title || '无标题'}}</h3>
+                            <div>
+                                <div class="ui-left ui-size-12 ui-color-gray ui-inline-block"><span class="ui-padding-r-10">来自：{{data.realName || '无'}}</span> | <span class="ui-margin-l-10">类型：{{data.columnCodeName}}</span>
+                                    <ul class="ui-navspace ui-right">
+                                        <li><i class="iconfont icon-shijian ui-color-lightblue ui-size-14"></i>{{data.sendTime}}</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span id="star_btn" class="{{data.isCollection == '是' ? 'active' : ''}} ui-article-star">收藏</span>
+                                </div>
+                            </div>
+                            <div class="j-share-box ui-inline-block ui-left ui-absolute ui-margin-t-20"></div>
+                        </div>
+                        <div class="ui-article-content">
+                            <div class="ui-article-text">
+                                {{@ data.articleContent}}
+                            </div>
+                        </div>
+
+                        <div class="ui-article-bottom">
+                            <div class="ui-article-page">
+                                {{if (data.lastArticleTitle) }}<p>上一条：<a href="?articleId={{data.lastArticleId}}">{{data.lastArticleTitle}}</a></p>{{/if}}
+                                {{if (data.nextArticleTitle) }}<p>下一条：<a href="?articleId={{data.nextArticleId}}">{{data.nextArticleTitle}}</a></p>{{/if}}
+                            </div>
+                        </div>
+                    </script>
+                </div>
+            </div>
+            <div class="col-xs-3">
+
+                <div class="ui-panel">
+                    <div class="ui-panel-content ui-padding-t-10">
+                        <ul class="ui-tool-list">
+                            <li><a href="user_consult.html" title="免费法律咨询"><i class="icon-mfflzx"></i><p class="ui-size-16">免费法律咨询<i class="icon-hot"></i></p><p class="ui-color-gray">有疑问？马上咨询吧</p></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ui-content-row">
+                    <script ad="flynwtxq_right" type="text/html" src="../tmpl/ad.html"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

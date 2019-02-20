@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="MyZhaopin">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>简历</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="fonts/iconfont.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <style type="text/css">
+        .newsbox{margin-bottom: 1.44rem}
+    </style>
+</head>
+
+<body class="Lawsearch Lawask Alicaipan MyZhaopin">
+<div id="app">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-closeempty" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+        </div>
+        <h2>简历详情</h2>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class=" idx-band5 page-slideright">
+
+            <div class="newsBox page-slideright">
+                <div id="newAsk" class="mui-control-content mui-active">
+                    <ul class="ui-bg-gray" style="margin: 0 0 .25rem!important;">
+                        <li style="margin: 0!important;">
+                            <a >
+                                <div class="left">
+                                    <img :src="articleData.userImg | createImgUrl" @error="setErrorImg"/>
+                                </div>
+                                <div class="right">
+                                    <div class="t">
+                                        <h2 class="ui-block ui-width-100p">{{articleData.userName}}
+                                            <span class="ui-right ui-block" v-if="isShowStar == true" @click="starJianLi"><i class="iconfont icon-xingxing"></i>收藏</span>
+                                        </h2>
+                                    </div>
+                                    <div class="b">
+                                        <section><p>专业：<span>{{articleData.major}}</span></p><p>从业年限：<span>{{articleData.workExperience}}年</span></p></section>
+                                        <section><p>学历：<span>{{articleData.qualificationName}}</span></p><p>所在地区：<span>{{articleData.provinceName}} {{articleData.cityName}}</span></p></section>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        <div class="ui-box">
+            <div class="ui-box-content">
+                <div><label>最高学历：</label><span></span></div>
+                <div><label>毕业院校：</label><span>{{articleData.school}}</span></div>
+                <div><label>期望薪金：</label><span>{{articleData.salName}}</span></div>
+                <div><label>联系方式：</label><span>{{articleData.mobile}}</span></div>
+                <div><label>自我评价：</label><span v-html="articleData.selfAssessment"></span></div>
+            </div>
+        </div>
+
+        <div class="ui-box">
+            <div class="ui-box-title">工作经历</div>
+            <div class="ui-box-content" v-for="exp in articleData.experienceList" v-if="null!=articleData.experienceList && articleData.experienceList.length > 0">
+                <div><h2>{{exp.companyName || '无'}}</h2></div>
+                <div><label>职位名称：</label><span>{{exp.jobName}}</span></div>
+                <div><label>所属部门：</label><span>{{exp.deptName}}</span></div>
+                <div><label>时间段：</label><span>{{exp.inDate}} ~ {{exp.outDate}}</span></div>
+                <div><label>工作内容：</label><span v-html="exp.workContent"></span></div>
+            </div>
+        </div>
+
+        <div class="ui-box">
+            <div class="ui-box-title">教育经历</div>
+            <div class="ui-box-content" v-for="edu in articleData.eduList" v-if="null!=articleData.eduList && articleData.eduList.length > 0">
+                <div><h2>{{edu.schoolName}}</h2></div>
+                <div><label>专业：</label><span>{{edu.major}}{{articleData.fileList.length}}</span></div>
+                <div><label>学历：</label><span>{{edu.qualificationName || '无'}}</span></div>
+                <div><label>时间段：</label><span>{{edu.inDate}} ~ {{edu.outDate}}</span></div>
+                <div><label>在校经历：</label><span v-html="edu.schoolDesc"></span></div>
+            </div>
+        </div>
+
+            <div class="backtop">
+
+            </div>
+        </div>
+    </div>
+    <!--主体 end-->
+
+    <script src="vue/vue.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="js/share.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <!--<script src="vue/axios.min.js"></script>-->
+    <!--<script src="vue/httpVueLoader.js"></script>-->
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Jianli.js"></script>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 律师注册</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+    <div class="ui-content ui-padding-b-40">
+        <div class="container ui-padding-tb-30">
+            <div class="row">
+                <div class="col-xs-2">
+                    <h4 class="ui-size-18">欢迎加入阿里法律</h4>
+                </div>
+                <div class="col-xs-10">
+                    <ul class="ui-steps-list">
+                        <li class="ui-active"><i>1</i>选择注册类型</li>
+                        <li class="ui-active"><i>2</i>填写注册信息</li>
+                        <li><i>3</i>注册成功</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="ui-regpanel">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="ui-top-wrapper">
+                            <h3 class="ui-padding-tb-30 text-center ui-bold">律师注册</h3>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="ui-regform ui-border-r-1">
+                            <form class="form-horizontal" id="form">
+                                <div class="form-group">
+                                    <label for="userName" class="col-xs-3 control-label">用户名：</label>
+                                    <div class="col-xs-7">
+                                        <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入用户名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile" class="col-xs-3 control-label">手机号码：</label>
+                                    <div class="col-xs-7">
+                                        <input type="tel" name="mobile" class="form-control" id="mobile" placeholder="请输入手机号码" data-tip="同一手机号只能注册一个角色">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nickName" class="col-xs-3 control-label">昵称：</label>
+                                    <div class="col-xs-7">
+                                        <input type="text" name="nickName" class="form-control" id="nickName" placeholder="请输入昵称">
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                <!--<label for="inputPassword3" class="col-xs-3 control-label">验证码：</label>-->
+                                <!--<div class="col-xs-4">-->
+                                <!--<input type="number" class="form-control" id="inputPassword3" placeholder="请输入图形验证码">-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-3">-->
+                                <!--<img src="../img/validimg.png" alt="" class="img-responsive ui-width-100p">-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-2">-->
+                                <!--<a href="" class="ui-line-height-40 ui-color-lightblue">换一张</a>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <label for="mobileCode" class="col-xs-3 control-label">手机验证码：</label>
+                                    <div class="col-xs-4">
+                                        <input type="number" name="code" class="form-control" id="mobileCode" placeholder="请输入手机验证码">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <a id="sendsms_btn" href="javascript:void(0);" class="btn btn-block ui-btn-lightblue">点此获取</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-xs-3 control-label">密码：</label>
+                                    <div class="col-xs-7">
+                                        <input type="password" name="password" class="form-control" id="password" placeholder="6-16位字符，建议字母数字组合" data-rule="密码: required;password;">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmpassword" class="col-xs-3 control-label">确认密码：</label>
+                                    <div class="col-xs-7">
+                                        <input type="password" class="form-control" id="confirmpassword" placeholder="请再次输入密码" data-rule="确认密码: match(password);">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="province_select" class="col-xs-3 control-label">所在地区：</label>
+                                    <div class="col-xs-4">
+                                        <select class="form-control" name="province" data-rule="省份:required" id="province_select">
+                                        <script id="province_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.provinceId}}">{{value.provinceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <select class="form-control" name="city" data-rule="城市:required" id="city_select">
+                                        <script id="city_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.cityId}}">{{value.cityName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">职业：</label>
+                                    <div class="col-xs-4">
+                                        <select class="form-control" name="job" data-rule="职业:required">
+                                        <script id="job_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.jobId}}">{{value.jobName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="form-group ui-border-b-1">
+                                    <label class="col-xs-3 control-label">擅长专业：</label>
+                                    <div class="col-xs-9 ui-padding-lr-no ui-checkbox-list">
+                                        <script id="case_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <div class="col-xs-3">
+                                                <label><input type="checkbox" name="cases" value="{{value.caseId}}" class="cases" data-rule="checked(5~10)"  data-target="#msg_holder">{{value.caseName}}</label>
+                                            </div>
+                                            {{/each}}
+                                        </script>
+                                        <span class="msg-box" id="msg_holder"></span>
+
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox" name="cases" value="1">立案问题</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox" name="cases" value="2">行政处罚</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">婚姻家庭</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">知识产权</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">刑事侦察</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">行政审批</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">交通事故</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">侵权责任</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">刑事诉讼</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">行政诉讼</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">民间借贷</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">公司纠纷</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">监所问题</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">民事执行</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">房地产</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">担保纠纷</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">治安案件</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">劳动争议</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">合同纠纷</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">拆迁纠纷</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">税务问题</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">法医鉴定</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">其他鉴定</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-3">-->
+                                        <!--<label><input type="checkbox">其他民商事</label>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-offset-3 col-xs-9">
+                                        <div class="checkbox">
+                                            <label class="ui-padding-tb-20">
+                                            <input type="checkbox" data-rule="checked">我已同意<a target="_blank" href="about_agreement.html" class="ui-color-lightblue">《平台服务协议》</a>
+                                        </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-offset-3 col-xs-4">
+                                        <button type="submit" class="btn btn-block ui-btn-lightblue">下一步</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="ui-regform">
+                            <form class="form-horizontal">
+                                <div class="form-group ui-padding-tb-20">
+                                    <span class="ui-size-12">已有账号？</span>
+                                    <p><a href="login.html" class="ui-color-lightblue">直接登录 ></a></p>
+                                </div>
+                                <div class="form-group ui-size-12">
+                                    使用第三方账号登录
+                                </div>
+                                <div class="form-group">
+                                    <a href="javascript:void(0);" class="ui-btn-qqlogin" thirdlogin="qq">QQ登录</a>
+                                </div>
+                                <div class="form-group">
+                                    <a href="javascript:void(0);" class="ui-btn-wechatlogin" thirdlogin="wx">微信登录</a>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <a href="javascript:void(0);" class="ui-btn-sinalogin" thirdlogin="sina">新浪登录</a>
+                                </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

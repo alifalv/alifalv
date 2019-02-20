@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="Myinfo-viprenzhen">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>咨询师认证</title>
+		<link rel="stylesheet" href="mui/mui.min.css" />
+		<link rel="stylesheet" href="vue/vant-min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask Myinfo-viprenzhen">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>企业认证</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter idx-band5" id="app" v-cloak>
+			<div class="newsBox page-slideright">
+				<div id="newCase" class="mui-control-content mui-active">
+					<section>
+						<div class="mui-input-row">
+							<label>单位全称：</label>
+							<input type="text" class="mui-input-clear" placeholder="（必填）填写营业执照上登记的组织机构名称" v-model.trim="companyName">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>单位代码：</label>
+							<input type="text" class="mui-input-clear" placeholder="（必填）填写营业执照上统一社会信用代码" v-model.trim="companyCode">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>注册地址：</label>
+							<input type="text" class="mui-input-clear" placeholder="填写营业执照登记的企业地址" v-model.trim="registerAddress">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>办公地址：</label>
+							<input type="text" class="mui-input-clear" placeholder="如与注册地址一致，则填写注册地址" v-model.trim="workAddress">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>联系人姓名：</label>
+							<input type="text" class="mui-input-clear" placeholder="(必填)请填写单位联系人姓名" v-model.trim="realName">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>联系人微信号：</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写单位联系人微信号" v-model.trim="weChat">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>联系人QQ：</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写单位联系人QQ号" v-model.trim="qq">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>企业邮箱：</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写企业邮箱" v-model.trim="email">
+						</div>
+					</section>
+					<div class="uploadimgbox">
+						<p>证件照片上传：</p>
+						<div class="uploadbox">
+							<van-uploader :after-read="onRead">
+								<div class="selectphoto">
+									<img :src="workImg">
+								</div>
+							</van-uploader>
+						</div>
+						<p class="redfont">温馨提示：请提交真实无误的会员资料，会员资料提交审核通过后，可不能更改哦！</p>
+					</div>
+					<input type="button" class="logininbtn" id="Nextstep" :value="btn" @click="saveFn"/>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="vue/vant-min.js"></script>
+		<script src="js/ajax/ajax.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Myinfo-qiye-renzhen.js"></script>
+	</body>
+
+</html>

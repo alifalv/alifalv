@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="Myinfo-viprenzhen">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>我要咨询</title>
+    <link rel="stylesheet" href="mui/mui.min.css" />
+    <link rel="stylesheet" href="vue/vant-min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .mui-navigate-right:after,
+        .mui-push-right:after {
+            right: 1rem;
+            content: '\e583'
+        }
+         
+		 
+		 
+        .selectphoto {
+            width: 3.2rem!important;
+            height: 3.2rem!important;
+            position: relative;
+            overflow: hidden;
+            background-image: url(images/addimg.png)!important;
+            background-size: 40px!important;
+            border: 1px solid #e3e3e3;
+        }
+        
+        .selectphoto img {
+            width: 4rem!important;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -2rem;
+            margin-top: inherit;
+            display: block;
+            max-height: none!important;
+            max-width: none!important;
+            height: auto;
+        }
+        
+        .Myinfo-viprenzhen .mui-control-content .uploadimgbox .uploadbox {
+            padding: 0 0.4rem;
+            display: inline!important;
+        }
+        
+        .mui-navigate-right:after,
+        .mui-push-left:after,
+        .mui-push-right:after {
+            font-family: Muiicons;
+            font-size: inherit;
+            line-height: 1;
+            position: absolute;
+            top: auto;
+            display: inline-block;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+            text-decoration: none;
+            color: #bbb;
+            -webkit-font-smoothing: antialiased;
+        }
+		
+    </style>
+</head>
+
+<body class="Lawsearch Lawask Myinfo-viprenzhen">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+        </div>
+        <h2>我要咨询</h2>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class="Conter idx-band5 WoYaoZiXun LawbuyFaBu" id="app" v-cloak>
+        <div class="newsBox page-slideright">
+            <div id="newCase" class="mui-control-content mui-active">
+            <!--    <section>
+                    <div class="mui-input-row">
+                        <label>咨询标题：</label>
+                        <input type="text" class="mui-input-clear" placeholder="请输入咨询问题标题（5-100个字符）" v-model.trim="title">
+                    </div>
+                </section>
+                <section> 
+                   <div class="mui-input-row">
+                        <label>咨询详情：</label>
+                    </div>
+                    <div class="mui-input-row" style="height:5rem">
+                        <textarea style="height:5rem" class="mui-input-clear" v-model.trim="adviceContent"></textarea>
+                    </div>
+                </section> -->
+				<section>
+				    <div>
+				        <label>咨询标题:</label>
+				    </div>
+				    <div class="mui-input-row">
+				        <input type="text" class="mui-input-clear" minlength="5" maxlength="30" placeholder="请输入咨询问题标题（5-100个字符）" v-model.trim="title">
+				    </div>
+				</section>
+				<section>
+				    <div>
+				        <label>咨询详情:</label>
+				    </div>
+				    <div class="mui-input-row" style="height:5rem">
+				        <textarea type="text" class="mui-input-clear" placeholder="请尽量完整描述您的诉求或纠纷产生的经过，方便咨询师在充分了解案情的情况下为您作答。" v-model.trim="adviceContent"></textarea>
+				    </div>
+				</section>
+                <!-- <input type="file" id="myFile1" />
+                <img src="" id="preview_img" width="400px" height="400px" alt=""> -->
+                <div class="uploadimgbox">
+                    <p>上传证据：</p>
+                    <div class="uploadbox" style="width:30%">
+                        <van-uploader :after-read="onRead">
+                            <div class="selectphoto">
+                                <img :src="workImg1">
+                            </div>
+                        </van-uploader>
+                    </div>
+                    <div class="uploadbox">
+                        <van-uploader :after-read="onRead1">
+                            <div class="selectphoto">
+                                <img :src="workImg2">
+                            </div>
+                        </van-uploader>
+                    </div>
+                    <div class="uploadbox">
+                        <van-uploader :after-read="onRead2">
+                            <div class="selectphoto">
+                                <img :src="workImg3">
+                            </div>
+                        </van-uploader>
+                    </div>
+                </div>
+                <div class="selectList">
+                    <div class="selectrow form-control  mui-navigate-right" id="department">
+                        <span>请选择类型</span>
+                        <select name="" v-model="caseId">
+                            <option v-for="(item, index) in caseList" :key="index" :value="item.caseId" :selected="index == 0">
+                                {{item.caseName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="selectrow form-control  mui-navigate-right">
+                        <span>请选择赏金</span>
+                        <select class="form-control" autocomplete="off" v-model="reward" data-rule="赏金:required">
+                            <option v-if="adviceCount.freeNum>0" selected="selected" value="0">0元</option>
+                            <option selected="selected"  value="20">20元</option>
+                            <option value="30">30元</option>
+                            <option value="50">50元</option>
+                            <option value="100">100元</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="redfont">{{adviceCount.responseString}}</p>
+
+            </div>
+            <!-- <input type="button" class="btn" id="Nextstep" value="发布" @click="saveFn" /> -->
+			<div class="zixun-btn">
+				<div   class="news-tool" @click="saveFn" >发布 </div>
+			</div>
+        </div>
+    </div>
+    </div> 
+    <!--主体 end-->
+
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="vue/vant-min.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/WoYaoZiXun.js"></script>
+</body>
+
+</html> 

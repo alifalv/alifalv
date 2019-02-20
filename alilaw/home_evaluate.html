@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 个人评价</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/home.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="home_header" type="text/html" src="../tmpl/home_header.html"></script>
+        </div>
+    </header>
+    <div class="ui-content ui-about-wrapper" style="background: url('../img/home-top.png');padding: 200px 0;">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+    <div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-bg-white">
+        <div class="container ">
+            <div class="ui-padding-b-no">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <script id="homeAboutTmpl" type="text/html">
+                            <div class="ui-home-center">
+                                <div class="ui-home-center-title">
+                                    <h4>个人简介</h4>
+                                </div>
+                                <div class="ui-home-evaluate ui-home-evaluation ui-margin-t-40" style="padding:0px">
+                                    <div class="row ui-padding-lr-10 ui-color-darkgray ui-home-center-evaluate">
+                                        <div class="col-xs-3"><span class="ui-color-gray">法律水平：</span>{{data.levelScore || '0'}}</div>
+                                        <div class="col-xs-3"><span class="ui-color-gray">服务态度：</span>{{data.attitudeScore || '0'}}</div>
+                                        <div class="col-xs-3"><span class="ui-color-gray">社会资源：</span>{{data.sourceScore || '0'}}</div>
+                                        <div class="col-xs-3"><span class="ui-color-gray">收费标准：</span>{{data.chargeScore || '0'}}</div>
+                                        <div class="col-xs-3 ui-margin-t-13"><span class="ui-color-gray">解答咨询：</span>{{data.complateAdviceNum || '0'}}次</div>
+                                        <div class="col-xs-3 ui-margin-t-13"><span class="ui-color-gray">代写文书：</span>{{data.makeNum || '0'}}次</div>
+                                        <div class="col-xs-3 ui-margin-t-13"><span class="ui-color-gray">接收委托：</span>{{data.entrustNum || '0'}}人</div>
+                                    </div>
+                                </div>
+                                <div class="row ui-padding-lr-10 ui-color-darkgray ui-margin-t-40">
+                                    <a class="col-xs-3 btn btn-default ui-a-lightblue" href="user_consult.html">全部（<span class="ui-color-blue2">{{data.goodNum || '无'}}</span>）</a>
+                                    <a class="col-xs-3 btn btn-default ui-a-lightblue" href="user_consult.html">好评（<span class="ui-color-blue2">{{data.goodNum || '无'}}</span>）</a>
+                                    <a class="col-xs-3 btn btn-default ui-a-lightblue" href="user_consult.html">中评（<span class="ui-color-blue2">{{data.middleNum || '无'}}</span>）</a>
+                                    <a class="col-xs-3 btn btn-default ui-a-lightblue" href="user_consult.html">差评（<span class="ui-color-blue2">{{data.badNum || '无'}}</span>）</a>
+                                </div>
+                                <div class="ui-home-evaluation col-xs-12" style="padding:0px">
+                                    <div class="ui-margin-t-25">
+                                        <div class="col-xs-12 ui-margin-l-54">
+                                            <p class="ui-color-gray ui_p_left">{{data.realName || data.userName}}</p>
+                                            <p class="ui-color-gray ui_p_left ui-margin-l-36">{{data.realName || data.userName}}</p>
+                                            <p class="ui-color-gray ui_p_left ui_p_ul" style="margin-left:20px">{{data.workAddress || '暂未填写'}}</p>
+                                            <p class="ui-color-gray ui_p_left ui_p_ul">{{data.registerTime}}</p>
+                                        </div>
+                                        <div class="col-xs-12 ui-margin-l-54 ui-margin-t-6 ui-margin-b-20">
+                                            <p class="ui-bold-evaluate">
+                                                {{data.characterSign}}
+                                            </p>
+                                        </div>
+                                        <!-- {{if (getLength(rows) > 0)}} {{each rows value i}} -->
+                                        <!-- {{/each}} {{else}}
+                                        <div class="col-xs-12 ui-margin-l-54">
+                                            <p class="ui-color-gray ui_p_left">暂无评论</p>
+                                        </div>
+                                        {{/if}} -->
+                                    </div>
+                                </div>
+                            </div>
+                        </script>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <div>
+                            <script class="home_right" type="text/html" src="../tmpl/homeRight.html"></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="userReplyTmpl">
+        {{if (getLength(data) > 0 && !error)}} {{each data}} {{if ($index
+        < 3)}} <div class="col-xs-4 ui-padding-lr-no ui-border-1 ui-margin-t-17">
+            <div class="ui-padding-10 ui-color-gray2">
+                <div>{{$value.realName}}</div>
+                <div>{{$value.evaluateldContent}}</div>
+                <div>{{$value.evaluateTime}}</div>
+            </div>
+            </div>
+            {{/if}} {{/each}} {{else}}
+            <div class="col-xs-12 ui-padding-lr-no ui-border-1 ui-margin-t-17">
+                <div class="ui-padding-10 ui-color-gray2">
+                    <div>{{error || '暂无评价'}}</div>
+                </div>
+            </div>
+            {{/if}}
+    </script>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html" data-color="black"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>

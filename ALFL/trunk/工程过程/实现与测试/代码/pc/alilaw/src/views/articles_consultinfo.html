@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 法律咨询 - 咨询问题详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+
+    <div class="ui-content ui-content-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <dl class="ui-breadcrumb">
+                        <dt>当前位置：</dt>
+                        <dd><a href="index.html">首页</a></dd>
+                        <dd><a href="lawconsult.html">法律咨询</a></dd>
+                        <dd>咨询问题详情</dd>
+                    </dl>
+                </div>
+                <div class="col-xs-9">
+                    <div class="ui-article">
+                        <div id="activeInfo">
+                            <script id="activeInfoTmpl" type="text/html">
+                                <div class="ui-article-top">
+                                    <h3>{{data.title || '无标题'}}</h3>
+                                    <div>
+                                        <div class="ui-left ui-size-12 ui-color-gray ui-inline-block"><span class="ui-padding-r-10">来自：{{data.userName || '无'}}</span> | <span class="ui-margin-l-10">咨询类型：{{data.caseTypeName}}</span></div>
+                                        <ul class="ui-navspace ui-right">
+                                            <li><i class="iconfont icon-newshang ui-color-lightblue ui-size-14"></i>赏金：{{data.reward}}元</li>
+                                            <li><i class="iconfont icon-shijian ui-color-lightblue ui-size-14"></i>{{data.sendTime}}</li>
+                                            <li><i class="iconfont icon-yonghu ui-color-lightblue ui-size-14"></i><span class="ui-color-red">{{data.counts}}</span>位咨询师回复</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="ui-article-content">
+                                    <div class="ui-article-text">
+                                        {{@ data.adviceContent}}
+                                    </div>
+                                    <div class="ui-border-b-1"><span class="ui-bold ui-size-16 ui-padding-tb-10 ui-inline-block">相关证据</span> <span class="ui-right ui-color-gray ui-size-12 ui-padding-tb-10">点击可查看大图</span></div>
+                                    <div class="ui-article-text">
+
+                                        <ul class="ui-imglist ui-imglist-3" id="img_viewer">
+                                            {{@ data.imgs | createImgs}}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="ui-article-bottom">
+                                    <div class="ui-article-page">
+                                        {{if (data.lastTitle) }}
+                                        <p>上一条：<a href="articles_consultinfo.html?articleId={{data.lastAdviceId}}">{{data.lastTitle}}</a></p>{{/if}} {{if (data.nextTitle) }}
+                                        <p>下一条：<a href="articles_consultinfo.html?articleId={{data.nextAdviceId}}">{{data.nextTitle}}</a></p>{{/if}}
+                                    </div>
+                                </div>
+                            </script>
+                        </div>
+
+                        <div class="ui-article-comment">
+                            <div>
+                                <div class="js-first-replybox"></div>
+
+                                <!--<ul class="media-list">-->
+                                <!--<li class="media ui-padding-tb-30 ui-border-b-1 ">-->
+                                <!--<div class="media-left">-->
+                                <!--<a href="#" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">-->
+                                <!--<img class="media-object ui-img-fill" src="../img/defalut-head.png" alt="...">-->
+                                <!--</a>-->
+                                <!--</div>-->
+                                <!--<div class="media-body">-->
+                                <!--<textarea class="form-control" rows="4" placeholder="我来解答（对于用户咨询的法律疑问， 咨询师解答字数建议在50个字符以上）"></textarea>-->
+                                <!--<div class="ui-color-gray ui-margin-t-17"><i class="iconfont icon-deng ui-color-lightblue ui-margin-r-10"></i>只限咨询师解答，解答之前请先登录-->
+                                <!--<button class="btn btn-sm ui-btn-red ui-right ui-padding-lr-24">提交评论</button>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+
+                                <div id="commonReplyList">
+                                    <ul class="media-list" pagination="mask">
+                                        <script id="commonReplyListTmpl" type="text/html">
+                                            {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                            <li class="media ui-padding-tb-30">
+                                                <div class="media-left">
+                                                    <a href="{{if (value.userType == '2')}}home_index.html?userId={{value.userId}}{{else}}javascript:void(0);{{/if}}" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                                                        <img class="media-object ui-img-fill img-circle" src="{{value.userImg | createImgUrl}}" alt="...">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading ui-line-height-40 ui-size-16">{{value.userName || value.nickName}} {{if (value.is_contract == '1')}}
+                                                        <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                        <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                        <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                        <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (value.isAuthentication == '2')}}
+                                                        <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}}
+                                                    </h4>
+                                                    <p class="ui-padding-b-30 ui-line-height-25">{{value.replyContent}}</p>
+                                                    <div class="ui-color-gray ui-block"><span class="ui-left">{{value.replyTime | dateDiff}}</span>
+                                                        <ul class="ui-navspace ui-right">
+                                                            <li><i class="j-like-btn ui-pointer iconfont icon-zan" data-replyid="{{value.replyId}}"></i><span>{{value.likeNum || 0}}</span></li>
+                                                            <li><i class="js-replybox-btn ui-pointer iconfont icon-pinglun" data-replyid="{{value.replyId}}" data-userid="{{value.userId}}"></i><span>{{value.replyNum || 0}}</span></li>
+                                                            <li><i class="iconfont icon-shang ui-pointer j-reward-btn" data-userid="{{value.userId}}" data-replyid="{{value.replyId}}"></i><span>{{value.rewardNum || 0}}</span></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="js-replybox"></div>
+                                                    <div class="js-replycontent">
+                                                        {{if(value.nextReplyData) }} {{each value.nextReplyData nextValue i}}
+                                                        <div class="media ui-padding-tb-30 ui-bg-bluegray ui-padding-lr-50">
+                                                            <!--<div class="media-left">-->
+                                                            <!--<a href="#" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">-->
+                                                            <!--<img class="media-object ui-img-fill" src="../img/defalut-head.png" alt="...">-->
+                                                            <!--</a>-->
+                                                            <!--</div>-->
+                                                            <div class="media-body">
+                                                                <h4 class="media-heading ui-line-height-40 ui-size-16">{{nextValue.userName || nextValue.nickName}} {{if (nextValue.is_contract == '1')}}
+                                                                    <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                                    <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                                    <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                                    <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (nextValue.isAuthentication == '2')}}
+                                                                    <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}} 回复： @ {{value.userName}}
+                                                                </h4>
+
+                                                                <!--<h4 class="media-heading ui-line-height-40 ui-size-16">A先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i></h4>-->
+                                                                <p class="ui-padding-b-30 ui-line-height-25">{{nextValue.replyContent}}</p>
+                                                                <div class="ui-color-gray ui-block"><span class="ui-left">{{nextValue.replyTime | dateDiff}}</span>
+                                                                    <!--<ul class="ui-navspace ui-right">-->
+                                                                    <!--<li><i class="j-like-btn ui-pointer iconfont icon-zan"></i>{{nextValue.likeNum}}</li>-->
+                                                                    <!--<li><i class="js-replybox-btn iconfont icon-pinglun" data-info="{{nextValue | toJSON}}"></i>10</li>-->
+                                                                    <!--<li><i class="iconfont icon-shang"></i>10</li>-->
+                                                                    <!--</ul>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{/each}} {{/if}}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/each}} {{else}}
+                                            <li class="text-center ui-color-gray">{{error || '暂无留言'}}</li>
+                                            {{/if}}
+                                        </script>
+                                        <!--<li class="media ui-padding-tb-30">-->
+                                        <!--<div class="media-left">-->
+                                        <!--<a href="#" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">-->
+                                        <!--<img class="media-object ui-img-fill" src="../img/defalut-head.png" alt="...">-->
+                                        <!--</a>-->
+                                        <!--</div>-->
+                                        <!--<div class="media-body">-->
+                                        <!--<h4 class="media-heading ui-line-height-40 ui-size-16">胡先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i></h4>-->
+                                        <!--<p class="ui-padding-b-30 ui-line-height-25">如果你已经不打算将合同继续进行下去的话，那你可以起诉对方违约，因为该房屋的产权存在重大瑕疵，导致合同目-->
+                                        <!--的无法实现，你可以先致律师函给房东与中介，在致函后，可以去法院提起民事诉讼，请求房东和中介退还你所付费-->
+                                        <!--用，承担违约责任，并且赔偿你因购房产生的损失。</p>-->
+                                        <!--<div class="ui-color-gray ui-block"><span class="ui-left">2018-05-15 11:11:11</span>-->
+                                        <!--<ul class="ui-navspace ui-right">-->
+                                        <!--<li><i class="j-like-btn ui-pointer iconfont icon-zan"></i>10</li>-->
+                                        <!--<li><i class="iconfont icon-pinglun"></i>10</li>-->
+                                        <!--<li><i class="iconfont icon-shang"></i>10</li>-->
+                                        <!--</ul>-->
+                                        <!--</div>-->
+                                        <!--<div class="media ui-padding-tb-30 ui-bg-bluegray ui-padding-lr-50">-->
+                                        <!--&lt;!&ndash;<div class="media-left">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<a href="#" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<img class="media-object ui-img-fill" src="../img/defalut-head.png" alt="...">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                        <!--<div class="media-body">-->
+                                        <!--<h4 class="media-heading ui-line-height-40 ui-size-16">A先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i>回复： @ 胡先生</h4>-->
+
+                                        <!--&lt;!&ndash;<h4 class="media-heading ui-line-height-40 ui-size-16">A先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i></h4>&ndash;&gt;-->
+                                        <!--<p class="ui-padding-b-30 ui-line-height-25">如果你已经不打算将合同继续进行下去的话，那你可以起诉对方违约，因为该房屋的产权存在重大瑕疵，导致合同目-->
+                                        <!--的无法实现，你可以先致律师函给房东与中介，在致函后，可以去法院提起民事诉讼，请求房东和中介退还你所付费-->
+                                        <!--用，承担违约责任，并且赔偿你因购房产生的损失。</p>-->
+                                        <!--<div class="ui-color-gray ui-block"><span class="ui-left">8分钟前</span>-->
+                                        <!--<ul class="ui-navspace ui-right">-->
+                                        <!--<li><i class="j-like-btn ui-pointer iconfont icon-zan"></i>10</li>-->
+                                        <!--<li><i class="iconfont icon-pinglun"></i>10</li>-->
+                                        <!--<li><i class="iconfont icon-shang"></i>10</li>-->
+                                        <!--</ul>-->
+                                        <!--</div>-->
+
+                                        <!--<div class="media ui-padding-tb-30 ui-bg-bluegray">-->
+                                        <!--&lt;!&ndash;<div class="media-left">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<a href="#" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<img class="media-object ui-img-fill" src="../img/defalut-head.png" alt="...">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                        <!--<div class="media-body">-->
+                                        <!--<h4 class="media-heading ui-line-height-40 ui-size-16">胡先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i>回复： @ A先生</h4>-->
+                                        <!--<p class="ui-padding-b-30 ui-line-height-25">如果你已经不打算将合同继续进行下去的话，那你可以起诉对方违约，因为该房屋的产权存在重大瑕疵，导致合同目-->
+                                        <!--的无法实现，你可以先致律师函给房东与中介，在致函后，可以去法院提起民事诉讼，请求房东和中介退还你所付费-->
+                                        <!--用，承担违约责任，并且赔偿你因购房产生的损失。</p>-->
+                                        <!--<div class="ui-color-gray ui-block"><span class="ui-left">8分钟前</span>-->
+                                        <!--<ul class="ui-navspace ui-right">-->
+                                        <!--<li><i class="j-like-btn iconfont icon-zan"></i>10</li>-->
+                                        <!--<li><i class="iconfont icon-pinglun"></i>10</li>-->
+                                        <!--<li><i class="iconfont icon-shang"></i>10</li>-->
+                                        <!--</ul>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</li>-->
+                                    </ul>
+                                    <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="ui-panel">
+                        <div class="ui-panel-content ui-padding-t-10">
+                            <ul class="ui-tool-list">
+                                <li><a href="user_consult.html" title="免费法律咨询"><i class="icon-mfflzx"></i><p class="ui-size-16">免费法律咨询<i class="icon-hot"></i></p><p class="ui-color-gray">有疑问？马上咨询吧</p></a></li>
+                                <li><a href="user_case_entrusted.html" title=""><i class="icon-fbay"></i><p class="ui-size-16">发布案源</p><p class="ui-color-gray">我要打官司</p></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ui-panel">
+                        <script ad="cjwtxq_right" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <!-- 律师推荐 -->
+                    <div class="ui-panel" id="cityCounselorRecommendList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray"><span class="j-citname"></span>律师推荐</span>
+                        </div>
+                        <div class="ui-panel-content">
+                            <script id="cityCounselorRecommendListTmpl" type="text/html">
+                                {{if (getLength(data) > 0)}} {{each data value i}}
+                                <div class="ui-law-recommended">
+                                    <a href="home_index.html?userId={{value.userId}}">
+                                        <div class="ui-law-recommended-head">
+                                            <img src="{{value.userImg | createImgUrl}}" alt="" class="img-responsive ui-img-height-fill">
+                                        </div>
+                                        <div class="ui-law-recommended-info">
+                                            <h4 class="ui-law-recommended-name">{{value.userName}} {{if (value.is_contract == '1')}}
+                                                <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (value.isAuthentication == '2')}}
+                                                <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}}
+                                            </h4>
+                                            <p class="ui-law-recommended-phone">{{value.mobile}}</p>
+                                            <p class=" ui-cut-2" title="擅长：{{each value.specialityName sn i}}{{i == 0 ? '' : '，'}}{{sn.typeName}}{{/each}}">擅长： {{each value.specialityName sn i}} {{i == 0 ? '' : '，'}}{{sn.typeName}} {{/each}}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                {{/each}} {{else}}
+                                <div>
+                                    <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                </div>
+                                {{/if}}
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+
+    <script type="text/html" id="replyBoxTmpl">
+        <form id="reply_form" novalidate>
+            <input type="hidden" name="upId" value="{{upId}}">
+            <ul class="media-list">
+                <li class="media ui-padding-tb-30 ui-border-b-1 ">
+                    <div class="media-left">
+                        <a href="javascript:void(0);" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                            <img class="media-object ui-img-fill img-circle" src="{{userImg | createImgUrl}}" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <textarea name="replyContent" class="form-control" rows="4" placeholder="我来评论" data-rule="评论:required"></textarea>
+                        <div class="ui-color-gray ui-margin-t-17">
+                            {{if(isLogin != true)}}
+                            <i class="iconfont icon-deng ui-color-lightblue ui-margin-r-10"></i>只限于认证咨询师，解答之前请先<a class="ui-size-12 ui-color-blue" href="login.html">登录</a> {{else}} {{if (isNotAuthentication == true)}}
+                            <i class="iconfont icon-deng ui-color-lightblue ui-margin-r-10"></i>只限于认证咨询师，解答之前请先<a class="ui-size-12 ui-color-blue" href="personal_vipinfo_counselor.html">认证</a> {{/if}} {{/if}}
+                            <button type="submit" class="js-replysubmit-btn btn btn-sm ui-btn-red ui-right ui-padding-lr-24">提交评论</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </script>
+
+    <script type="text/html" id="replycontentTmpl">
+        <div class="media ui-padding-tb-30 ui-bg-bluegray ui-padding-lr-50">
+            <div class="media-body">
+                <h4 class="media-heading ui-line-height-40 ui-size-16">{{data.userName || data.nickName}} {{if (data.is_contract == '1')}}
+                    <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                    <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                    <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                    <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (data.isAuthentication == '2')}}
+                    <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}} 回复： @ {{pUserName}}
+                </h4>
+                <p class="ui-padding-b-30 ui-line-height-25">{{data.replyContent}}</p>
+                <div class="ui-color-gray ui-block"><span class="ui-left">{{data.replyTime | dateDiff}}</span>
+                    <!--<ul class="ui-navspace ui-right">-->
+                    <!--<li><i class="j-like-btn ui-pointer iconfont icon-zan"></i>{{data.likeNum}}</li>-->
+                    <!--<li><i class="js-replybox-btn iconfont icon-pinglun" data-info="{{data | toJSON}}"></i>10</li>-->
+                    <!--<li><i class="iconfont icon-shang"></i>10</li>-->
+                    <!--</ul>-->
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="media ui-padding-tb-30">-->
+        <!--<div class="media-left">-->
+        <!--<a href="{{data.userId}}" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">-->
+        <!--<img class="media-object ui-img-fill" src="{{data.userImg | createImgUrl}}" alt="...">-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div class="media-body">-->
+        <!--<h4 class="media-heading ui-line-height-40 ui-size-16">胡先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i></h4>-->
+        <!--<p class="ui-padding-b-30 ui-line-height-25">{{data.replyContent}}</p>-->
+        <!--<div class="ui-color-gray">-->
+        <!--&lt;!&ndash;{{data.replyTime}}&ndash;&gt;-->
+        <!--&lt;!&ndash;<i class="js-replybox-btn iconfont icon-pinglun ui-color-pink ui-right ui-margin-lr-10 ui-size-20"></i>&ndash;&gt;-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="js-replybox"></div>&ndash;&gt;-->
+        <!--</div>-->
+        <!--</div>-->
+    </script>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

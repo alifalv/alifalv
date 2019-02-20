@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="MyZhaopin MyQiuzhi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>岗位详情</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="fonts/iconfont.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <style type="text/css">
+        .MyZhaopin .newsBox ul li {
+            padding: 0 1rem;
+            margin: 0 0 0.25rem;
+        }
+
+        .ui-right-btn{
+            position: absolute;
+            right: -.5rem;
+            top: 0.7rem;
+            font-size: .8rem;
+        }
+        .MyQiuzhi .newsBox ul li a .right .b p {
+            background: none;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask MyQiuzhi">
+<div id="app">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-closeempty" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+        </div>
+        <div class="goback msgcenter" v-if="isShowStar == true">
+            <a href="javascript:void(0);" @click="juBao"><img src="images/myinfo/123123.png" alt="" /></a>
+        </div>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class=" idx-band5 page-slideright ui-bg-gray">
+
+            <div class="newsBox page-slideright">
+                <div id="newAsk" class="mui-control-content mui-active">
+                    <ul>
+                        <li >
+                            <a >
+                                <div class="left"></div>
+                                <div class="right">
+                                    <div class="t">
+                                        <h2>{{articleData.jobName}}</h2>
+                                        <!-- <span class="deletebtn"></span> -->
+                                    </div>
+                                    <div class="c">
+                                        <p class="ui-color-pink">{{articleData.salName}}</p>
+                                        <p>{{articleData.provinceName}} {{articleData.cityName}}</p>
+                                        <p>{{articleData.sendTime | subDay}}</p>
+                                    </div>
+                                    <div class="b">
+                                        <p style="padding-left: 0">招聘人数： | 要求学历：{{articleData.qualificationName}} | 经验要求：{{articleData.workExperience}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        <div class="ui-box" style="padding: .25rem 1rem" v-if="articleData.userId!=0">
+            <a :href="'QiYe.html?userId=' + articleData.userId">
+                <div class="ui-box-content">
+                    <div><label><i class="ui-myqiuzhi4"></i></label><h2>{{articleData.companyName}}</h2></div>
+                    <div><label></label><span>规模：{{articleData.companySize}}</span></div>
+                    <i class="iconfont icon-right ui-right-btn"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="ui-box">
+            <!--<div class="ui-box-content">-->
+                <!--<div><label>岗位要求：</label></div>-->
+                <!--<div><span></span></div>-->
+            <!--</div>-->
+            <div class="ui-box-content">
+                <div><label>岗位职责：</label></div>
+                <div><span>{{articleData.jobDesc}}</span></div>
+            </div>
+        </div>
+
+        <div class="ui-box">
+            <div class="ui-box-content">
+                <div><label>联系人：</label><span>{{articleData.contactName}}</span></div>
+                <div><label>联系电话：</label><span>{{articleData.contactMobile}}</span></div>
+                <div><label>电子邮箱：</label><span>{{articleData.email}}</span></div>
+            </div>
+        </div>
+
+            <div class="backtop">
+
+            </div>
+        </div>
+
+        <div class="footer" v-if="isShowStar == true">
+            <div class="mui-content ui-margin-t-2 ">
+                <div class="mui-row ">
+                    <div class="mui-col-xs-3 ui-text-center" @click="star">
+                        <i class="mui-icon mui-icon-star ui-color-pink"></i>
+                        <span v-if="isStared == true" class="mui-tab-label">已收藏</span>
+                        <span v-else-if="isStared != true" class="mui-tab-label">收藏</span>
+                    </div>
+                    <div class="mui-col-xs-9 ui-text-center">
+                        <button type="button" class="mui-btn mui-btn-danger ui-margin-t-3 ui-width-90p" @click="sendJob">申请此职位</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--主体 end-->
+
+    <script src="vue/vue.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="js/share.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <!--<script src="vue/axios.min.js"></script>-->
+    <!--<script src="vue/httpVueLoader.js"></script>-->
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/GangWei.js"></script>
+</body>
+
+</html>

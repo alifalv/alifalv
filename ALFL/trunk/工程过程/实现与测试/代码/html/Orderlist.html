@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="OrderList">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>订单中心</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="css/common.css">
+		<link type="text/css" rel="stylesheet" href="css/myorder.css">
+		<link rel="stylesheet" href="css/main.css" />
+
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<style>
+			.mui-control-content {
+				height: -webkit-fill-available;
+				height: -moz-fill-available;
+				height: -moz-available;    /* FireFox目前这个生效 */
+				height: fill-available;;
+			}
+		</style>
+	</head>
+
+	<body class="OrderList Lawsearch Lawask MyZhaopin">
+	<div  id="app">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>我的订单</h2>
+			<div class="goback msgcenter">
+				<a href=""><img src="images/myinfo/order-msg.png" alt="" /></a>
+			</div>
+		</div>
+		<!--公共头部 end-->
+
+		<div class="Conter idx-band5">
+			<div class="newsBox-tit flex_Horizontal mui-segmented-control">
+				<a :class="(activeHash == 'quanbu' || activeHash == '') ? 'mui-control-item mui-active' : 'mui-control-item'"  class="mui-control-item" href="#quanbu">全部</a>
+				<a :class="activeHash == 'dfk' ? 'mui-control-item mui-active' : 'mui-control-item'" href="#dfk">待付款</a>
+				<!--<a class="mui-control-item" href="#dwc">待完成</a>-->
+				<a :class="activeHash == 'dpj' ? 'mui-control-item mui-active' : 'mui-control-item'" href="#dpj">待评价</a>
+				<a :class="activeHash == 'sstk' ? 'mui-control-item mui-active' : 'mui-control-item'" href="#sstk">申诉/退款</a>
+			</div>
+			<div class="zyhd">
+				<div class="newsBox page-slideright OrderList">
+					<div id="quanbu" :class="(activeHash == 'quanbu' || activeHash == '') ? 'mui-control-content orderConter mui-active' : 'mui-control-content orderConter'" >
+						<div id="list1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul>
+									<li style="margin: 0" v-for="(value, index) in list1List" :key="index" :href="value.sourceType | getArticleUrlByBusinessType('order', value.connectionId, value.businessOrder)">
+										<div class="top">
+											<p class="order-time"><span>{{value.orderTime | subDay}} </span><span>订单号：{{value.businessOrder}}</span></p>
+											<p class="order-name">{{value.orderName}}/{{value.userName}}{{value.userId}}+【{{value.businessType}}】</p>
+											<p class="order-price"><span>数量: {{value.orderNum}}</span><span>总价: ￥{{value.totalPrice}}</span></p>
+											<p class="order-num"><span>单价: ￥{{value.orderPrice}}</span>
+												<span class="order-status">{{value.statusName}}</span>
+											</p>
+										</div>
+										<div class="bottom">
+											<p>咨询师：
+												<span v-if="value.businessType != '会员充值'">{{value.remark}}</span>
+												<span v-else-if="value.businessType == '会员充值'">阿里法律</span>
+											</p>
+											<div class="btngroup">
+												<span v-if="value.butA == '去支付'" class="order-btn-topay show j-btn-zhifu" :data-businessorder="value.businessOrder" :data-userid="value.userId">去支付</span>
+												<span v-else-if="value.butA == '评价'" class="order-btn-surepayed show j-btn-pingjia" :data-businessorder="value.businessOrder" :data-userid="value.userId">评价</span>
+												<span v-else-if="value.butA == '确认完成'" class="order-btn-surepayed show j-btn-wancheng" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认完成</span>
+												<span v-else-if="value.butA == '确认收货'" class="order-btn-surepayed show j-btn-shouhuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认收货</span>
+												<span v-else-if="value.butA == '确认发货'" class="order-btn-surepayed show j-btn-fahuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认发货</span>
+
+												<span v-if="value.butB == '取消订单'" class="order-btn-cancle show j-btn-quxiao" :data-businessorder="value.businessOrder" :data-userid="value.userId">取消订单</span>
+												<span v-else-if="value.butB == '订单有异议'" class="order-btn-argu show  j-btn-yiyi" :data-businessorder="value.businessOrder" :data-userid="value.userId">订单有异议</span>
+												<span v-else class="order-btn-argu">{{value.butB}}</span>
+											</div>
+										</div>
+									</li>
+									<li v-if="list1IsNot" class="ui-nolist">暂无数据</li>
+								</ul>
+							</div>
+				<!--全部结束-->
+						</div>
+					</div>
+
+					<!--待付款-->
+					<div id="dfk" :class="activeHash == 'dfk' ? 'mui-control-content orderConter mui-active' : 'mui-control-content orderConter'" >
+						<div id="list2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul>
+									<li style="margin: 0" v-for="(value, index) in list2List" :key="index" :href="value.sourceType | getArticleUrlByBusinessType('order', value.connectionId, value.businessOrder)">
+										<div class="top">
+											<p class="order-time"><span>{{value.orderTime | subDay}} </span><span>订单号：{{value.businessOrder}}</span></p>
+											<p class="order-name">{{value.orderName}}/{{value.userName}}{{value.userId}}+【{{value.businessType}}】</p>
+											<p class="order-price"><span>数量: {{value.orderNum}}</span><span>总价: ￥{{value.totalPrice}}</span></p>
+											<p class="order-num"><span>单价: ￥{{value.orderPrice}}</span>
+												<span class="order-status">{{value.statusName}}</span>
+											</p>
+										</div>
+										<div class="bottom">
+											<p>咨询师：
+												<span v-if="value.businessType != '会员充值'">{{value.remark}}</span>
+												<span v-else-if="value.businessType == '会员充值'">阿里法律</span>
+											</p>
+											<div class="btngroup">
+												<span v-if="value.butA == '去支付'" class="order-btn-topay show j-btn-zhifu" :data-businessorder="value.businessOrder" :data-userid="value.userId">去支付</span>
+												<span v-else-if="value.butA == '评价'" class="order-btn-surepayed show j-btn-pingjia" :data-businessorder="value.businessOrder" :data-userid="value.userId">评价</span>
+												<span v-else-if="value.butA == '确认完成'" class="order-btn-surepayed show j-btn-wancheng" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认完成</span>
+												<span v-else-if="value.butA == '确认收货'" class="order-btn-surepayed show j-btn-shouhuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认收货</span>
+												<span v-else-if="value.butA == '确认发货'" class="order-btn-surepayed show j-btn-fahuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认发货</span>
+
+												<span v-if="value.butB == '取消订单'" class="order-btn-cancle show j-btn-quxiao" :data-businessorder="value.businessOrder" :data-userid="value.userId">取消订单</span>
+												<span v-else-if="value.butB == '订单有异议'" class="order-btn-argu show  j-btn-yiyi" :data-businessorder="value.businessOrder" :data-userid="value.userId">订单有异议</span>
+												<span v-else class="order-btn-argu">{{value.butB}}</span>
+											</div>
+										</div>
+									</li>
+									<li v-if="list2IsNot" class="ui-nolist">暂无数据</li>
+								</ul>
+
+							</div>
+							<!--全部结束-->
+						</div>
+					</div>
+					<!--待付款结束-->
+
+					<!--待完成-->
+					<div id="dwc" :class="activeHash == 'dwc' ? 'mui-control-content orderConter mui-active' : 'mui-control-content orderConter'" >
+						<div id="list3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul>
+									<li style="margin: 0" v-for="(value, index) in list3List" :key="index" :href="value.sourceType | getArticleUrlByBusinessType('order', value.connectionId, value.businessOrder)">
+										<div class="top">
+											<p class="order-time"><span>{{value.orderTime | subDay}} </span><span>订单号：{{value.businessOrder}}</span></p>
+											<p class="order-name">{{value.orderName}}/{{value.userName}}{{value.userId}}+【{{value.businessType}}】</p>
+											<p class="order-price"><span>数量: {{value.orderNum}}</span><span>总价: ￥{{value.totalPrice}}</span></p>
+											<p class="order-num"><span>单价: ￥{{value.orderPrice}}</span>
+												<span class="order-status">{{value.statusName}}</span>
+											</p>
+										</div>
+										<div class="bottom">
+											<p>咨询师：
+												<span v-if="value.businessType != '会员充值'">{{value.remark}}</span>
+												<span v-else-if="value.businessType == '会员充值'">阿里法律</span>
+
+											</p>
+											<div class="btngroup">
+												<span v-if="value.butA == '去支付'" class="order-btn-topay show j-btn-zhifu" :data-businessorder="value.businessOrder" :data-userid="value.userId">去支付</span>
+												<span v-else-if="value.butA == '评价'" class="order-btn-surepayed show j-btn-pingjia" :data-businessorder="value.businessOrder" :data-userid="value.userId">评价</span>
+												<span v-else-if="value.butA == '确认完成'" class="order-btn-surepayed show j-btn-wancheng" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认完成</span>
+												<span v-else-if="value.butA == '确认收货'" class="order-btn-surepayed show j-btn-shouhuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认收货</span>
+												<span v-else-if="value.butA == '确认发货'" class="order-btn-surepayed show j-btn-fahuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认发货</span>
+
+												<span v-if="value.butB == '取消订单'" class="order-btn-cancle show j-btn-quxiao" :data-businessorder="value.businessOrder" :data-userid="value.userId">取消订单</span>
+												<span v-else-if="value.butB == '订单有异议'" class="order-btn-argu show  j-btn-yiyi" :data-businessorder="value.businessOrder" :data-userid="value.userId">订单有异议</span>
+												<span v-else class="order-btn-argu">{{value.butB}}</span>
+											</div>
+										</div>
+									</li>
+									<li v-if="list3IsNot" class="ui-nolist">暂无数据</li>
+
+								</ul>
+							</div>
+							<!--全部结束-->
+						</div>
+					</div>
+					<!--待完成结束-->
+
+					<!--待评价-->
+					<div id="dpj" :class="activeHash == 'dpj' ? 'mui-control-content orderConter mui-active' : 'mui-control-content orderConter'" >
+						<div id="list4" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul>
+									<li style="margin: 0" v-for="(value, index) in list4List" :key="index" :href="value.sourceType | getArticleUrlByBusinessType('order', value.connectionId, value.businessOrder)">
+										<div class="top">
+											<p class="order-time"><span>{{value.orderTime | subDay}} </span><span>订单号：{{value.businessOrder}}</span></p>
+											<p class="order-name">{{value.orderName}}/{{value.userName}}{{value.userId}}+【{{value.businessType}}】</p>
+											<p class="order-price"><span>数量: {{value.orderNum}}</span><span>总价: ￥{{value.totalPrice}}</span></p>
+											<p class="order-num"><span>单价: ￥{{value.orderPrice}}</span>
+												<span class="order-status">{{value.statusName}}</span>
+											</p>
+										</div>
+										<div class="bottom">
+											<p>咨询师：
+												<span v-if="value.businessType != '会员充值'">{{value.remark}}</span>
+												<span v-else-if="value.businessType == '会员充值'">阿里法律</span>
+
+											</p>
+											<div class="btngroup">
+												<span v-if="value.butA == '去支付'" class="order-btn-topay show j-btn-zhifu" :data-businessorder="value.businessOrder" :data-userid="value.userId">去支付</span>
+												<span v-else-if="value.butA == '评价'" class="order-btn-surepayed show j-btn-pingjia" :data-businessorder="value.businessOrder" :data-userid="value.userId">评价</span>
+												<span v-else-if="value.butA == '确认完成'" class="order-btn-surepayed show j-btn-wancheng" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认完成</span>
+												<span v-else-if="value.butA == '确认收货'" class="order-btn-surepayed show j-btn-shouhuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认收货</span>
+												<span v-else-if="value.butA == '确认发货'" class="order-btn-surepayed show j-btn-fahuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认发货</span>
+
+												<span v-if="value.butB == '取消订单'" class="order-btn-cancle show j-btn-quxiao" :data-businessorder="value.businessOrder" :data-userid="value.userId">取消订单</span>
+												<span v-else-if="value.butB == '订单有异议'" class="order-btn-argu show  j-btn-yiyi" :data-businessorder="value.businessOrder" :data-userid="value.userId">订单有异议</span>
+												<span v-else class="order-btn-argu">{{value.butB}}</span>
+											</div>
+										</div>
+									</li>
+									<li v-if="list4IsNot" class="ui-nolist">暂无数据</li>
+
+								</ul>
+							</div>
+							<!--全部结束-->
+						</div>
+					</div>
+
+					<!--申诉-->
+					<div id="sstk" :class="activeHash == 'sstk' ? 'mui-control-content orderConter mui-active' : 'mui-control-content orderConter'" >
+						<div id="list5" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul>
+									<li style="margin: 0" v-for="(value, index) in list5List" :key="index" :href="value.sourceType | getArticleUrlByBusinessType('order', value.connectionId, value.businessOrder)">
+										<div class="top">
+											<p class="order-time"><span>{{value.orderTime | subDay}} </span><span>订单号：{{value.businessOrder}}</span></p>
+											<p class="order-name">{{value.orderName}}/{{value.userName}}{{value.userId}}+【{{value.businessType}}】</p>
+											<p class="order-price"><span>数量: {{value.orderNum}}</span><span>总价: ￥{{value.totalPrice}}</span></p>
+											<p class="order-num"><span>单价: ￥{{value.orderPrice}}</span>
+												<span class="order-status">{{value.statusName}}</span>
+											</p>
+										</div>
+										<div class="bottom">
+											<p>咨询师：
+												<span v-if="value.businessType != '会员充值'">{{value.remark}}</span>
+												<span v-else-if="value.businessType == '会员充值'">阿里法律</span>
+
+											</p>
+											<div class="btngroup">
+												<span v-if="value.butA == '去支付'" class="order-btn-topay show j-btn-zhifu" :data-businessorder="value.businessOrder" :data-userid="value.userId">去支付</span>
+												<span v-else-if="value.butA == '评价'" class="order-btn-surepayed show j-btn-pingjia" :data-businessorder="value.businessOrder" :data-userid="value.userId">评价</span>
+												<span v-else-if="value.butA == '确认完成'" class="order-btn-surepayed show j-btn-wancheng" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认完成</span>
+												<span v-else-if="value.butA == '确认收货'" class="order-btn-surepayed show j-btn-shouhuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认收货</span>
+												<span v-else-if="value.butA == '确认发货'" class="order-btn-surepayed show j-btn-fahuo" :data-businessorder="value.businessOrder" :data-userid="value.userId">确认发货</span>
+
+												<span v-if="value.butB == '取消订单'" class="order-btn-cancle show j-btn-quxiao" :data-businessorder="value.businessOrder" :data-userid="value.userId">取消订单</span>
+												<span v-else-if="value.butB == '订单有异议'" class="order-btn-argu show  j-btn-yiyi" :data-businessorder="value.businessOrder" :data-userid="value.userId">订单有异议</span>
+												<span v-else class="order-btn-argu">{{value.butB}}</span>
+											</div>
+										</div>
+									</li>
+									<li v-if="list5IsNot" class="ui-nolist">暂无数据</li>
+								</ul>
+							</div>
+							<!--全部结束-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+	<script src="mui/mui.min.js"></script>
+	<script src="vue/vue.js"></script>
+	<script src="js/store.js"></script>
+	<script src="js/rest.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/ajax/commonfuc.js"></script>
+	<script src="js/mui.slideright.js"></script>
+	<script src="js/lib/Orderlist.js"></script>
+
+</html>

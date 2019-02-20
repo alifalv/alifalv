@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 人才招聘</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header"  type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+
+<div class="ui-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <dl class="ui-breadcrumb ui-content-row ui-padding-b-20">
+                    <dt>当前位置：</dt>
+                    <dd><a href="index.html">首页</a></dd>
+                    <dd>人才招聘</dd>
+                </dl>
+            </div>
+            <!-- 岗位搜索 -->
+            <div class="col-xs-6">
+                <div class="ui-seachpanel">
+                    <div class="ui-seachpanel-title">岗位搜索</div>
+                    <div class="ui-seachpanel-content">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="province_select" class="col-xs-offset-1 col-xs-2 control-label">工作地点</label>
+                                <div class="col-xs-4">
+                                    <select id="province_select" class="form-control" name="province">
+                                        <option value="">不限</option>
+                                        <script id="province_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option  value="{{value.provinceId}}" {{value.provinceId != selectedId ? '' : 'selected'}}>{{value.provinceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <select class="form-control" name="city">
+                                        <option value="">不限</option>
+                                        <script id="city_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option  value="{{value.cityId}}" {{value.cityId != selectedId ? '' : 'selected'}}>{{value.cityName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sal" class="col-xs-offset-1 col-xs-2 control-label ui-justify">薪金</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="sal" id="sal">
+                                        <option value="">不限</option>
+                                        <script id="salListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.salId}}" {{value.salId != selectedId ? '' : 'selected'}}>{{value.salName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="qualification" class="col-xs-offset-1 col-xs-2 control-label">学历要求</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="qualification" id="qualification">
+                                        <script id="educationListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.educationId}}" {{value.educationId != selectedId ? '' : 'selected'}}>{{value.educationName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="workExperience" class="col-xs-offset-1 col-xs-2 control-label">从业年限</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="workExperience" id="workExperience">
+                                        <script id="experienceListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.experienceId}}" {{value.experienceId != selectedId ? '' : 'selected'}}>{{value.experienceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="jobName" class="col-xs-offset-1 col-xs-2 control-label">岗位名称</label>
+                                <div class="col-xs-8">
+                                    <input name="jobName" class="form-control" type="text" id="jobName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyName" class="col-xs-offset-1 col-xs-2 control-label">公司名称</label>
+                                <div class="col-xs-8">
+                                    <input name="companyName" class="form-control" type="text" id="companyName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-offset-1 col-xs-6">
+                                    <a href="javascript:void(0);" id="search_job_btn" class="btn btn-block ui-btn-lightblue">快速搜索</a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a href="javascript:void(0);" class="j-gojob-btn btn btn-block ui-btn-lightblue-b ui-border-gray">我要招聘</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 人才搜索 -->
+            <div class="col-xs-6">
+                <div class="ui-seachpanel">
+                    <div class="ui-seachpanel-title">人才搜索</div>
+                    <div class="ui-seachpanel-content">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="province2_select" class="col-xs-offset-1 col-xs-2 control-label">工作地点</label>
+                                <div class="col-xs-4">
+                                    <select id="province2_select" class="form-control" name="province">
+                                        <option value="">不限</option>
+                                        <script id="province2_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option  value="{{value.provinceId}}" {{value.provinceId != selectedId ? '' : 'selected'}}>{{value.provinceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <select class="form-control" name="city">
+                                        <option value="">不限</option>
+                                        <script id="city2_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option  value="{{value.cityId}}" {{value.cityId != selectedId ? '' : 'selected'}}>{{value.cityName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sal2" class="col-xs-offset-1 col-xs-2 control-label ui-justify">薪金</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="sal" id="sal2">
+                                        <option value="">不限</option>
+                                        <script id="sal2ListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.salId}}" {{value.salId != selectedId ? '' : 'selected'}}>{{value.salName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="qualification2" class="col-xs-offset-1 col-xs-2 control-label">学历要求</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="qualification" id="qualification2">
+                                        <script id="education2ListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.educationId}}" {{value.educationId != selectedId ? '' : 'selected'}}>{{value.educationName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="workExperience2" class="col-xs-offset-1 col-xs-2 control-label">从业年限</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="workExperience" id="workExperience2">
+                                        <script id="experience2ListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.experienceId}}" {{value.experienceId != selectedId ? '' : 'selected'}}>{{value.experienceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-xs-offset-1 col-xs-2 control-label">工作性质</label>
+                                <div class="col-xs-8">
+                                    <select class="form-control" name="type" id="type">
+                                        <option value="">不限</option>
+                                        <option value="1">全职</option>
+                                        <option value="0">兼职</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="job" class="col-xs-offset-1 col-xs-2 control-label">期望职务</label>
+                                <div class="col-xs-8">
+                                    <input class="form-control" type="text" name="job" id="job">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-offset-1 col-xs-6">
+                                    <a href="javascript:void(0);" id="search_resume_btn" class="btn btn-block ui-btn-lightblue">快速搜索</a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a href="javascript:void(0);" class="j-goresume-btn btn btn-block ui-btn-lightblue-b ui-border-gray">我要求职</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-advert-list ui-content-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo01" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo02" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo03" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo04" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo05" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo06" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo07" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo08" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo09" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo10" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo11" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-advert-li">
+                        <script ad="rczp_logo12" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9">
+
+                <!-- 最新招聘 -->
+                <div class="ui-panel" id="newJobList">
+                    <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">最新招聘</span></div>
+                    <div class="ui-panel-content">
+                        <div class="row" pagination="mask">
+                            <script id="newJobListTmpl" type="text/html">
+                                {{if (getLength(rows) > 0)}}
+                                    {{each rows value i}}
+                                    <div class="col-xs-4">
+                                        <div class="ui-companylist">
+                                            {{if(value.userId != '0')}}
+                                            <div class="ui-companylist-title ui-cut-1"><a href="recruitment_companyinfo.html?userId={{value.userId}}" target="_blank">{{value.companyName || '无名称'}}</a></div>
+                                            {{else}}
+                                            <div class="ui-companylist-title ui-cut-1"><a href="recruitment_jobinfo.html?advertiseId={{value.advertiseId}}" target="_blank">{{value.companyName || '无名称'}}</a></div>
+                                            {{/if}}
+                                            <p class="ui-companylist-info ui-cut-1">招聘：<a href="recruitment_jobinfo.html?advertiseId={{value.advertiseId}}" class="ui-color-gray" target="_blank">{{value.jobName}}</a></p>
+                                            <p class="ui-companylist-info">{{value.sendTime | subDay}}</p>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                {{else}}
+                                    <div class="col-xs-12"><div class="text-center ui-color-gray">{{error || '暂无记录'}}</div></div>
+                                {{/if}}
+                            </script>
+                        </div>
+                        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                    </div>
+                </div>
+
+                <!-- 公务员招聘 -->
+                <div class="ui-panel" id="civilWorkerRecruitList">
+                    <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">公务员招聘</span></div>
+                    <div class="ui-panel-content">
+                        <div class="table-responsive" pagination="mask">
+                            <table class="table">
+                                <tbody>
+                                <script id="civilWorkerRecruitListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}}
+                                        {{each rows value i}}
+                                        <tr>
+                                            <td class="text-left"><i class="iconfont icon-ring"></i><a href="civilrecruit.html?articleId={{value.articleId}}">{{value.title}}</a></td>
+                                            <td class="text-right ui-color-gray">{{value.sendTime}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    {{else}}
+                                        <tr>
+                                            <td colspan="2" class="text-center ui-color-gray">暂无内容</td>
+                                        </tr>
+                                    {{/if}}
+                                </script>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+
+                <!-- 个人求职 -->
+                <div class="ui-panel" id="recommendResume">
+                    <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">个人求职</span>
+                        <!--<a class="ui-panel-link" href="">更多 ></a>-->
+                    </div>
+                    <div class="ui-panel-content">
+                        <ul class="ui-person-list">
+                            <script id="recommendResumeTmpl" type="text/html">
+                                {{if (getLength(rows) > 0)}}
+                                    {{each rows value i}}
+                                    <li>
+                                        <a href="recruitment_resumeinfo.html?userId={{value.userId}}" title="{{value.userName}}" target="_blank">
+                                            <div class="ui-person-list-head">
+                                                <img src="{{value.userImg | createImgUrl}}" alt="..." class="img-circle img-responsive ui-img-fill">
+                                            </div>
+                                            <p class="ui-color-lightblue">{{value.userName}} {{value.sex}} {{value.age}}岁</p>
+                                            <p class="ui-color-gray ui-size-12">学历：{{value.qualification}}</p>
+                                            <p class="ui-color-gray ui-size-12">专业：{{value.major}}</p>
+                                            <p class="ui-color-gray ui-size-12">从业年限：{{value.workExperience}}年</p>
+                                        </a>
+                                    </li>
+                                    {{/each}}
+                                {{else}}
+                                    <li>
+                                        <div class="text-center ui-color-gray">暂无</div>
+                                    </li>
+                                {{/if}}
+                            </script>
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="" title="">-->
+                                    <!--<div class="ui-person-list-head">-->
+                                        <!--<img src="../img/demo-head.jpg" alt="..." class="img-circle img-responsive ui-img-fill">-->
+                                    <!--</div>-->
+                                    <!--<p class="ui-color-lightblue">周青精 女 22岁</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">学历：本科</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">专业：法学</p>-->
+                                    <!--<p class="ui-color-gray ui-size-12">从业年限：4年</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

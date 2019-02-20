@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 我的律师 - 我浏览过的律师</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/swiper.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="user_header" type="text/html" src="../tmpl/user_header.html"></script>
+        </div>
+    </header>
+    <div class="ui-person-wrapper">
+        <div>
+            <script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script>
+        </div>
+    </div>
+    <div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+        <div class="container">
+            <div class="ui-padding-b-no">
+                <div class="row">
+
+                    <div class="col-xs-3">
+                        <div>
+                            <script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script>
+                        </div>
+                    </div>
+                    <div class="col-xs-9">
+                        <div class="ui-bg-white">
+
+                            <ul class="nav nav-tabs ui-person-panel-top">
+                                <li role="presentation"><a href="personal_mycounselor_consulting.html">我咨询的律师</a></li>
+                                <li role="presentation" class="active"><a href="javascript:void(0);">我浏览的律师</a></li>
+                                <li role="presentation"><a href="personal_mycounselor_collect.html">我收藏的律师</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content ui-person-panel-content ui-margin-lr-20 ui-margin-t-20" id="myBrowseConsultantList">
+                                <div role="tabpanel" class="tab-pane active ui-block">
+                                    <div class="ui-margin-lr-15 ui-relative" pagination="mask">
+                                        <div class="row">
+                                            <script id="myBrowseConsultantListTmpl" type="text/html">
+                                                {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                                <a href="home_index.html?userId={{value.userId}}" target="_blank" class="ui-decoration-no">
+                                                    <div class="col-xs-6">
+                                                        <div class="ui-layercard ui-height-150" style="border-color: #F0F0F0">
+                                                            <div class="ui-left">
+                                                                <div class="ui-img-adaptive-width ui-height-88 img-circle" style="width: 88px;"><img class="j-headimg" src="{{value.userImg | createImgUrl}}" alt="{{value.userName}}"></div>
+                                                            </div>
+                                                            <div class="ui-layercard-info">
+                                                                <h4 class="ui-layercard-name">{{value.realName}} {{if (value.is_contract == 1)}}
+                                                                    <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (value.isAuthentication == '2')}}
+                                                                    <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                                    <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                                    <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                                    <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}}
+                                                                </h4>
+                                                                <p class="ui-cut-1 ui-size-12 ui-margin-b-10" title="擅长：{{each value.specialityTypeName}}{{$index == 0 ? '' : '，'}}{{$value}}{{/each}}">擅长： {{if(value.specialityTypeName && value.specialityTypeName.length > 0)}} {{each value.specialityTypeName}} {{$index == 0 ? '' : '，'}}{{$value}} {{/each}} {{else}} 无 {{/if}}
+                                                                </p>
+                                                                <p class="ui-margin-b-8"><span class="ui-width-50p ui-border-r-1 ui-color-darkgray">解答咨询 <span class="ui-color-red">{{value.complateAdviceNum || 0}}</span></span><span class="ui-width-50p ui-padding-l-10 ui-color-darkgray">接受委托 <span class="ui-color-red">{{value.entrustNum || 0}}</span></span>
+                                                                </p>
+                                                                <div class="j-follow-box" data-isstar="0" data-userid="{{value.userId}}">
+                                                                    <p class="ui-width-75">
+                                                                        <a href="javascript:void(0);" class="j-follow-btn j-followoper-btn btn btn-block ui-padding-3 ui-btn-red-b ui-radius-5 ui-hide"><i class="iconfont icon-jia ui-margin-r-5"></i>关注</a>
+                                                                        <a href="javascript:void(0);" class="j-unfollow-btn j-followoper-btn btn btn-block ui-padding-3 ui-btn-lightgray-b ui-radius-5">取消关注</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {{/each}} {{else}}
+                                                <div class="text-center ui-height-340">
+                                                    <div class="ui-bg-box"></div>
+                                                    <div class="ui-color-gray">{{error || '暂无记录'}}</div>
+                                                </div>
+                                                {{/if}}
+                                            </script>
+                                        </div>
+                                        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RecommendedToday">
+    <resultMap id="BaseResultMap" type="RecommendedToday" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="column_type" property="columnType" jdbcType="INTEGER" />
+        <result column="columnName" property="columnTypeDescription" />
+        <result column="article_id" property="articleId" />
+        <result column="order" property="order" jdbcType="INTEGER" />
+        <result column="create_user" property="createUser" jdbcType="INTEGER" />
+        <result column="sys_userName" property="createUserName" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="is_available" property="isAvailable" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        art.*,
+        asu.sys_userName,
+        ac.columnName
+        FROM
+          ali_recommended_today as art
+        left join ali_sys_user asu on art.create_user = asu.sys_userId
+        left join ali_column ac on art.column_type = ac.columnId
+        <where>
+            <if test="true">
+                and is_available is null
+            </if>
+            <if test="columnType != null and columnType != 0">
+                and art.column_type = #{columnType,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and art.create_time &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd != ''">
+                and art.create_time &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (art.title like CONCAT('%',#{content},'%') or asu.sys_userName like CONCAT('%',#{content},'%'))
+            </if>
+        </where>
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(art.id)
+        FROM
+          ali_recommended_today as art
+        left join ali_sys_user asu on art.create_user = asu.sys_userId
+        left join ali_column ac on art.column_type = ac.columnId
+        <where>
+            <if test="true">
+                and is_available is null
+            </if>
+            <if test="columnType != null and columnType != 0">
+                and art.column_type = #{columnType,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and art.create_time &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd != ''">
+                and art.create_time &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (art.title like CONCAT('%',#{content},'%') or asu.sys_userName like CONCAT('%',#{content},'%'))
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="RecommendedToday" resultMap="BaseResultMap">
+        SELECT
+        art.*,
+        asu.sys_userName,
+        ac.columnName
+        FROM
+        ali_recommended_today as art
+        left join ali_sys_user asu on art.create_user = asu.sys_userId
+        left join ali_column ac on art.column_type = ac.columnId
+        <where>
+            <if test="id != null">
+                and art.id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="RecommendedToday" useGeneratedKeys="true" keyProperty="id" >
+      insert into ali_recommended_today (title, column_type, article_id, `order`,
+          create_user, create_time, is_available
+          )
+        values (#{title}, #{columnType,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, #{order,jdbcType=INTEGER},
+          #{createUser,jdbcType=INTEGER}, NOW(), #{isAvailable,jdbcType=INTEGER}
+          )
+    </insert>
+    <update id="update" parameterType="RecommendedToday" >
+        update ali_recommended_today
+        <set>
+            <if test="title != null" >
+                title = #{title},
+            </if>
+            <if test="columnType != null" >
+                column_type = #{columnType,jdbcType=INTEGER},
+            </if>
+            <if test="articleId != null" >
+                article_id = #{articleId,jdbcType=INTEGER},
+            </if>
+            <if test="order != null" >
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isAvailable != null" >
+                is_available = #{isAvailable,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,415 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>权限设置</h1>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-success" onclick="showDialogModal()">新增</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="table_id">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>角色</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">角色</h5>
+				<input type="text" id="id_update" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">角色名：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="sys_roleName" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-8">
+							<ul id="menuTree" class="ztree"></ul>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary save" onclick="save()">保存</button>
+				<button type="button" class="btn btn-primary save" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary update" onclick="update()">修改</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<input type="text" id="id_del" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除？</span></li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/jquery.ztree.core.js"></script>
+<script src="js/jquery.ztree.excheck.js"></script>
+<script type="application/javascript" charset="utf-8">
+	var tableData;
+	$(document).ready(function () {
+	    menu();
+		tableData= $('#table_id').DataTable({
+	    		//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 10,
+			"lengthChange": false,
+			"language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	   			type:'POST',
+                data:{
+                    "start": 0,
+                    "length": 10
+                }
+	   		}, 
+			"aoColumns": [
+				{ "data":"sys_roleId" },		
+				{ "data":"sys_roleName" },	
+				{ "mData":"sysStateDescription" },
+				//操作
+				{ "data":null,
+	           		"visible": true,
+	                "render":function(data,type,full){
+	                	var LockOrUnlock;
+	                	if(full.sys_state=="0"){
+	                		LockOrUnlock = '<input type="button" class="btn btn-success" value="禁用" onclick="toLocking(\''+full.sys_roleId+'\')"/>&nbsp;';
+	                	}else{
+	                		LockOrUnlock = '<input type="button" class="btn btn-success" value="启用" onclick="toUnlock(\''+full.sys_roleId+'\')"/>&nbsp;';
+	                	}
+	                	return  '<input type="button" class="btn btn-success" value="编辑" onclick="toEdit(\''+full.sys_roleId+'\',\''+full.sys_roleName+'\')"/>&nbsp;' +
+	                		LockOrUnlock + '<input type="button" class="btn btn-success" value="删除" onclick="toDelete(\''+full.sys_roleId+'\')"/>';
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+	        		Yajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl+"system/role/list",
+					"data": aoData,
+					"success": fnCallback
+				});
+			}
+		});
+	});
+	
+	//重新加载
+	function search(){
+		tableData.ajax.reload();
+	}
+    function reload(){
+		var table = $('#table_id').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//获取获取所有菜单
+	function menu(){
+		//定义树变量
+		var setting = {
+			check: { enable: true },
+			data: {
+				simpleData: { enable: true }
+			}
+		};
+		var data = new FormData();
+        Yajax({
+			url:requestUrl+'menu/list',
+			type : 'post',
+			data : data,
+	        async: false,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+                var  treeNode=data.data;
+                console.log(treeNode);
+                $.fn.zTree.init($('#menuTree'),setting,treeNode);
+                // 获取树对象
+                var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+                treeObj.expandAll(true);
+                /* // 获取所有树节点
+                var nodes = treeObj.transformToArray(treeObj.getNodes());
+                // 遍历树节点设置树节点为选中
+                for (var i = 0, length_1 = nodes.length; i < length_1; i++) {
+                    treeObj.expandNode(nodes[i], true);
+                } */
+			},
+			error : function() {
+				alert("失败!");
+			}
+		});
+	}
+
+	//新增 按钮
+	function showDialogModal() {
+	    $("#dialogModal").modal("show");
+        $(".btn.btn-primary.update").hide();
+        $(".btn.btn-primary.save").show();
+	    $('#sys_roleName').val("");
+        //$('input[name="chkbx"]:checked').removeAttr("checked");//取消选中
+	    var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+	    treeObj.checkAllNodes(false);
+	}
+	
+	//保存
+	function save() {
+	    saveData();
+	    $("#dialogModal").modal("hide");
+	    $('#sys_roleName').val("");
+	}
+	
+	//取消
+	function closed(){
+	    $("#dialogModal").modal("hide");
+	    $('#sys_roleName').val("");
+	}
+	
+	//新增
+	function saveData(){
+		/* //checkbox取值
+		var chk_value =[];//定义一个数组    
+	    $('input[name="chkbx"]:checked').each(function(){//遍历每一个名字为nodes的复选框，其中选中的执行函数    
+	    		chk_value.push($(this).val());//将选中的值添加到数组chk_value中    
+	    });
+	    var premissonIds = chk_value.join(","); */
+		var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+		var nodes = treeObj.getCheckedNodes(true);
+		console.log(nodes);
+		var premissonIds="";
+		for(var i=0;i<nodes.length;i++){
+			if(premissonIds==""){
+				premissonIds=nodes[i].premissonId;
+			}else{
+				premissonIds=premissonIds+","+nodes[i].premissonId;
+			}
+		}
+		console.log(premissonIds);
+        Yajax({
+	        type:'POST',
+	        url:requestUrl+"system/role/add",
+	        data:JSON.stringify({
+		        	"sys_roleName":$('#sys_roleName').val(),
+		        	"sysMappings":premissonIds
+	        }),
+	        contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+	        success : function(data) {
+	            console.log(data);
+	            alert("保存成功");
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("保存失败");
+	        }
+	    });
+	}
+		
+	//编辑 获取详情
+	function toEdit(sys_roleId,sys_roleName){
+	    $("#dialogModal").modal("show");
+        $("#id_update").val(sys_roleId);
+        $(".btn.btn-primary.update").show();
+        $(".btn.btn-primary.save").hide();
+	    $('#sys_roleName').val(sys_roleName);
+	    var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+	    treeObj.checkAllNodes(false);
+        //$('input[name="chkbx"]:checked').removeAttr("checked");//取消选中
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"system/role/info/"+sys_roleId,
+	        //url:requestUrl+"menu/roleList/"+sys_roleId,
+	        success : function(data) {
+	            console.log(data);
+	            //$('#sys_roleName').val(data.data.sys_roleName);
+	            //checkbox赋值
+	            var checkBox = data.data.sysMappings;
+	            if(checkBox!=''){
+			    		var checkBoxArray = checkBox.split(",");
+			    		for(var i=0;i<checkBoxArray.length;i++){
+			    			/* $("input[name='chkbx']").each(function(){
+			    				if($(this).val()==checkBoxArray[i]){
+			    					$(this).attr("checked","checked");
+			    				}
+			    			}) */
+		    				var node = treeObj.getNodeByParam("premissonId",checkBoxArray[i]);
+		    				//treeObj.selectNode(node,true);//指定选中ID的节点
+		    				treeObj.checkNode(node, true, false);
+			    		}
+	            }
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("请求失败");
+	        }
+	    });
+	}
+	
+	//修改
+	function update(){
+		/* //checkbox取值
+		var chk_value =[];//定义一个数组    
+	    $('input[name="chkbx"]:checked').each(function(){//遍历每一个名字为nodes的复选框，其中选中的执行函数    
+	    		chk_value.push($(this).val());//将选中的值添加到数组chk_value中    
+	    });
+	    var premissonIds = chk_value.join(","); */
+		var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+		var nodes = treeObj.getCheckedNodes(true);
+		console.log(nodes);
+		var premissonIds="";
+		for(var i=0;i<nodes.length;i++){
+			if(premissonIds==""){
+				premissonIds=nodes[i].premissonId;
+			}else{
+				premissonIds=premissonIds+","+nodes[i].premissonId;
+			}
+		}
+		console.log(premissonIds);
+        Yajax({
+	        type:'POST',
+	        url:requestUrl+"system/role/update",
+	        data:JSON.stringify({
+		        	"sys_roleId":$("#id_update").val(),
+		        	"sys_roleName":$('#sys_roleName').val(),
+		        	"sysMappings":premissonIds
+	        }),
+	        contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+	        success : function(data) {
+	            console.log(data);
+	            alert("修改成功");
+                $("#dialogModal").modal("hide");
+                $("#id_update").val("");//重置
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("修改失败");
+	        }
+	    });
+	}
+	
+	//删除
+	function toDelete(sys_roleId){
+        $("#id_del").val(sys_roleId);
+        $("#mySmallModalLabel").modal("show");
+	}
+    //确认删除
+    function delResult(){
+        var sys_roleId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"system/role/remove/"+sys_roleId,
+	        success : function(data) {
+	            console.log(data);
+	            alert("删除成功");
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("删除失败");
+	        }
+	    });
+    }
+	
+	//禁用
+	function toLocking(sys_roleId){
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"system/role/disabled/"+sys_roleId,
+	        success : function(data) {
+	            console.log(data);
+	            alert("禁用成功");
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("禁用失败");
+	        }
+	    });
+	}
+	
+	//启用
+	function toUnlock(sys_roleId){
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"system/role/enable/"+sys_roleId,
+	        success : function(data) {
+	            console.log(data);
+	            alert("启用成功");
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("启用失败");
+	        }
+	    });
+	}
+</script>

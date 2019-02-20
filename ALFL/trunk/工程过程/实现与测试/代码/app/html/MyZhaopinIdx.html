@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="MyZhaopin MyQiuzhi">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>求职招聘</title>
+		<link rel="stylesheet" href="mui/mui.min.css" />
+		<link rel="stylesheet" href="vue/vant-min.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Myinfo">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+			</div>
+			<h2>求职招聘</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter idx-band5" id="app">
+			<div class="linkbox"  v-if="userType == '1'">
+				<div class="linkli">
+					<a href="MyQiuzhi.html">
+						<p>
+							<span>我的求职</span>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</p>
+					</a>
+				</div>
+				<div class="linkli">
+					<a href="MyJianli.html">
+						<p>
+							<span>我的简历</span>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</p>
+					</a>
+				</div>
+			</div>
+
+			<div class="linkbox"  v-else-if="userType == '2'">
+				<div class="linkli">
+					<a href="MyQiuzhi.html">
+						<p>
+							<span>我的求职</span>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</p>
+					</a>
+				</div>
+				<div class="linkli">
+					<a href="MyJianli.html">
+						<p>
+							<span>我的简历</span>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</p>
+					</a>
+				</div>
+				<div class="linkli">
+					<a href="MyZhaopin.html">
+						<p>
+							<span>我的招聘</span>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</p>
+					</a>
+				</div>
+			</div>
+
+			<div class="linkbox" v-else-if="userType == '3'">
+				<div class="linkli">
+					<a href="MyZhaopin.html">
+						<p>
+							<span>我的招聘</span>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</p>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/MyZhaopinIdx.js"></script>
+	</body>
+
+</html>

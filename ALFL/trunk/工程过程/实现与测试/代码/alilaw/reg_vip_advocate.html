@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 普通用户充值</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/img.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+    <div class="ui-content ui-padding-b-40">
+        <div class="container ui-padding-tb-30">
+            <div class="row">
+                <div class="col-xs-2">
+                    <h4 class="ui-size-18">欢迎加入阿里法律</h4>
+                </div>
+                <div class="col-xs-10">
+                    <ul class="ui-steps-list">
+                        <li class="ui-active"><i>1</i>选择注册类型</li>
+                        <li class="ui-active"><i>2</i>填写注册信息</li>
+                        <li class="ui-active"><i>3</i>会员充值</li>
+                        <li><i>4</i>注册成功</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="ui-regpanel ui-padding-b-40">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="ui-padding-40">
+                            <img src="../img/enterprise_vip_top.jpg" alt="" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="ui-vipform">
+                        <form action="" method="post" id="formOpen">
+                            <div class="col-xs-12 ui-margin-b-20">
+                                <div class="row">
+                                    <div class="col-xs-3 text-right"><label>会员类型</label></div>
+                                    <div class="col-xs-6">
+                                        <div class="row" id="vipLevelList">
+                                            <div class="col-xs-4 text-center">
+                                                <a href="javascript:void(0);" class="btn btn-block ui-vipform-btn ui-checked" data-id="1"><i class="ui-icon ui-icon-goldvip-big"></i>黄金会员</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a id="ptvip_btn" href="javascript:void(0);" class="btn btn-block ui-vipform-btn ui-disabled" data-id="2"><i class="ui-icon ui-icon-ptvip-big"></i>白金会员</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a id="masonryvip_btn" href="javascript:void(0);" class="btn btn-block ui-vipform-btn ui-disabled" data-id="3"><i class="ui-icon ui-icon-masonryvip-big"></i>钻石会员</a>
+                                            </div>
+                                            <input type="hidden" name="vipLevel" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 text-left ui-vipform-icon">
+                                        <i class="iconfont icon-wenhao ui-color-lightyellow" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-content="企业黄金会员、白金会员和钻石会员均根据年费不同由企业自行根据企业情况选择。黄金会员年服务费2000元（包括全年免费法律咨询，发送律师函、草拟、审核合同、拟写起诉状等诉讼材料最多4份），企业白金会员年服务费5000元（包括全年免费法律咨询。发送律师函、草拟、审核合同、拟写起诉状等诉讼材料最高12份）。钻石会员年服务费20000元（全年不限量免费法律咨询，发送律师函、草拟、审核合同、拟写起诉状等材料最多50份）。"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 ui-margin-b-20">
+                                <div class="row">
+                                    <div class="col-xs-3 text-right"><label>车辆类型</label></div>
+                                    <div class="col-xs-6">
+                                        <div class="row" id="driverLevelList">
+                                            <div class="col-xs-4 text-center">
+                                                <a href="javascript:void(0);" class="btn btn-block ui-vipform-btn ui-checked" data-id="2" data-amount="500" style="background: url('../img/bg-a.png')">客&nbsp;&nbsp;&nbsp;&nbsp;车</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="javascript:void(0);" class="btn btn-block ui-vipform-btn" data-id="1" data-amount="400" style="background: url('../img/bg-b.png')">货&nbsp;&nbsp;&nbsp;&nbsp;车</a>
+                                            </div>
+                                            <div class="col-xs-4 text-center">
+                                                <a href="javascript:void(0);" class="btn btn-block ui-vipform-btn" data-id="0" data-amount="200" style="background: url('../img/bg-c.png')">其&nbsp;&nbsp;&nbsp;&nbsp;他</a>
+                                            </div>
+                                            <input type="hidden" name="carType" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 text-left ui-vipform-icon">
+                                        <i class="iconfont icon-wenhao ui-color-lightyellow" tabindex="1" role="button" data-toggle="popover" data-trigger="focus" data-content="客车对应的为A证驾驶范围的车辆，货车为B证驾驶证对应的车辆。"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-3 text-right"><label>开通年限</label></div>
+                                    <div class="col-xs-6 ui-margin-t-17">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-center">
+                                                <select name="openYear" id="year" class="form-control">
+                                                <option value="1" selected>1年</option>
+                                                <option value="2">2年</option>
+                                                <option value="3">3年</option>
+                                                <option value="4">4年</option>
+                                                <option value="5">5年</option>
+                                                <option value="6">6年</option>
+                                                <option value="7">7年</option>
+                                                <option value="8">8年</option>
+                                                <option value="9">9年</option>
+                                                <option value="10">10年</option>
+                                            </select>
+                                            </div>
+                                            <div class="col-xs-8 text-center">
+                                                <div class="ui-color-gray text-left ui-margin-t-6">需充值 <span class="ui-color-red" id="amount"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 ui-margin-b-20">
+                                <div class="row">
+                                    <div class="col-xs-offset-3 col-xs-6 ui-margin-t-17">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-center">
+                                                <input type="hidden" name="realName" data-rule="真实姓名:required" data-target="#msg_holder">
+                                                <input type="hidden" name="idCard" data-rule="身份证:required" data-target="#msg_holder">
+                                                <input type="hidden" name="idCardFront">
+                                                <input type="hidden" name="idCardBack">
+                                                <a href="javascript:void(0);" class="btn btn-block ui-btn-lightblue-b" id="supInfo">点击补充资料</a>
+                                                <div class="msg-box" id="msg_holder"></div>
+                                            </div>
+                                            <div class="col-xs-8 text-center">
+                                                <div class="ui-color-gray text-left ui-margin-t-6">首次开通需补充个人资料</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 ui-margin-b-20">
+                                <div class="row">
+                                    <div class="col-xs-offset-3 col-xs-6 ui-margin-t-17">
+                                        <div class="row">
+                                            <div class="col-xs-12 text-left">
+                                                <span class="ui-color-gray">
+                                                <input type="checkbox" id="blankCheckbox" value="option1"  data-rule="checked"> 我已阅读并同意<a target="_blank" href="about_agreement.html" class="ui-color-lightblue">《平台服务协议》</a>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-offset-3 col-xs-6 ui-margin-t-17">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-left">
+                                                <button class="btn btn-block ui-btn-lightblue ui-size-16">立即开通</button>
+                                            </div>
+                                            <div class="col-xs-8 text-left">
+                                                <div class="ui-margin-t-6">
+                                                    <a href="reg_advocate_success.html" class="ui-color-lightblue ui-size-16">跳过此步</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" style="display: none">
+        <div class="container container-fluid" style="width: 900px!important;">
+            <div class="row">
+
+                <div class="col-xs-12 ui-margin-b-20">
+
+                    <div class="ui-regform ui-padding-lr-80 ui-padding-l-no">
+                        <form class="form-horizontal" id="form">
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="title" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>真实姓名：</label>
+                                <div class="col-xs-10">
+                                    <input type="text" name="realName" class="form-control" id="title" placeholder="真实姓名（2-30个字符）" data-rule="真实姓名:required;length(2~30)">
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="adviceContent" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>证件号码：</label>
+                                <div class="col-xs-10">
+                                    <input type="text" name="idCard" class="form-control" id="adviceContent" placeholder="本人身份证或驾驶证号" data-rule="证件号码:required">
+                                </div>
+                                <div class="col-xs-offset-2 col-xs-10">
+                                    <div class="ui-size-12 ui-color-gray"><i class="iconfont icon-deng"></i>为保障您的权益，请填写真实有效的证件信息用于身份验证，阿里法律平台会保障您的个人隐私信息安全。</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group ui-margin-b-30">
+                                <label class="col-xs-2 control-label">证据：</label>
+                                <div class="col-xs-5 ui-margin-b-20 ui-margin-t-10">
+                                    身份证正面
+                                </div>
+                                <div class="col-xs-5 ui-margin-b-20 ui-margin-t-10">
+                                    身份证背面
+                                </div>
+                                <div class="col-xs-offset-2 col-xs-5">
+                                    <section class=" img-section">
+                                        <div class="z_photo upimg-div clear">
+                                            <section class="z_file fl">
+                                                <input type="file" id="idcardzm" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-xs-5">
+                                    <section class=" img-section">
+                                        <div class="z_photo upimg-div clear">
+                                            <section class="z_file fl">
+                                                <input type="file" id="idcardbm" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-xs-offset-2 col-xs-10 ui-margin-b-10">
+                                    <div class="ui-size-12 ui-color-red"><i class="iconfont icon-deng"></i>请上传清晰、无污物、完整的证件照片或彩色扫描件</div>
+                                </div>
+                                <div class=" col-xs-offset-2 col-xs-10">
+                                    <div class="ui-size-12 ui-color-gray"><i class="iconfont icon-deng"></i>您可上传与咨询问题相关的证据照片供律师参考，图片文件后缀支持jpg、png、gif、jpeg格式，单张图片大小建议在4M以下，最多可上传3张照片！</div>
+                                </div>
+                            </div>
+                            <div class="form-group ui-margin-b-30">
+                                <div class="col-xs-offset-2 col-xs-4">
+                                    <button type="submit" class="btn btn-block ui-btn-red">提交资料</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

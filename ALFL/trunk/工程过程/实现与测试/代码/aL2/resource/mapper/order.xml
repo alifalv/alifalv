@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BusinessOrder">
+
+
+
+     
+     <select id="listBusinessOrder" parameterType="map"  resultType="map">
+     		SELECT
+				bus.*,
+				 co.realName,us.mobile as mobile3
+			FROM
+				ali_business_order  as bus 
+				left join 
+				  ali_user as us on us.userId = bus.favoreeUserId
+				left join 
+				   ali_counselor as co on co.userId = bus.favoreeUserId
+				<where>
+				  <if test="null != businessOrder and businessOrder !=''">
+				   	   AND bus.businessOrder = #{businessOrder}
+				     </if>	
+				     <if test="null != userId">
+				       <!-- 查询我发出的订单 和，这个订单对我有益的，(如【文书制作】 需要 点击确认发货  但是是委托人一定对这个订单已经支付过了的) -->
+					 	AND ( bus.userId = #{userId}  or ( bus.favoreeUserId =#{userId}   and bus.isPay = 1 ) )
+					 </if>
+ 					<if test="special != null  and special ==5">
+							 <!-- 如果这个 参数 等于 5  ，就是需要查询已支付成功-->
+							  and bus.isPay = 1
+					 </if>
+					 <if test="special != null  and special ==1">
+							 <!-- 如果这个 参数 等于 1  ，就是需要查询待支付的-->
+							  and bus.isPay = 2
+					 </if>
+					 <if test="special != null  and special ==2">
+							 <!-- 如果这个 参数 等于 2  ，就是需要查询待评价的   ,并且是一定支付过了的-->
+							  and bus.evaluate = 2 and bus.isPay = 1
+					 </if>
+					 <if test="special != null  and special == 3 ">
+					   <!-- 如果这个 参数 等于 3  ，就是需要查询 退款和申诉的订单-->
+					 	 and ( bus.isPay = 5  or  bus.isComplain > 0 )
+					 </if>
+					  <if test="special != null  and special == 4 ">
+					   <!-- 
+					   		如果这个 参数 等于 4  ，就是需要查询 
+					   		【法律咨询        待解答】 businessType = '法律咨询'  and   orderState = 1
+					   		【法律文书制作  待收货】 businessType = '法律文书制作'  and   reception = 1
+					   		【案件委托        处理中】 businessType ='案件委托'  and    orderState = 1
+					   	-->
+					 	 and ( 
+					 	 	(bus.businessType = '法律咨询'  and   bus.orderState = 1)
+					 	 	or
+					 	 	( bus.businessType = '法律文书制作'  and   bus.reception = 1)
+					 	 	or
+					 	 	( bus.businessType ='案件委托'  and    bus.orderState = 1 )
+					 	   )
+					 </if>  
+					 <if test="businessType  != null and  businessType !='' ">
+					 	 and bus.businessType = #{businessType}
+					 </if>
+					 
+					 <if test="startTime  != null and  startTime !='' ">
+					 	 and bus.orderTime &gt;= #{startTime}
+					 </if>
+					 <if test="endTime  != null   and  endTime  !='' " >
+					 	 and bus.orderTime  &lt;= #{endTime }
+					 </if>
+					 <if test="keyword  != null   and  keyword  !='' " >
+					   <!-- 查询关键词 -->
+					 	           and  (  bus.businessOrder LIKE '%${keyword}%' or bus.orderName LIKE '%${keyword}%' or us.mobile LIKE '%${keyword}%')
+					 </if>
+					 <if test="payment !=null and payment !='' ">
+					     and bus.payment =#{payment}
+					 </if>
+					  <if test="isPay !=null  and isPay !='' ">
+					     and bus.isPay =#{isPay}
+					 </if>
+					 <if test="orderState ==null  or orderState =='' ">
+					      and ( bus.orderState  = 1 or bus.orderState= 0)
+					 </if>
+					  <if test="orderState !=null  and orderState !='' ">
+					     and bus.orderState =#{orderState}
+					 </if> 
+				</where> 
+			
+			   ORDER BY orderTime DESC 
+			    limit #{PAGE_START},#{PAGE_LENGTH}
+     </select>
+     
+        <select id="listBusinessOrder_COUNT_TOTAL" parameterType="map"  resultType="int">
+   		SELECT
+			count(*)
+			FROM
+			ali_business_order  as bus
+			left join ali_user as us on us.userId = bus.favoreeUserId
+			<!--   	LEFT JOIN ali_user as us on us.userId  = bus.favoreeUserId -->
+				<where>
+				  <if test="null != businessOrder and businessOrder !=''">
+				   	   AND bus.businessOrder = #{businessOrder}
+				     </if>	
+				     <if test="null != userId">
+				       <!-- 查询我发出的订单 和，这个订单对我有益的，(如【文书制作】 需要 点击确认发货  但是是委托人一定对这个订单已经支付过了的) -->
+					 	AND ( bus.userId = #{userId}  or ( bus.favoreeUserId =#{userId}   and bus.isPay = 1 ) )
+					 </if>
+ 					<if test="special != null  and special ==5">
+							 <!-- 如果这个 参数 等于 5  ，就是需要查询已支付成功-->
+							  and bus.isPay = 1
+					 </if>
+					 <if test="special != null  and special ==1">
+							 <!-- 如果这个 参数 等于 1  ，就是需要查询待支付的-->
+							  and bus.isPay = 2
+					 </if>
+					 <if test="special != null  and special ==2">
+							 <!-- 如果这个 参数 等于 2  ，就是需要查询待评价的   ,并且是一定支付过了的-->
+							  and bus.evaluate = 2 and bus.isPay = 1
+					 </if>
+					 <if test="special != null  and special == 3 ">
+					   <!-- 如果这个 参数 等于 3  ，就是需要查询 退款和申诉的订单-->
+					 	 and ( bus.isPay = 5  or  bus.isComplain > 0 )
+					 </if>
+					  <if test="special != null  and special == 4 ">
+					   <!-- 
+					   		如果这个 参数 等于 4  ，就是需要查询 
+					   		【法律咨询        待解答】 businessType = '法律咨询'  and   orderState = 1
+					   		【法律文书制作  待收货】 businessType = '法律文书制作'  and   reception = 1
+					   		【案件委托        处理中】 businessType ='案件委托'  and    orderState = 1
+					   	-->
+					 	 and ( 
+					 	 	(bus.businessType = '法律咨询'  and   bus.orderState = 1)
+					 	 	or
+					 	 	( bus.businessType = '法律文书制作'  and   bus.reception = 1)
+					 	 	or
+					 	 	( bus.businessType ='案件委托'  and    bus.orderState = 1 )
+					 	   )
+					 </if>  
+					 <if test="businessType  != null and  businessType !='' ">
+					 	 and bus.businessType = #{businessType}
+					 </if>
+					 
+					 <if test="startTime  != null and  startTime !='' ">
+					 	 and bus.orderTime &gt;= #{startTime}
+					 </if>
+					 <if test="endTime  != null   and  endTime  !='' " >
+					 	 and bus.orderTime  &lt;= #{endTime }
+					 </if>
+					 <if test="keyword  != null   and  keyword  !='' " >
+					   <!-- 查询关键词 -->
+					 	           and  (  bus.businessOrder LIKE '%${keyword}%' or bus.orderName LIKE '%${keyword}%' or us.mobile LIKE '%${keyword}%')
+					 </if>
+					 <if test="payment !=null and payment !='' ">
+					     and bus.payment =#{payment}
+					 </if>
+					  <if test="isPay !=null  and isPay !='' ">
+					     and bus.isPay =#{isPay}
+					 </if>
+					 <if test="orderState ==null  or orderState =='' ">
+					      and ( bus.orderState  = 1 or bus.orderState= 0)
+					 </if>
+					  <if test="orderState !=null  and orderState !='' ">
+					     and bus.orderState =#{orderState}
+					 </if> 
+				</where> 
+	   ORDER BY orderTime DESC 
+      </select>
+
+  <!-- 保存这个订单数据 -->
+	<insert id="saveBusinessOrder"  parameterType="map">
+		INSERT INTO  ali_business_order
+			 (
+			 	businessOrder, orderName, userId, userName, userImg, businessType, orderNum, orderPrice, connectionId, orderTime,
+			   orderState, mobile, orderType, checkTime, endTime, payment, remark, evaluate, sender, reception, favoreeUserId,isPay,
+			   outTradeNo,isComplain,complainType,complainContent,cardNumber,totalPrice,sign,sourceType,cardName
+			   )
+			 VALUES (
+					#{businessOrder}, #{orderName}, #{userId}, #{userName}, #{userImg}, #{businessType}, #{orderNum}, #{orderPrice}, #{connectionId}, Now(),
+			   #{orderState}, #{mobile}, #{orderType}, #{checkTime}, #{endTime}, #{payment}, #{remark}, #{evaluate}, #{sender}, #{reception}, #{favoreeUserId},#{isPay},
+			   #{outTradeNo},#{isComplain},#{complainType},#{complainContent},#{cardNumber},#{totalPrice},#{sign},#{sourceType},#{cardName}
+			)
+	</insert>
+	
+	<!-- 根据来源的Id 和 类型，取消这个订单 -->
+	<update id="updateOrderByconnectionId"  parameterType="map">
+		update  ali_business_order set isPay =  0 ,  orderState = 2  where  sourceType =#{sourceType}  and  connectionId = #{connectionId}
+	</update>
+	
+	<!-- 修改这个订单的数据 -->
+	<update id="updateBusinessOrder"  parameterType="map">
+			update ali_business_order 
+			<set>
+				 <if test="null != favoreeUserId">
+				      favoreeUserId = #{favoreeUserId},
+				 </if> 
+				 <if test="null != connectionId and connectionId !='' ">
+				      connectionId = #{connectionId},
+				 </if>                  
+				 <if test=" null != complainContent  and complainContent !='' ">
+			      complainContent = #{complainContent},
+				  </if>
+				 <if test=" null != complainType  and complainType !='' ">
+			      complainType = #{complainType},
+				  </if>
+					<if test=" null != isComplain ">
+			      isComplain = #{isComplain},
+				  </if>
+				 <if test=" null != outTradeNo  and outTradeNo !='' ">
+			      outTradeNo = #{outTradeNo},
+				  </if>
+				 <if test=" null != isPay">
+			      isPay = #{isPay},
+				  </if>
+				  <if test=" null != reception ">
+			      reception = #{reception},
+				  </if>
+			   <if test=" null != sender ">
+			      sender = #{sender},
+				  </if> 
+			   <if test=" null != evaluate ">
+			      evaluate = #{evaluate},
+			  </if>
+			
+				<if test=" null != remark  and remark !='' ">
+			    remark =concat(remark, #{remark}),
+			</if>
+			
+			<if test=" null != payment  and payment !='' ">
+			    payment = #{payment},
+			</if>
+			<if test=" null != userName  and userName !='' ">
+			    userName = #{userName},
+			</if>
+			<if test=" null != orderPrice  and orderPrice !='' ">
+			    orderPrice = #{orderPrice},
+			</if>
+			<if test=" null != totalPrice  and totalPrice !='' ">
+			    totalPrice = #{totalPrice},
+			</if>
+			<if test=" null != orderState ">
+			    orderState = #{orderState},
+			</if>
+			<if test=" null != mobile  and mobile !='' ">
+			    mobile = #{mobile},
+			</if>
+			   
+			<if test=" null != checkTime  and checkTime !='' ">
+			    checkTime = #{checkTime},
+			</if>
+			
+			<if test=" null != endTime  and endTime !='' ">
+			    endTime = #{endTime},
+			</if>
+			
+			<if test=" null != orderType ">
+			    orderType = #{orderType},
+			</if>
+			
+			<if test=" null != outTradeNo  and outTradeNo !='' ">
+			    outTradeNo = #{outTradeNo},
+			</if>
+			<if test=" null != cardNumber  and cardNumber !='' ">
+			    cardNumber = #{cardNumber},
+			</if>
+			<if test=" null != sign  and sign !='' ">
+			    sign = #{sign},
+			</if>
+			<if test=" null != sourceType  and sourceType !='' ">
+			    sourceType = #{sourceType},
+			</if>  
+			<if test=" null != noPassReason  and noPassReason !='' ">
+			    noPassReason = #{noPassReason},
+			</if>  
+			 </set>
+			where  
+			     businessOrder = #{businessOrder}  
+			     <if test="null != userId">
+			     	and userId = #{userId}
+			     </if>
+			     
+			     
+	</update>
+	
+	
+	<!-- 查询出这个订单的详情； -->
+	<select id="findOrderDetails" parameterType="map" resultType="map">
+	    select * from ali_business_order  
+	    <where>
+		    <if  test="businessType !=null and businessType !=''">
+		       and  businessType = #{businessType}
+		    </if>
+		    <if  test="connectionId !=null and connectionId !=''">
+		       and  connectionId = #{connectionId}
+		    </if>
+		    <if  test="businessOrder !=null and businessOrder !=''">
+		       and  businessOrder = #{businessOrder}
+		    </if>
+		    <if  test="userId !=null and userId !=''">
+		       and  userId = #{userId}
+		    </if>
+		      <if  test="favoreeUserId !=null and favoreeUserId !=''">
+		       and  favoreeUserId = #{favoreeUserId}
+		    </if>
+		     <if  test="outTradeNo !=null and outTradeNo !=''">
+		       and  outTradeNo = #{outTradeNo}
+		    </if>
+		    <if test="special !=null and special == 0 ">
+		    			<!-- 查询订单是否还没有开始 支付 ，或者 正在支付中的订单；  -->
+		       and  ( isPay  =   2  or  isPay  =3)
+		    </if>
+		    <if test="isPay !=null and isPay == '' "> 
+		       and   isPay  =    #{isPay}
+		    </if>
+		     <if  test="orderState !=null and orderState !=''">
+		        and  orderState = #{orderState}
+		     </if>
+	    </where>
+	     
+	</select>
+	
+	
+	<select id="findOrderByUserId" parameterType="map">
+		select * from ali_business_order where userId = #{userId}
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findOrderByUserId_TOTAL_COUNT" parameterType="map">
+		select COUNT(businessOrder) from ali_business_order where userId = #{userId}
+	</select>
+	
+	<!-- 订单评价时的展示数据 -->
+	 <select id="listOrderEvaluate"  parameterType="map" resultType="map">
+	 		SELECT
+	 		<if test="null != joinSql">
+	 		    ${joinSql}
+	 		</if> 
+			a.businessOrder,
+			a.orderName,
+			a.orderTime,
+			a.businessType 
+		  from ali_business_order a 
+		where 
+			businessOrder = #{businessOrder}
+	 </select>
+
+</mapper>

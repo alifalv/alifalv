@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="Caculater">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>诉讼费计算</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask Caculater">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-closeempty" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+			</div>
+			<h2>诉讼费计算</h2>
+			<div class="goback msgcenter">
+				<a href="Msgcenter.html"><img src="images/myinfo/order-msg.png" alt="" /></a>
+			</div>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter">
+			<div class="caculatebox">
+				<section>
+					<div class="caculatebox-l">
+						<span>诉讼类别</span>
+					</div>
+					<div class="caculatebox-r">
+						<select id="litigation_type" name="">
+							<option value="1">财产案件</option>
+							<option value="2">离婚案件</option>
+							<option value="3">侵害人格权案件</option>
+							<option value="4">其他非财产案件</option>
+							<option value="5">知识产权民事案件</option>
+							<option value="6">劳动争议案件</option>
+							<option value="7">商标、专利、海事行政案件</option>
+							<option value="8">其他行政案件</option>
+							<option value="9">申请执行</option>
+							<option value="10">财产保全</option>
+							<option value="11">申请支付令</option>
+							<option value="12">申请公示催告</option>
+							<option value="13">撤销仲裁</option>
+							<option value="14">申请破产</option>
+							<option value="15">海事纠纷</option>
+						</select>
+					</div>
+				</section>
+
+				<section>
+					<div class="caculatebox-l">
+						<span>诉讼标的</span>
+					</div>
+					<div class="caculatebox-r H1_4inputrow">
+						<div class="mui-input-row">
+							<input type="text" class="mui-input-clear" id="cost_amount" placeholder="请输入金额（元/单位）" />
+							<span class="input-row-right"></span>
+						</div>
+					</div>
+				</section>
+
+				<section class="btngroup">
+					<div class="caculatebox-l">
+						<input type="button" id="resetBtn" value="重  置" />
+					</div>
+					<div class="caculatebox-r">
+						<input type="button" id="cost_btn" value="计 算" />
+					</div>
+				</section>
+
+				<section>
+					<div class="caculatebox-l">
+						<span>计算结果</span>
+					</div>
+					<div class="caculatebox-r">
+						<p class="result" id="cost_result"></p>
+					</div>
+				</section>
+			</div>
+			<div class="tipbox">
+				<p>友情提示：本工具的计算依据是，国务院于2006年12月19日颁布并在2007年4月1日开始实施的《诉讼费用交纳办法》(国务院481号令). </p>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue2.5.9.js"></script>
+		<script src="vue/axios.min.js"></script>
+		<script src="vue/httpVueLoader.js"></script>
+		<script src="js/litigationCost.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script type="text/javascript">
+			$('#cost_btn').on('click', function() {
+				$('#cost_result').html(litigationCost($('#cost_amount').val(), $('#litigation_type').val()));
+				return false;
+			});
+			
+			$('#resetBtn').on('click', function() {
+				$('#cost_amount').val('');
+				$('#litigation_type').val('1');
+				$('#cost_result').html('');
+				return false;
+			});
+		</script>
+	</body>
+
+</html>

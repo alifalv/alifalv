@@ -1,0 +1,96 @@
+{{if (userType == 1)}}
+<div class="ui-person-menu">
+    <dl>
+        <dt><a {{@ 'personal_consult.html' | createMenuUrl}}><i class="ui-icon-fuwuzhongxin"></i>服务中心</a></dt>
+        <dd>
+            <a {{@ 'personal_consult.html' | createMenuUrl}}>我的咨询<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_caseentrust.html' | createMenuUrl}}>案件委托<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_order.html' | createMenuUrl}}>我的订单<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_mycounselor_consulting.html' | createMenuUrl}}><i class="iconfont icon-group ui-color-gray"></i>我的咨询师</a></dt>
+        <dd>
+            <a {{@ 'personal_mycounselor_consulting.html' | createMenuUrl}}>咨询过的咨询师<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_mycounselor_browse.html' | createMenuUrl}}>浏览过的咨询师<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_mycounselor_collect.html' | createMenuUrl}}>收藏过的咨询师<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_info.html' | createMenuUrl}}><i class="ui-icon-guanlizhongxin"></i>管理中心</a></dt>
+        <dd>
+            <a {{@ 'personal_info.html' | createMenuUrl}}>账号设置<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_jobhunt_advocate.html' | createMenuUrl}}>求职招聘<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_msgsetting.html' | createMenuUrl}}>消息设置<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_vipinfo_advocate.html' | createMenuUrl}}>认证<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+</div>
+{{else if (userType == 2)}}
+<!-- 咨询师 -->
+<div class="ui-person-menu">
+    <dl>
+        <dt><a {{@ 'personal_consult.html' | createMenuUrl}}><i class="ui-icon-fuwuzhongxin"></i>服务中心</a></dt>
+        <dd>
+            <a {{@ 'personal_consult.html' | createMenuUrl}}>我的咨询<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_caseentrust.html' | createMenuUrl}}>案件委托<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_order.html' | createMenuUrl}}>我的订单<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_answer_consult.html' | createMenuUrl}}><i class="ui-icon-wodeguanzhu"></i>客户服务</a></dt>
+        <dd>
+            <a {{@ 'personal_answer_consult.html' | createMenuUrl}}>我解答的咨询<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_bidding_case.html' | createMenuUrl}}>我竞拍的案件<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_home_all.html' | createMenuUrl}}><i class="ui-icon-zhuye"></i>我的主页</a></dt>
+        <dd>
+            <a {{@ 'personal_home_styles.html' | createMenuUrl}}>我的风采<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_home_works.html' | createMenuUrl}}>工作动态<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_home_cases.html' | createMenuUrl}}>成功案例<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_home_essays.html' | createMenuUrl}}>我的随笔<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_info.html' | createMenuUrl}}><i class="ui-icon-guanlizhongxin"></i>管理中心</a></dt>
+        <dd>
+            <a {{@ 'personal_info.html' | createMenuUrl}}>账号设置<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_jobhunt_counselor.html' | createMenuUrl}}>求职招聘<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_msgsetting.html' | createMenuUrl}}>消息设置<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_vipinfo_counselor.html' | createMenuUrl}}>认证<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+</div>
+
+{{else if (userType == 3)}}
+<!-- 企业会员 -->
+<div class="ui-person-menu">
+    <dl>
+        <dt><a {{@ 'personal_consult.html' | createMenuUrl}}><i class="ui-icon-fuwuzhongxin"></i>服务中心</a></dt>
+        <dd>
+            <a {{@ 'personal_consult.html' | createMenuUrl}}>我的咨询<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_caseentrust.html' | createMenuUrl}}>案件委托<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_order.html' | createMenuUrl}}>我的订单<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_mycounselor_consulting.html' | createMenuUrl}}><i class="iconfont icon-group ui-color-gray"></i>我的咨询师</a></dt>
+        <dd>
+            <a {{@ 'personal_mycounselor_consulting.html' | createMenuUrl}}>咨询过的咨询师<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_mycounselor_browse.html' | createMenuUrl}}>浏览过的咨询师<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_mycounselor_collect.html' | createMenuUrl}}>收藏过的咨询师<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+    <dl>
+        <dt><a {{@ 'personal_info.html' | createMenuUrl}}><i class="ui-icon-guanlizhongxin"></i>管理中心</a></dt>
+        <dd>
+            <a {{@ 'personal_info.html' | createMenuUrl}}>账号设置<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_jobhunt_enterprise.html' | createMenuUrl}}>求职招聘<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_msgsetting.html' | createMenuUrl}}>消息设置<i class="iconfont icon-right"></i></a>
+            <a {{@ 'personal_vipinfo_enterprise.html' | createMenuUrl}}>认证<i class="iconfont icon-right"></i></a>
+        </dd>
+    </dl>
+</div>
+{{/if}}

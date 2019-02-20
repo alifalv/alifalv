@@ -1,0 +1,777 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>招聘信息</h1>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="publishContent()">发布内容</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content" id="content" style="display: block">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<div class="form-group">
+							<label class="control-label" for="starttime">时间:</label>
+							<div style="display: inline; margin-left: 10px; margin-right: 10px;">
+								<input type="text" style="border: 1px solid #ccc;" value="" id="starttime" readonly> 到 
+								<input type="text" style="border: 1px solid #ccc;" value="" id="endtime" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="text" id="id_input" class="form-control mx-sm-3"
+								aria-describedby="passwordHelpInline" placeholder="岗位名称，公司名称">
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table id="zpxxDT" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>岗位名称</th>
+								<th>公司名称</th>
+								<th>添加时间</th>
+								<th>发布人</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content" id="fabu" style="display: none">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">发布内容</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()"></button>
+				</div>
+				<div class="card-header">
+					<input type="hidden" name="advertiseId" value=""> 
+					<input type="hidden" name="userId" value="">
+					<form class="form-inline">
+						<label class="save-edit">发布单位</label> 
+						<input type="text" id="userCompany_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" style="margin-top: 10px;">
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">发布人</label> 
+						<input type="text" id="userName_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" style="margin-top: 10px;">
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">岗位名称</label> 
+						<input type="text" id="jobName_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" style="margin-top: 10px;">
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">工作类型</label> 
+						<select class="form-control mx-sm-3" style="margin-top: 10px;" id="type_publish">
+							<option value="1">全职</option>
+							<option value="0">兼职</option>
+						</select>
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">招聘人数</label> 
+						<input type="text" id="recruitsNum_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" style="margin-top: 10px;">
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">薪资范围</label> 
+						<select class="form-control mx-sm-3" style="margin-top: 10px;" id="sal_publish">
+							<option value="1">1.5K以下</option>
+							<option value="2">1.5-2K</option>
+							<option value="3">2-3K</option>
+							<option value="4">3-4.5K</option>
+							<option value="5">4.5-6K</option>
+							<option value="6">6-8K</option>
+							<option value="7">8-10K</option>
+							<option value="8">10-15K</option>
+							<option value="9">15-20K</option>
+							<option value="10">20-25K</option>
+							<option value="11">25-30K</option>
+							<option value="12">30-40K</option>
+							<option value="13">40-50K</option>
+							<option value="14">50-70K</option>
+							<option value="15">70-100K</option>
+							<option value="16">100K及以上</option>
+						</select>
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">工作地点</label> 
+						<select class="form-control mx-sm-3" style="margin-top: 10px;" id="select_province" onchange="changeProvince()">
+
+						</select> 
+						<select class="form-control mx-sm-3" style="margin-top: 10px;" id="select_city">
+
+						</select>
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">工作经验</label> 
+						<select class="form-control mx-sm-3" style="margin-top: 10px;" id="workExperience_publish">
+							<option value="1">不限</option>
+							<option value="2">1年以内</option>
+							<option value="3">1-2年</option>
+							<option value="4">2-3年</option>
+							<option value="5">3-4年</option>
+							<option value="6">4-5年</option>
+							<option value="7">5-10年</option>
+							<option value="8">10年以上</option>
+						</select>
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">学历要求</label> 
+						<select class="form-control mx-sm-3" style="margin-top: 10px;" id="qualification_publish">
+							<option value="1">不限</option>
+							<option value="2">初中及以下</option>
+							<option value="3">高中</option>
+							<option value="4">中技</option>
+							<option value="5">中专</option>
+							<option value="6">大专</option>
+							<option value="7">本科</option>
+							<option value="8">硕士</option>
+							<option value="9">MBA</option>
+							<option value="10">博士</option>
+						</select>
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">职位描述</label>
+						<textarea id="jobDesc_publish" class="form-control mx-sm-3"
+							rows="3" placeholder="Enter ..." style="margin-top: 10px; width: 80%"></textarea>
+					</form>
+					<form class="form-inline center">
+						<button type="button" class="btn btn-primary save" onclick="savePublish()">保存</button> &nbsp;
+						<button type="button" class="btn btn-primary edit" onclick="editPublish()">修改</button> &nbsp;
+						<button type="button" class="btn btn-primary" onclick="cancel()">取消</button> &nbsp;
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">审核</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-check form-check-inline">
+					<label class="form-check-label mx-sm-3" for="inlineRadio1">审核结果</label>
+					<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+					<label class="form-check-label" for="inlineRadio1">通过</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					<label class="form-check-label" for="inlineRadio2">不通过</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> &nbsp;
+				<button type="button" class="btn btn-primary">Save changes</button> &nbsp;
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除?</span></li>
+				</ul>
+				<input type="text" id="id_del" style="display: none;"> 
+				<input type="text" id="userId_del" style="display: none;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button> &nbsp;
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button> &nbsp;
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="showResumeList" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog showResumeList modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">简历列表</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body ResumeList">
+			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button> &nbsp;
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+.modal-dialog.showResumeList { max-width: 800px; }
+.recruit {
+	position: relative;
+	left: -13px;
+	bottom: 9px;
+}
+</style>
+<script type="application/javascript" charset="utf-8">
+	function publishContent(){
+        $("#fabu").css('display','block');
+        $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.edit").hide();
+        $("#userCompany_publish").val("");
+        $("#userName_publish").val("");
+        $("#jobName_publish").val("");
+        $("#type_publish").val("");
+        $("#recruitsNum_publish").val("");
+        $("#sal_publish").val("1");
+        $("#city_publish").val("");
+        $("#workExperience_publish").val("1");
+        $("#qualification_publish").val("1");
+        $("#jobDesc_publish").val("");
+	}
+	function editContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.save").hide();
+	}
+	function cancel(){
+		$("#fabu").css('display','none');
+        $("#content").css('display','block');
+	}
+	function savePublish(){
+		var parameter = {
+         	userId:0,//sessionStorage.getItem('sys_userId'),// from login msg
+         	userType:0,
+         	companyName:$("#userCompany_publish").val(),
+        		linkman:$("#userName_publish").val(),
+        		jobName:$("#jobName_publish").val(),
+        		type:$("#type_publish").val(),
+        		recruitsNum:$("#recruitsNum_publish").val(),
+        		sal:$("#sal_publish").val(),
+        		province:$("#select_province").val(),
+        		city:$("#select_city").val(),
+        		workExperience:$("#workExperience_publish").val(),
+        		qualification:$("#qualification_publish").val(),
+        		jobDesc:$("#jobDesc_publish").val()
+        }
+		console.log(parameter);
+		tempUrl = "api/user/sendJob";
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                alert("发布成功");
+	                $("#userCompany_publish").val("");
+	                $("#userName_publish").val("");
+	                $("#jobName_publish").val("");
+	                $("#recruitsNum_publish").val("");
+	                $("#sal_publish").val("1");
+	                $("#city_publish").val("");
+	                $("#workExperience_publish").val("1");
+	                $("#qualification_publish").val("1");
+	                $("#jobDesc_publish").val("");
+	                $("#fabu").css('display','none');
+	                $("#content").css('display','block');
+	                reload();
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("发布失败");
+            }
+		});
+	}
+</script>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+	$("#outstarttime").jeDate(start);
+	$("#outendtime").jeDate(end);
+	$("#intime").jeDate(intime);
+	$("#addRecordTime").jeDate(addRecordTime);
+	//时间控件 结束
+	
+	//发布或撤销按钮
+	function publishOrCloseJob(userId,advertiseId,state){
+		var parameter = {
+			userId:userId,
+			advertiseId:advertiseId,
+			state:state
+		};
+		var tempUrl = "api/user/publishOrCloseJob";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                if(state==1){alert("发布成功");}
+	                else if(state==0){alert("撤销成功");}
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("操作失败");
+            }
+		});
+	}
+	
+	//编辑按钮  表格操作
+	function setEdit(id){
+		var parameter = {
+			advertiseId:id
+		};
+		tempUrl = "api/user/seacherJobDetail";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                		editContent();
+                		$("input[name='userId']").val(data.data.userId);
+                		$("input[name='advertiseId']").val(data.data.advertiseId);
+                    $("#userCompany_publish").val(data.data.companyName);
+                    $("#userName_publish").val(data.data.linkman);
+                    $("#jobName_publish").val(data.data.jobName);
+                    $("#type_publish").val(data.data.type);
+                    $("#recruitsNum_publish").val(data.data.recruitsNum);
+                    $("#sal_publish").val(data.data.sal);
+                    $("#select_province").val(data.data.province);
+                    $("#select_city").val(data.data.city);
+                    $("#workExperience_publish").val(data.data.workExperience);
+                    $("#qualification_publish").val(data.data.qualification);
+                    $("#jobDesc_publish").val(data.data.jobDesc);
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+		});
+	}
+	
+	//修改
+	function editPublish(){
+		var parameter = {
+			userId:$("input[name='userId']").val(),
+			advertiseId:$("input[name='advertiseId']").val(),
+         	companyName:$("#userCompany_publish").val(),
+        		linkman:$("#userName_publish").val(),
+        		jobName:$("#jobName_publish").val(),
+        		type:$("#type_publish").val(),
+        		recruitsNum:$("#recruitsNum_publish").val(),
+        		sal:$("#sal_publish").val(),
+        		province:$("#select_province").val(),
+        		city:$("#select_city").val(),
+        		workExperience:$("#workExperience_publish").val(),
+        		qualification:$("#qualification_publish").val(),
+        		jobDesc:$("#jobDesc_publish").val()
+		}
+		console.log(parameter);
+		tempUrl = "api/user/updateJob";
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                alert("修改成功");
+	                $("#userCompany_publish").val("");
+	                $("#userName_publish").val("");
+	                $("#jobName_publish").val("");
+	                $("#recruitsNum_publish").val("");
+	                $("#sal_publish").val("1");
+	                $("#city_publish").val("");
+	                $("#workExperience_publish").val("1");
+	                $("#qualification_publish").val("1");
+	                $("#jobDesc_publish").val("");
+	                $("#fabu").css('display','none');
+	                $("#content").css('display','block');
+	                reload();
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("修改失败");
+            }
+		});
+	}
+	
+	//显示删除对话框
+	function delMsg(id,userId){
+		$("#id_del").val(id);
+		$("#userId_del").val(userId);
+		$("#mySmallModalLabel").modal("show");
+	}
+	
+	//删除按钮
+	function delResult(){
+		var id = $("#id_del").val();
+		var userId = $("#userId_del").val();
+		$("#mySmallModalLabel").modal("hide");
+		var parameter = {
+			advertiseId:id,
+			userId:userId
+		};
+		console.log(parameter);
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+"api/user/deleteJob",
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                alert("删除成功");
+	                sendMessage();
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+		});
+	}
+	
+	//发站内消息
+	function sendMessage(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#userId_del').val(),
+	            	messageContent:"招聘内容违规已删除",
+	            	businessType:1,
+	            	businessId:$("#id_del").val(),
+	            	messageType:"招聘信息"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+	
+	//刷新表格
+    function reload(){
+		var table = $('#zpxxDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//查找按钮
+	function search(){
+		zpxxDT.ajax.reload();
+	} 
+	
+	//重置按钮
+	function reset(){
+		$("#conditionValue").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
+		$("#select_type").val("0");
+	} 
+	
+	//显示简历列表
+	function showResumeList(advertiseId,userId){
+		$("#showResumeList").modal("show");
+		var parameter = {advertiseId:advertiseId};
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+"api/user/collecResumeList/"+userId+"/1/100",
+            data:parameter,
+            success : function(data) {
+                console.log(data);
+                $(".ResumeList").empty();
+                if(data.records>0){
+                		for(var i in data.rows){
+                			if(data.rows[i].advertiseId!=advertiseId){continue;}
+                        	var htmltext = '<div class="form-check"><label>简历名称：</label><label class="form-check-label" style="width:200px;"><a href="#" onclick="RedirectToPC(\'recruitment_resumeinfo.html?userId='+data.rows[i].userId+'\')">'+data.rows[i].resumeName+'</a></label><label>岗位名称：</label><label class="form-check-label" style="width:200px;">'+data.rows[i].jobName+'</label><label class="form-check-label">'+data.rows[i].sendTime+'</label></div>';
+						$(".ResumeList").append(htmltext);
+                		}
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+      	});
+	}
+</script>
+<script type="application/javascript" charset="utf-8">
+	var zpxxDT;
+	$(document).ready(function(){
+		//获取省份信息
+		getProvinceList();
+		//获取城市信息
+		changeProvince();
+		zpxxDT=$('#zpxxDT').DataTable( {
+	        //-------------固定配置，不用改--------------
+	        "ordering": false,
+	        "serverSide": true,
+	        "pagingType":"numbers",
+	        "searching": false,
+	        "processing": true,
+	        "pageLength": 10,
+	        "lengthChange": false,
+			"language": {
+		        "sProcessing": "处理中...",
+		        "sLengthMenu": "显示 _MENU_ 项结果",
+		        "sZeroRecords": "没有匹配结果",
+		        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+		        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+		        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+		        "sInfoPostFix": "",
+		        "sSearch": "搜索:",
+		        "sUrl": "",
+		        "sEmptyTable": "表中数据为空",
+		        "sLoadingRecords": "载入中...",
+		        "sInfoThousands": ",",
+		        "oPaginate": {
+		            "sFirst": "首页",
+		            "sPrevious": "上页",
+		            "sNext": "下页",
+		            "sLast": "末页"
+		        },
+		        "oAria": {
+		            "sSortAscending": ": 以升序排列此列",
+		            "sSortDescending": ": 以降序排列此列"
+		        }
+		    },
+            //----------------------------------------------
+            ajax:{
+                type:'POST',
+                data:{
+                    "start": 0,
+                    "length": 10
+                }
+            },
+			"aoColumns": [
+				//编号
+				{ "data":"advertiseId" },		
+				//岗位名称
+				{ "data":"jobName",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.jobName  != null && full.jobName  !=""){
+							return '<a href="#" onclick="RedirectToPC(\'recruitment_jobinfo.html?advertiseId='+full.advertiseId+'\')">'+full.jobName+'</a>';
+						};
+						return "";
+					}
+				},	
+				//公司名称
+				{ "data":"companyName",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.companyName != null && full.companyName !=""){
+							return full.companyName;
+						};
+						return "";
+					}
+				},
+				//添加时间
+				{ "data":"sendTime" },
+				//发布人
+				{ "data":"linkman ",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.linkman  != null && full.linkman  !=""){
+							return full.linkman ;
+						};
+						return "";
+					}
+				},
+				//状态
+				{ "data":"state ",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.state  == null || full.state  ==""){
+						   return "待审核";
+					   }else if(full.state==1){
+						   return "发布成功";
+					   }else if(full.state==2){
+						   return "发布失败";
+					   }
+					}
+				},
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						var texta = "";
+						var textb = "";
+						var textc = '<label><input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.advertiseId+'\',\''+full.userId+'\')"/>&nbsp;</label>';
+						var textd = "";
+						if(full.userType==0){
+							if(full.state==0){
+								texta = '<label><input type="button" class="btn btn-success" value="发布" onclick="publishOrCloseJob(\''+full.userId+'\',\''+full.advertiseId+'\',\''+1+'\')"/>&nbsp;</label>';
+							}else if(full.state==1){
+								texta = '<label><input type="button" class="btn btn-success" value="撤销" onclick="publishOrCloseJob(\''+full.userId+'\',\''+full.advertiseId+'\',\''+0+'\')"/>&nbsp;</label>';
+							}
+							textb = '<label><input type="button" class="btn btn-success" value="编辑" onclick="setEdit(\''+full.advertiseId+'\')"/>&nbsp;</label>';
+							if(full.resumeCount>0){
+								textd = '<label><input type="button" class="btn btn-success" value="简历" onclick="showResumeList(\''+full.advertiseId+'\',\''+full.userId+'\')"/><span class="badge badge-warning navbar-badge recruit">'+full.resumeCount+'</span>&nbsp;</label>';
+							}
+						}
+						return  texta+textb+textc+textd;
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+				aoData.push({'name':'conditionValue','value':$('#id_input').val()});
+				aoData.push({'name':'endTime','value':$('#endtime').val()});
+				aoData.push({'name':'startTime','value':$('#starttime').val()});
+				aoData.push({'name':'model','value':3});
+                var oTable = $('#zpxxDT').dataTable();
+	        		var tableSetings=oTable.fnSettings();  
+	        		var paging_length=tableSetings._iDisplayLength;//当前每页显示多少  
+	        		var page_start=tableSetings._iDisplayStart;//当前页开始  
+	        		var pageNo = (page_start / paging_length)+1; //得到页码值
+	        		$.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl_pc+"api/user/newJobList/"+pageNo+"/10",
+					"data": aoData,
+					"success": fnCallback
+				});
+			}
+		} );
+	});
+	
+	//获取省份信息
+	function getProvinceList(){
+		Yajax({
+		    type:'POST',
+		    url:requestUrl+"address/provinceList",
+		    async: false,
+		    success : function(data) {
+		        console.log(data);
+		        if(data.code==1){
+		            for(var i in data.data){
+					 	var selecthtml = '<option value="'+data.data[i].provinceId+'">'+data.data[i].provinceName+'</option>';
+					 	$('#select_province').append(selecthtml);
+						$("#select_province").val("19"); 
+		            }
+		        }
+		    },
+		    fail:function (data) {
+		        console.log(data);
+		    }
+		});
+	}
+	
+	//根据省份获取城市信息
+	function changeProvince(){
+		var provinceId = $("#select_province").val();
+		Yajax({
+		    type:'POST',
+		    url:requestUrl+"address/cityListByProvince/"+provinceId,
+	      	async: false,
+		    success : function(data) {
+		        console.log(data);
+		        if(data.code==1){
+		        		$('#select_city').empty();
+		            for(var i in data.data){
+		            	 	var selecthtml = '<option value="'+data.data[i].cityId+'">'+data.data[i].cityName+'</option>';
+		            	 	$('#select_city').append(selecthtml);
+		            }
+		        }
+		    },
+		    fail:function (data) {
+		        console.log(data);
+		    }
+		});
+	}
+</script>
+</body>
+</html>

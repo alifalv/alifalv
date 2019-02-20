@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>法律咨询</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<style>
+			.mui-control-content {
+				height: -webkit-fill-available;
+				height: -moz-fill-available;
+				height: -moz-available;    /* FireFox目前这个生效 */
+				height: fill-available;;
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript :history.back(-1);"></a>
+			</div>
+			<h2>法律咨询</h2>
+			<div class="goback msgcenter">
+				<a href=""><img src="images/myinfo/order-msg.png" alt="" /></a>
+			</div>
+		</div>
+		<div >
+			{{list1List}}
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter idx-band5" id="app" v-cloak>
+			<div class="newsBox-tit flex_Horizontal mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#list1">我的解答</a>
+				<a class="mui-control-item" href="#list2">我的咨询</a>
+			</div>
+			<div class="newsBox page-slideright">
+				<div id="list1" class="mui-control-content mui-active">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul>
+								<li  class="flex_Horizontal" v-for="(item, index) in list1List" :key="index">
+									<div class="left">
+										<img :src="item.userImg" /> 
+									</div>
+									<div class="right">
+										<div class="t">
+											<span>{{item.userName}}</span><span>{{item.sendTime | subDay}}</span>
+										</div>
+										<div class="c">
+											<h4>{{item.caseTypeName}}｜{{item.title}} </h4>
+											<p class="greyfont">{{item.articleContent | removeHtmlTag}}</p>
+										</div>
+										<div class="b">
+											<p class="redfont">赏金：￥<span>{{item.reward || 0}}</span>回复：<span>{{item.replyNum || 0}}</span></p>
+											<p class="statusbar"><span class="deletebtn"></span></p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div id="list2" class="mui-control-content">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul>
+								<li href="" class="flex_Horizontal" v-for="(item, index) in list2List" :key="index">
+									<div class="left">
+										<img :src="item.userImg" />
+									</div>
+									<div class="right">
+										<div class="t">
+											<span>{{item.nickName}}</span><span>{{item.sendTime}}</span>
+										</div>
+										<div class="c">
+											<h4>{{item.caseTypeName}}｜{{item.title}} </h4>
+											<p class="greyfont">{{item.articleContent}}</p>
+										</div>
+										<div class="b">
+											<p class="redfont">赏金：￥<span>{{item.reward}}</span>回复：<span>{{item.replyNum}}</span></p>
+											<p class="statusbar"><span class="deletebtn" :data-adviceid="item.adviceId"></span></p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		</div>-->
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/MyLawask1.js"></script>
+	</body>
+
+</html>

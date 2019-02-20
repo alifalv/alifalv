@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 简历详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header" type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-30">
+        <div class="ui-regpanel ui-padding-b-no">
+            <div class="row">
+                <script id="resumeInfoTmpl" type="text/html">
+                    <div class="col-xs-12 ui-padding-40">
+                        <div class="ui-size-25 ui-border-b-1-bluegary ui-padding-b-20">{{data.resumeName}} <a href="javascript:void(0);" data-resumeid="{{data.resumeId}}" class="j-star-btn ui-color-gray ui-right ui-size-16"><i class="iconfont icon-xingxing"></i>收藏</a></div>
+                        <div class="row">
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">姓名</span><span class="ui-bold">{{data.userName}}</span></div>
+                                <div class="ui-bg-lightgray ui-padding-tb-10 ui-margin-t-17"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">工作经验</span><span class="ui-bold">{{data.workExperience}}年</span></div>
+                                <div class="ui-bg-lightgray ui-padding-tb-10 ui-margin-t-17"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">毕业学校</span><span class="ui-bold">{{data.school}}</span></div>
+                            </div>
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">性别</span><span class="ui-bold">{{data.sex}}</span></div>
+                                <div class="ui-bg-lightgray ui-padding-tb-10 ui-margin-t-17"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">最高学历</span><span class="ui-bold">{{data.qualificationName || '无'}} </span></div>
+                                <div class="ui-bg-lightgray ui-padding-tb-10 ui-margin-t-17"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">期望薪金</span><span class="ui-bold">{{data.salName}}</span></div>
+                            </div>
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">出生年月</span><span class="ui-bold">{{data.birthDate | subDay}}</span></div>
+                                <div class="ui-bg-lightgray ui-padding-tb-10 ui-margin-t-17"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">工作城市</span><span class="ui-bold">{{data.provinceName}} {{data.cityName}}</span></div>
+                                <div class="ui-bg-lightgray ui-padding-tb-10 ui-margin-t-17"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">联系方式</span><span class="ui-bold">{{@ isLogining ? data.mobile : '<a href="javascript:void(0);" id="loginjump_btn" class="ui-color-lightblue">点击登录即可查看</a>'}}</span></div>
+                            </div>
+
+                            <div class="col-xs-3  ui-padding-lr-15">
+                                <div class="ui-margin-t-17 text-center" style="height: 155px;width: 130px">
+                                    <!--<img src="../img/demo-head.png" alt="" class="ui-img-height-fill">-->
+                                    <img src="{{data.userImg | createImgUrl}}" alt="" class="ui-img-height-fill">
+
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10">
+                                    <div class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">自我评价</div>
+                                    <p class="ui-line-height-20 ui-padding-r-20 ui-margin-l-100 ui-bold">{{@ data.selfAssessment}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{each data.experienceList exp i}}
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-12 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">工作经历</span><span class="ui-bold">{{exp.companyName || '无'}}</span></div>
+                            </div>
+
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">职位名称</span><span class="ui-bold">{{exp.jobName}}</span></div>
+                            </div>
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">所属部门</span><span class="ui-bold">{{exp.deptName}}</span></div>
+                            </div>
+                            <div class="col-xs-6 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">时间段</span><span class="ui-bold">{{exp.inDate}} ~ {{exp.outDate}}</span></div>
+                            </div>
+
+                            <div class="col-xs-12 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10">
+                                    <div class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">工作内容</div>
+                                    <p class="ui-line-height-20 ui-padding-r-20 ui-margin-l-100 ui-bold">{{exp.workContent}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+
+                        {{each data.eduList edu i}}
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-12 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">教育经历</span><span class="ui-bold">{{edu.schoolName}}</span></div>
+                            </div>
+
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left ">专业</span><span class="ui-bold">{{edu.major}}</span></div>
+                            </div>
+                            <div class="col-xs-3 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">学历</span><span class="ui-bold">{{edu.qualificationName || '无'}}</span></div>
+                            </div>
+                            <div class="col-xs-6 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">时间段</span><span class="ui-bold">{{edu.inDate}} ~ {{edu.outDate}}</span></div>
+                            </div>
+
+                            <div class="col-xs-12 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class=" ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">在校经历</span><span class="ui-bold">{{edu.schoolDesc}}</span></div>
+                            </div>
+                        </div>
+                        {{/each}}
+
+                        <div class="row">
+                            <div class="col-xs-12 ui-margin-t-17 ui-padding-lr-15 ">
+                                <div class="ui-bg-lightgray ui-padding-tb-10"><span class="ui-padding-lr-24 ui-color-gray ui-width-110 ui-inline-block ui-justify ui-left">附件</span>
+                                    {{if (getLength(data.fileList) > 0)}}
+                                    {{each data.fileList file i }}
+                                        <span><a href="{{file.fileName | createFileUrl}}" class="ui-color-lightblue" target="_blank">{{file.fileName | ridPath}}</a></span>
+                                    {{/each}}
+                                    {{else}}
+                                    <div class="text-center">无</div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>法律疑难问题与观点</h1>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-success" style="margin-left: 10px;" data-toggle="modal"
+					data-target=".bd-example-modal-lg" onclick="publishContent()">发布内容</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content" id="content" style="display: block">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<div class="form-group">
+							<label class="control-label" for="starttime">时间:</label>
+							<div style="display: inline; margin-left: 10px; margin-right: 10px;">
+								<input type="text" style="border: 1px solid #ccc;" value="" id="starttime" readonly> 到 
+								<input type="text" style="border: 1px solid #ccc;" value="" id="endtime" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="text" id="conditionValue" class="form-control mx-sm-3"
+								aria-describedby="passwordHelpInline" placeholder="标题、发布人">
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table id="cjDT" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>标题</th>
+								<th>类型</th>
+								<!--<th>所属顺序</th>-->
+								<th>发布人</th>
+								<th>添加时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content" id="fabu" style="display: none">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">发布内容</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()"></button>
+				</div>
+				<div class="card-header">
+					<input type="hidden" name="articleId" value="">
+					<form class="form-inline">
+						<label class="save-edit">类型</label> 
+						<select class="form-control mx-sm-3" id="select_type_publish" style="margin-top: 10px; width: 160px;">
+							<option value="1">立案问题</option><option value="2">刑事侦查</option><option value="3">刑事犯罪</option><option value="4">监所问题</option>
+							<option value="5">行政处罚</option><option value="6">行政审批</option><option value="7">行政复议与诉讼</option><option value="8">婚姻家庭纠纷</option>
+							<option value="9">交通事故纠纷</option><option value="10">民间借贷纠纷</option><option value="11">劳动雇佣纠纷</option><option value="12">公司问题</option>
+							<option value="13">房地产纠纷</option><option value="14">担保纠纷</option><option value="15">合同纠纷</option><option value="16">侵权责任纠纷</option>
+							<option value="17">知识产权纠纷</option><option value="18">税务问题</option><option value="19">拆迁争议</option><option value="20">司法鉴定</option>
+							<option value="21">民事执行</option><option value="22">医疗纠纷</option><option value="23">仲裁与诉讼</option><option value="24">其他民商事纠纷</option>
+						</select>
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">标题</label> 
+						<input type="text" id="title_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" placeholder="请输入标题内容" style="margin-top: 10px; width: 80%;">
+					</form>
+					<form class="form-inline">
+						<label class="save-edit">发布人</label> 
+						<input type="text" id="userName_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" style="margin-top: 10px;">
+					</form>
+					<form class="form-inline">
+						<label class="save-edit"><input id="ck_rmbUser" type="checkbox" value="" />外链地址</label> 
+						<input type="text" id="outJoinUrl_publish" class="form-control mx-sm-3"
+							aria-describedby="passwordHelpInline" placeholder="请输入此法律疑难问题与观点链接地址" style="margin-top: 10px;">
+					</form>
+					<form class="form-inline" id="articleContent_editer">
+						<label class="save-edit">内容</label>
+						<script type="text/plain" id="myEditor" class="form-control mx-sm-3" style="width: 800px; height: 400px;"></script>
+						<!-- 实例化编辑器 -->
+						<script type="text/javascript">
+							UM.delEditor('myEditor');
+							var um = UM.getEditor('myEditor');
+						</script>
+					</form>
+					<form class="form-inline center">
+						<button type="button" class="btn btn-primary save" onclick="savePublish()">保存</button>&nbsp;
+						<button type="button" class="btn btn-primary edit" onclick="editPublish()">修改</button>&nbsp;
+						<button type="button" class="btn btn-primary" onclick="cancel()">取消</button>&nbsp;
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">审核</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-check form-check-inline" style="margin-left: 60px;">
+					<label class="form-check-label mx-sm-3">审核结果</label> 
+					<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio1" value="1" checked="checked"> 
+					<label class="form-check-label">通过</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio0" value="0"> 
+					<label class="form-check-label">不通过</label>
+				</div>
+				<input type="text" id="id_examine" style="display: none;" tabindex="1">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+				<button type="button" class="btn btn-primary" onclick="saveResult()">保存</button>&nbsp;
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除?</span></li>
+				</ul>
+				<input type="text" id="id_del" style="display: none;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>&nbsp;
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	function publishContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.edit").hide();
+	    $("#title_publish").val("");
+	    $("#userName_publish").val("");
+	    $("#outJoinUrl_publish").val("");
+	    UM.getEditor('myEditor').setContent("");
+	}
+	function editContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.save").hide();
+	}
+	function cancel(){
+		$("#fabu").css('display','none');
+	    $("#content").css('display','block');
+	}
+	var isOutJoin = 0;
+	//选中label
+	$("#ck_rmbUser").on("click", function() {
+		var input = $(this).find('input[id="ck_rmbUser"]');
+		if($("#ck_rmbUser").prop("checked")) {
+			$("#articleContent_editer").hide();
+			isOutJoin = 1;
+		} else {
+			$("#articleContent_editer").show();
+			isOutJoin = 0;
+		}
+	});
+	function savePublish(){
+		var parameter = {
+        		userId:sessionStorage.getItem('sys_userId'),// from login msg
+    	        isofficial:0,
+    	        articleType:$("#select_type_publish").val(),
+	        title:$("#title_publish").val(),
+	        realName:$("#userName_publish").val(),
+	        isOutJoin:isOutJoin,
+	        outJoinUrl:$("#outJoinUrl_publish").val(),
+	        articleContent:UM.getEditor('myEditor').getContent()
+		}
+		console.log(parameter);
+		tempUrl = "api/article/sendQuestionAndViewpoint";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                alert("发布成功");
+	                $("#title_publish").val("");
+	                $("#userName_publish").val("");
+	                $("#outJoinUrl_publish").val("");
+	                UM.getEditor('myEditor').setContent("");
+	                $("#fabu").css('display','none');
+	                $("#content").css('display','block');
+	                reload();
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("发布失败");
+            }
+		});
+	}
+</script>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+	$("#outstarttime").jeDate(start);
+	$("#outendtime").jeDate(end);
+	$("#intime").jeDate(intime);
+	$("#addRecordTime").jeDate(addRecordTime);
+	//时间控件 结束
+	
+	//发布按钮  表格操作
+	function publish(id){
+		var parameter = {
+			articleId:id,
+			columnCode:1,
+			isPush:1
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                alert("发布成功");
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("发布失败");
+            }
+		});
+	}
+	
+	//撤销按钮  表格操作
+	function revoke(id){
+		var parameter = {
+			articleId:id,
+			columnCode:1,
+			isPush:0
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                alert("撤销成功");
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("撤销失败");
+            }
+		});
+	}
+	
+	//编辑按钮  表格操作
+	function setEdit(userId,articleId){
+		var parameter = {
+			columnCode:1
+		};
+		tempUrl = "api/article/articleDetails/"+userId+"/"+articleId;
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                		editContent();
+		            $("input[name='articleId']").val(data.data.articleId);
+		            $("#select_type_publish").val(data.data.articleType);
+    	                $("#title_publish").val(data.data.title);
+    	                $("#userName_publish").val(data.data.realName);
+    	                $("#outJoinUrl_publish").val(data.data.outJoinUrl);
+    	                UM.getEditor('myEditor').setContent(data.data.articleContent);
+    	                if(data.data.isOutJoin==1){
+    	                    $("#ck_rmbUser").attr('checked', true);
+    	        				$("#articleContent_editer").hide();
+    	        				isOutJoin = 1;
+    	                }
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+		});
+	}
+	
+	//修改
+	function editPublish(){
+		var parameter = {
+			articleId:$("input[name='articleId']").val(),
+			columnCode:1,
+	        isofficial:0,
+	        articleType:$("#select_type_publish").val(),
+	        title:$("#title_publish").val(),
+	        realName:$("#userName_publish").val(),
+	        isOutJoin:isOutJoin,
+	        outJoinUrl:$("#outJoinUrl_publish").val(),
+	        articleContent:UM.getEditor('myEditor').getContent()
+		}
+		console.log(parameter);
+		tempUrl = "api/article/updateArticle";
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                alert("修改成功");
+	                $("#title_publish").val("");
+	                $("#userName_publish").val("");
+	                $("#outJoinUrl_publish").val("");
+	                UM.getEditor('myEditor').setContent("");
+	                $("#fabu").css('display','none');
+	                $("#content").css('display','block');
+	                reload();
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("修改失败");
+            }
+		});
+	}
+	
+	//显示删除对话框
+	function delMsg(id){
+		$("#id_del").val(id);
+		$("#mySmallModalLabel").modal("show");
+	}
+	
+	//删除按钮
+	function delResult(){
+		var id = $("#id_del").val();
+		$("#mySmallModalLabel").modal("hide");
+		var parameter = new FormData();
+        $("#id_del").val("");//重置
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+"api/article/deleteArticle/"+id,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                alert("删除成功");
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+		});
+	}
+	
+	//刷新表格
+    function reload(){
+		var table = $('#cjDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//查找按钮
+	function search(){
+		cjDT.ajax.reload();
+	} 
+	
+	//重置按钮
+	function reset(){
+		$("#conditionValue").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
+		$("#select_type").val("0");
+	} 
+</script>
+<script type="application/javascript" charset="utf-8">
+	var cjDT;
+	$(document).ready(function(){
+		cjDT=$('#cjDT').DataTable( {
+			//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 10,
+			"lengthChange": false,
+			"language": {
+				"sProcessing": "处理中...",
+				"sLengthMenu": "显示 _MENU_ 项结果",
+				"sZeroRecords": "没有匹配结果",
+				"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix": "",
+				"sSearch": "搜索:",
+				"sEmptyTable": "表中数据为空",
+				"sLoadingRecords": "载入中...",
+				"sInfoThousands": ",",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sPrevious": "上页",
+					"sNext": "下页",
+					"sLast": "末页"
+				},
+				"oAria": {
+					"sSortAscending": ": 以升序排列此列",
+					"sSortDescending": ": 以降序排列此列"
+				}
+			},
+			//----------------------------------------------
+			ajax:{
+				type:'POST',
+				data:{
+					"start": 0,
+					"length": 10
+				}
+			},
+			"aoColumns": [
+				//编号
+				{ "data":"articleId" },		
+				//标题
+				{ "data":"title",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.title  != null && full.title  !=""){
+							return '<a href="#" onclick="RedirectToPC(\'articles_probleminfo.html?articleId='+full.articleId+'\')">'+full.title+'</a>';
+						}
+						return "";
+					}
+				},
+				//类型
+				{ "data":"articleTypeDesc ",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.articleTypeDesc  != null && full.articleTypeDesc  !=""){
+							return full.articleTypeDesc ;
+						}
+						return "";
+					}
+				},
+				//发布人
+				{ "data":"realName ",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.realName  != null && full.realName  !=""){
+							return full.realName ;
+						}
+						return "";
+					}
+				},
+				//添加时间
+				{ "data":"sendTime" },
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						var texta = "";
+						var textb = "";
+						if(full.isPush==0 && full.isofficial==0){
+							texta = '<input type="button" class="btn btn-success" value="发布" onclick="publish(\''+full.articleId+'\')"/>&nbsp;';
+						}else if(full.isPush==1 && full.isofficial==0){
+							texta = '<input type="button" class="btn btn-success" value="撤销" onclick="revoke(\''+full.articleId+'\')"/>&nbsp;';
+						}
+						if(full.isofficial==0){
+							textb = '<input type="button" class="btn btn-success" value="编辑" onclick="setEdit(\''+full.userId+'\',\''+full.articleId+'\')"/>&nbsp;';
+						}
+						return  texta+textb+
+							'<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.articleId+'\')"/>';
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+				aoData.push({'name':'conditionValue','value':$('#conditionValue').val()});
+				aoData.push({'name':'endTime','value':$('#endtime').val()});
+				aoData.push({'name':'startTime','value':$('#starttime').val()});
+
+                var oTable = $('#cjDT').dataTable();
+	        		var tableSetings=oTable.fnSettings();  
+	        		var paging_length=tableSetings._iDisplayLength;//当前每页显示多少  
+	        		var page_start=tableSetings._iDisplayStart;//当前页开始  
+	        		var pageNo = (page_start / paging_length)+1; //得到页码值
+	        		$.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl_pc+"api/article/questionAndViewpointList/3/"+pageNo+"/10",
+					"data": aoData,
+					"success": fnCallback
+				} );
+			}
+		} );
+	});
+</script>
+</body>
+</html>

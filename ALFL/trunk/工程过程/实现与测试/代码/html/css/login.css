@@ -1,0 +1,760 @@
+﻿/*2017-07-21*/
+
+a {
+	display: block;
+}
+
+.Login {
+	height: 100%;
+	overflow-x: visible;
+	background: #efefef;
+}
+
+.Login footer {
+	background: #efefef;
+}
+
+.Login .ExtConter {
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	flex-direction: column;
+	height: 100%;
+}
+
+.Login .ExtConter footer {
+	position: static;
+	padding-bottom: 1rem;
+}
+
+.Login .findpwd {
+	text-align: right;
+	font-size: 0.6rem;
+	color: #007AFF;
+	padding-right: 0.4rem;
+}
+
+.from {
+	width: 100%;
+	margin-top: 2.5rem;
+}
+
+from input {
+	display: block;
+	width: 100%;
+	height: 1.8rem;
+	border: none;
+	margin-bottom: 0.08rem;
+	text-indent: 0.5rem;
+	font-size: 0.6rem;
+	background-color: #fff;
+}
+
+from button {
+	display: block;
+	margin: 1rem auto 0.4rem;
+	width: 93%;
+	height: 2rem;
+	border: none;
+	background: #e02e24;
+	font-size: 0.7rem;
+	color: white;
+	border-radius: 0.3rem;
+}
+
+.option {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.option a {
+	font-size: 0.6rem;
+	display: block;
+	margin: .0.6rem;
+	color: #666666;
+}
+
+footer {
+	position: absolute;
+	left: 0;
+	height: auto;
+	bottom: 1rem;
+	width: 100%;
+	text-align: center;
+}
+
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.footer .segment {
+	width: 32%;
+	height: 0.05rem;
+	background: #999999;
+}
+
+.footer p {
+	font-size: 0.6rem;
+	color: #999999;
+	margin: 0.5rem;
+}
+
+footer .weixing img {
+	width: 2rem;
+}
+
+footer .weixing p {
+	font-size: 0.6rem;
+	margin-top: 0.2rem;
+	color: #999999;
+}
+
+
+/*注册*/
+
+article {
+	width: 100%;
+	margin-top: 2.5rem;
+	position: relative;
+}
+
+article input {
+	margin-bottom: 0.05rem;
+}
+
+article from p {
+	font-size: 0.6rem;
+	color: #666666;
+	margin-left: 0.5rem;
+}
+
+article from .captcha {
+	position: absolute;
+	right: 0.5rem;
+	top: 2.2rem;
+	background: #fc5046;
+	width: 20%;
+	height: 1rem;
+	font-size: 0.5rem;
+	color: white;
+	text-align: center;
+	line-height: 1rem;
+}
+
+
+/*我的余额*/
+
+.wallet {
+	position: absolute;
+	right: 0.4rem;
+	top: 0rem;
+	width: 1.4rem;
+	height: 1.8rem;
+	z-index: 10;
+}
+
+article.coonet {
+	padding-top: 1.8rem;
+	margin: 0;
+}
+
+article .mybalance {
+	width: 100%;
+	height: 5rem;
+	border-top: 1px solid #efefef;
+	border-bottom: 1px solid #efefef;
+	background: white;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+article .mybalance h2 {
+	font-weight: 400;
+	width: 100%;
+	font-size: 1.3rem;
+	text-align: center;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	margin-top: 1.5rem;
+}
+
+article .mybalance h2 span {
+	vertical-align: bottom;
+	font-size: 0.6rem;
+	margin-left: 0.2rem;
+	line-height: .0.9rem;
+}
+
+article .mybalance .detail {
+	width: 2.4rem;
+	height: 0.8rem;
+	text-align: center;
+	border: 0.05rem solid #96abc8;
+	line-height: 0.8rem;
+	font-size: 0.5rem;
+	color: #96abc8;
+}
+
+article .earnings {
+	display: flex;
+	border-bottom: 1px solid #efefef;
+	background: white;
+	height: 3.4rem;
+	width: 100%;
+	align-items: center;
+	justify-content: space-around;
+}
+
+article .earning_w {
+	height: 2.9rem;
+	text-align: center;
+	width: 50%;
+	border-right: 1px solid #efefef;
+}
+
+article .earning-L {
+	height: 2.9rem;
+	text-align: center;
+	width: 50%;
+}
+
+article .earnings h2 {
+	font-size: 0.6rem;
+	font-weight: normal;
+	color: #999999;
+	margin-top: 0.5rem;
+}
+
+article .earnings p {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: black;
+}
+
+article .rule {
+	width: 100%;
+	background: white;
+	font-size: 0.6rem;
+	color: #999;
+	overflow: hidden;
+}
+
+article .rule p {
+	margin: 0.5rem;
+}
+
+.semit {
+	text-align: center;
+	margin: 1rem auto;
+	width: 93%;
+	height: 2rem;
+	background: #e02e24;
+	font-size: 0.7rem;
+	color: white;
+	border-radius: 0.3rem;
+	line-height: 2rem;
+}
+
+
+/*添加账户下拉框*/
+
+.mui-card {
+	margin: 0 !important;
+}
+
+.mui-radio.mui-left input[type='radio'],
+.mui-checkbox.mui-left input[type='checkbox'] {
+	left: 0 !important;
+}
+
+.mui-radio input[type='radio']:checked:before,
+.mui-checkbox input[type='checkbox']:checked:before {
+	color: #e02e24 !important;
+}
+
+#xingxi {
+	background-color: transparent;
+}
+
+from div#xingxi input {
+	display: block;
+	width: 100%;
+	height: 1.8rem;
+	border: none;
+	margin-bottom: 3px;
+	padding: 0;
+	text-indent: 0.5rem;
+	font-size: 0.6rem;
+	background-color: #fff;
+}
+
+#tianjiazhanghu {
+	padding-top: 0.4rem;
+}
+
+.mui-input-group .mui-input-row {
+	height: 1.8rem;
+}
+
+.mui-radio.mui-left label,
+.mui-checkbox.mui-left label {
+	padding-right: 15px;
+	padding-left: 58px;
+	line-height: 0.55rem;
+}
+
+.mui-radio label,
+.mui-checkbox label {
+	display: inline-block;
+	float: none;
+	width: 100%;
+	padding-right: 58px;
+}
+
+.mui-radio.mui-left label,
+.mui-checkbox.mui-left label {
+	padding-right: 15px;
+	padding-left: 2rem;
+}
+
+.mui-radio label,
+.mui-checkbox label {
+	display: inline-block;
+	float: none;
+	width: 100%;
+	padding-right: 58px;
+	font-size: 0.6rem;
+}
+
+.mui-radio input[type='radio']:before,
+.mui-checkbox input[type='checkbox']:before {
+	font-size: 1rem;
+	;
+}
+
+.mui-input-row label {
+	padding: 0.6rem 0;
+}
+
+.mui-radio input[type='radio'],
+.mui-checkbox input[type='checkbox'] {
+	top: 0.3rem;
+	width: 0.9rem !important;
+	height: 1rem;
+}
+
+h5,
+.mui-h5 {
+	font-size: 0.6rem;
+}
+
+
+/*选择账户*/
+
+header a.ATD {
+	position: absolute;
+	padding: 0.5rem;
+	left: auto;
+	top: 0;
+	right: 0rem;
+	font-size: 0.6rem;
+}
+
+.checkgroup .payway-l p {
+	font-size: 0.6rem;
+}
+
+.form h5 {
+	font-size: 0.8rem !important;
+}
+
+.Conter {
+	padding-top: 1.8rem;
+}
+
+#accout {
+	margin: 0;
+}
+
+.mui-table-view-cell::after {
+	bottom: -1px !important;
+}
+
+.mui-table-view-cell {
+	padding: 0 !important;
+}
+
+.mui-table-view-cell>.mui-slider-left>.mui-btn,
+.mui-table-view-cell>.mui-slider-right>.mui-btn {
+	margin: 0.19rem 0 0 0;
+}
+
+.payway {
+	background-color: #fff;
+	padding: 0 0.5rem;
+	margin-top: 0.2rem;
+}
+
+.payway label {
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	align-content: center;
+	font-size: 0.7rem;
+	line-height: 2.5rem;
+}
+
+.payway label input.paycheck {
+	display: inline-block;
+	width: 1.2rem;
+	height: 1.2rem;
+	background-position: center center;
+	background-image: url(../images/chose1.png);
+	background-size: 1.3rem;
+	background-repeat: no-repeat;
+}
+
+.payway label input.paycheck:checked {
+	background-image: url(../images/chose2.png);
+}
+
+.payway-l p {
+	padding-left: 1.6rem;
+	background-size: auto 60%;
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.payway .payway-l p.Unionpay {
+	background-image: url("../images/Unionpay.png");
+}
+
+.payway .payway-l p.Alipay {
+	background-image: url("../images/Alipay.png");
+}
+
+.payway-r {
+	display: flex;
+	display: -webkit-flex;
+	align-content: center;
+}
+
+.payway-r input {
+	align-self: center;
+}
+
+
+/*提现申请	*/
+
+.XZaccount {
+	background: white;
+	width: 100%;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	font-size: 0.6rem;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #efefef;
+	border-top: 0.5rem solid #efefef;
+}
+
+.XZaccount p {
+	margin: 0 0.5rem;
+}
+
+.XZaccount p:last-child {
+	color: #e02e24;
+	;
+}
+
+.money {
+	width: 100%;
+	height: 3.6rem;
+	;
+	background: white;
+}
+
+.money h2 {
+	font-size: 0.6rem;
+	margin-left: 0.5rem;
+	font-weight: 400;
+	line-height: 1.5rem;
+}
+
+.money h3 {
+	display: flex;
+	font-size: 0.8rem;
+	font-weight: 500;
+	margin-left: 0.5rem;
+}
+
+.money h3 span {
+	margin: 0.6rem 0.2rem 0 0;
+}
+
+.money h3 input {
+	font-size: 1.5rem;
+}
+
+.ketixian {
+	background: white;
+	width: 100%;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	font-size: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid #efefef;
+}
+
+.ketixian p,
+.ketixian>span {
+	margin: 0 0.5rem;
+}
+
+
+/*提现*/
+
+section {
+	width: 100%;
+	background: white;
+	height: 8.8rem;
+	border-top: 0.5rem solid #efefef;
+}
+
+section .top {
+	text-align: center;
+	width: 100%;
+	height: 6rem;
+}
+
+section .top img {
+	margin: 1rem 0 0.5rem 0;
+	width: 2rem;
+}
+
+section .top p {
+	width: 100%;
+	text-align: center;
+	font-size: 0.6rem;
+}
+
+section .bottom {
+	width: 100%;
+}
+
+section .bottom p {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.6rem;
+	line-height: 1.4rem;
+	margin: 0 0.5rem;
+	color: #666666;
+}
+
+section .bottom p span {
+	color: black;
+}
+
+.tixing {
+	width: 100%;
+	font-size: 0.55rem;
+	color: #666666;
+	text-align: center;
+}
+
+
+/*收益明细*/
+
+section.detail {
+	margin-top: 1.8rem;
+	height: auto;
+	border-top: 1px solid #efefef;
+}
+
+section .main {
+	width: 100%;
+	height: 2.8rem;
+	border-top: 1px solid #efefef;
+}
+
+section .main .main_top {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.7rem;
+	margin-top: 0.6rem;
+}
+
+section .main .main_bottom {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.6rem;
+	color: #666666;
+}
+
+section .main .main_top p {
+	margin: 0 0.5rem;
+	font-size: 0.7rem;
+	line-height: 1rem;
+}
+
+section .main .main_bottom p {
+	margin: 0 0.5rem;
+	font-size: 0.5rem;
+	line-height: 0.6rem;
+}
+
+.Accounts .payway .payway-l p {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.Accounts .payway .payway-l {
+	width: 100%;
+}
+
+.Accounts .addAccounts {
+	font-size: 0.7rem;
+	margin-top: 0.5rem;
+	width: 100%;
+	height: 2.3rem;
+	line-height: 2.2rem;
+	padding-left: 2rem;
+	background: url('../images/jiahao.png') 3% 47%/1rem no-repeat, #FFFFFF url(../images/right.png) 98% 47%/1.25rem no-repeat;
+}
+
+.cardisempty {
+	display: none;
+	text-align: center;
+	padding-top: 7rem;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.cardisempty p {
+	font-size: 0.65rem;
+	color: #666666;
+}
+
+.cardisempty .gosee {
+	display: block;
+	height: 1.7rem;
+	width: 4.5rem;
+	margin-top: 0.8rem;
+	text-align: center;
+	line-height: 1.7rem;
+	color: #e02e24;
+	border: 1px solid #e02e24;
+	border-radius: 1rem;
+	font-size: 0.75rem;
+}
+
+.MessageGroup .tankuangleirong .tishiyu {
+	display: flex;
+	align-items: center;
+	line-height: 0.8rem;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.MessageGroup .tankuangleirong .tishiyu p {
+	width: 100%;
+}
+
+.MessageGroup .tankuangleirong .tishiyu p.hint {
+	margin-top: 0.2rem;
+	font-weight: bold;
+}
+
+.MessageGroup .tankuangleirong .tishiyu p.tishiyu_bottom {
+	margin-bottom: 0.3rem;
+}
+
+.Withdrawdeposit {
+	overflow-x: hidden;
+}
+
+.Withdrawdeposit .tankuangleirong {
+	border-radius: 0.5rem;
+	background: white;
+	width: 72%;
+	position: fixed;
+	left: 13%;
+	top: 50%;
+	margin-top: -3.5rem;
+	z-index: 9999;
+	display: none;
+}
+
+.Withdrawdeposit .tankuangyinying {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.6;
+	filter: alpha(opacity=40);
+	z-index: 100;
+	display: none;
+}
+
+.Withdrawdeposit .tankuangleirong p {
+	width: 100%;
+	height: 2rem;
+	text-align: center;
+	line-height: 2rem;
+	border-bottom: 1px solid #b5b5b5;
+	font-size: 0.65rem;
+}
+
+.Withdrawdeposit.tankuangleirong p img {
+	width: 0.8rem;
+	position: absolute;
+	top: 0.2rem;
+	right: 0.2rem;
+}
+
+.Withdrawdeposit .tankuangleirong #auth_code {
+	display: block;
+	width: 100%;
+	height: 1.8rem;
+	border-bottom: 1px solid #b5b5b5;
+	margin-bottom: 0.08rem;
+	text-indent: 0.5rem;
+	font-size: 0.6rem;
+	background-color: #fff;
+}
+
+.Withdrawdeposit .tankuangleirong .captcha {
+	position: absolute;
+	right: 0.5rem;
+	top: 2.4rem;
+	background: #fc5046;
+	width: 30%;
+	height: 1rem;
+	font-size: 0.5rem;
+	color: white;
+	text-align: center;
+	line-height: 1rem;
+}
+
+.Withdrawdeposit .tankuangleirong .goumai {
+	color: #e02e24;
+	width: 100%;
+	display: inline-block;
+	height: 1.8rem;
+	text-align: center;
+	line-height: 1.8rem;
+	cursor: pointer;
+	font-size: 0.68rem;
+}

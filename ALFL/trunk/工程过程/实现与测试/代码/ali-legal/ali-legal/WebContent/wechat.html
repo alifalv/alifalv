@@ -1,0 +1,463 @@
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6 title">
+            <h1>微信提现</h1>
+          </div>
+		 <!--  <div class="form-group" >
+			  <button type="button" class="btn btn-success" text="导出Excel">导出Excel</button>
+		  </div> -->
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+           
+				  <form class="form-inline">
+
+				  	  <div class="form-group">
+						<!-- <div style="display:inline;width:100px;font-size:16px;color:#999999;margin-left:20px;">时间</div>-->
+						<label class="control-label" for="starttime">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="starttime" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="endtime" readonly>
+						</div>
+					  </div>
+					  
+					   <label class="my-1 mr-2" >状态</label>
+					   <select class="form-control my-1 mr-sm-2" id="status">
+						<option selected value="">全部</option>
+						<option value="6">待审核</option>
+						<option value="1">提现成功</option>
+						<option value="4">提现失败</option>
+					  </select>
+
+					  <div class="form-group">
+						<input type="text" id="id_input" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" placeholder="商品名称、订单编号、手机号">
+					  </div>
+
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+
+
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="WeChatCashDT" class="table table-bordered table-hover">
+                <thead>
+					<tr>
+					  <th>编号</th>
+					  <th>提现金额(元)</th>
+					  <th>提现方式</th>
+					  <th>真实姓名</th>
+					  <th>联系人手机号</th>
+					  <th>申请时间</th>
+					  <th>审核时间</th>
+					  <th>状态</th>
+					  <th>操作</th>
+					</tr>
+                </thead>
+               <!-- <tbody>
+                <tr>
+                  <td>6009</td>
+                  <td>36009</td>
+				  <td>1000</td>
+                  <td>微信</td>
+				  <td>张三</td>
+				  <td>13566668888</td>
+                  <td>2017-03-27 14:32:09</td>
+				  <td>2017-03-27 14:32:09</td>
+				  <td>待审核</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                     		 审核
+                    </button>
+                  </td>
+               </tbody>-->
+              </table>
+              <div class="dataTables_length">
+              	<label>每页<select id="pageSize" onchange="changePageSize()">
+              		<option selected="selected" value="5">5</option>
+              		<option value="10">10</option>
+              		<option value="50">50</option>
+              		<option value="100000">All</option></select>条
+              	</label>
+              	<label>已提现总金额：¥<span id="totalone"></span></label>
+              	<label>待提现总金额：¥<span id="totaltwo"></span></label>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+	   <!-- /.content -->
+	<div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">审核</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-check form-check-inline" style="margin-left: 60px;">
+						<label class="form-check-label mx-sm-3" >审核结果</label>
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio1" value="1" checked="checked">
+						<label class="form-check-label" >通过</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio0" value="4">
+						<label class="form-check-label" >不通过</label>
+					</div>
+					<input type="text" id="id_examine" style="display:none;" tabindex="1">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" onclick="saveResult()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src="jedate-6.0.0/jquery.jedate.js"></script>
+<script src="jedate-6.0.0/jquery.jedate.min.js"></script>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+
+	//时间控件 结束
+	
+	//查找按钮
+	function search(){
+		WeChatCashDT.ajax.reload();
+		totalCount();
+	} 
+    function reload(){
+		var table = $('#WeChatCashDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+		totalCount();
+    }
+	
+	//重置按钮
+	function reset(){
+		$("#status").val("0");
+		$("#starttime").val("");
+	    $("#endtime").val("");
+	    $("#id_input").val("");
+
+	    //$("#addTimeEnd").val("");
+	    //$("#addTimeStart").val("");
+	} 
+	
+	
+	//显示审核对话框
+	function toExamine(id){
+		$("#id_examine").val(id);
+		$("#examine").modal("show");
+	}
+	
+	//审核按钮
+	function saveResult(){
+		$("#examine").modal("hide");
+		var is_pass = $("input[name='examineRadio']:checked").val();
+		var parameter = {
+			businessOrder:$("#id_examine").val(),
+			state:is_pass
+		}
+		var tempUrl = "api/order/auditWithdrawDeposit";
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                    alert("审核成功");
+                    $("#id_examine").val("");
+                    reload();
+                }else{
+                    alert("审核失败");
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("修改失败");
+            }
+      	});
+	}
+</script>
+
+<script type="application/javascript" charset="utf-8">
+var WeChatCashDT;
+var pageSize = 5;
+var pageNo;
+$(document).ready(function(){
+
+	WeChatCashDT=$('#WeChatCashDT').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [  {  
+                    extend: 'excelHtml5',  
+                    text: '导出Excel',//定义导出excel按钮的文字  
+                    exportOptions: {  
+                        'modifier': {  
+                            'page': 'current'  
+                        }  
+                    }  
+        } ],
+			//-------------固定配置，不用改--------------
+			//"sDom":'<”bottom”ip<”clear”>>',
+			"ordering": false,
+			"serverSide": true,      //后台处理分页则为true
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": pageSize,
+			"lengthChange": true,
+			"language": {
+				"sProcessing": "处理中...",
+				"sLengthMenu": "显示 _MENU_ 项结果",
+				"sZeroRecords": "没有匹配结果",
+				"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix": "",
+				"sSearch": "搜索:",
+				"sEmptyTable": "表中数据为空",
+				"sLoadingRecords": "载入中...",
+				"sInfoThousands": ",",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sPrevious": "上页",
+					"sNext": "下页",
+					"sLast": "末页"
+				},
+				"oAria": {
+					"sSortAscending": ": 以升序排列此列",
+					"sSortDescending": ": 以降序排列此列"
+				}
+			},
+			//----------------------------------------------
+			ajax:{
+				//url:requestUrl+"WeChat/withdraw",
+				type:'POST',
+				data:{
+					"start": 0,
+					"length": pageSize
+				}
+			},
+			"aoColumns": [
+				//编号
+				{ "data":"businessOrder",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.businessOrder  != null && full.businessOrder  !=""){
+							return full.businessOrder ;
+						}
+						return "";
+					}
+				},		
+				//提现金额(元)
+				{ "data":"totalPrice",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.orderPrice != null && full.orderPrice !=""){
+							return full.orderPrice;
+						}
+						return "";
+					}
+				},
+				//提现方式
+				{ "data":"payment",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.payment  != null && full.payment  !=""){
+							return full.payment ;
+						}
+						return "";
+					}
+				},
+				//真实姓名
+				{ "data":"userName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.userName != null && full.userName!=""){
+							return full.userName;
+						}
+						return "";
+					}
+				},
+				//联系人手机号
+				{ "data":"mobile",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.mobile != null && full.mobile!=""){
+							return full.mobile;
+						}
+						return "";
+					}
+				},
+				//申请时间
+				{ "data":"orderTime",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.orderTime != null && full.orderTime!=""){
+							return full.orderTime;
+						}
+						return "";
+					}
+				},
+				//审核时间
+				{ "data":"checkTime",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.checkTime != null && full.checkTime!=""){
+							return full.checkTime;
+						}
+						return "";
+					}
+				},
+				//状态
+				{ "data":"statusName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.statusName != null && full.statusName!=""){
+							return full.statusName;
+						}
+						return "";
+					}
+				},
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						if(full.statusName=="待审核"){
+							return '<input type="button" class="btn btn-success" value="审核" onclick="toExamine(\''+full.businessOrder+'\')"/>'
+						}else{
+							return ''
+						}
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+				aoData.push({'name':'keyword','value':$('#id_input').val()});
+				aoData.push({'name':'endTime','value':$('#endtime').val()});
+				aoData.push({'name':'startTime','value':$('#starttime').val()});
+				aoData.push({'name':'isPay','value':$('#status').val()});
+            		aoData.push({'name':'businessType','value':'提现'});
+				aoData.push({'name':'payment','value':'微信支付'});
+
+                var oTable = $('#WeChatCashDT').dataTable();
+    	        		var tableSetings=oTable.fnSettings();  
+    	        		var paging_length=tableSetings._iDisplayLength;//当前每页显示多少  
+    	        		var page_start=tableSetings._iDisplayStart;//当前页开始  
+    	        		pageNo = (page_start / paging_length)+1; //得到页码值
+                $.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl_pc+'api/order/listBusinessOrder/3/'+pageNo+'/'+pageSize+'',
+					"data": aoData,
+					"success": fnCallback
+				} );
+			}
+		} );
+	//}
+	$(".col-sm-6.title").after($(".dt-buttons"));
+	$(".dataTables_info").after($(".dataTables_length"));
+	totalCount();
+});
+function changePageSize(){
+	var oTable = $('#WeChatCashDT').dataTable();
+	var oSettings = oTable.fnSettings();
+	pageSize = $("#pageSize").val();
+	oSettings._iDisplayLength = pageSize;
+	pageNo = 0;
+	search();
+}
+function totalCount(){
+    Yajax({
+        type:'POST',
+        async: false,
+        data:{
+        		payment:'微信支付',
+        		businessType:'提现',
+        		isPay:$('#status').val(),
+        		createTimeStart:$('#starttime').val(),
+        		createTimeEnd:$('#endtime').val(),
+        		content:$('#id_input').val()
+	    },
+        url:requestUrl+"transaction/record/totalCount",
+        success : function(data) {
+            console.log(data);
+            if(data.code==1){
+            		$('#totalone').text(data.data.totalone);
+            		$('#totaltwo').text(data.data.totaltwo);
+            }
+        },
+        fail:function (data) {
+            console.log(data);
+        }
+    });
+}
+</script>
+<style>
+.dataTables_length label{
+    width: 150px;
+    margin-top: 10px;
+}
+</style>

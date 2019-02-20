@@ -1,0 +1,359 @@
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6 title">
+            <h1>交易记录</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+           
+				  <form class="form-inline">
+
+				  	  <div class="form-group">
+						<!-- <div style="display:inline;width:100px;font-size:16px;color:#999999;margin-left:20px;">时间</div>-->
+						<label class="control-label" for="starttime">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="starttime" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="endtime" readonly>
+						</div>
+					  </div>
+					  
+					   <label class="my-1 mr-2">类型</label>
+					   <select class="form-control my-1 mr-sm-2" id="status">
+						<option selected value="">全部</option>
+						<option value="会员充值">会员充值</option>
+						<option value="退款">退款</option>
+						<option value="提现">提现</option>
+						<option value="打赏">打赏</option>
+						<option value="法律咨询">法律咨询</option>
+					  </select>
+
+					  <div class="form-group">
+						<input type="text" id="id_input" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" placeholder="商品名称、订单编号、手机号">
+					  </div>
+
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="transactionDT" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                      <th>订单号</th>
+                      <th>金额(元)</th>
+                      <th>名称</th>
+                      <th>类型</th>
+                      <th>支付人真实姓名/ID</th>
+                      <th>联系人手机号</th>
+                      <th>时间</th>
+                    </tr>
+                </thead>
+               <!-- <tbody>
+                <tr>
+                  <td>6009</td>
+				  <td>1000</td>
+				  <td>张三</td>
+				  <td>13566668888</td>
+                  <td>2017-03-27 14:32:09</td>
+				  <td>201705310024300800602</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      审核
+                    </button>
+                  </td>
+               </tbody>-->
+
+              
+              </table>
+              <div class="dataTables_length">
+              	<label>每页<select id="pageSize" onchange="changePageSize()">
+              		<option selected="selected" value="5">5</option>
+              		<option value="10">10</option>
+              		<option value="50">50</option>
+              		<option value="100000">All</option></select>条
+              	</label>
+              	<label>收入总金额：¥<span id="totalone"></span></label>
+              	<label>支出总金额：¥<span id="totaltwo"></span></label>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+   
+
+	
+
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+
+	//时间控件 结束
+	
+	//查找按钮
+	function search(){
+		transactionDT.ajax.reload();
+		totalCount();
+	} 
+    function reload(){
+		var table = $('#transactionDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+		totalCount();
+    }
+	
+	//重置按钮
+	function reset(){
+		$("#type").val("0");
+		$("#starttime").val("");
+	    $("#endtime").val("");
+	    $("#id_input").val("");
+	} 
+	
+	
+	
+</script>
+<script type="application/javascript" charset="utf-8">
+var transactionDT;
+$(document).ready(function(){
+
+	transactionDT=$('#transactionDT').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [  {  
+                    extend: 'excelHtml5',  
+                    text: '导出Excel',//定义导出excel按钮的文字  
+                    exportOptions: {  
+                        'modifier': {  
+                            'page': 'current'  
+                        }  
+                    }  
+        } ],
+		//-------------固定配置，不用改--------------
+		//"sDom":'<”bottom”ip<”clear”>>',
+		"ordering": false,
+		"serverSide": true,      //后台处理分页则为true
+		"pagingType":"numbers",
+		"searching": false,
+		"processing": true,
+		"pageLength": 5,
+		"lengthChange": true,
+		"language": {
+	        "sProcessing": "处理中...",
+	        "sLengthMenu": "显示 _MENU_ 项结果",
+	        "sZeroRecords": "没有匹配结果",
+	        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "sInfoPostFix": "",
+	        "sSearch": "搜索:",
+	        "sUrl": "",
+	        "sEmptyTable": "表中数据为空",
+	        "sLoadingRecords": "载入中...",
+	        "sInfoThousands": ",",
+	        "oPaginate": {
+	            "sFirst": "首页",
+	            "sPrevious": "上页",
+	            "sNext": "下页",
+	            "sLast": "末页"
+	        },
+	        "oAria": {
+	            "sSortAscending": ": 以升序排列此列",
+	            "sSortDescending": ": 以降序排列此列"
+	        }
+	    },
+		//----------------------------------------------
+		ajax:{
+			url:requestUrl+"transaction/record/list",
+			type:'POST',
+			data:{
+				"start": 0,
+				"length": 5
+			}
+		},
+		"aoColumns": [
+			//订单号
+			{ "data":"businessOrder",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.businessOrder  != null && full.businessOrder  !=""){
+						return full.businessOrder ;
+					};
+					return "";
+				}
+			},		
+			//金额
+			{ "data":"orderPrice",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.orderPrice  != null && full.orderPrice  !=""){
+						return full.orderPrice ;
+					};
+					return "";
+				}
+			},	
+			//名称
+			{ "data":"orderName",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.orderName != null && full.orderName !=""){
+						return full.orderName;
+					};
+					return "";
+				}
+			},
+			//类型
+			{ "data":"businessType ",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.businessType  != null && full.businessType  !=""){
+						return full.businessType ;
+					};
+					return "";
+				}
+			},
+			//支付人真实姓名/ID
+			{ "data":"userId",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.userId != null && full.userId!=""){
+						return full.realName+'/'+full.userId;
+					};
+					return "";
+				}
+			},
+			//联系人手机号
+			{ "data":"mobile",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.mobile != null && full.mobile!=""){
+						return full.mobile;
+					};
+					return "";
+				}
+			},
+			//时间
+			{ "data":"orderTime",
+				"visible": true,
+				"mRender":function(data,type,full){
+				   if(full.orderTime != null && full.orderTime!=""){
+						return full.orderTime;
+					};
+					return "";
+				}
+			},
+		],
+		"fnServerData": function ( sSource, aoData, fnCallback ) {
+			aoData.push({'name':'content','value':$('#id_input').val()});
+			aoData.push({'name':'createTimeEnd','value':$('#endtime').val()});
+			aoData.push({'name':'createTimeStart','value':$('#starttime').val()});
+			aoData.push({'name':'businessType','value':$('#status').val()});
+
+		    Yajax( {
+				"dataType": 'json',
+				"type": "POST",
+				"url": requestUrl+"transaction/record/list",
+				"data": aoData,
+				"success": fnCallback
+			} );
+		}
+	});
+	$(".col-sm-6.title").after($(".dt-buttons"));
+	$(".dataTables_info").after($(".dataTables_length"));
+	totalCount();
+});
+function changePageSize(){
+	var oTable = $('#transactionDT').dataTable();
+	var oSettings = oTable.fnSettings();
+	oSettings._iDisplayLength = $("#pageSize").val();
+	search();
+}
+function totalCount(){
+    Yajax({
+        type:'POST',
+        async: false,
+        data:{
+        		businessType:$('#status').val(),
+        		createTimeStart:$('#starttime').val(),
+        		createTimeEnd:$('#endtime').val(),
+        		content:$('#id_input').val()
+	    },
+        url:requestUrl+"transaction/record/totalCount",
+        success : function(data) {
+            console.log(data);
+            if(data.code==1){
+            		$('#totalone').text(data.data.totalone);
+            		$('#totaltwo').text(data.data.totaltwo);
+            }
+        },
+        fail:function (data) {
+            console.log(data);
+        }
+    });
+}
+</script>
+<style>
+.dataTables_length label{
+    width: 150px;
+    margin-top: 10px;
+}
+</style>
+</body>
+</html>

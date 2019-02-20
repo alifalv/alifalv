@@ -1,0 +1,441 @@
+
+<link href="upload/img.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf8" src="upload/imgUpload.js"></script>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Bananer管理</h1>
+          </div>
+		  <div class="form-group" >
+			  <button type="button" class="btn btn-success" style="margin-left:10px;" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="publishContent()">添加</button>
+		  </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" id="content" style="display:block">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+				  <form class="form-inline">
+					  <label class="my-1 mr-2">类型</label>
+					  <select class="form-control my-1 mr-sm-2" id="typetype" onchange="search()">
+						<option selected value="0">全部</option>
+						<option value="1">PC_Bananer</option>
+						<option value="2">App_Bananer</option>
+					  </select>
+				   </form>
+            </div>
+            <!-- /.pcDT -->
+            <div class="card-body">
+              <table id="pcDT" class="table table-bordered table-hover">
+                <thead>
+					<tr>
+					  <th>编号</th>
+					  <th>名称</th>
+					  <th>nid</th>
+					  <th>链接</th>
+					  <th>操作</th>
+					</tr>
+                </thead>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    
+    <!-- Main content -->
+    <section class="content" id="fabu" style="display:none">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Banner设置</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			<form id="formupload" onsubmit="return false" action="##" method="post">
+            <div class="card-header">
+ 				<input type="hidden" id="id" value="">
+            	  	<div class="form-inline">
+						  <label class="save-edit">类型</label>
+						  <select class="form-control mx-sm-3" name="type" id="type" style="margin-top:10px;">
+							<option value="1">PC_Bananer</option>
+							<option value="2">App_Bananer</option>
+						  </select>
+           		  </div>
+				   <div class="form-inline">
+						<label class="save-edit">名称</label>
+						<input type="text" name="name" id="Name_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+				   </div>
+				   <div class="form-inline">
+						<label class="save-edit">NID</label>
+						<input type="text" name="place" id="place_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+				   </div>
+				   <div class="form-inline">
+                    <label class="save-edit">图片</label>
+                    <section class="form-control mx-sm-3 img-section" style="margin-top:10px;">
+					    <div class="z_photo upimg-div clear">
+					        	<section class="z_file fl">
+					            <input type="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="">
+					        </section>
+					    </div>
+					</section>
+                   </div>
+                   
+                   <div class="form-inline">
+						<label class="save-edit"><input id="ck_rmbUser" name="columnType" type="checkbox" value="1" />链接地址</label>
+						<input type="text" name="url" id="url_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline"  placeholder="请输入此Bananer管理链接地址"  style="margin-top:10px;width:80%">
+				   </div>
+                   
+                   <div class="form-inline" id="articleContent_editer">
+                    <label class="save-edit">内容</label>
+					<!-- style给定宽度可以影响编辑器的最终宽度 -->
+					<script type="text/plain" id="myEditor" class="form-control mx-sm-3" style="width:800px;height:400px;"></script>
+					<!-- 实例化编辑器 -->
+					<script type="text/javascript">UM.delEditor('myEditor');var um = UM.getEditor('myEditor', {textarea:"content"});</script>
+                   </div>
+				   
+				   <div class="form-inline center">
+						<button type="button" class="btn btn-primary save" onclick="savePublish()">保存</button>&nbsp;
+						<button type="button" class="btn btn-primary edit" onclick="saveEdit()">修改</button>&nbsp;
+						<button type="button" class="btn btn-primary" onclick="cancel()">取消</button>&nbsp;
+				   </div>
+            </div>
+		 </form>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    
+    <!-- /.content -->
+	<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title" >删除提醒</h6>
+        				<input type="text" id="id_del" style="display:none;"/>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav justify-content-center">
+						<li class="nav-item">
+							<span class="nav-link">确认删除？</span>
+						</li>
+					</ul>
+					<input type="text" id="id_del" style="display:none;">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+					<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script type="application/javascript" charset="utf-8">
+	$("#file").takungaeImgup({
+	    formData: {
+	        "name": 'images'
+	    },
+	    imageNum : 1,
+	    success: function(data) {
+	    		console.log(data.data);
+	    },
+	    error: function(err) {
+	        alert(err.msg);
+	    }
+	});
+
+	function publishContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.edit").hide();
+        $(".up-section.fl").remove();
+		$(".z_file.fl").css('display','block');
+	}
+	function cancel(){
+		$("#fabu").css('display','none');
+	    $("#content").css('display','block');
+	}
+	function savePublish(){
+		tempUrl = "banner/add";
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl+tempUrl,
+	            data:$('#formupload').serialize(),
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                alert("发布成功");
+		                $("#url_publish").val("");
+		                UM.getEditor('myEditor').setContent("");
+		                $("#fabu").css('display','none');
+		                $("#content").css('display','block');
+		                reload();
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("发布失败");
+	            }
+	      });
+	}
+	
+	//详情
+	function detailMsg(id){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.save").hide();
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"banner/info/"+id,
+	        success : function(data) {
+	            console.log(data);
+				if(data.code==1){
+	                $(".up-section.fl").remove();
+					$('input[id="id"]').val(id);
+					$('#type').val(data.data.type);
+					$('#Name_publish').val(data.data.name);
+					$('#place_publish').val(data.data.place);
+					$('#url_publish').val(data.data.url);
+					UM.getEditor('myEditor').setContent(data.data.content);
+	                var images = data.data.images.split(",");
+	                for(var i in images){
+		                $(".z_photo.upimg-div.clear").append('<section class="up-section fl"><i class="close-upimg"></i>'+
+		                	'<img class="up-img" src="'+requestUrl_img+images[i]+'">'+
+		                	'<input type="hidden" name="images" value="'+images[i]+'"></section>');
+	                }
+	                delImg();
+	        	    		$(".z_file.fl").css('display','none');
+				}
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	        }
+	    });
+	}
+	function delImg(){
+	    $(".close-upimg").click(function () {
+	        $(this).parent().remove();
+			$(".z_file.fl").css('display','block');
+	    });
+	}
+	var isOutJoin = 0;
+	//选中label
+	$("#ck_rmbUser").on("click", function() {
+		var input = $(this).find('input[id="ck_rmbUser"]');
+		if($("#ck_rmbUser").prop("checked")) {
+			$("#articleContent_editer").hide();
+			isOutJoin = 1;
+		} else {
+			$("#articleContent_editer").show();
+			isOutJoin = 0;
+		}
+	});
+    //确认修改
+    function saveEdit(){
+	    	var parameter = {
+	    			id:$('input[id="id"]').val(),
+	    			type:$('#type').val(),
+	    			name:$('#Name_publish').val(),
+	    			place:$('#place_publish').val(),
+	    			images:$('input[name="images"]').val(),
+	    			columnType:isOutJoin,
+	    			url:$('#url_publish').val(),
+	            content:UM.getEditor('myEditor').getContent()
+	    	}
+	    	console.log(parameter);
+        Yajax({
+	        type:'POST',
+            data:JSON.stringify(parameter),
+	        url:requestUrl+"banner/update",
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType: "application/json; charset=utf-8",
+	        success : function(data) {
+	            console.log(data);
+				if(data.code==1){
+					alert("修改成功");
+					$("#imageId").attr("src","");
+					$("#fabu").css('display','none');
+				    $("#content").css('display','block');
+				    reload();//刷新表格
+				}
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("修改失败");
+	        }
+	    });
+    }
+	
+	//显示删除对话框
+	function delMsg(id){
+		$("#id_del").val(id);
+		$("#mySmallModalLabel").modal("show");
+	}
+	
+	//删除按钮
+	function delResult(){
+        var id = $("#id_del").val();
+		$("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+            type:'GET',
+            url:requestUrl+"banner/remove/"+id,
+            success : function(data) {
+                console.log(data);
+                reload();
+                alert("删除成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+	    });
+	}
+	
+	//查找按钮
+	function search(){
+		pcDT.ajax.reload();
+	} 
+    function reload(){
+		var table = $('#pcDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+</script>
+
+<script type="application/javascript" charset="utf-8">
+    var pcDT;
+    $(function(){
+        pcDT=$('#pcDT').DataTable( {
+
+            //-------------固定配置，不用改--------------
+            "ordering": false,
+            "serverSide": true,
+            "pagingType":"numbers",
+            "searching": false,
+            "processing": true,
+            "pageLength": 5,
+            "lengthChange": false,
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            //----------------------------------------------
+            ajax:{
+                url:requestUrl+'banner/list',
+                type:'POST',
+                data:{
+                    "start": 0,
+                    "length": 5
+                }
+            },
+            "aoColumns": [
+                //编号
+                { "data": "id",
+                    "visible": true,
+                    "render":function(data,type,full){
+                        if(full.id != null && full.id!=""){
+                            return full.id;
+                        }
+                        return "";
+                    }
+                },
+                //名称
+                { "data": "name",
+                    "visible": true,
+                    "render":function(data,type,full){
+                        if(full.name != null && full.name!=""){
+                            return full.name;
+                        }
+                        return "";
+                    }
+                },
+                //nid   place
+                { "data": "place",
+                    "visible": true,
+                    "render":function(data,type,full){
+                        if(full.place != null && full.place!=""){
+                            return full.place;
+                        }
+                        return "";
+                    }
+                },
+                //链接
+                { "data": "url",
+                    "visible": true,
+                    "render":function(data,type,full){
+                        if(full.url != null && full.url!=""){
+                            return full.url;
+                        }
+                        return "";
+                    }
+                },
+                //操作
+                { "data":null,
+                    "visible": true,
+                    "render":function(data,type,full){
+                        return '<input type="button" class="btn btn-success" value="修改" onclick="detailMsg(\''+full.id+'\')"/>&nbsp;'+
+                        			'<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.id+'\')"/>';
+                    }
+                }
+            ],
+
+            "fnServerData": function ( sSource, aoData, fnCallback ) {
+    				aoData.push({'name':'type','value':$('#typetype').val()});
+
+                Yajax( {
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": requestUrl+'banner/list',
+                    "data": aoData,
+                    "success": fnCallback
+                } );
+
+            }
+
+        } );
+    });
+</script>
+

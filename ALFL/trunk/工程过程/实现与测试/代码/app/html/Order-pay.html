@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="Order-pay">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>支付订单</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/md5.min.js"></script>
+	</head>
+ 
+	<body class="Lawsearch Order-pay">
+		<!--公共头部 begin--> 
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+			</div>
+			<h2>支付订单</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter" id="app">
+			<div class="orderpaybox">
+				<div class="paytop">
+					<p class="lc-p"> 温馨提示：下单之前，请与律师协商好服务价格，协商的律师服务价格不能低于200元，谢谢！</p>
+					<section>
+						<span>订单名称：</span>
+						<p>【{{orderInfo.businessType}}】{{orderInfo.orderName}}</p>
+					</section>
+					<section>
+						<span>订单编号：</span>
+						<p>{{orderInfo.businessOrder}}</p>
+					</section>
+					<section>
+						<span>订单金额：</span>
+						<input placeholder="请输入价格" class="lc-i" v-if="orderInfo.orderPrice == 0 || isChangePrice == true" type="text" v-model.trim="orderPrice" @change="changePrice">
+						<p class="redfont" v-else>￥ {{orderInfo.orderPrice}}</p>
+					</section>
+					<section>
+						<span>真实姓名：</span>
+						<input type="text" v-model.trim="userName" class="lc-i">
+					</section>
+					 <section> 
+						 <span>联系电话：</span> 
+						<input type="text" v-model.trim="mobile" class="lc-i">
+					</section>
+				</div>
+				<div class="paybottom">
+					<div class="paybottom-l">
+						<p>实付款：<span class="redfont">￥ {{totalPrice}}</span></p>
+					</div>
+					<div class="paybottom-r" @click="pay">
+						<img src="images/sonpages/orderpay.png"/>
+						<span>微信支付</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="vue/vant-min.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Order-pay.js"></script>
+	</body>
+
+</html>

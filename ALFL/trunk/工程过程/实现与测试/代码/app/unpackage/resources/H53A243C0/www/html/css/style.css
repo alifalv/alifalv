@@ -1,0 +1,19 @@
+.areaBox{
+    position: fixed;
+    bottom: 0;top: 0;
+    left: 0;right: 0;
+    background: rgba(0, 0, 0, .6)
+}
+
+.areaBox .van-picker{
+    position: absolute;
+    bottom: 0;left: 0;right: 0;
+}
+
+.van-picker *{
+    font-size: .5rem
+}
+
+.van-picker__cancel, .van-picker__confirm {
+    color: #ec5648;
+}

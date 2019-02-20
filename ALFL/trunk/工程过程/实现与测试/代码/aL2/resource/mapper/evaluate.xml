@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Evaluate">
+  
+   <insert id="saveEvaluate" parameterType="map" useGeneratedKeys="true" keyProperty="evaluateId">
+   			INSERT INTO  ali_evaluate
+   			 ( evaluateType, businessOrder, levelScore, mannerScore, sourceScore, scaleScore, is_delete, evaluateldContent, evaluateTime,userId,allScore,levelNum,mannerNum,sourceNum,scaleNum,counts,evaluateUserId)
+   			  VALUES (#{evaluateType}, #{businessOrder}, #{levelScore}, #{mannerScore}, #{sourceScore}, #{scaleScore},#{ is_delete}, #{evaluateldContent}, NOW(),#{userId},#{allScore},#{levelNum},#{mannerNum},#{sourceNum},${scaleNum},#{counts},#{evaluateUserId});
+   	
+   </insert>
+   <select id="listEvaluate" resultType="map"  parameterType="map">
+   				select * from ali_evaluate
+   				<where>
+   					<if test="null != businessOrder and businessOrder !='' ">
+   					    and  businessOrder = #{businessOrder} 
+   					</if>
+   					<if test="null != evaluateId">
+   					    and  evaluateId = #{evaluateId} 
+   					</if>
+   					<if test="null != userId">
+   					   and userId = #{userId} 
+   					</if>
+   				</where>
+   </select>
+   
+   <!--  统计 咨询师的评分分数  -->
+   <select id="countsCounselorScore" parameterType="map" resultType="map">  
+						SELECT
+								IFNULL(sum(CASE  WHEN  levelNum &lt;&gt;  0   then 1   else 0 end ) ,0)AS levelCount,
+								IFNULL(sum(levelNum), 0) as levelNum,
+								
+							    IFNULL(sum(CASE  WHEN  mannerNum &lt;&gt;  0   then 1   else 0 end ),0) AS mannerCount,
+								IFNULL(sum(mannerNum), 0) as mannerNum,
+							
+							    IFNULL(sum(CASE  WHEN  sourceNum &lt;&gt;  0   then 1   else 0 end ),0)  AS sourceCount,
+								IFNULL(sum(sourceNum), 0) as sourceNum ,
+							
+							   IFNULL(sum(CASE  WHEN  scaleNum &lt;&gt; 0   then 1   else 0 end ),0)  AS scaleCount,
+								IFNULL(sum(scaleNum), 0) as scaleNum,
+							
+							    IFNULL(sum(allScore),0) as allScore,
+								IFNULL(sum(counts), 0) as counts
+						FROM
+								ali_evaluate
+						WHERE
+								userId = #{userId}  
+   </select>
+   
+   <update id="updateEvaluate"    parameterType="map">
+       update  ali_evaluate
+       	<set>
+       		<if test="evaluateType != null and evaluateType !=''">
+       		   evaluateType = #{evaluateType},
+       		</if>
+       		<if test="levelScore != null">
+       		  levelScore = #{levelScore},
+       		</if>
+       		<if test="mannerScore != null">
+       		  mannerScore = #{mannerScore},
+       		</if>
+       		<if test="sourceScore != null">
+       		  sourceScore = #{sourceScore},
+       		</if>
+       		<if test="scaleScore != null">
+       		  scaleScore = #{scaleScore},
+       		</if>
+       		
+       		<if test="allScore != null">
+       		  allScore = #{allScore},
+       		</if>
+       		<if test="levelNum != null">
+       		  levelNum = #{levelNum},
+       		</if>
+       		<if test="mannerNum != null">
+       		  mannerNum = #{mannerNum},
+       		</if>
+       		<if test="sourceNum != null">
+       		  sourceNum = #{sourceNum},
+       		</if>
+       		<if test="scaleNum != null">
+       		  scaleNum = #{scaleNum},
+       		</if>
+       		 <if test="counts != null">s
+       		  counts = #{counts},
+       		</if>
+       		<if test="evaluateldContent != null and evaluateldContent !=''">
+       		   evaluateldContent = #{evaluateldContent},
+       		</if>
+       		<if test="evaluateUserId != null and evaluateUserId !=''">
+       		   evaluateUserId = #{evaluateUserId},
+       		</if>
+       		
+       	</set>
+       	<where>
+       		<if test="userId != null">
+       		     and userId = #{userId}
+       		</if>
+       		<if test="businessOrder != null  and businessOrder !='' "  >
+       		     and businessOrder = #{businessOrder}
+       		</if>
+       		<if test="evaluateId != null">
+       		     and evaluateId = #{evaluateId}
+       		</if>
+       	</where>
+   </update>
+   
+   <delete id="deleteEvaluate" parameterType="int">
+   			delete  from  ali_evaluate where evaluateId = #{evaluateId}
+   </delete>
+
+</mapper>

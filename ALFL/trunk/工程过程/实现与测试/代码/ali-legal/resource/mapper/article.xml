@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Article">
+    <resultMap id="BaseResultMap" type="Article" >
+        <id column="articleId" property="articleId" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="realName" property="realName" jdbcType="VARCHAR" />
+        <result column="isofficial" property="isofficial" jdbcType="INTEGER" />
+        <result column="isOutJoin" property="isOutJoin" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="columnCode" property="columnCode" jdbcType="VARCHAR" />
+        <result column="txtPath" property="txtPath" jdbcType="VARCHAR" />
+        <result column="sendTime" property="sendTime" jdbcType="TIMESTAMP" />
+        <result column="lookNum" property="lookNum" jdbcType="INTEGER" />
+        <result column="outJoinUrl" property="outJoinUrl" jdbcType="VARCHAR" />
+        <result column="coverImg" property="coverImg" jdbcType="VARCHAR" />
+        <result column="articleState" property="articleState" jdbcType="INTEGER" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+        <result column="isPush" property="isPush" jdbcType="INTEGER" />
+        <result column="likeNum" property="likeNum" jdbcType="INTEGER" />
+        <result column="collectionNum" property="collectionNum" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        a.*,b.columnName
+        FROM
+        ali_article a left join ali_column b on a.columnCode=b.columnId 
+        <where>
+            <if test="true">
+                and a.isDelete is null and b.columnType=1
+            </if>
+            <if test="type != null and type != 0">
+                and a.columnCode = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and sendTime &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd != ''">
+                and sendTime &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (title like CONCAT('%',#{content},'%') or realName like CONCAT('%',#{content},'%'))
+            </if>
+        </where>
+        ORDER BY articleId DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(articleId)
+        FROM
+        ali_article a left join ali_column b on a.columnCode=b.columnId 
+        <where>
+            <if test="true">
+                and a.isDelete is null and b.columnType=1
+            </if>
+            <if test="type != null and type != 0">
+                and a.columnCode = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and sendTime &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd != ''">
+                and sendTime &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (title like CONCAT('%',#{content},'%') or realName like CONCAT('%',#{content},'%'))
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="Article" >
+        update ali_article
+        <set>
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where articleId = #{articleId,jdbcType=INTEGER}
+    </update>
+    <select id="numberOfComplaints" resultType="Integer">
+        select count(articleId) from ali_article where (isDelete is null or isDelete != 1) and isPush = 0 and isofficial = 1 and columnCode = 0;
+    </select>
+    <select id="numberOfAliReferee" resultType="Integer">
+        select count(articleId) from ali_article where (isDelete is null or isDelete != 1) and isPush = 0 and isofficial = 1 and columnCode = 9;
+    </select>
+    <select id="numberOfLawTrain" resultType="Integer">
+        select count(articleId) from ali_article where (isDelete is null or isDelete != 1) and isPush = 0 and isofficial = 1 and columnCode = 7;
+    </select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommonReply">
+
+
+	<insert id="addReply" parameterType="map" useGeneratedKeys="true" keyProperty="replyId">
+		insert into ali_common_reply 
+			(userId,userName,userImg,serviceName,businessType,replyContent,replyTime,relativeId)
+			values  
+			(#{userId},#{nickName},#{userImg},#{serviceName},#{businessType},#{replyContent},NOW(),#{relativeId}) 
+	</insert>
+	
+	<select id="findReplyList" parameterType="map" resultType="map">
+		select a.* from ali_common_reply a where 
+		  a.businesstype = #{businessType} and
+		  a.relativeId = #{relativeId}
+		  order by replyTime DESC
+	</select>
+	
+	<select id="findServiceNameByAdvice" parameterType="int" resultType="java.lang.String">
+		select title from ali_advice where adviceId = #{adviceId}
+	</select>
+	
+	<select id="findServiceNameByCase" parameterType="int" resultType="java.lang.String">
+		select caseTitle from ali_case_depute where caseId = #{caseId}
+	</select>
+	
+	<select id="findServiceNameByArticle" parameterType="int" resultType="java.lang.String">
+		select title from ali_article where articleId = #{articleId}
+	</select>
+
+	<select id="findUserInfo" parameterType="int" resultType="map">
+		select nickName,userImg from ali_user where userId = #{userId}
+	</select>
+
+</mapper>

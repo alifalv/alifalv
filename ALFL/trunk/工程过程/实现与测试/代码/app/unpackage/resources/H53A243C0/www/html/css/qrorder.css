@@ -1,0 +1,335 @@
+section .site{
+	font-size: 0.6rem;
+	width: 100%;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	padding-left: 0.5rem;
+	border-bottom:1px solid #E0E0E0;
+	background-color: #fff;
+}
+section .site a{display: block;}
+section .site img{
+	width: 1rem;
+	float: right;
+	margin: 0.4rem 0.5rem 0 0;	
+}
+section .mrsite{
+	width: 100%;
+	height: 3rem;
+	padding:0.15rem 0 0.3rem;
+	background:#fff;
+}
+section .mrsite a{display: block;background:url(../images/right.png) no-repeat 99% 45%/1rem;}
+section .mrsite img{
+	float: left;
+	width: 1rem;
+	margin: 1rem 0 0 0.4rem;
+}
+section .mrsite .dzxx{
+	float: left;
+	width: 80%;
+	margin:0.4rem 0 0 0.4rem;
+	font-size: 0.6rem;
+	overflow: hidden;
+}
+section .mrsite .dzxx p{
+	height: 0.7rem;
+}
+section .mrsite .dzxx p span.hm{
+	float:right;
+	margin-right: 0.3rem;
+}
+section .mrsite .dzxx p:last-child{
+	display: table;
+	width: 100%;
+	margin-top: 0.2rem;
+	height: 1.7rem;
+}
+section .mrsite .dzxx p span.shdz{
+	width: 3.1rem;
+	display: table-cell;
+	overflow: hidden;
+	vertical-align: middle;
+}
+section .mrsite .dzxx p span.dz{
+	overflow-x: auto;
+	margin-right: 0.4rem;
+	padding-top: 0.2rem;
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 0.55rem;
+	line-height: 0.8rem;
+}
+section .ddxq{
+	width: 100%;
+	overflow: hidden;
+	background-color: #fff;
+}
+section .ddxq h1{
+	font-size: 0.6rem;
+	font-weight: 100;
+	height: 1.5rem;
+	padding: 0 0.5rem;
+	line-height: 1.5rem;
+	width: 100%;
+	border-bottom:1px solid #E0E0E0;
+}
+section .ddxq .splb{
+	padding:0.4rem;
+	border-bottom:1px solid #E0E0E0;
+	display: flex;display:-webkit-flex;justify-content:space-between;align-items:center;
+}
+section .ddxq .splb img{
+	width: 3rem;
+	height: 3rem;
+}
+section .ddxq .splb .spsm{
+	width:66%;
+	height: 3rem;
+	overflow: hidden;
+	padding-left: 0.5rem;
+	display: flex;display:-webkit-flex;justify-content:space-between;flex-direction: column;
+}
+section .ddxq .splb .spsm h2{
+font-size: 0.6rem;
+	font-weight: normal;
+	
+}
+section .ddxq .splb .spsm span.rules{display:block;margin-top: 0.2rem; padding-left: 0.1rem; font-size: 0.54em;color:#999999;}
+section .ddxq .splb .spsm .paddingem{padding: 0 0.2rem;}
+section .ddxq .splb .spsm p{
+	width: 100%;
+	text-align: left; 
+	font-size: 0.58rem;
+	color: #999999;
+	margin-top: 0.2rem;
+}
+section .ddxq .splb p{
+	width: 1.5rem;
+	font-size: 0.6rem;
+	padding-right: 0.1rem;
+	text-align:right;
+	color: #999999;
+}
+section .order-list{
+	width: 100%;
+	height: 1.8rem;
+	border-bottom:1px solid #E0E0E0;
+	background-color: #fff;
+}
+section .order-list p{
+	font-size: 0.6rem;
+	width: 100%;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	margin-left: 0.3rem;
+}
+section .order-list p span{
+	float: right;
+	width: 70%;
+	text-align: right;
+	margin-right: 0.8rem;
+}
+
+section .selectyhq{height: 1.8rem;border-bottom:1px solid #E0E0E0;background-color: #fff;}
+section .selectyhq a{padding:0 0.3rem;display:flex;display:-webkit-flex;justify-content:space-between;align-items: center; font-size: 0.6rem;height: 1.8rem;line-height: 1.8rem;}
+section .selectyhq a .right{display:flex;display:-webkit-flex;justify-content:space-between;align-items: center;}
+section .selectyhq a .right span{color: #999999;}
+section .selectyhq a .right img{width: 1rem;}
+section .selectyhq a .right .yhqprice{color: #e02e24;}
+section .ddzj span.FinalPay{color: #e02e24;}
+section .OrderTime{margin-top: 0.15rem;}
+
+footer .hj{
+	background:#FFF ;
+	float: left;
+	width: 50%;
+	text-align: center;
+	line-height: 2rem;
+	font-size: 0.7rem;
+}
+footer .hj p{border-top:1px solid #e02e24;}
+footer .hj p .finalprice{
+     color: #e02e24;
+}
+
+.footer {
+	width: 100%;
+	height:3rem;
+}
+footer .tjdd{
+	float: left;
+	width: 50%;
+	background: #e02e24;
+	text-align: center;
+	line-height: 2rem;
+	font-size: 0.7rem;
+	color: white;
+}
+footer .tjdd a{display: block;}
+footer .surerecive{width: 100%;}
+/*支付详情*/
+section .ddbh{
+	width: 100%;
+	height: 1.8rem;
+	border-bottom:1px solid #E0E0E0;
+	line-height: 1.8rem;
+	font-size: 0.6rem;
+}
+section .ddbh p{
+	margin-left: 0.5rem;
+	vertical-align: middle;
+}
+section .ddbh p span.ddzt{
+	color: #e02e24;
+	float:right;
+	margin-right: 0.5rem;
+}
+section .xdsj{
+	width: 100%;
+	height: 1.8rem;
+	border-bottom:1px solid #E0E0E0;
+	line-height: 1.8rem;
+	font-size: 0.6rem;
+}
+section .xdsj p{
+	margin-left: 0.5rem;
+	vertical-align: middle;
+}
+section .yfje
+{
+	width: 100%;
+	height: 1.8rem;
+	border-bottom:1px solid #E0E0E0;
+	line-height: 1.8rem;
+	font-size: 0.6rem;
+}
+section .yfje p{
+	margin-left: 0.5rem;
+}
+section .sfje{
+	width: 100%;
+	height: 1.8rem;
+	border-bottom:1px solid #E0E0E0;
+	line-height: 1.8rem;
+	font-size: 0.6rem;
+}
+section .sfje p{
+	margin-left: 0.5rem;
+}
+section .sfje p span{
+	color:#e02e24;
+}
+section .ddts{
+	font-size: 0.6rem;
+	margin: 0.5rem 0 0 0.4rem;
+    color: #999999;
+}
+footer .ZF{
+	background: #efedeb;
+	cursor: pointer;
+}
+/*订单详情*/
+section .sfk{
+    width: 100%;
+    height: 1.8rem;
+    border-top: 1px solid #E0E0E0;;
+}
+section .sfk p{
+	font-size: 0.6rem;
+	width: 100%;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	margin-left: 0.3rem;
+}
+section .sfk p span{
+	color: #e02e24;
+	float: right;
+	width: 70%;
+	text-align: right;
+	margin-right: 0.8rem;
+}
+section .xdsj{
+    width: 100%;
+    height: 1.8rem;
+    border-top: 1px solid #E0E0E0;;
+}
+section .xdsj p{
+	font-size: 0.6rem;
+	width: 100%;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	margin-left: 0.3rem;
+}
+section .xdsj p .xdsj-sj{
+	float: right;
+	width: 70%;
+	text-align: right;
+	margin-right: 0.8rem;
+}
+section .xdsj p .xdsj-sj .nyr{
+	margin-right: 0.3rem;;
+}
+footer #qrsh{
+	display: block;
+	background: #FF9210;
+	height: 2rem;
+	text-align: center;
+	line-height: 2rem;
+	color: white;
+	font-size: 0.7rem;
+}
+.tankuangleirong{
+	border-radius: 0.5rem;
+	background: white;
+	width:72%;
+	position: fixed;
+	left:13%;
+	top:50%;
+	margin-top: -3.5rem;
+	z-index: 9999;
+	display: none;
+}
+.tankuangleirong .tishiyu{
+	width:100%;
+	height:3rem;
+	text-align: center;
+	line-height:3rem;
+	border-bottom:1px solid #b5b5b5;
+	font-size:0.6rem;
+}
+.tankuangleirong .quxiao{
+	color: #e02e24;
+	float: left;
+	width:49.8%;
+	display: inline-block;
+	height:1.8rem;
+	text-align: center;
+	line-height:1.8rem;
+	border-right:1px solid #b5b5b5;
+	cursor: pointer;
+	font-size: 0.7rem;
+}
+.tankuangleirong .goumai{
+	color: #e02e24;
+	float: left;
+	width:49.7%;
+	display: inline-block;
+	height:1.8rem;
+	text-align: center;
+	line-height:1.8rem;
+	cursor: pointer;
+	font-size: 0.7rem;
+}
+.tankuangyinying{
+	position: fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background: #000;
+	opacity: 0.6;
+	filter: alpha(opacity = 40);
+	z-index: 100;
+	display: none;
+}

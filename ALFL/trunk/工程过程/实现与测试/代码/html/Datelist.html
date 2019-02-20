@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html class="Datelist">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>日程总览</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="fonts/iconfont.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/mui.picker.min.css">
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<style>
+			.mui-scroll-wrapper {
+				top: 4.3rem;
+			}
+		</style>
+	</head>
+
+	<body class="Lawsearch Lawask Datelist">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back redfont" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>日程总览</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter page-slideright" id="app">
+			<div class="main-top " >
+				<p class="icon iconfont icon-xiangxia j-btn" data-options='{"type":"month","beginYear":2018,"endYear":2030}'>{{nowDate}}</p>
+			</div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" v-cloak>
+				<div class="mui-scroll">
+					<div class="main-center">
+						<ul>
+							<li v-for="(item, index) in list" :key="index">
+								<a :href="'Dateinfo.html?date=' + nowDate + '&gregorianCalendar=' + item.gregorianCalendar + '&text=' + item.gregorianCalendar + ' ' + item.week + ' ' + item.lunarCalendar">
+									<div class="list-t">
+										<p>{{item.gregorianCalendar}} {{item.week}} {{item.lunarCalendar}}</p>
+										<span class="deletebtn" :data-id="item.id" :data-scheduleid="item.scheduleId"></span>
+									</div>
+									<div class="list-b">
+										<p>{{item.content}}</p>
+									</div>
+								</a>
+							</li>
+							<p v-if="isNoList" class="ui-nolist">暂无</p>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="main-bottom" style="z-index: 9999">
+				<div class="addbtnbox">
+					<a href="Date-create.html">
+						<img src="images/dateselect/bottomicon1.png" />
+						<span>添加日程</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+		<script src="vue/vue.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+
+		<script src="vue/axios.min.js"></script>
+		<script src="vue/httpVueLoader.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Datelist.js"></script>
+	</body>
+
+</html>

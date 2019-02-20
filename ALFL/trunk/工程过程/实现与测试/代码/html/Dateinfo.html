@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="Datelist Dateinfo">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>日程详情</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="fonts/iconfont.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask Datelist Dateinfo">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back redfont" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>日程详情</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter page-slideright" id="app">
+			<div class="main-top">
+				<p>{{dateText}}</p>
+			</div>
+
+			<!--<div class="ui-margin-t-1" >-->
+				<div class="main-center" v-for="(item, index) in list" :key="index">
+					<div class="center-t">
+						<h4>日程1</h4>
+						<div class="editbox">
+							<span v-if="!editList[item.id]" class="editbtn" @click="editbtn(item.id, item.scheduleId)">编辑</span>
+							<span v-if="editList[item.id]" class="savebtm" @click="savebtm(item.id, item.scheduleId)">保存</span>
+							<span class="deletebtn" @click="deletebtn(item.id, item.scheduleId)">删除</span>
+						</div>
+					</div>
+					<div class="center-c">
+						<!--<p>{{item.content}}</p>-->
+						<textarea :disabled="!editList[item.id] ? true : false" :id="'content' + item.id">{{item.content}}</textarea>
+
+					</div>
+					<div class="center-b">
+						<ul>
+							<li>提醒时间：{{item.gregorianCalendar}} {{item.week}} {{item.lunarCalendar}}</li>
+							<!--<li>提醒时间：2018-06-18  15：51  周五</li>-->
+							<!--<li>提醒时间：2018-06-18  15：51  周五</li>-->
+						</ul>
+					</div>
+				</div>
+			<!--</div>-->
+			<div v-if="isNoList" class="ui-nolist">暂无</div>
+
+
+			<div class="main-bottom"></div>
+		</div>
+		<!--主体 end-->
+		<script src="vue/vue.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+
+		<script src="vue/axios.min.js"></script>
+		<script src="vue/httpVueLoader.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Dateinfo.js"></script>
+	</body>
+
+</html>

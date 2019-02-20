@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>首页</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="vue/vant-min.css" />
+    <link href="swiper/swiper.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/footnav.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    
+    <style type="text/css">
+        @-webkit-keyframes fadeIn { 
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        .img-lazyload {
+            -webkit-animation: fadeIn 350ms linear 0ms 1 normal both;
+            animation: fadeIn 350ms linear 0ms 1 normal both;
+            opacity: 1;
+        }
+        
+        .idx-band5 .newsBox .right .b P.redfont span {
+            margin-right: 0.2rem;
+            margin-left: 0.2rem;
+        }
+    </style>
+    <base target="_blank" />
+</head>
+
+<body class="Index ">
+	  
+    <!--主体 begin-->
+    <div id="app" class="Conter bodybg page-slideright">
+		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+			
+		<!-- <div  class="box_fixed" id="boxFixed" :class="{'is_fixed' : isFixed}" v-if="isFixed"    >
+			<van-tabs v-model="active" @click="change"   >
+				<van-tab title="最新咨询">
+					
+				</van-tab>
+				<van-tab title="最新案源"></van-tab>
+		</div> -->
+	
+        <header class="top-header">
+			<div class="iccbox" >
+				<!-- <span class="i-ico1"><img class="i-ico3" src="images/index/icon-dingwei@2x.png" ></span> -->
+				<!-- <span class="i-ico1"><img class="i-ico3" src="images/index/icon-dingwei@2x.png" ></span> -->
+				<span class="mui-icon mui-icon-location"></span>
+				<span class="cna" v-cloak>{{cityName}}</span>
+			</div>
+			
+			<a href="Msgcenter.html"  > <span class="mui-icon mui-icon-email"></span></a>
+		</header>
+        <div>
+            <!--图片-->
+            <!-- <div class="swiper-container"> -->
+                <!-- <div class="swiper-wrapper"> -->
+                    <!-- <div class="swiper-slide"> -->
+                        <div class="img">
+                            <!-- <a href="Register-main.html"><img src="images/index/banner1.png" /></a> -->
+                            <img src="images/index/banner1.png" /> 
+                        </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+                <!-- <div class="swiper-pagination"></div> -->
+            <!-- </div> -->
+        </div>
+
+        <div class="idx-band-wrap">
+            <!--banner下面-->
+            <div class="idx-band-1">
+                <ul class="flex_Horizontal">
+                    <li class="flex_son">
+                        <a href="Lawask.html">
+                            <img src="images/index/idx-band1-1.png" />
+                            <p>
+                                <strong>咨询解答</strong>
+                            </p>
+                        </a>
+
+                    </li>
+                    <li class="flex_son">
+                        <a href="Lawbuy.html">
+                            <img src="images/index/idx-band1-2.png" />
+                            <p>
+                                <strong>案件竞拍</strong>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="http://wenshu.court.gov.cn/Index">
+                            <img src="images/index/idx-band1-3.png" />
+                            <p>
+                                <strong>案例查询</strong>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="http://www.gsxt.gov.cn/index.html" target="_top">
+                            <img src="images/index/idx-band1-4.png" />
+                            <p>
+                                <strong>企业查询</strong>
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--新法导学-->
+            <div class="idx-newlaw">
+                <a href="#" class="flex_Horizontal">
+                    <div>
+                        <img src="images/index/img-xinfadaoxue@2x.png" />
+                        <p>新法导学</p>
+                    </div>
+                    <div class="flex_Horizontal idx-newlaw-info">
+                        <div class="swiper-container2">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" v-for="(item, index) in legalList">
+                                    <div class="flex_son flex_Horizontal idx-newlaw-top">
+                                        <span v-cloak>{{item.unitName}}</span>
+                                        <span v-cloak>{{item.issueTime | subDay}}</span>
+										
+                                    </div>
+                                    <!-- <div class="flex_son idx-newlaw-bottom" @click="toinfo(item.articleId)" :href="'Law-Info.html?articleId=' + item.articleId" > -->
+                                    <div  class="flex_son idx-newlaw-bottom" @click="toinfo(item.articleId)"   >
+                                        <p v-cloak>{{item.title}} </p>
+                                    </div>
+									  
+									    
+									 
+									
+                                </div>
+							 
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+<a :href="'Law-Info.html?articleId=' + aherfdata"  style="display: none;" id="myaa" >{{aherfdata}}</a>
+            <!--十个快捷入口-->
+            <div class="idx-band2">
+                <ul class="flex_Horizontal" style="margin-top: 1rem;">
+                    <li>
+                        <a href="Caculater.html">
+                            <img src="images/index/icon-jisuanqi@2x.png" />
+                            <span>诉讼费计算</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="DocList.html">
+                            <img src="images/index/icon-wenshu@2x.png" />
+                            <span>文书模板</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="FindLawer.html">
+                            <img src="images/index/icon-zhaotonghang@2x.png" />
+                            <span>找同行</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://rmfygg.court.gov.cn">
+                            <img src="images/index/icon-gonggao@2x.png" />
+                            <span>法院公告</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="flex_Horizontal" style="margin-top: 1rem;">
+                    <li>
+                        <a href="http://zxgk.court.gov.cn/">
+                            <img src="images/index/icon-zhixingxinxi@2x.png" />
+                            <span>执行信息</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="BaixingList.html">
+                            <img src="images/index/icon-renmen@2x.png" />
+                            <span>热门话题</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="HighestPoints.html">
+                            <img src="images/index/icon-zuigaoyuan@2x.png" />
+                            <span>最高院观点</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Alicaipan.html">
+                            <img src="images/index/icon-alicapan@2x.png" />
+                            <span>阿里判决</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="TrainList.html">
+                            <img src="images/index/idx-band2-9.png" />
+                            <span>培训信息</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ZhaopinIdx.html">
+                            <img src="images/index/idx-band2-10.png" />
+                            <span>求职招聘</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+
+            <!-- <div class="idx-band3">
+                <ul class="flex_Horizontal">
+                    <li class="flex_son">
+                        <a href="http://m.jialilaw.com/ask.html"><img src="images/index/idx-band3-1.png" /></a>
+                    </li>
+                    <li class="flex_son">
+                        <a href="BaixingList.html"><img src="images/index/idx-band3-2.png" /></a>
+                    </li>
+                </ul>
+            </div> -->
+
+            <!--推荐律师-->
+            <!-- <div class="idx-band4">
+                <ul class="flex_Horizontal">
+                    <li class="flex_son" v-for="(value, index) in tjlsList" v-if="index < 3" :key="index">
+                        <a :href="'LawerInfo.html?userId=' + value.userId">
+                            <div class="idx-band4-top">
+                                <img :src="value.userImg | createImgUrl" />
+                            </div>
+                            <div class="idx-band4-center">
+                                <h3>{{value.userName}}</h3>
+                                <p>{{value.mobile}}</p>
+                                <span>{{value.provinceName}} {{value.cityName}}</span>
+                            </div>
+                            <div class="idx-band4-bottom">
+                                <span v-for="(sn, i) in value.specialityName" v-if="i < 2" :key="i">
+										{{sn.typeName}}
+									</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+		<div class="m-space"></div> 
+		</van-pull-refresh>
+        <!--下面最新资讯-->
+		 
+        <div class="idx-band5 mui-content">
+			<div  class="box_fixed" id="boxFixed" :class="{'is_fixed' : isFixed}"   style=" top: 0px " >
+				<van-tabs v-model="active" @click="change"   >
+					<van-tab title="最新咨询">
+						
+					</van-tab>
+					<van-tab title="最新案源"></van-tab>
+			</div>
+          <!--  <div class="newsBox-tit flex_Horizontal mui-segmented-control">
+                <a class="mui-control-item mui-active" href="#newAsk">最新咨询</a>
+                <a class="mui-control-item" href="#newCase">最新案源</a>
+            </div> -->
+			
+				<!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
+			<div :class=" isFixed ? 'list-content2 mtttp': 'list-content2' " id="list-content">
+          
+                <van-list
+                    v-model="loading"
+                    :finished="finished"
+                    @load="onLoad"
+                    :offset="10" 
+                >
+                    <div class="list-item newsBox" v-cloak>
+							  <ul class="mui-table-view" v-if="active==0" >
+							    <li class="flex_Horizontal" v-for="(item, index) in newAskList" :key="index" :href="'Lawask-Info.html?articleId=' + item.adviceId">						        
+							        <div class="right" style="width:100%">							            
+							            <div class="c">
+							                <h4>{{item.title}}  </h4>
+							                <p class="greyfont">{{item.articleContent}}</p>
+							            </div>
+							            <div class="b">
+							                <p class="redfont"><span>{{item.caseTypeName}}</span>| <span>{{item.replyNum}}</span>回复 | 赏金<span>{{item.reward}}</span>元
+							                </p>
+							                <a :href="'Lawask-Info.html?articleId=' + item.adviceId">查看详情</a>
+							            </div>
+							        </div>
+							    </li>
+							    <li v-if="isNoNewAskList" class="ui-nolist">没有找到数据</li>
+							</ul>					  											
+							 <ul class="mui-table-view" v-else>
+							    <li class="flex_Horizontal" v-for="(item, index) in newCaseList" :key="index" :href="'Lawbuy-Info.html?caseId=' + item.caseId">					        
+							        <div class="right" style="width:100%">				           
+							            <div class="c">
+							                <h4>{{item.caseTitle}}</h4>
+							            </div>
+							            <div class="b">
+							                <p>报价：
+							                    <span v-if="item.offerType == '1'">￥ {{item.offerMoney}}</span>
+							                    <span v-if="item.offerType == '2'">面议</span>
+							                </p>
+							                <a v-if="item.caseState == '0'" :href="'Lawbuy-Info.html?caseId=' + item.caseId">查看详情</a>
+							                <span v-else-if="item.caseState == '1'">处理中</span>
+							                <span v-else-if="item.caseState == '2'">已结案</span>
+							            </div>
+							        </div>
+							    </li>
+							    <li v-if="isNoNewCaseList" class="ui-nolist">没有找到数据</li>
+							</ul>
+                    </div>
+                </van-list>
+           
+        </div>
+			
+            <div class="newsBox mui-slider-group" id="lihref"  >
+                <div id="newAsk" class="mui-control-content mui-active" style="height: 0.01rem">
+                   <div id="newAskList" class="mui-scroll-wrapper">
+                        <div class="mui-scroll"> 
+                             
+                        </div>
+                    </div>
+                </div>
+
+                <div id="newCase" class="mui-control-content" style="height: 0.01rem">
+                   <div id="newCaseList" class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                       
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--推荐列表
+        <!--<div class="intrlist" id="Lazyloadimg">
+				<ul>
+
+				</ul>
+			</div>-->
+			<a href="https://alifalv.lvpin100.com/"  id="mya" style="display: none;">111111111111111</a>
+			 
+				
+			</div>
+			<!--底部 -->
+			<div class="footer"  style="display: none;">
+			    <nav class="mui-bar mui-bar-tab">
+			        <a id="defaultTab" class="mui-tab-item mui-active" href="Index.html">
+			            <span class="mui-icon mui-icon-home"></span>
+			            <span class="mui-tab-label">首页</span>
+			        </a>
+			        <a class="mui-tab-item" href="Lawsearch.html">
+			            <span class="mui-icon mui-icon-classfy"></span>
+			            <span class="mui-tab-label">法律检索</span>
+			        </a>
+			       <!-- <a class="mui-tab-item" href="KuaiJie.html">
+			            <span class="mui-icon mui-icon-znls"></span>
+			            <span class="mui-tab-label">智能律师</span>
+			        </a> -->
+					  <a class="mui-tab-item" href="https://alifalv.lvpin100.com/" target="_top">
+					     <span class="mui-icon mui-icon-znls"></span>
+					     <span class="mui-tab-label">智能律师</span>
+					 </a> 
+				<!-- 	<span class="mui-tab-item"  @click="toai" >
+					    <span class="mui-icon mui-icon-znls"></span>
+					    <span class="mui-tab-label">智能律师</span>
+					</span> -->
+			        <a class="mui-tab-item" href="DateSelect.html">
+			            <span class="mui-icon mui-icon-trolley"></span>
+			            <span class="mui-tab-label">工作日程</span>
+			        </a>
+			        <a id="MyInfotab" class="mui-tab-item" href="Myinfo.html">
+			            <span class="mui-icon mui-icon-mine"></span>
+			            <span class="mui-tab-label">我的</span>
+			        </a>
+			    </nav>
+			</div>
+			 <div id="container" style="display: none;"></div>
+			
+    </div>
+	 
+	<!-- </van-pull-refresh> -->
+    <!--主体 end-->
+
+    <!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		</div>-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.cookie.min.js"></script>
+	 <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=a6afc95c79b3a86544915605f13fd05d"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+	<script src="vue/vant-min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="swiper/swiper.min.js"></script>
+    <script src="js/ajax/ajax.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Index.js"></script>
+	 
+ 
+</body>
+
+</html>

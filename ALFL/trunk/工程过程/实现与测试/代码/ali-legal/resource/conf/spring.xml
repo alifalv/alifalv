@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:p="http://www.springframework.org/schema/p"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"	
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/tx   http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd ">
+	<!-- 启用spring 注解 -->
+	<context:annotation-config />
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	<task:annotation-driven/>
+	<context:component-scan
+		base-package="com.legal.app.service,com.common.dbutil,com.common.cache,com.common.utils,com.legal.app.utils" />
+
+	<!-- 加载配置文件设置 -->
+	<bean id="configProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath*:conf/config.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="properties" ref="configProperties" />
+	</bean>
+	<bean class="com.legal.app.utils.SessionUtils"/>
+	<!-- 数据写连接池配置-->
+	<bean id="writeDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+		destroy-method="close" parent="parentDataSource">
+		<property name="url" value="${db.w1.url}" />
+		<property name="username" value="${db.w1.user}" />
+		<property name="password" value="${db.w1.password}" />
+	</bean>
+	<!-- 数据连接池父配置项 -->
+	<bean id="parentDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+		destroy-method="close" abstract="true">
+		<property name="defaultAutoCommit" value="false"></property>
+		<property name="validationQuery" value="select 1"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	</bean>
+	<!-- mybatis父配置 -->
+	<bean id="parentSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		abstract="true">
+		<property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
+		<property name="typeAliasesPackage" value="com.legal.app.model" />
+	</bean>
+
+	<!-- 数据库写连接 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
+		<constructor-arg index="0">
+			<bean parent="parentSessionFactory">
+				<property name="dataSource" ref="writeDataSource"></property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- 事务管理 器 -->
+	<bean id="tm"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="writeDataSource" />
+	</bean>
+	
+	<!-- 测试每个请求的时间BEAN  -->
+	<bean id="requestTimer" class="com.common.web.RequestTimer"></bean>
+
+	<!-- 定义事务通知 -->
+	<tx:advice id="tmAdvice" transaction-manager="tm">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="*" rollback-for="java.lang.Exception"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 织入事务及请求响应时长 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.legal.app..controller.*.*(..))"
+			id="pid" />
+		<aop:advisor advice-ref="tmAdvice" pointcut-ref="pid" />
+		<!-- 生产环境，此配置需注释掉  -->
+		<aop:advisor advice-ref="requestTimer" pointcut-ref="pid" />
+	</aop:config>
+	
+	
+	<!-- 定义全局缓存  需要REDIS做缓存时，打开此注释；
+	 <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+	   p:host-name="${redis.host}"
+	   p:port="${redis.port}"  
+	   p:password="${redis.password}"
+	   p:use-pool="true"/>
+	   
+	 <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" 
+	   p:connection-factory-ref="jedisConnectionFactory"/>
+	  
+	 <bean id="cache" class="com.common.cache.SpringRedisCache">
+	   		<property name="redisTemplate" ref="redisTemplate"></property>
+	 </bean> 
+	 -->
+	 <!-- 定义全局缓存 -->
+	 <bean id="cache" class="com.common.cache.ICacheImpl"/>
+	 
+</beans>

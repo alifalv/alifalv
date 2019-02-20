@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 法律培训列表</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header"  type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+
+<div class="ui-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <dl class="ui-breadcrumb ui-content-row ui-padding-b-20">
+                    <dt>当前位置：</dt>
+                    <dd><a href="index.html">首页</a></dd>
+                    <dd>法律培训</dd>
+                </dl>
+            </div>
+            <!-- 培训搜索 -->
+            <div class="col-xs-12">
+                <div class="ui-seachpanel">
+                    <div class="ui-seachpanel-title">培训搜索</div>
+                    <div class="ui-seachpanel-content">
+                        <form class="form-horizontal" pagination="searchForm" id="trainingListForm">
+                            <div class="form-group">
+                                <label for="province_select" class="col-xs-1 control-label">培训地点</label>
+                                <div class="col-xs-2">
+                                    <select id="province_select" class="form-control" name="province">
+                                        <option value="">不限</option>
+                                        <script id="province_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option  value="{{value.provinceId}}">{{value.provinceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                                <div class="col-xs-2">
+                                    <select class="form-control" name="city">
+                                        <option value="">不限</option>
+                                        <script id="city_tmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option  value="{{value.cityId}}">{{value.cityName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                                <label for="title" class="col-xs-1 control-label">培训课程</label>
+                                <div class="col-xs-4">
+                                    <input name="title" class="form-control" type="text" id="title">
+                                </div>
+                                <div class="col-xs-2 j-fbpx-btn" style="display: none">
+                                    <a href="training_release.html" class="btn btn-block ui-btn-lightblue-b ui-border-gray">发布培训</a>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="year" class="col-xs-1 control-label">培训时间</label>
+                                <div class="col-xs-2">
+                                    <input id="year" name="year" type="text" class="form-control Wdate" onclick="WdatePicker({dateFmt:'yyyy'})"/>
+                                </div>
+                                <div class="col-xs-2">
+                                    <input id="month" name="month" type="text" class="form-control Wdate" onclick="WdatePicker({dateFmt:'MM'})"/>
+                                </div>
+                                <label for="trainName" class="col-xs-1 control-label">培训机构</label>
+                                <div class="col-xs-4">
+                                    <input id="trainName" name="trainName" class="form-control" type="text">
+                                </div>
+                                <div class="col-xs-2">
+                                    <a href="javascript:void(0);" class="btn btn-block ui-btn-lightblue" pagination="searchBtn">快速搜索</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="ui-panel">
+                    <script ad="pxxx_htgg01" type="text/html" src="../tmpl/ad.html"></script>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="ui-panel">
+                    <script ad="pxxx_htgg02" type="text/html" src="../tmpl/ad.html"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9">
+                <!-- 全部咨询 -->
+                <div class="ui-panel" id="trainingList">
+                    <div class="ui-panel-top">
+                        <!--<ul class="nav nav-pills ">-->
+                        <!--<li role="presentation" class="active"><a href="#">Home</a></li>-->
+                        <!--<li role="presentation"><a href="#">Profile</a></li>-->
+                        <!--<li role="presentation"><a href="#">Messages</a></li>-->
+                        <!--</ul>-->
+                        <span class="ui-panel-title ui-color-gray">法律培训</span>
+                    </div>
+                    <div class="ui-panel-content">
+                        <div class="table-responsive" pagination="mask">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="text-left">培训主题</th>
+                                    <th>培训机构</th>
+                                    <th>地点</th>
+                                    <th>培训日期</th>
+                                    <th>培训费（元）</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <script id="trainingListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}}
+                                        {{each rows value i}}
+                                        <tr>
+                                            <td class="text-left"><i class="iconfont icon-ring ui-left ui-color-gray"></i><a href="lawtraininginfo.html?articleId={{value.articleId}}" class="ui-cut-1" target="_blank">{{value.title}}</a></td>
+                                            <td class="ui-color-gray">{{value.trainName}}</td>
+                                            <td>{{value.provinceName}}{{value.cityName}}{{value.trainAddress}}</td>
+                                            <td class="ui-color-gray">{{value.trainTime}}</td>
+                                            <td class="ui-color-greed">{{value.cost}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    {{else}}
+                                        <tr><td colspan="5" class="text-center ui-color-gray">{{error || '暂无记录'}}</td></tr>
+                                    {{/if}}
+                                </script>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="..." class="ui-pagination" pagination="page"></nav>
+                    </div>
+                </div>
+
+                <!-- 法律人的信息 -->
+                <div class="ui-panel" id="lawPersionList">
+                    <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">法律人的信息</span></div>
+                    <div class="ui-panel-content">
+                        <div class="table-responsive" pagination="mask">
+                            <table class="table">
+                                <tbody>
+                                <script id="lawPersionListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}}
+                                    {{each rows value i}}
+                                    <tr>
+                                        <td class="text-left"><i class="iconfont icon-ring"></i><a href="articles_lawerinfo.html?articleId={{value.articleId}}">{{value.title}}</a></td>
+                                        <td class="text-right ui-color-gray">{{value.sendTime | subDay}}</td>
+                                    </tr>
+                                    {{/each}}
+                                    {{else}}
+                                    <tr>
+                                        <td colspan="2" class="text-center ui-color-gray">{{error || '暂无记录'}}</td>
+                                    </tr>
+                                    {{/if}}
+                                </script>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="..." class="ui-pagination" pagination="page"></nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="ui-advert-list ui-advert-list-v ui-content-row">
+                    <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">培训机构推荐</span></div>
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg01" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg02" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg03" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg04" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg05" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg06" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg07" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg08" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg09" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+
+                    <div class="ui-advert-li">
+                        <script ad="pxxx_pxjg10" type="text/html" src="../tmpl/ad.html"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html" data-color="black"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

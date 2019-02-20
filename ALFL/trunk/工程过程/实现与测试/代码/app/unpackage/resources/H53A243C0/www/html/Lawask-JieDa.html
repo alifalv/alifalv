@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>解答</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="js/fastclick.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <style>
+        .jieda-btn {
+            width: 100%;
+            height: 1.4rem;
+            margin: 0.5rem 0;
+            border: 0!important;
+            outline: 0!important;
+            ;
+            padding: 0!important;
+            background-color: #94C0FF!important;
+            border-radius: 0.69rem!important;
+            color: #fff!important;
+            ;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask MyInfoEdit-Pname">
+    <div id="app">
+        <!--公共头部 begin-->
+        <div class="header">
+            <div class="goback">
+                <a class="mui-action-back mui-icon mui-icon-closeempty" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+            </div>
+            <h2>解答</h2>
+        </div>
+        <!--公共头部 end-->
+
+        <!--主体 begin-->
+        <div class="Conter">
+            <textarea id="yourPname" v-model.trim="replyContent" rows="" cols="" placeholder="请输入解答内容，对于用户咨询的法律疑问， 咨询师
+解答字数建议在50个字符以上"></textarea>
+
+          <!--  <div class="ui-padding-lr-4">
+                <input type="button" class="jieda-btn" value="发 布" @click="jieDa" />
+            </div> -->
+			
+			<div class="zixun-btn">
+				<div  class="news-tool" @click="jieDa">发布咨询 </div>
+			</div>
+        </div>
+    </div>
+    <!--主体 end-->
+
+    <script src="vue/vue.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script type="text/javascript"></script>
+    <script src="js/lib/Lawask-JieDa.js"></script>
+    </script>
+</body>
+
+</html>

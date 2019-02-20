@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 订单支付详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header" type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-50">
+        <div id="infoBox" class="ui-regpanel">
+            <div class="row">
+                <div class="col-xs-12 ui-padding-lr-15"><div class="ui-top-wrapper ui-order-wrapper"><h3 class="ui-padding-tb-20 text-center ui-bold"></h3></div></div>
+                <div class="col-xs-12">
+                    <div class="ui-reg-result ui-padding-lr-50 ui-margin-tb-20">
+                        <div class="text-center ui-padding-b-20 ui-bold ui-size-20">订单支付详情</div>
+                        <script id="orderTmpl" type="text/html">
+                            <form method="post" id="form">
+                                <div class="ui-padding-lr-50">
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-3 col-xs-6  text-left ui-bg-bluegray ui-padding-15 ui-padding-lr-50"><span class="ui-padding-r-10">订单编号：</span>{{data.businessOrder}}</div>
+                                    </div>
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-3 col-xs-6  text-left ui-bg-bluegray ui-padding-15 ui-padding-lr-50"><span class="ui-padding-r-10">订单名称：</span>{{data.orderName}} 【{{data.businessType}}】</div>
+                                    </div>
+
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-3 col-xs-6  text-left ui-bg-bluegray ui-padding-15 ui-padding-lr-50">
+                                            <span class="ui-padding-r-10">订单金额：</span>
+                                            {{if(data.orderPrice == 0 || isChangePrice == true)}}
+                                            <input class="ui-margin-r-20" id="orderPrice" type="number" value="{{data.orderPrice}}" data-rule="订单金额:required;money">元
+                                            {{else}}
+                                            <span class="ui-color-red ui-bold">{{data.orderPrice}}</span>元
+                                            {{/if}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-3 col-xs-6 text-left ui-bg-bluegray ui-padding-15 ui-padding-lr-50"><span class="ui-padding-r-10">提交数量：</span><span class="ui-color-red ui-bold">{{data.orderNum}}</span></div>
+                                    </div>
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-3 col-xs-6 text-left ui-bg-bluegray ui-padding-15 ui-padding-lr-50">
+                                            <span class="ui-padding-r-10">真实姓名：</span><input class="ui-margin-r-20" id="userName" name="userName" type="text" value="{{data.userName}}" data-rule="真实姓名:required">
+                                            <div class="ui-color-red ui-size-12 ui-margin-t-10" style="margin-left: -5px;margin-right: -50px"><i class="iconfont icon-deng ui-color-red"></i>真实姓名用于可能发生的退款业务，请填写本人真实姓名，否则可能退款失败。</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-3 col-xs-4 ui-padding-tb-11 ui-padding-lr-50 ui-border-red-1 text-left"><span class="ui-bold">实付款：</span><input id="totalPrice" name="totalPrice" type="hidden" value="{{data.totalPrice}}" data-rule="实付款:required"><span class="ui-color-red ui-bold ui-size-20 j-totalPrice-txt">{{data.totalPrice}}</span> 元</div>
+                                        <div class="col-xs-2 ui-padding-lr-no"><button type="submit" class="btn btn-block ui-btn-red ui-padding-tb-15">微信支付</button></div>
+                                    </div>
+                                    <div class="row ui-padding-tb-10">
+                                        <div class="col-xs-offset-7 col-xs-2 ui-padding-lr-no"><a href="javascript:void(0);" class="j-orderclose-btn btn-link btn-block ui-padding-tb-15">取消订单</a></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="qrcodeBox" class="ui-regpanel ui-hide">
+            <div class="row">
+                <div class="col-xs-12 ui-padding-lr-15"><div class="ui-top-wrapper ui-order-wrapper"><h3 class="ui-padding-tb-20 text-center ui-bold"></h3></div></div>
+                <script id="qrcodeInfoTmpl" type="text/html">
+                    <div class="col-xs-offset-3 col-xs-6">
+                        <div class="ui-size-25 text-center  ui-bold ui-color-darkgray ui-margin-b-20"><img src="../img/wechat.png" alt="">微信安全支付</div>
+                        <div class="ui-block ui-padding-30 ui-color-white ui-margin-b-20" style="background: #69a5d7">
+                            <div class="ui-left ui-padding-10 ui-bg-white ui-height-150 ui-width-150"><div id="qrcode" class="ui-color-darkgray text-center"><span id="qrcodeload" style="line-height: 130px">加载中</span></div></div>
+                            <div class="text-center ui-size-36 ui-margin-t-20">¥ {{totalPrice}}</div>
+                            <div class="ui-margin-l-170 ui-padding-tb-10 ui-margin-t-17" style="background: #93c3eb">
+                                <img src="../img/erweima.png" alt="" class="ui-left ui-margin-l-80 ui-margin-r-10">
+                                <div>请使用微信扫描</div>
+                                <div>二维码完成支付</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div><span class="ui-size-20 ui-bold ui-color-darkgray">阿里法律</span><span class="ui-margin-l-10">{{businessType}}</span></div>
+                            <hr class="ui-border-b-1-bluegary"/>
+                            <div><span>交易单号 <span class="ui-right">{{businessOrder}}</span></span></div>
+                            <div class="ui-margin-t-10"><span>交易时间 <span class="ui-right">{{nowTime}}</span></span></div>
+                            <hr class="ui-border-b-1-bluegary"/>
+                        </div>
+                    </div>
+                </script>
+                <div class="col-xs-12 text-center">
+                    <a class="btn btn-default ui-btn-lightblue btn-lg ui-width-200" href="javascript:void(0);" id="payok_btn">确认已支付</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

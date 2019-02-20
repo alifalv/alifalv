@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>案源竞拍</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="vue/vant-min.css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="vue/vant-min.css" /> --> 
+    <script src="js/jquery.cookie.min.js"></script>
+    <style> 
+        .mui-scroll-wrapper {
+            /* top: 1.3rem; */
+        }
+        
+        .mui-control-content {
+            height: -webkit-fill-available;
+            height: -moz-fill-available;
+            height: -moz-available;
+            /* FireFox目前这个生效 */
+            height: fill-available;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+        </div>
+        <h2>案源竞拍</h2>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class="Conter idx-band5 Lawsearch lawbuyDatail" id="app">
+        <!-- 搜索 -->
+     <div  class="toparea">  
+     	   <div class="lawsearch-top borderBottom">
+     	    <form class="inputbox">
+     	        <div class="mui-input-row">
+     	            <label><img src="images/other/search.png"/> </label>
+     	            <input type="text" class="mui-input-clear" v-model.trim="caseTitle" placeholder="请输入搜索关键字">
+     	        </div>
+     	        <div class="caseGroup">
+     	            <select v-model="caseId">
+     	                    <option value="">案源类型</option>
+     	                    <option v-for="(item, index) in caseList" :key="index" :value="item.caseId" :selected="index == 0">
+     	                        {{item.caseName}}
+     	                    </option>
+     	            </select>
+     	            <button type="button" @click="searchCase" >搜索</button>
+     	        </div>
+     	    </form>
+     	</div>
+     	
+     	<van-tabs v-model="active" @click="change">
+     		<van-tab title="最新案源">
+     			
+     		</van-tab>
+     		<van-tab title="本地案源"></van-tab>
+     </div>
+
+		<div class="list-content" id="list-content">
+			<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+                <van-list
+                    v-model="loading"
+                    :finished="finished"
+                    @load="onLoad"
+                    :offset="10"
+                >
+                    <div class="list-item" v-cloak>
+						<div class="newsBox">
+                        <ul class="mui-scroll"  v-if="active==0">
+                            <li class="flex_Horizontal" v-for="(item, index) in list" :key="index" :href="'Lawbuy-Info.html?caseId=' + item.caseId">
+                                <!-- <div class="left">
+                        			<img :src="item.userImg | createImgUrl" />
+                        		</div> -->
+                                <div class="right lc-right" style="width:100%">
+                                    <div class="l-l">
+                                    	<!-- <img :src="item.userImg | createImgUrl"  > -->
+                        				<img  src="images/index/moren.png" >
+                                    </div>
+                        			<div class="l-r"> 
+                        				<div class="t">
+                        				    <span>{{item.userName| hidename }}</span><span>{{item.provinceName}} {{item.cityName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.deputeTime | subDay}}</span>
+                        				</div>
+                        				<div class="c">
+                        				    <p>{{ item.caseTypeName }}|{{ item.caseTitle }}</p>
+                        				</div>
+                        				<div class="b">
+                        				    <p class="prot" >报价：
+                        				        <span   v-if="item.offerType == '1'">￥ {{item.offerMoney || 0}}</span>
+                        				        <span   v-if="item.offerType == '2'">面议</span>
+                        						
+                        				        <span  style="margin-left: 0.5rem;" >竞拍人数:{{item.province}}</span>
+                        				    </p>
+                        				
+                        				    <span class="ui-color-gray" v-if="item.caseState == '1'">处理中</span>
+                        				    <span class="ui-color-greed" v-else-if="item.caseState == '2'">已结案</span>
+                        				    <a :href="'Lawbuy-Info.html?caseId=' + item.caseId" v-else-if="item.caseState == '0'">查看详情</a>
+                        				</div>
+                        			</div>
+                                </div>
+                            </li>
+                            <!-- <li v-if="isNoList" class="ui-nolist">没有找到数据</li> -->
+                        </ul>
+						
+						
+						<ul    v-else>
+						    <li class="flex_Horizontal" v-for="(item, index) in list" :key="index" :href="'Lawbuy-Info.html?caseId=' + item.caseId">
+						        <!-- <div class="left">
+									<img :src="item.userImg | createImgUrl" />
+								</div> -->
+						        <div class="right lc-right" style="width:100%">
+						            <div class="l-l">
+						            	<!-- <img :src="item.userImg | createImgUrl"  > -->
+										<img  src="images/index/moren.png" >
+						            </div>
+									<div class="l-r">
+										<div class="t">
+										    <span>{{item.userName | hidename }}</span><span>{{item.provinceName}} {{item.cityName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.deputeTime | subDay}}</span>
+										</div>
+										<div class="c">
+										    <p>{{ item.caseTypeName }}|{{ item.caseTitle }}</p>
+										</div>
+										<div class="b">
+										    <p class="prot" >报价：
+										        <span   v-if="item.offerType == '1'">￥ {{item.offerMoney || 0}}</span>
+										        <span   v-if="item.offerType == '2'">面议</span>
+												
+										        <span  style="margin-left: 0.5rem;" >竞拍人数:{{item.province}}</span>
+										    </p>
+										
+										    <span class="ui-color-gray" v-if="item.caseState == '1'">处理中</span>
+										    <span class="ui-color-greed" v-else-if="item.caseState == '2'">已结案</span>
+										    <a :href="'Lawbuy-Info.html?caseId=' + item.caseId" v-else-if="item.caseState == '0'">查看详情</a>
+										</div>
+									</div>
+						        </div>
+						    </li>
+						    <!-- <li v-if="isNoList" class="ui-nolist">没有找到数据</li> -->
+						</ul>
+						
+						 </div>
+                    </div>
+ 
+                </van-list>
+            </van-pull-refresh>
+		</div>
+
+        <div id="pullrefresh" class="mui-content" v-show="active==5" v-cloak>
+            <div class="newsBox">
+                <div id="newCase" class="mui-control-content mui-active mui-scroll-wrapper">
+                   
+					 
+                </div>
+            </div>
+        </div>
+        <!-- <div class="news-tool" style="height:1.75rem"> -->
+            <!-- <ul>
+                    <li>
+                        <i></i>
+                        <span>上一条</span>
+                    </li>
+                    <li>
+                        <i></i>
+                        <span>下一条</span>
+                    </li>
+                    <li>
+                        <i></i>
+                        <span>分享</span>
+                    </li>
+                    <li>
+                        <i></i>
+                        <span>收藏</span>
+                    </li>
+				</ul> -->
+            <!-- <a href="Lawbuy_FaBu.html"><button type="button" style="height:1.75rem">发布案源</button></a> -->
+            <div class="zixun-btn">
+					<a href="Lawbuy_FaBu.html" class="news-tool" >发布案源 </a>
+				</div>
+        <!-- </div> -->
+        <!--主体 end-->
+
+        <!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		</div>-->
+    </div>
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+	<script src="vue/vant-min.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <!--<script src="js/mui.slideright.js"></script>-->
+	 
+    <script src="js/lib/Lawbuy.js"></script>
+   
+</body>
+
+</html>

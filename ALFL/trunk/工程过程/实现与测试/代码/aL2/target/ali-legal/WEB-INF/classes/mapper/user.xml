@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+	<sql id="column_list">
+	   userId,
+	   userName,
+	   mobile,
+	   userPwd,
+	   nickName,
+	   userType,
+	   userImg,
+	   vipLevel,
+	   registerTime,
+	   inVipTime,
+	   expireTime,
+	   isWeChat,
+	   isWeiBo,
+	   isQQ,
+	   userState,
+	   isAuthentication,
+	   pushCode,
+	   equipmentType,
+	   is_push,
+	   is_contract
+	</sql>
+
+	<!-- 根据用户名或手机号码获取用户信息 -->
+	<select id="findUserByUserNameOrMobile" resultType="map" parameterType="java.lang.String">
+		select 
+		 <include refid="column_list"></include>
+		 from ali_user
+		  where
+		  userState = 1 and 
+		  userName = #{userName} or mobile = #{userName}
+	</select>
+	
+	<select id="findUserByUserId" resultType="map" parameterType="int">
+		select 
+		 <include refid="column_list"></include>
+		 from ali_user
+		  where
+		  userId = #{userId}
+	</select>
+	
+	<select id="findUserBasicInfoByUserId" resultType="map" parameterType="int">
+		select 
+		 userId,nickName,userImg
+		 from ali_user
+		  where
+		  userId = #{userId}
+	</select>
+	
+	
+	<!-- 检查此用户名是否注册过 -->
+	<select id="findUserCountByUserName" parameterType="java.lang.String" resultType="int">
+		select COUNT(userId) from ali_user where userName = #{userName}
+	</select>
+	
+	<!-- 检查此手机号是否注册过 -->
+	<select id="findUserCountByMobile" parameterType="java.lang.String" resultType="int">
+		select COUNT(userId) from ali_user where mobile = #{mobile}
+	</select>
+	
+	<select id="findConsultantByUserId" parameterType="int" resultType="map">
+		select * from ali_consultant where userId = #{userId}
+	</select>
+
+	<select id="findCompanyByUserId" parameterType="int" resultType="map">
+		select * from ali_company where userId = #{userId}
+	</select>
+	
+	<select id="findCounselorByUserId" parameterType="int" resultType="map">
+		select * from ali_counselor where userId = #{userId}
+	</select>
+	
+	<insert id="addCommonUser" parameterType="map" useGeneratedKeys="true" keyProperty="userId">
+		insert into ali_user (
+		   userName,
+		   mobile,
+		   userPwd,
+		   nickName,
+		   userType,
+		   userImg,
+		   vipLevel,
+		   registerTime,
+		   inVipTime,
+		   expireTime,
+		   isWeChat,
+		   isWeiBo,
+		   isQQ,
+		   userState,
+		   isAuthentication,
+		   pushCode,
+		   equipmentType,
+		   is_push,
+		   is_contract
+		) values 
+		(
+			#{userName},
+			#{mobile},
+			#{userPwd},
+			#{nickName},
+			#{userType},
+			#{userImg},
+			#{vipLevel},
+			NOW(),
+			#{inVipTime},
+			#{expireTime},
+			#{isWeChat},
+			#{isWeiBo},
+			#{isQQ},
+			#{userState},
+			#{isAuthentication},
+			#{pushCode},
+			#{equipmentType},
+			#{is_push},
+			#{is_contract}
+		)
+	</insert>
+	
+	
+	<insert id="addConsultantInfo" parameterType="map">
+		insert into ali_consultant 
+		  (userId,adviceNum,followingNum,collectionNum,freeNum)
+		  values
+		  (#{userId},#{adviceNum},#{followingNum},#{collectionNum},#{freeNum})
+	</insert>
+	
+	<insert id="addCompanyInfo" parameterType="map">
+		insert into ali_company 
+		  (userId,companyCode,companyName,adviceNum,followingNum,collectionNum,freeNum)
+		  values
+		  (#{userId},#{companyCode},#{companyName},#{adviceNum},#{followingNum},#{collectionNum},#{freeNum})
+	</insert>
+	
+	<insert id="addCounselorInfo" parameterType="map">
+		insert into ali_counselor
+		  (userId,province,city,job,realName,adviceNum,freeNum,
+		  followingNum,collectionNum,makeNum,complateAdviceNum,entrustNum,
+		  levelScore,attitudeScore,sourceScore,chargeScore,readNum,userScore,userBalance,
+		  goodNum,commonScore)
+		  values
+		  (#{userId},#{province},#{city},#{job},#{realName},#{adviceNum},
+		  #{freeNum},#{followingNum},#{collectionNum},#{makeNum},#{complateAdviceNum},
+		  #{entrustNum},#{levelScore},#{attitudeScore},#{sourceScore},#{chargeScore},
+		  #{readNum},#{userScore},#{userBalance},#{goodNum},#{commonScore})
+	</insert>
+	
+	<insert id="addCounselorCaseList" parameterType="map">
+		insert into ali_speciality (userId,typeId)
+		  values
+		  <foreach collection="cases" item="caseId" separator=",">
+		  	(#{userId},#{caseId})
+		  </foreach>
+	</insert>
+	
+	<select id="findCasesByUserId" resultType="int" parameterType="int">
+		select typeId from  ali_speciality where userId = #{userId}
+	</select>
+	
+	<delete id="deleteCasesByUserId" parameterType="int">
+		delete from ali_speciality where userId = #{userId}
+	</delete>
+	
+	<update id="editUserVipTime" parameterType="map">
+		update ali_user set vipLevel = #{vipLevel},inVipTime = #{inVipTime},
+		  expireTime = #{expireTime}  where userId = #{userId}
+	</update>
+	
+	<update id="editConsultantInfo" parameterType="map">
+		update ali_consultant 
+		<set>
+			<if test="carType != null">
+				carType = #{carType},
+			</if>
+			<if test="idCardFront != null and idCardFront != null">
+				idCardFront = #{idCardFront},
+			</if>
+			<if test="idCardBack != null and idCardBack != null">
+				idCardBack = #{idCardBack},
+			</if>
+			<if test="realName != null and realName != null">
+				realName = #{realName},
+			</if>
+			<if test="idCard != null and idCard != null">
+				idCard = #{idCard},
+			</if>
+			<if test="province != null">
+				province = #{province},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	
+	
+	<update id="editCompanytInfo" parameterType="map">
+		update ali_company
+		<set>
+			<if test="companyCode != null and companyCode != ''">
+				companyCode = #{companyCode},
+			</if>
+			<if test="companyName != null and companyName != null">
+				companyName = #{companyName},
+			</if>
+			<if test="registerAddress != null and registerAddress != null">
+				registerAddress = #{registerAddress},
+			</if>
+			<if test="realName != null and realName != null">
+				realName = #{realName},
+			</if>
+			<if test="workAddress != null and workAddress != null">
+				workAddress = #{workAddress},
+			</if>
+			<if test="workImg != null and workImg != null">
+				workImg = #{workImg},
+			</if>
+			<if test="email != null and email != null">
+				email = #{email},
+			</if>
+			<if test="weChat != null and weChat != null">
+				weChat = #{weChat},
+			</if>
+			<if test="qq != null and qq != null">
+				qq = #{qq},
+			</if>
+			<if test="province != null">
+				province = #{province},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<update id="counselorAuthentication" parameterType="map">
+		update ali_counselor
+		<set>
+			
+			<if test="bankAccount != null and bankAccount != null">
+				bankAccount = #{bankAccount},
+			</if>
+			<if test="bankName != null and bankName != null">
+				bankName = #{bankName},
+			</if>
+			<if test="bankAccountName != null and bankAccountName != null">
+				bankAccountName = #{bankAccountName},
+			</if>
+			<if test="personImg != null and personImg != null">
+				personImg = #{personImg},
+			</if>
+			<if test="workImg != null and workImg != null">
+				workImg = #{workImg},
+			</if>
+			<if test="companyName != null and companyName != null">
+				companyName = #{companyName},
+			</if>
+			<if test="registerAddress != null and registerAddress != null">
+				registerAddress = #{registerAddress},
+			</if>
+			<if test="realName != null and realName != null">
+				realName = #{realName},
+			</if>
+			<if test="workAddress != null and workAddress != null">
+				workAddress = #{workAddress},
+			</if>
+			<if test="workImg != null and workImg != null">
+				workImg = #{workImg},
+			</if>
+			<if test="email != null and email != null">
+				email = #{email},
+			</if>
+			<if test="weChat != null and weChat != null">
+				weChat = #{weChat},
+			</if>
+			<if test="qq != null and qq != null">
+				qq = #{qq},
+			</if>
+			<if test="province != null">
+				province = #{province},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+			<if test="job != job">
+				job = #{job},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<select id="findFreeCount" resultType="int" parameterType="int">
+		select freeNum from ali_consultant where useId = #{userId}
+	</select>
+	 
+	<!-- 更新免费次数 -->
+	<update id="updateFreeCount" parameterType="int">
+		update ali_consultant set freeNum = freeNum - 1 where userId = #{userId}
+	</update>
+	
+	
+	<select id="isFollow" parameterType="map" resultType="int">
+		select count(followId) from ali_follow where 
+			userId = #{userId}
+			and counselorId = #{counselorId}
+	</select>
+	
+	<insert id="addBrowse" parameterType="map" >
+		insert into ali_access_log (userId,counselorId,browseTime)
+		  values 
+		  (#{userId},#{counselorId},NOW())
+	</insert>
+	
+	<insert id="addFollow" parameterType="map" >
+		insert into ali_follow (userId,counselorId,browseTime)
+		  values 
+		  (#{userId},#{counselorId},NOW())
+	</insert>
+	
+	<select id="findBrowseList" parameterType="int" resultType="map">
+		select a.userId,a.userName,a.userImg,b.characterSign,
+		  b.complateAdviceNum,b.entrustNum,b.makeNum
+		  from ali_user a inner join
+		  ali_counselor b on a.userId = b.userId
+		  inner join ali_access_log c
+		  a.userId = c.counselorId
+		  where c.userId = #{userId}
+	</select>
+	
+	
+	
+	<select id="findFollowList" parameterType="int" resultType="map">
+		select a.userId,a.userName,a.userImg,b.characterSign,
+		  b.complateAdviceNum,b.entrustNum,b.makeNum
+		  from ali_user a inner join
+		  ali_counselor b on a.userId = b.userId
+		  inner join ali_follow c
+		  a.userId = c.counselorId
+		  where c.userId = #{userId}
+	</select>
+	
+	<select id="findMyAdviceConsultant" parameterType="int" resultType="map">
+		select c.* from ali_counselor c inner join 
+			(select distinct a.userId from ali_advice_reply a 
+		  inner join 
+		  ali_advice b on a.adviceId = b.adviceId
+		  where b.userId = #{userId}) t on c.userId = t.userId
+	</select>
+	
+	<update id="updateThreeInfo" parameterType="map">
+		update ali_user set 
+		<choose>
+			<when test="openType == 'WECHAT'">
+				isWeChat = 1
+			</when>
+			<when test="openType == 'QQ'">
+				isQQ = 1
+			</when>
+			<when test="openType == 'WEIBO'">
+				isWeiBo = 1
+			</when>
+		</choose>
+		
+		where userId = #{userId}
+	</update>
+	
+	<insert id="addThreeInfo_wechat" parameterType="map">
+		insert into ali_wechat (userId,accountNo,authorityId) values (
+			#{userId},#{accountNo},#{openId}
+		)
+	</insert>
+	
+	<insert id="addThreeInfo_weibo" parameterType="map">
+		insert into ali_weibo (userId,weibo,authorityId) values (
+			#{userId},#{accountNo},#{openId}
+		)
+	</insert>
+	
+	<insert id="addThreeInfo_qq" parameterType="map">
+		insert into ali_qq (userId,qq,authorityId) values (
+			#{userId},#{accountNo},#{openId}
+		)
+	</insert>
+	
+	<insert id="addUserCompanyInfo" parameterType="map" useGeneratedKeys="true" keyProperty="companyId">
+		insert into ali_companyInfo (
+		    userId,companyName,companySize,province,city,companyAddress,
+		    contactMobile,contactName,companyDesc,email
+		) values (
+			#{userId},#{companyName},#{companySize},#{province},
+			#{city},#{companyAddress},#{contactMobile},#{contactName},
+			#{companyDesc},#{email}
+		) 
+	</insert>
+	
+	<select id="findCompanyInfoByUserId" parameterType="int" resultType="map">
+		select * from ali_companyInfo where userId = #{userId}
+	</select>
+	
+	<select id="findResumeInfoByUserId" parameterType="int" resultType="map">
+		select * from ali_user_resume where userId = #{userId}
+	</select>
+	
+	<insert id="deliverResume" parameterType="map" >
+		insert into ali_resume_mapping (resumeId,advertiseId,sendTime) 
+		values 
+		(#{resumeId},#{advertiseId},NOW())
+	</insert>
+	
+	<insert id="addResumeInfo" parameterType="map" >
+		insert into ali_user_resume (userId,resumeName,job,sal,city,workExperience,
+		qualification,state) 
+		values 
+		(#{userId},#{resumeName},#{job},#{sal},#{city},#{workExperience},#{qualification},1)
+	</insert>
+	
+	<insert id="addWorkExperience">
+		insert into ali_user_experience (userId,jobType,jobName,inDate,outDate,
+		deptName,workContent)
+		 values
+		<foreach collection="list" item="w" separator=",">
+			(#{w.userId},#{w.jobType},#{w.jobName},#{w.inDate},
+			#{w.outDate},#{w.deptName},#{w.workContent})
+		</foreach>
+	</insert>
+	
+	<insert id="addEdu">
+		insert into ali_user_edu (userId,schoolName,major,qualification,inDate,
+		outDate,schoolDesc)
+		 values
+		<foreach collection="list" item="edu" separator=",">
+			(#{edu.userId},#{edu.schoolName},#{edu.major},#{edu.qualification},#{edu.inDate},
+			#{edu.outDate},#{edu.schoolDesc})
+		</foreach>
+	</insert>
+	
+	<insert id="addResumeFile">
+		insert into ali_user_file (userId,fileName) values 
+		<foreach collection="list" item="f">
+			(#{f.userId},#{f.fileName})
+		</foreach>
+	</insert>
+	
+	<update id="changeUserProfile" parameterType="map">
+		update ali_user set userImg = #{userImg} where userId = #{userId}
+	</update>
+	
+	<select id="getUserIdByPersonUrl" parameterType="java.lang.String" resultType="int">
+		select userId from ali_counselor where personUrl = #{url}	
+	</select>
+	
+	<select id="getPushCodeByUserId" parameterType="int" resultType="java.lang.String">
+		select pushCode from ali_user where userId = #{userId}
+	</select>
+	
+	<update id="updateUserPushCode" parameterType="map">
+		update ali_user set pushCode = #{pushCode} where userId = #{userId}
+	</update>
+	
+	<select id="getThreeLoginFlag" parameterType="map" resultType="int">
+		select userId from  
+		<choose>
+			<when test="openType == 'WEIBO'">
+				ali_weibo
+			</when>
+			<when test="openType == 'WECHAT'">
+				ali_wechat
+			</when>
+			<when test="openType == 'QQ'">
+				ali_qq
+			</when>
+		</choose>
+		where  authorityId = #{openId}
+	</select>
+	
+<!-- 	<select id="findUserVipOutTime" parameterType="userId">
+		select from ali_user 
+	</select>
+	 -->
+	
+</mapper>

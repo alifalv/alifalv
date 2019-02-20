@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 我的首页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/swiper.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/home.css" rel="stylesheet">
+
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="home_header" type="text/html" src="../tmpl/home_header.html"></script></div>
+</header>
+<div class="ui-content ui-about-wrapper" style="background: url('../img/home-top.png');padding: 200px 0;position: absolute;z-index: 0">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</div>
+<div class="ui-content ui-padding-b-40 ui-margin-t-270 ui-bg-white">
+    <div class="container">
+        <div class="ui-padding-b-no">
+            <script id="userInfoTmpl" type="text/html">
+                <div class="row" >
+                    <div class="col-xs-3 ui-border-blue-5 ui-bg-white">
+                        <div class="ui-block text-center">
+                            <div class="ui-margin-t-70">
+                                <div class="ui-height-200 ui-width-160 ui-block ui-margin-center">
+                                    <img src="{{data.userImg | createImgUrl}}" class="ui-img-height-fill">
+                                </div>
+                            </div>
+                            <div class="ui-margin-t-13 ui-size-22 ui-color-blue2 text-center">{{data.realName || data.userName}}</div>
+                            <div class="ui-margin-t-13 text-center">ID：{{data.userId}}</div>
+                            <div class="ui-margin-t-13 text-center">
+                                {{if (data.is_contract == '1')}}
+                                    <i class="ui-icon-signed-big" title="签约律师"></i>
+                                {{/if}}
+
+                                {{if (data.vipLevel == '1')}}
+                                <i class="ui-icon-vip-gold-big" title="黄金会员"></i>
+                                {{else if (data.vipLevel == '2')}}
+                                <i class="ui-icon-vip-ptvip-big" title="白金会员"></i>
+                                {{else if (data.vipLevel == '3')}}
+                                <i class="ui-icon-vip-masonryvip-big" title="钻石会员"></i>
+                                {{/if}}
+
+                                {{if (data.isAuthentication == '2')}}
+                                    <i class="ui-icon-certified-big ui-margin-l-5" title="已认证"></i>
+                                {{/if}}
+                            </div>
+                            <div class="ui-padding-lr-40 ui-margin-b-20 j-operbtn-box">
+                                <button href="user_separateconsult.html?userId={{data.userId}}" class="j-free-btn btn btn-block ui-btn-blue2 ui-size-16 ui-margin-t-20">免费咨询</button>
+                                <button type="button" class="j-mark-btn btn btn-block ui-btn-blue2 ui-size-16 ui-margin-t-20">文书制作</button>
+                                <button type="button" class="j-dj-btn btn btn-block btn-link ui-size-16 ui-margin-t-20">协议律师费订金>></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-9">
+                        <div style=";" class="ui-padding-lr-15 ui-block ui-margin-l-15 ui-bg-gray2">
+                            <div class="row ui-bg-white " style="margin-left: -7px">
+                                <div class="col-xs-8">
+                                    <div class="row ui-padding-tb-15 ui-padding-lr-30" >
+                                        <div class="col-xs-5">
+                                            <p class="ui-margin-t-13">
+                                                <i class="iconfont icon-dianhua ui-size-36 ui-color-blue2 ui-left"></i>
+                                                <span class="ui-margin-l-15 ui-color-gray ui-inline-block ui-margin-t-6">律师电话</span>
+                                                <span class="ui-bold ui-margin-l-15 ui-inline-block">{{data.mobile || '暂未填写'}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <p class="ui-margin-t-13">
+                                                <i class="iconfont icon-qq ui-size-36 ui-color-blue2 ui-left"></i>
+                                                <span class="ui-margin-l-15 ui-color-gray ui-inline-block ui-margin-t-6">律师QQ</span>
+                                                <span class="ui-bold ui-margin-l-15 ui-inline-block">{{data.qq || '暂未填写'}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-3 text-right ui-padding-t-25">
+                                            <div id="star_btn" class="ui-pointer">
+                                                <i class="iconfont icon-xingxing ui-size-25 ui-color-gray "></i>
+                                                <span class="ui-size-16">收藏</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <hr/>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <!-- 个性签名 -->
+                                            <p class="ui-size-16 ui-color-blue2 ui-margin-t-17">{{data.characterSign || 'Ta还没有编辑个性签名~'}}</p>
+                                            <p class="ui-size-14 ui-color-gray ui-margin-t-17"><span class="ui-margin-r-40">所在地区：{{data.provinceName || '无'}} {{data.cityName || '无'}}</span><span>工作单位：{{data.conpanyName || '暂未填写'}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 ui-padding-lr-no">
+                                    <div class="text-center ui-padding-tb-30">
+                                    <!--<div class="text-center ui-padding-tb-30 ui-bg-blue">-->
+                                        <!--<div class="ui-color-white ui-padding-tb-10">欢迎扫一扫 个人二维码</div>-->
+                                        <div class="ui-padding-tb-10">欢迎扫一扫 个人二维码</div>
+                                        <!--<div id="user_qrcode" class="ui-heightwidth-145" style="margin: 0 auto"></div>-->
+                                        <div class="ui-heightwidth-145 ui-bg-white" style="margin: 0 auto">
+                                            <img src="{{data.codeImg | createImgUrl}}" class="ui-img-fill ui-block " alt="二维码挂了">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ui-padding-tb-15 ui-padding-lr-15 ui-padding-lr-30">
+                                <div class="col-xs-8">
+                                    <div class="row ui-margin-t-17">
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">法律水平：</span>{{data.levelScore || '0'}}</div>
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">服务态度：</span>{{data.attitudeScore || '0'}}</div>
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">社会资源：</span>{{data.sourceScore || '0'}}</div>
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">收费标准：</span>{{data.chargeScore || '0'}}</div>
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">解答咨询：</span>{{data.complateAdviceNum || '0'}}次</div>
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">代写文书：</span>{{data.makeNum || '0'}}次</div>
+                                        <div class="col-xs-3 ui-margin-t-10"><span class="ui-color-gray2">接受委托：</span>{{data.entrustNum || '0'}}人</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 ui-padding-l-no ui-margin-t-17">
+                                    <span class="ui-bg-black ui-padding-lr-15 ui-color-white ui-margin-r-20">来自用户的评价</span><span class="ui-margin-r-5">好评（<span class="ui-color-blue2">{{data.goodNum || '无'}}</span>）</span><span class="ui-margin-r-5">中评（<span class="ui-color-blue2">{{data.middleNum || '无'}}</span>）</span><span>差评（<span class="ui-color-blue2">{{data.badNum || '无'}}</span>）</span>
+                                </div>
+
+                                <div class="j-user-reply"></div>
+
+                                <div class="col-xs-12 ui-padding-l-no ui-margin-t-17">
+                                    <span class="ui-bg-black ui-padding-lr-15 ui-color-white ui-margin-r-20">专业领域 </span>
+                                </div>
+
+                                <div class="col-xs-12 ui-margin-t-17">
+                                    <div class="row">
+                                        {{each data.specialityList sp}}
+                                        <div class="col-xs-2  ui-color-gray2 ui-color-gray2">
+                                            <i class="iconfont icon-gou ui-size-25 ui-margin-r-10 ui-color-blue2"></i>{{sp.typeName}}
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ui-margin-t-70">
+                    <div class="col-xs-12">
+                        <div class="ui-home-center">
+                            <div class="ui-home-center-title"><h4>我的简介</h4><a href="home_about.html?userId={{data.userId}}" class="ui-color-gray2 ui-right">MORE ></a></div>
+                            <div class="ui-home-center-content ui-margin-t-30">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <div class="ui-border-blue-5 ui-padding-30 ui-line-height-30 ui-height-340">
+                                            <div class="ui-cut-8 ui-height-240">
+                                                {{data.personDesc || '暂无简介'}}
+                                            </div>
+                                            <div class="text-right"><a href="home_about.html?userId={{data.userId}}" class="ui-color-blue">详 细 >></a></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="ui-img-adaptive-height ui-height-340">
+                                            <img src="../img/demo-home-work.jpg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+            <div class="row ui-margin-t-70" id="styleList">
+                <div class="col-xs-12">
+                    <script id="styleListTmpl" type="text/html">
+                        <div class="ui-home-center">
+                            <div class="ui-home-center-title"><h4>我的风采</h4> <a href="home_styles.html?userId={{userId}}" class="ui-color-gray2 ui-right">MORE ></a></div>
+                            <div class="ui-home-center-content ui-margin-t-30">
+                                <div class="row">
+                                    {{if (getLength(rows) > 0)}}
+                                        {{each rows value i}}
+                                        <div class="col-xs-2">
+                                            <!--<a href="home_style.html?articleId={{value.articleId}}&userId={{value.userId}}">-->
+                                                <div class="ui-img-adaptive-height ui-height-250">
+                                                    <img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}">
+                                                </div>
+                                            <!--</a>-->
+                                            <div class="ui-color-gray2 ui-margin-tb-10">{{value.sendTime | subDay}}</div>
+                                            <div class="ui-color-gray2 ui-margin-tb-10"><a href="javascript:void(0);">{{value.title}}</a>
+                                                <!--<a href="javascript:void(0);" class="ui-right">></a>-->
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    {{else}}
+                                        <div class="col-xs-12 text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-home-index-wrapper ui-margin-t-70 ui-padding-tb-50" id="workList">
+        <div class="container">
+            <div class="row">
+                <script id="workListTmpl" type="text/html">
+                    <div class="col-xs-12 text-center">
+                        <div class="ui-home-indexwork-title">工作动态</div>
+                        <a href="home_works.html?userId={{userId}}" class="ui-abright-0 ui-abtop-0 ui-size-12 ui-normal ui-color-white ui-absolute">MORE ></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <ul class="ui-homeworks-ul">
+                            {{if (getLength(rows) > 0)}}
+                                {{each rows value i}}
+                                <li>
+                                    <div class="ui-border-1 ui-padding-30 ui-hover-shadow">
+                                        <div class="ui-size-20 ui-bold ui-margin-b-30 ui-height-56 ui-cut-2">{{value.title}}</div>
+                                        <div class="ui-color-gray ui-margin-b-30">{{value.sendTime | subDay}}</div>
+                                        <div class="ui-color-gray ui-margin-b-30 ui-height-80 ui-cut-4">{{value.articleContent | removeHtmlTag}}</div>
+                                        <a href="home_work.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-color-blue2">查看详细 >></a>
+                                    </div>
+                                </li>
+                                {{/each}}
+                            {{else}}
+                                <div class="ui-width-100p text-center ui-color-white">{{error || '暂无内容'}}</div>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="caseList">
+        <div class="row ui-margin-t-70">
+            <div class="col-xs-12">
+                <script id="caseListTmpl" type="text/html">
+                    <div class="ui-home-center">
+                        <div class="ui-home-center-title"><h4>成功案例</h4> <a href="home_cases.html?userId={{userId}}" class="ui-color-gray2 ui-right">MORE ></a></div>
+                        <div class="ui-home-center-content ui-margin-t-30">
+                            <ul class="ui-homeworks-ul ui-homeworks-2">
+                                    {{if (getLength(rows) > 0)}}
+                                        {{each rows value i}}
+                                            {{if (i == 0)}}
+                                            <li class="ui-bg-white ui-padding-30 ui-height-180 ui-boxshadow-out-tl">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="ui-img-adaptive-width ui-height-100"><img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}"></div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="ui-bg-blue ui-left ui-width-35 ui-height-8"></div>
+                                                        <div class="ui-margin-l-40 ui-padding-l-10">
+                                                            <div class="ui-cut-1 ui-size-16 ui-margin-b-10">{{value.title}}</div>
+                                                            <div class="ui-cut-3 ui-color-gray ui-line-height-25 ui-height-72 ui-margin-b-10">{{value.articleContent | removeHtmlTag}}</div>
+                                                            <div class="text-right"><a href="home_case.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-color-blue2">查看详细 > ></a></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/if}}
+                                            {{if (i == 1)}}
+                                            <li class="ui-bg-gray2 ui-padding-30 ui-height-180 ui-boxshadow-in-bl">
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <div class="ui-margin-r-40 ui-padding-r-10">
+                                                            <div class="ui-cut-1 ui-size-16 ui-margin-b-10">{{value.title}}</div>
+                                                            <div class="ui-cut-3 ui-color-gray ui-line-height-25 ui-height-72 ui-margin-b-10">{{value.articleContent | removeHtmlTag}}</div>
+                                                            <div class="text-right"><a href="home_case.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-color-blue2">查看详细 > ></a></div>
+                                                        </div>
+                                                        <div class="ui-bg-blue ui-right ui-width-35 ui-height-8 ui-absolute ui-abtop-0 ui-abright-10"></div>
+                                                    </div>
+                                                    <div class="col-xs-5">
+                                                        <div class="ui-img-adaptive-width ui-height-100"><img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}"></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/if}}
+                                            {{if (i == 2)}}
+                                            <li class="ui-bg-gray2 ui-padding-30 ui-height-180 ui-boxshadow-in-tr">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="ui-img-adaptive-width ui-height-100"><img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}"></div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="ui-bg-blue ui-left ui-width-35 ui-height-8"></div>
+                                                        <div class="ui-margin-l-40 ui-padding-l-10">
+                                                            <div class="ui-cut-1 ui-size-16 ui-margin-b-10">{{value.title}}</div>
+                                                            <div class="ui-cut-3 ui-color-gray ui-line-height-25 ui-height-72 ui-margin-b-10">{{value.articleContent | removeHtmlTag}}</div>
+                                                            <div class="text-right"><a href="home_case.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-color-blue2">查看详细 > ></a></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/if}}
+                                            {{if (i == 3)}}
+                                            <li class="ui-bg-white ui-padding-30 ui-height-180 ui-boxshadow-out-br">
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <div class="ui-margin-r-40 ui-padding-r-10">
+                                                            <div class="ui-cut-1 ui-size-16 ui-margin-b-10">{{value.title}}</div>
+                                                            <div class="ui-cut-3 ui-color-gray ui-line-height-25 ui-height-72 ui-margin-b-10">{{value.articleContent | removeHtmlTag}}</div>
+                                                            <div class="text-right"><a href="home_case.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-color-blue2">查看详细 > ></a></div>
+                                                        </div>
+                                                        <div class="ui-bg-blue ui-right ui-width-35 ui-height-8 ui-absolute ui-abtop-0 ui-abright-10"></div>
+                                                    </div>
+                                                    <div class="col-xs-5">
+                                                        <div class="ui-img-adaptive-width ui-height-100"><img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}"></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/if}}
+                                        {{/each}}
+                                    {{else}}
+                                        <div class="ui-width-100p text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    {{/if}}
+                            </ul>
+                        </div>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="essayList">
+        <div class="row ui-margin-t-70">
+            <div class="col-xs-12">
+                <script id="essayListTmpl" type="text/html">
+                    <div class="ui-home-center">
+                        <div class="ui-home-center-title"><h4>我的随笔</h4> <a href="home_essays.html?userId={{userId}}" class="ui-color-gray2 ui-right">MORE ></a></div>
+                        <div class="ui-home-center-content ui-margin-t-30">
+                            <div class="swiper-container ui-margin-lr-40">
+                                <div class="swiper-wrapper">
+                                        {{if (getLength(rows) > 0)}}
+                                            {{each rows value i}}
+                                            <div class="swiper-slide ui-padding-lr-10 ui-width-25p">
+                                                <div class="ui-home-essays">
+                                                    <div class="ui-img-adaptive-width ui-height-100"><img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}"></div>
+                                                    <div class="ui-home-essays-title ui-cut-1">{{value.title}}</div>
+                                                    <div class="ui-home-essays-content ui-cut-4 ui-height-88">{{value.articleContent | removeHtmlTag}}</div>
+                                                    <div><a href="home_essay.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-size-12 ui-color-lightblue">查看详情 >></a></div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                        {{else}}
+                                            <div class="ui-width-100p text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                        {{/if}}
+                                </div>
+                            </div>
+                            {{if (getLength(rows) > 0)}}
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="userReplyTmpl">
+    {{if (getLength(data) > 0 && !error)}}
+        {{each data}}
+            {{if ($index < 3)}}
+            <div class="col-xs-4 ui-padding-lr-no ui-border-1 ui-margin-t-17">
+                <div class="ui-padding-10 ui-color-gray2">
+                    <div>{{$value.realName}}</div>
+                    <div>{{$value.evaluateldContent}}</div>
+                    <div>{{$value.evaluateTime}}</div>
+                </div>
+            </div>
+            {{/if}}
+        {{/each}}
+    {{else}}
+    <div class="col-xs-12 ui-padding-lr-no ui-border-1 ui-margin-t-17">
+        <div class="ui-padding-10 ui-color-gray2">
+            <div>{{error || '暂无评价'}}</div>
+        </div>
+    </div>
+    {{/if}}
+</script>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html" data-color="black"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

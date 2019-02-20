@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Advice">
+
+	<select id="findAdviceList" resultType="map" parameterType="map">
+	  select t.*,
+	    (select COUNT(replyId) from ali_advice_reply where adviceId = t.adviceId) as replyNum
+	    from (
+		select adviceId,title,userId,userName,userImg,caseType,reward,state,sendTime
+		  from ali_advice where 1=1
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != 0">
+		  	and caseType = #{caseId}
+		  </if>
+		  <choose>
+		  	<when test="queryType == 1">
+		  		order by sendTime desc
+		  	</when>
+		  	<when test="queryType == 2">
+		  		order by sendTime desc,readNum desc
+		  	</when>
+		  </choose>
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	  ) t 
+	</select>
+	
+	<select id="findAdviceList_COUNT_TOTAL" parameterType="map" resultType="int">
+		select COUNT(adviceId) from ali_advice where 1=1
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != 0">
+		  	and caseType = #{caseId}
+		  </if>
+	</select>
+	
+	<!-- 根据id获取咨询内容 -->
+	<select id="findAdviceByAdviceId" resultType="map" parameterType="int">
+		select t.*
+		  ,(select COUNT(replyId) from ali_advice_reply where adviceId = t.adviceId) as replyNum 
+		  from ali_advice t where adviceId = #{adviceId}
+	</select>
+	
+	<!-- 根据id集合获取所有的证据图片信息 -->
+	<select id="findImgsByAdviceIds" resultType="map">
+		select adviceId,img from ali_advice_img 
+		where adviceId in
+		<foreach collection="array" item="adviceId" open="(" close=")" separator=",">
+			#{adviceId}
+		</foreach>
+	</select>
+	
+	<insert id="addAdvice" parameterType="map" useGeneratedKeys="true" keyProperty="adviceId">
+		insert into ali_advice 
+		(userId,userName,userImg,adviceContent,caseType,reward,sendTime,state,readNum) values
+		(#{userId},#{userName},#{userImg},#{adviceContent},#{caseType},#{reward},NOW(),0,0) 
+	</insert>
+	
+	<insert id="addAdviceImgs" parameterType="map">
+		insert into ali_advice_img (adviceId,img) values
+		<foreach collection="imgs" item="img" separator=",">
+			(#{adviceId},#{img})
+		</foreach>
+	</insert>
+	
+	
+	<!-- 获取上一章下一章信息 -->
+	<select id="findPreAndNextAdviceInfo" resultType="map" parameterType="map">
+		select 'pre' as infoType ,adviceId,title
+		  from ali_advice where 1=1
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != 0">
+		  	and caseType = #{caseId}
+		  </if>
+		    and adviceId &lt; #{adviceId}
+		  <choose>
+		  	<when test="queryType == 1">
+		  		order by sendTime desc
+		  	</when>
+		  	<when test="queryType == 2">
+		  		order by sendTime desc,readNum desc
+		  	</when>
+		  </choose>
+		  limit 1
+		  
+		  union all
+		  
+		  select 'next' as infoType , adviceId,title
+		  from ali_advice where 1=1
+		  <if test="keyWord != null and keyWord != ''">
+		  	and title like '%${keyWord}%'
+		  </if>
+		  <if test="hasDate == 1">
+		  	and sendTime between #{startDate} and #{endDate}
+		  </if>
+		  <if test="caseId != 0">
+		  	and caseType = #{caseId}
+		  </if>
+		    and adviceId &gt; #{adviceId}
+		  <choose>
+		  	<when test="queryType == 1">
+		  		order by sendTime desc
+		  	</when>
+		  	<when test="queryType == 2">
+		  		order by sendTime desc,readNum desc
+		  	</when>
+		  </choose>
+		  limit 1
+	</select>
+	
+	
+	<select id="findAdviceReplyList" resultType="map" parameterType="map">
+		select tmp.*,c.isAuthentication,c.vipLevel as level from (
+			select t.*,
+			(select COUNT(l.likeId) from ali_advice_like l where l.userId = #{userId} AND t.replyId = l.replyId) as isLike
+			from (
+				select a.detailsId as replyId,a.replyContent,a.replyTime as sendTime,
+				  b.adviceId,b.userId,b.nickName,b.userImg,b.rankValue as rank
+				  from ali_advice_details a
+				  inner join 
+				  ali_advice_reply b on a.replyId = b.replyId
+				  where b.adviceId = #{adviceId}
+			     ) t order by t.sendTime
+		   ) tmp inner join ali_user c on
+		   tmp.userId = c.userId
+	</select>
+	
+	<insert id="addLike" parameterType="map">
+		insert into ali_advice_like (replyId,userId)
+		  values (#{replyId},#{userId})
+	</insert>
+	
+	<update id="updateLikeNum" parameterType="int">
+		update ali_advice_details set 
+		likeNum = likeNum+1 where detailsId = #{replyId}
+	</update>
+	
+	<select id="findLikeNumByReplyId" parameterType="int">
+		select likeNum from ali_advice_details where detailsId = #{replyId}
+	</select>
+	
+	
+	<select id="findAdviceByUserId" parameterType="int" resultType="map">
+		SELECT a.*,
+			(SELECT COUNT(b.detailsId) FROM ali_advice_details b INNER JOIN 
+			 ali_advice_reply c ON b.replyId = c.replyId WHERE c.adviceId = a.adviceId)
+			 AS replyNum
+		 FROM ali_advice a WHERE a.userId = #{userId}
+	</select>
+	
+	
+	<select id="myAnswerAdvice" parameterType="int" resultType="map">
+		select a.* from ali_advice a 
+		  inner join 
+		  ali_advice_reply b on a.adviceId = b.adviceId
+		  where b.userId = #{userId}
+	</select>
+
+</mapper>

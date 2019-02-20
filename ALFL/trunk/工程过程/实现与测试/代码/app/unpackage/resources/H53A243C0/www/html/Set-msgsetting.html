@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html class="Set-center">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>消息设置</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/md5.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Set-center Set-msgsetting">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>消息设置</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter" id="app">
+			<div class="listbox">
+				<section>
+					<div class="list-l">
+						<span>回复消息开关</span>
+					</div>
+					<div class="list-r">
+						<div id="is_accept_replylMsg" v-if="is_accept_replylMsg == '1'" class="mui-switch mui-active"><div class="mui-switch-handle"></div></div>
+						<div id="is_accept_replylMsg" v-else-if="is_accept_replylMsg == '0'" class="mui-switch "><div class="mui-switch-handle"></div></div>
+					</div>
+				</section>
+				<section>
+					<div class="list-l">
+						<span>系统消息开关</span>
+					</div>
+					<div class="list-r">
+						<div id="is_accept_sysMsg" v-if="is_accept_sysMsg == '1'" class="mui-switch mui-active"><div class="mui-switch-handle"></div></div>
+						<div id="is_accept_sysMsg" v-else-if="is_accept_sysMsg == '0'" class="mui-switch "><div class="mui-switch-handle"></div></div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="vue/axios.min.js"></script>
+		<script src="vue/httpVueLoader.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Set-msgsetting.js"></script>
+	</body>
+
+</html>

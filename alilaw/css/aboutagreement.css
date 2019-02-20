@@ -1,0 +1,15 @@
+.aboutTable {
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px;
+    text-align: center;
+    color: #202020;
+    vertical-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.aboutTable tr td {
+    padding: 13px;
+    border: 1px solid #E5ECEE;
+}

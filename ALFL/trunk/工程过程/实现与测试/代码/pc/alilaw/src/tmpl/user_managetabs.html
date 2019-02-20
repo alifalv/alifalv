@@ -1,0 +1,17 @@
+{{if (userType == 1)}}
+    <li role="presentation" {{@ 'personal_info.html' | createActiveTabs}}><a href="personal_info.html" >账户设置</a></li>
+    <li role="presentation" {{@ 'personal_jobhunt_advocate.html' | createActiveTabs}}><a href="personal_jobhunt_advocate.html" >求职招聘</a></li>
+    <li role="presentation" {{@ 'personal_msgsetting.html' | createActiveTabs}}><a href="personal_msgsetting.html">消息设置</a></li>
+    <li role="presentation" {{@ 'personal_vipinfo_advocate.html' | createActiveTabs}}><a href="personal_vipinfo_advocate.html">VIP资料</a></li>
+{{else if (userType == 2)}}
+    <li role="presentation" {{@ 'personal_info.html' | createActiveTabs}}><a href="personal_info.html" >账户设置</a></li>
+    <li role="presentation" {{@ 'personal_homesetting.html' | createActiveTabs}}><a href="personal_homesetting.html" >个人主页设置</a></li>
+    <li role="presentation" {{@ 'personal_jobhunt_counselor.html' | createActiveTabs}}><a href="personal_jobhunt_counselor.html" >求职招聘</a></li>
+    <li role="presentation" {{@ 'personal_msgsetting.html' | createActiveTabs}}><a href="personal_msgsetting.html">消息设置</a></li>
+    <li role="presentation" {{@ 'personal_vipinfo_counselor.html' | createActiveTabs}}><a href="personal_vipinfo_counselor.html">执业认证</a></li>
+{{else if (userType == 3)}}
+    <li role="presentation" {{@ 'personal_info.html' | createActiveTabs}}><a href="personal_info.html" >账户设置</a></li>
+    <li role="presentation" {{@ 'personal_jobhunt_enterprise.html' | createActiveTabs}}><a href="personal_jobhunt_enterprise.html" >求职招聘</a></li>
+    <li role="presentation" {{@ 'personal_msgsetting.html' | createActiveTabs}}><a href="personal_msgsetting.html">消息设置</a></li>
+    <li role="presentation" {{@ 'personal_vipinfo_enterprise.html' | createActiveTabs}}><a href="personal_vipinfo_enterprise.html">VIP资料</a></li>
+{{/if}}

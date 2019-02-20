@@ -1,0 +1,200 @@
+/*上传图片插件的样式*/
+.img-section {
+	border: 1px dashed #cccccc;
+	zoom:1;/*为IE6，7的兼容性设置*/
+}
+.img-section:after{
+	content:".";/*加一段内容*/
+	display:block;/*让生成的元素以块级元素显示，占满剩余空间*/
+	height:0;/*避免生成的内容破坏原有布局高度*/
+	clear:both;/*清除浮动*/
+	visibility:hidden;/*让生成的内容不可见*/
+}
+
+.clear:after{
+	content:".";/*加一段内容*/
+	display:block;/*让生成的元素以块级元素显示，占满剩余空间*/
+	height:0;/*避免生成的内容破坏原有布局高度*/
+	clear:both;/*清除浮动*/
+	visibility:hidden;/*让生成的内容不可见*/
+}
+.img-box{
+	margin-top: 40px;
+}
+.img-box .up-p{
+	margin-bottom: 20px;
+	font-size: 16px;
+	color: #555;
+}
+.z_photo{
+	padding: 18px;
+	/*padding: 18px;*/
+}
+.z_photo .z_file{
+	width: 200px;
+	height: 150px;
+	position: relative;
+	display: inline-block;
+	background: url('../img/a11.png');
+	background: url('../img/addimg.png')center no-repeat;
+	background-size: 80px	;
+	border: 1px solid #e3e3e3;
+}
+.z_file  .file{
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 100;
+	cursor: pointer;
+}
+.z_photo .up-section{
+	position: relative;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+.up-section .close-upimg{
+	width: 30px;
+	height: 30px;
+	background: url("../img/a7.png") no-repeat;
+	position: absolute;
+	top: 6px;
+	right: 8px;
+	display: none;
+	z-index: 10;
+	cursor: pointer;
+}
+.up-section .up-span{
+	display: block;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 9;
+	background: rgba(0,0,0,.5);
+}
+.up-section:hover, .z_photo .z_file:hover{
+	border-color: #ccf;
+	box-shadow: 0 0 5px rgba(0,0,0,.15);
+}
+.up-section:hover .close-upimg{
+	display: block;
+}
+.up-section:hover .up-span{
+	visibility: visible;
+}
+.z_photo .up-img{
+	/*display: block;*/
+	/*width: 100%;*/
+	/*height: 100%;*/
+	max-height: 100%;
+	max-width: 100%;
+	height: auto;
+	width: auto;
+}
+.loading{
+    border: 1px solid #D1D1D1;
+	background:url(../img/loading.gif) no-repeat center;
+}
+.up-opcity{
+	opacity: 0;
+}
+.img-name-p{
+	display: none;
+}
+.upimg-div .up-section {
+
+	text-align: center;
+	float: left;
+    width: 200px;
+    height: 150px;
+	border: 1px solid #e3e3e3;
+	overflow: hidden;
+}
+.img-box .upimg-div .z_file {
+	border: 1px solid #eee;
+    width: 200px;
+    height: 150px;
+}
+.z_file .add-img {
+    display: block;
+    width: 190px;
+    height: 180px;
+}
+/*遮罩层样式*/
+.mask{
+	z-index: 1000;
+	display: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.4);
+}
+.mask .mask-content{
+	 width: 500px;
+	 position: absolute;
+	 top: 50%;
+	 left: 50%;
+	 margin-left: -250px;
+	 margin-top: -80px;
+	 background: white;
+	 height: 160px;
+	 text-align: center;
+}
+.mask .mask-content .del-p{
+	color: #555;
+	height: 94px;
+	line-height: 94px;
+	font-size: 18px;
+	border-bottom: 1px solid #D1D1D1;
+}
+.mask-content .check-p{
+	height: 66px;
+	line-height: 66px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+}
+.mask-content .check-p span{
+	width: 49%;
+	display:inline-block;
+	text-align: center;
+	color:#d4361d ;
+	font-size: 18px;
+}
+.check-p .del-com{
+	border-right: 1px solid #D1D1D1;
+}
+
+.img-tips {
+	position: absolute;
+	left: 241px;
+	top: 60px;
+	right: 15px;
+	color: #eb5748;
+}
+
+
+.file-look {
+	background-size: 80px 90px;
+	background-position-x: center;
+	background-position-y: center;
+	background-color: #f8f8f8;
+	background-image:  url(../img/file-look.png);
+	background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+

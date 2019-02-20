@@ -1,0 +1,86 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{background: #fff;height: 100%;}
+header{
+	-webkit-overflow-scroll:touch;
+	width: 100%;
+	height: 2rem;
+	border-bottom: 0.04rem solid #E0E0E0;	
+}
+header img{
+	float: left;
+	width: 1rem;
+	margin: 0.5rem 0 0 0.2rem;
+}
+header p{
+	float: right;
+	line-height: 2rem;
+	margin-right: 0.5rem;
+	font-size: 0.6rem;
+}
+header div.serchbox{
+	float: left;
+	width: 76.5%;
+	height: 1.3rem;
+    border-radius: 1.15rem;
+	background: #F0F0F0;
+	margin: 0.35rem 0 0 0.25rem;
+	text-align: center;
+}
+header div.serchbox input{
+	width: 10rem;
+	height: 1.1rem;
+	padding:0 0 0 0.8rem;
+	margin: 0.1rem 0 0 0;
+	border: none;
+	display: block;
+	font-size: 0.55rem;
+	cursor: auto;
+	background: transparent;
+}
+section{
+	width: 100%;
+	overflow: hidden;
+}
+section h1{
+	width: 100%;
+	height: 1.7rem;
+	padding-left: 0.4rem;
+	border-bottom: 1px solid #E0E0E0;
+	line-height: 1.7rem;
+	font-size: 0.7rem;
+	font-weight: normal;
+}
+section .rmss{padding:0 0.4rem;}
+section ul{
+	width: 100%;
+}
+section ul li{
+	width: auto;
+	height: 1.2rem;
+	float: left;
+	background: #F0F0F0;
+	border-radius: 1.2rem;
+    margin:0.5rem 0.4rem 0 0;
+	padding: 0rem 0.6rem;
+	line-height: 1.2rem;
+	font-size: 0.6rem;
+}
+.SerchList{height: 100%; overflow-y:scroll;-webkit-overflow-scroll:touch;}
+.SerchList section{border-bottom:1px solid #eeedea;}
+.SerchList a{display: block;}
+.SerchList .mainintr{display:flex;display:-webkit-flex;justify-content: space-between;align-items: center;background-color: #fff;padding:0.4rem 0.5rem;}
+.SerchList .mainintr .m-left{width:35%;padding-right:0.5rem;}
+.SerchList .mainintr .m-left a{display:block;}
+.SerchList .mainintr .m-left a img{width: 100%;}
+.SerchList .mainintr .m-right{width: 65%;display:flex;display:-webkit-flex;justify-content: space-between;flex-direction: column;}
+.SerchList .mainintr .m-right .info-top{margin-bottom:0.6rem;}
+.SerchList .mainintr .m-right a{font-size:0.6rem;display: block;}
+.SerchList .mainintr .m-right .info-bottom{display:flex;display:-webkit-flex;justify-content: space-between;}
+.SerchList .mainintr .m-right .info-b-l{padding-top: 0.1rem;}
+.SerchList .mainintr .m-right .info-b-l p{font-size: 0.56rem;}
+.SerchList .mainintr .m-right .info-b-l p:nth-child(1){color: #999999;}
+.SerchList .mainintr .m-right .info-b-l p:nth-child(2){font-size: 0.7rem;color: #e02e24;}
+.SerchList .mainintr .m-right .info-b-l p:nth-child(2) span{margin-left: 0.2rem;}
+.SerchList .mainintr .m-right .info-b-r a{display: block;width:2rem;height:2rem;background:url(../images/buybus.png) center center no-repeat;background-size:100% auto;}
+.SerchListWrap{position: fixed;top: 2rem;left: 0;right: 0;bottom: 0;}

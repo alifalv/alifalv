@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<levalType>
+	<level>
+		<levelId>1</levelId>
+		<levelName>黄金</levelName>
+	</level>
+	<level>
+		<levelId>2</levelId>
+		<levelName>白金</levelName>
+	</level>
+	<level>
+		<levelId>3</levelId>
+		<levelName>钻石</levelName>
+	</level>
+
+</levalType>

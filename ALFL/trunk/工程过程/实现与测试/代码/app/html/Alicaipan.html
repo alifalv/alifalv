@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class="Alicaipan">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>阿里裁判</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/jquery.min.js"></script>
+		<!-- <script src="js/jquery.cookie.min.js"></script> -->
+		<style type="text/css">
+			#pullrefresh{top:4.44rem;}
+		</style>
+	</head>
+
+	<body class="Lawsearch Alicaipan">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+				<!-- <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);"  ></a> -->
+			</div>
+			<h2>阿里裁判</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter" id="app">
+			<div class="searchbox">
+				<div class="mui-input-row mui-search">
+					<input type="search" value="" class="mui-input-clear" placeholder="输入搜索关键字" ref="conditionValue">
+				</div>
+				<input type="button" name="searchbtn" id="searchbtn" value="搜索" />
+			</div>
+			
+				
+			<!-- <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<ul class="mui-scroll listbox">
+					<li class="list" v-for="(item, index) in list" :key="index">
+						<a href="">
+							<div class="list-l">
+								<img :src="item.overImg" />
+							</div>
+							<div class="list-r">
+								<h2>{{item.title}}</h2>
+								<p class="timebox"><span>【{{item.columnTypeName}}】</span><span>{{item.sendTime}}</span></p>
+								<p class="descrip">{{item.articleContent}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+
+			</div> -->
+
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" v-cloak>
+				<div class="mui-scroll">
+					<ul class="listbox">
+						<li class="list" v-for="(item, index) in list" :key="index">
+							<a :href="'AlicaipanInfo.html?articleId=' + item.articleId">
+								<div class="list-l">
+									<img :src="item.declareImgs | createImgUrl" />
+								</div>
+								<div class="list-r">
+									<h2>{{item.title}}</h2>
+									<p class="timebox"><span>{{item.sendTime | subDay}}</span></p>
+									<p class="descrip">{{item.caseDesc | removeHtmlTag}}</p>
+								</div>
+							</a>
+						</li>
+						<li v-if="isNoList" class="ui-nolist">没有找到数据</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+		<script src="vue/vue.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Alicaipan.js"></script>
+	</body>
+
+</html>

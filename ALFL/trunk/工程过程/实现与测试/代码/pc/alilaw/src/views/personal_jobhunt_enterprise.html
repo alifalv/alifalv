@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 管理中心 - 求职招聘</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-person-wrapper">
+    <div><script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script></div>
+</div>
+<div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+    <div class="container ">
+        <div class="ui-padding-b-no">
+            <div class="row">
+
+                <div class="col-xs-3">
+                    <div><script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script></div>
+                </div>
+
+                <div class="col-xs-9">
+                    <div class="ui-bg-white">
+
+                        <ul class="nav nav-tabs ui-person-panel-top">
+                            <script class="user_managetabs" type="text/html" src="../tmpl/user_managetabs.html"></script>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content ui-person-panel-content">
+                            <div role="tabpanel" class="tab-pane active ui-padding-30" style="display: block">
+                                <div class="row ui-border-b-1 ui-padding-b-30">
+                                    <div class="col-xs-12">
+                                        <div class="ui-size-16">公司信息</div>
+                                    </div>
+                                    <div class="col-xs-12 text-right ui-margin-t-20">
+                                        <div class="ui-regpanel ui-padding-b-no">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="ui-regform ui-padding-l-30">
+                                                        <form class="form-horizontal" id="companyInfoForm">
+                                                            <div class="form-group ui-margin-b-30 ui-margin-t-20">
+                                                                <label for="companyName" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>公司名称：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="companyName" type="text" class="form-control" id="companyName" placeholder="请输入公司名称" data-rule="公司名称:required">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="companySize" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>公司规模：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="companySize" type="text" class="form-control" id="companySize" placeholder="请输入公司规模" data-rule="公司规模:required">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="province_select" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>所在地区：</label>
+                                                                <div class="col-xs-5">
+                                                                    <select class="form-control" name="province" data-rule="省份:required" id="province_select">
+                                                                        <script id="province_tmpl" type="text/html">
+                                                                            {{each data value i}}
+                                                                            <option  value="{{value.provinceId}}" {{value.provinceId != selectedId ? '' : 'selected'}}>{{value.provinceName}}</option>
+                                                                            {{/each}}
+                                                                        </script>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-xs-5">
+                                                                    <select class="form-control" name="city" data-rule="城市:required" id="city_select">
+                                                                        <script id="city_tmpl" type="text/html">
+                                                                            {{each data value i}}
+                                                                            <option value="{{value.cityId}}" {{value.cityId != selectedId ? '' : 'selected'}}>{{value.cityName}}</option>
+                                                                            {{/each}}
+                                                                        </script>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="companyAddress" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>公司地址：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="companyAddress" type="text" class="form-control" id="companyAddress" placeholder="请输入公司地址" data-rule="公司地址:required">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="contactMobile" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>联系电话：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="contactMobile" type="tel" class="form-control" id="contactMobile" placeholder="请输入联系电话" data-rule="联系电话:required;mobile">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="contactName" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>联系人：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="contactName" type="text" class="form-control" id="contactName" placeholder="请输入联系人" data-rule="联系人:required">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="email" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>电子邮箱：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="email" type="email" class="form-control" id="email" placeholder="请输入电子邮箱" data-rule="电子邮箱:required;email">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="companyUrl" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>公司网址：</label>
+                                                                <div class="col-xs-10">
+                                                                    <input name="companyUrl" type="email" class="form-control" id="companyUrl" placeholder="请输入公司网址" data-rule="公司网址:required;url">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <label for="companyDesc" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>公司简介：</label>
+                                                                <div class="col-xs-10">
+                                                                    <script id="companyDesc" name="companyDesc" type="text/plain" data-rule="请输入公司简介:required"></script>
+                                                                    <!--<textarea name="companyDesc" id="companyDesc" class="form-control" rows="3" placeholder="请输入公司简介" data-rule="公司简介:required"></textarea>-->
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group ui-margin-b-30">
+                                                                <div class="col-xs-offset-2 col-xs-2">
+                                                                    <button type="submit" class="btn btn-block ui-btn-red">保存</button>
+                                                                </div>
+                                                                <!--<div class="col-xs-1">-->
+                                                                <!--<button type="button" class="btn btn-block btn-link ui-color-gray">关闭</button>-->
+                                                                <!--</div>-->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row ui-border-b-1 ui-padding-tb-30">
+                                    <div class="col-xs-12">
+                                        <div class="ui-size-16">发布的岗位</div>
+                                    </div>
+                                    <div class="col-xs-5 text-right">
+                                        <a href="personal_jobadd.html" class="ui-btn-add ui-margin-r-40" target="_blank">新建岗位</a>
+                                    </div>
+                                    <div class="col-xs-7" id="seacherJobList">
+                                        <div pagination="mask">
+                                            <script id="seacherJobListTmpl" type="text/html">
+                                                {{if (getLength(rows) > 0)}}
+                                                {{each rows value i}}
+                                                <div class="ui-border-b-1 ui-padding-tb-15"><a href="recruitment_jobinfo.html?advertiseId={{value.advertiseId}}" target="_blank">{{value.jobName}}</a>
+                                                    <div class="ui-right">
+                                                        <a href="recruitment_jobinfo.html?advertiseId={{value.advertiseId}}" class="ui-color-red ui-size-12 ui-margin-r-10" target="_blank">查看详情</a>
+                                                        <a href="personal_jobupdate.html?advertiseId={{value.advertiseId}}" class="ui-color-gray ui-size-12 ui-margin-r-10" target="_blank">修改</a>
+                                                        <a href="javascript:void(0);" class="ui-color-gray ui-size-12 j-delete-btn" data-advertiseid="{{value.advertiseId}}">删除</a>
+                                                    </div>
+                                                </div>
+                                                {{/each}}
+                                                {{else}}
+                                                <div class="text-center ui-color-gray">{{error || '暂无记录'}}</div>
+                                                {{/if}}
+                                            </script>
+                                        </div>
+                                        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="collecResumeList">
+                                    <div class="col-xs-12">
+                                        <div class="ui-size-16 ui-margin-t-30">收到的简历</div>
+                                    </div>
+                                    <div class="col-xs-12 ui-color-gray">
+                                        <div class="ui-padding-30" pagination="mask">
+                                            <script id="collecResumeListTmpl" type="text/html">
+                                                {{if (getLength(rows) > 0)}}
+                                                {{each rows value i}}
+                                                <div class="row ui-border-b-1 ui-padding-tb-15">
+                                                    <div class="col-xs-4 ui-cut-1"><a href="recruitment_resumeinfo.html?userId={{value.userId}}" class="ui-color-gray" target="_blank">{{value.resumeName}}</a></div>
+                                                    <div class="col-xs-4 ui-cut-1">投递岗位：<a href="recruitment_jobinfo.html?advertiseId={{value.advertiseId}}" class="ui-color-gray ui-size-12">{{value.jobName}}</a></div>
+                                                    <div class="col-xs-2 text-right">{{value.sendTime | subDay}}</div>
+                                                    <div class="col-xs-2 text-right"><a href="javascript:void(0);" class="ui-color-gray ui-size-12 j-delete-btn" data-collectionid="{{value.collectionId}}"><i class="iconfont icon-shanchu ui-margin-r-10"></i>删除</a></div>
+                                                </div>
+                                                {{/each}}
+                                                {{else}}
+                                                <div class="text-center ui-color-gray">{{error || '暂无记录'}}</div>
+                                                {{/if}}
+                                            </script>
+                                        </div>
+                                        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="collectionResumeList">
+                                    <div class="col-xs-12">
+                                        <div class="ui-size-16 ui-margin-t-30">收藏的简历</div>
+                                    </div>
+                                    <div class="col-xs-12 ui-color-gray">
+                                        <div class="ui-padding-30" pagination="mask">
+                                            <script id="collectionResumeListTmpl" type="text/html">
+                                                {{if (getLength(rows) > 0)}}
+                                                {{each rows value i}}
+                                                <div class="row ui-border-b-1 ui-padding-tb-15">
+                                                    <a href="recruitment_resumeinfo.html?userId={{value.userId}}" class="ui-color-gray" target="_blank">
+                                                        <div class="col-xs-4"><div class="ui-cut-1">{{value.resumeName}}</div></div>
+                                                        <div class="col-xs-4"><div class="ui-cut-1">{{value.job}}</div></div>
+                                                        <div class="col-xs-2 text-right">{{value.collectionTime | subDay}}</div>
+                                                        <div class="col-xs-2 text-right"><a href="javascript:void(0);" class="ui-color-gray ui-size-12 j-delete-btn" data-collectionid="{{value.collectionId}}"><i class="iconfont icon-shanchu ui-margin-r-10"></i>删除</a></div>
+                                                    </a>
+                                                </div>
+                                                {{/each}}
+                                                {{else}}
+                                                <div class="text-center ui-color-gray">{{error || '暂无记录'}}</div>
+                                                {{/if}}
+                                            </script>
+                                        </div>
+                                        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

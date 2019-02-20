@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta property="wb:webmaster" content="2d2624194c44a227" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+        <div><script class="header"  type="text/html" src="../tmpl/header.html"></script></div>
+    </header>
+    <div class="ui-content login-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6">
+                    <div class="loginform ui-color-gray">
+                        <form id="login_form" method="post">
+                            <div class="form-group ui-line-height-40">
+                                <h4 class="ui-size-20 ui-color-lightblue ui-inline-block">登录</h4>
+                                <a href="reg.html" class="ui-color-red ui-right">免费注册<i class="iconfont icon-you ui-size-18"></i></a>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group ui-height-40">
+                                    <span class="input-group-addon ui-bg-white"><i class="iconfont icon-yonghu1 ui-color-gray ui-size-20"></i></span>
+                                    <input type="text" id="userName" name="userName" data-rule="required" class="form-control ui-height-40" placeholder="手机号码/用户名" aria-describedby="username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group ui-height-40">
+                                    <span class="input-group-addon ui-bg-white"><i class="iconfont icon-key ui-color-gray ui-size-20"></i></span>
+                                    <input type="password" name="password" data-rule="required" class="form-control ui-height-40" placeholder="登录密码" aria-describedby="password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="ui-normal"><input type="checkbox" id="remember_btn">记住用户名</label>
+                                <a href="findpassword.html" class="ui-right ui-color-gray">忘记密码？</a>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" id="btn_login" class="btn btn-default btn-block ui-size-18 ui-height-40 ui-btn-lightblue">登 录</button>
+                            </div>
+                            <div class="form-group">
+                                <span class="ui-color-gray">使用第三方账号</span>
+                                <a href="index.html" class="ui-right ui-color-gray">返回首页</a>
+                            </div>
+                            <div class="form-group">
+                                <span id="qqLoginBtn"></span>
+                                <a href="javascript:void(0)" class="ui-decoration-no ui-margin-r-5" title="QQ" thirdlogin="qq"><i class="iconfont icon-qq ui-color-blue ui-size-30"></i></a>
+                                <a href="javascript:void(0)" class="ui-decoration-no ui-margin-r-5" title="微信" thirdlogin="wx"><i class="iconfont icon-wechatround ui-color-greed ui-size-30" ></i></a>
+                                <a href="javascript:void(0)" class="ui-decoration-no ui-margin-r-5" title="新浪" thirdlogin="sina"><i class="iconfont icon-sinaround ui-color-red ui-size-30" ></i></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

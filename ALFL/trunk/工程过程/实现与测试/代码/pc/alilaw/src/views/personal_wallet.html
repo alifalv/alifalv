@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 服务中心 - 钱包</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-person-wrapper">
+    <div><script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script></div>
+</div>
+<div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+    <div class="container ">
+        <div class="ui-padding-b-no">
+            <div class="row">
+
+                <div class="col-xs-3">
+                    <div><script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script></div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="ui-bg-white">
+                        <div class="tab-content ui-person-panel-content ui-margin-lr-20" id="listWalletRecordList">
+                            <div role="tabpanel" class="tab-pane active ui-block" pagination="mask">
+                                <div class="ui-margin-lr-15 ui-margin-t-20" >
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="ui-size-16 ui-color-gray ui-bold ui-margin-b-10">钱包余额</div>
+                                        </div>
+                                        <div class="col-xs-12 ui-border-b-1">
+                                            <div class="ui-margin-b-10"><span class="ui-bold ui-size-22">¥</span><span class="ui-bold ui-size-28" id="balance">加载中</span><a href="javascript:void(0);" class="j-tx-btn btn ui-bg-blue ui-right ui-padding-lr-20 ui-color-white ui-pointer ui-padding-tb-5 ui-radius-5">提现</a> </div>
+                                        </div>
+                                        <div class="col-xs-12"><div class="ui-margin-tb-20">收支明细</div></div>
+                                        <script id="listWalletRecordListTmpl" type="text/html">
+                                            {{if (getLength(rows) > 0)}}
+                                                {{each rows value i}}
+                                                <div class="col-xs-12 ui-border-b-1 ui-border-dashed">
+                                                    <div class="ui-margin-b-10 ui-margin-t-20"><span>{{value.orderName}}<span class="ui-color-gray">【{{value.businessType}}】</span></span>
+                                                        {{if(value.totalFee > 0)}}
+                                                            <span class="ui-right ui-color-blue ui-bold">+{{value.totalFee}} 元</span>
+                                                        {{else}}
+                                                            <span class="ui-right ui-color-red ui-bold">{{value.totalFee}} 元</span>
+                                                        {{/if}}
+                                                    </div>
+                                                    <div class="ui-margin-b-10"><span>{{value.orderTime}}</span><span class="ui-right">当前余额：¥ {{value.balance}}</span></div>
+                                                </div>
+                                                {{/each}}
+                                            {{else}}
+                                                <div class="text-center col-xs-12">
+                                                    <div class="ui-color-gray">{{error || '暂无记录'}}</div>
+                                                </div>
+                                            {{/if}}
+                                        </script>
+                                    </div>
+                                    <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+                    <div><script class="user_count" type="text/html" src="../tmpl/user_count.html"></script></div>
+                    <div class="ui-panel">
+                        <div class="ui-panel-content ui-padding-t-10">
+                            <ul class="ui-tool-list">
+                                <li><a href="user_consult.html" title=""><i class="icon-mfflzx"></i><p class="ui-size-16">免费法律咨询<i class="icon-hot"></i></p><p class="ui-color-gray">有疑问？马上咨询吧</p></a></li>
+                                <li><a href="user_case_entrusted.html" title=""><i class="icon-fbay"></i><p class="ui-size-16">发布案源</p><p class="ui-color-gray">我要打官司</p></a></li>
+                                <li><a href="findlawyer.html" title=""><i class="icon-zls"></i><p class="ui-size-16">找律师</p><p class="ui-color-gray">含法律文书制作</p></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div><script class="user_reply" type="text/html" src="../tmpl/user_reply.html"></script></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModal" style="display: none">
+    <div class="container container-fluid ui-tk-box">
+        <div class="row">
+            <div class="col-xs-12 ui-tk-title">
+                申请提现 <span class="ui-tk-close">×</span>
+            </div>
+            <div class="col-xs-12 ui-margin-b-20 ui-tk-content">
+                <form class="form-horizontal" id="tk_form">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label class="ui-tk-btn ui-padding-r-10"><input class="j-payment-btn" type="radio" name="payment" value="微信支付" checked><span><i class="iconfont icon-wechat"></i>提现至微信</span></label>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <label class="ui-tk-btn ui-padding-l-10"><input class="j-payment-btn" type="radio" name="payment" value="银行卡支付"><span><i class="iconfont icon-wechat"></i>提现至银行卡</span></label>
+                        </div>
+                    </div>
+                    <div class="row ui-margin-t-30">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+                                <div class="input-group-addon input-lg ui-padding-tb-20" id="realNameBankAccount_title">真实姓名</div>
+                                <input type="text" class="form-control input-lg ui-height-60 ui-bg-white" id="realNameBankAccount" placeholder="真实姓名" data-rule="required;" data-target="#realName_holder">
+                                <div id="realName_holder" style="position: absolute;bottom: 0;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ui-margin-b-10">
+                        <div class="col-xs-12 text-right ui-color-darkgray" id="rz_tip" style="visibility: hidden">
+                            还未进行执业认证，点击 <a href="personal_vipinfo_counselor.html" class="ui-color-blue">去认证</a>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+                                <div class="input-group-addon input-lg ui-padding-tb-20">提现金额</div>
+                                <input type="text" name="money" class="form-control input-lg ui-height-60" id="money" placeholder="0.00" data-rule="提现金额:required;range[100~]" data-msg-range="最低提现金额100元起" data-target="#money_holder">
+                                <div id="money_holder" style="position: absolute;bottom: 0;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ui-margin-t-10">
+                        <div class="col-xs-12">
+                            钱包余额 <span class="ui-color-blue">¥<span class="j-dialog-balance"></span></span> ，提现申请处理时间为3个工作日。最低提现金额100元起。
+                        </div>
+                    </div>
+                    <div class="row ui-margin-t-20">
+                        <div class="col-xs-12">
+                            <button class="btn btn-primary btn-block">提&nbsp;&nbsp;&nbsp;&nbsp;现</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

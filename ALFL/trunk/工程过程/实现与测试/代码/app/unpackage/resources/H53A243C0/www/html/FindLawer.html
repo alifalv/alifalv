@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="FindLawer">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>找律师</title>
+    <link rel="stylesheet" href="mui/mui.min.css" />
+    <link rel="stylesheet" href="fonts/iconfont.css" />
+    <link rel="stylesheet" href="vue/vant-min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .mui-scroll-wrapper {
+            top: 3.3rem;
+        }
+    </style>
+</head>
+
+<body class="FindLawer">
+    <div id="app">
+        <!--头部搜索以及条件筛选-->
+        <div class="headerbox">
+            <div class="searchbox">
+                <div class="seatch-l">
+                    <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+                </div>
+                <div class="seatch-c">
+                    <div class="mui-input-row mui-search">
+                        <input type="search" class="mui-input-clear" placeholder="输入搜索关键字" ref="conditionValue">
+                    </div>
+                </div>
+                <div class="seatch-r">
+                    <input type="button" name="searchbtn" id="searchbtn" value="搜索" />
+                </div>
+            </div>
+
+            <div class="choosebox">
+                <div class="choosetit">
+                    <!-- <span class="icon iconfont icon-xiangxia" @click="query(1)">全国</span>
+                    <span class="icon iconfont icon-xiangxia" @click="query(2)">职业</span>
+                    <span class="icon iconfont icon-xiangxia" @click="query(3)">专业领域</span>
+                    <span class="icon iconfont icon-xiangxia" @click="query(4)">智能排序</span> -->
+                </div>
+                <div class="choosecont">
+
+                </div>
+            </div>
+        </div>
+
+        <!--主体 begin-->
+        <div class="Conter">
+            <!-- <div class="lawerbox">
+				<ul>
+					<li>
+						<div class="left">
+							<img src="images/index/idx-defaluthead.png" />
+							<a href="LawerInfo.html">立即咨询</a>
+						</div>
+						<div class="right">
+							<div class="t">
+								<p class="tit">白静律师 </p>
+								<div class="iconbox">
+									<img src="images/other/mywatch-lv1.png" />
+									<img src="images/other/mywatch-wb.png" />
+									<img src="images/other/mywatch-rz.png" />
+								</div>
+							</div>
+							<div class="c">
+								<span>合同纠纷</span>
+								<span>婚姻家庭</span>
+								<span>债权债务</span>
+								<span>交通事故</span>
+							</div>
+							<div class="b">
+								<p>好评：<span class="askednum">1845</span>法律水平：<span class="tokenum">55</span>解答咨询：<span>5554</span></p>
+								<p>服务态度：<span class="askednum">1845</span>社会资源：<span class="tokenum">55</span>接受委托：<span>5554</span></p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div> -->
+            <!--<van-list-->
+            <!--:loading="loading"-->
+            <!--:finished="finished"-->
+            <!--:offset="100"-->
+            <!--@load="loadMore"-->
+            <!--&gt;-->
+            <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <div class="lawerbox">
+                        <ul>
+                            <li v-for="(item, index) in list" :key="index">
+                                <div class="left">
+                                    <img :src="item.userImg | createImgUrl" />
+                                    <a :href="'LawerInfo.html?userId=' + item.userId">立即咨询</a>
+                                </div>
+                                <div class="right">
+                                    <div class="t">
+                                        <p class="tit">{{item.userName}}</p>
+                                        <div class="iconbox">
+                                            <img src="images/myinfo/level1.png" v-if="item.vipLevel == '1'" />
+                                            <img src="images/myinfo/level2.png" v-else-if="item.vipLevel == '2'" />
+                                            <img src="images/myinfo/level3.png" v-else-if="item.vipLevel == '3'" />
+
+                                            <img src="images/other/mywatch-wb.png" v-if="item.is_contract == '1'" />
+
+                                            <img src="images/other/mywatch-rz.png" v-if="item.isAuthentication == '1'" />
+                                        </div>
+                                    </div>
+                                    <div class="c">
+                                        <span v-for="(it, i) in item.specialityList" :key="i">{{it}}</span>
+                                    </div>
+                                    <div class="b">
+                                        <p>好评：<span class="askednum">{{item.goodNum}}</span>法律水平：<span class="tokenum">{{item.levelScore}}</span>解答咨询：<span>{{item.complateAdviceNum}}</span></p>
+                                        <p>服务态度：<span class="askednum">{{item.attitudeScore}}</span>社会资源：<span class="tokenum">{{item.sourceScore}}</span>接受委托：<span>{{item.entrustNum}}</span></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li v-if="isNoList" class="ui-nolist">没有找到数据</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--</van-list>-->
+        </div>
+        <!--主体 end-->
+
+        <script src="mui/mui.min.js"></script>
+        <script src="vue/vue.js"></script>
+        <script src="js/store.js"></script>
+        <script src="js/rest.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/ajax/commonfuc.js"></script>
+        <script src="js/mui.slideright.js"></script>
+        <script src="js/lib/FindLawer.js"></script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,546 @@
+
+
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>订单列表</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" id="content" style="display:block">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+           
+				  <form class="form-inline">
+
+					  <!-- <div  style="display:inline;text-align: center; margin-left:20px;text-align:center;margin:0 auto;" >-->
+					  <div class="form-group">
+						<!-- <div style="display:inline;width:100px;font-size:16px;color:#999999;margin-left:20px;">时间</div>-->
+						<label class="control-label" for="addTimeStart">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="addTimeStart" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="addTimeEnd" readonly>
+						</div>
+					  </div>
+
+					  <label class="my-1 mr-2" >类型</label>
+					   <select class="form-control my-1 mr-sm-2" id="businessType">
+						<option value="">全部</option>
+						<option value="法律咨询">法律咨询</option>
+						<option value="案件委托">案件委托</option>
+						<option value="法律文书制作">法律文书制作</option>
+						<option value="打赏">打赏</option>
+						<option value="会员充值">会员充值</option>
+						<option value="协议律师费">协议律师费</option>
+					  </select>
+
+					  <label class="my-1 mr-2">订单状态</label>
+					   <select class="form-control my-1 mr-sm-2" id="orderState">
+						<option selected value="">全部</option>
+						<option value="1">未支付</option>
+						<option value="5">已支付</option>
+						<option value="2">待评价</option>
+						<option value="3">退款/申述</option>
+						<option value="4">待解答/待收货/处理中</option>
+					  </select>
+						
+					  <div class="form-group">
+						<input type="text" id="id_input" class="form-control mx-sm-4" aria-describedby="passwordHelpInline" placeholder="订单号、名称、联系电话">
+					  </div>
+
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="orderDT" class="table table-bordered table-hover">
+                <thead>
+					<tr>
+					  <th>订单号</th>
+					  <th>名称</th>
+					  <th>总价</th>
+					  <th>创建时间</th>
+					  <th>咨询师</th>
+					  <th>联系电话</th>
+					  <th>状态</th>
+					  <th>操作</th>
+					</tr>
+                </thead>
+
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    
+    <!-- Main content -->
+    <section class="content" id="fabu" style="display:none">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">订单详情</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+            <div class="card-header">
+            	  	<form class="form-inline">
+					 <label class="save-edit">当前订单状态</label>
+		            <div class="col-sm-5">
+		              <span class="form-control mx-sm-3" id="data_statusName" style="color:red;"></span>
+		            </div>
+           		  </form>
+			  </div>
+            <div class="card-header">
+				  <form class="form-inline">
+						<label class="save-edit">咨询师信息</label>
+			            <div class="col-sm-5" style="margin-top:10px;color:#999999;">
+			            		<label style="width: 750px;">
+							<label style="width: 250px;">咨询师姓名：<span id="data_userName"></span></label>
+			              	
+							<label style="width: 250px;">地区：<span id="data_provincecity"></span></label>
+			              	
+							<label style="width: 250px;">联系电话：<span id="data_mobile"></span></label>
+			              	</label>
+			            </div>
+				   </form>
+			  </div>
+            <div class="card-header">
+				  <form class="form-inline">
+						<label class="save-edit">订单信息</label>
+			            <div class="col-sm-5" style="margin-top:10px;color:#999999;">
+			            		<label style="width: 750px;">
+							<label style="width: 250px;">订单编号：<span id="data_businessOrder"></span></label>
+							<label style="width: 250px;">创建时间：<span id="data_orderTime"></span></label>
+							<label style="width: 250px;">付款方式：<span id="data_payment"></span></label>
+			              	</label>
+			            		<label style="width: 750px;">
+							<label style="width: 250px;">付款时间：<span id="data_checkTime"></span></label>
+							<label style="width: 250px;"><span></span></label>
+							<label style="width: 250px;">成交时间：<span id="data_endTime"></span></label>
+			              	</label>
+			            </div>
+				   </form>
+			  </div>
+            <div class="card-header">
+				  <form class="form-inline">
+			            <div class="col-sm-5" style="margin-top:10px;">
+			            		<label style="width: 850px;">
+							<label style="width: 250px;">订单名称：<span id="data_orderName"></span></label>
+							<label style="width: 200px;"><span></span></label>
+							<label style="width: 140px;">单价：<span id="data_orderPrice"></span></label>
+							<label style="width: 10px;"><span>X</span></label>
+							<label style="width: 140px;">数量：<span id="data_orderNum"></span></label>
+							<label style="width: 10px;"><span>=</span></label>
+							<label style="width: 150px;">订单总价：<span id="data_totalPrice"></span></label>
+			              	</label>
+			            </div>
+				   </form>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    
+    <!-- /.content -->
+	<div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">审核</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-check form-check-inline" style="margin-left: 60px;">
+						<label class="form-check-label mx-sm-3" >审核结果</label>
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio1" value="2" checked="checked">
+						<label class="form-check-label" >通过</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio0" value="3">
+						<label class="form-check-label" >不通过</label>
+					</div>
+					<input type="text" id="id_examine" style="display:none;width: 0px;height: 0px;" tabindex="1">
+        				<input type="text" id="id_userId" style="display:none;"/>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" onclick="saveResult()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    <!-- /.content style=""--> 
+	<div class="modal fade complainone" id="complain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header" style="padding: 10px;">
+					<h5 class="modal-title">申诉原因</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-check form-check-inline">
+					   <input class="form-control my-1 mr-sm-2" id="complainType" disabled="disabled"/>
+					</div>
+					<div class="form-check form-check-inline">
+					   <span class="form-control my-1 mr-sm-2" id="complainContent"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<style>
+	span.form-control { border: 0px solid #ced4da; }
+	.complainone{max-width: 880px;padding-left: 500px;}
+</style>
+<!-- ./wrapper -->
+
+<!-- page script -->
+<script src="jedate-6.0.0/jquery.jedate.js"></script>
+<script src="jedate-6.0.0/jquery.jedate.min.js"></script>
+
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#addTimeStart").jeDate(start);
+	$("#addTimeEnd").jeDate(end);
+
+	//时间控件 结束
+
+	//查找按钮
+	function search(){
+		orderDT.ajax.reload();
+	} 
+    function reload(){
+		var table = $('#orderDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//重置按钮
+	function reset(){
+		$("#addTimeStart").val("");
+		$("#addTimeEnd").val("");
+		$("#businessType").val("0");
+		$("#evaluateId").val("0");
+		$("#id_input").val("");
+	}
+
+    //显示审核对话框
+    function toExamine(id,userId){
+        $("#id_examine").val(id);
+        $("#id_userId").val(userId);
+        $("#examine").modal("show");
+    }
+
+    //申诉审核按钮
+    function saveResult(){
+        var is_pass = $("input[name='examineRadio']:checked").val();
+        $("#examine").modal("hide");
+        var parameter = {
+        		businessOrder:$("#id_examine").val(),
+        		isComplain:is_pass
+        }
+        console.log(parameter);
+        var tempUrl = "api/order/complainAudit";
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                reload();
+                alert("审核成功");
+                sendMessage(is_pass);
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("审核失败");
+            }
+        });
+    }
+	
+	//发站内消息
+	function sendMessage(type){
+		var messageContent = "";
+		if(type=="2"){
+			messageContent = "订单申诉审核通过";
+		}else if(type=="3"){
+			messageContent = "订单申诉审核不通过";
+		}
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:messageContent,
+	            	businessType:1,
+	            	businessId:$("#id_examine").val(),
+	            	messageType:"订单申诉"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+
+	//详情
+	function fullMessage(businessOrder) {
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+		var parameter = {businessOrder:businessOrder};
+        $.ajax({
+            type:'POST',
+            url: requestUrl_pc+'api/order/findOrderDetails',
+            data:parameter,
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                    $("#data_statusName").text(data.data.statusName);
+                    $("#data_userName").text(data.data.userList[0].realName+"(ID"+data.data.userList[0].userId+")");
+                    $("#data_provincecity").text(data.data.userList[0].provinceName+data.data.userList[0].cityName);
+                    $("#data_mobile").text(data.data.userList[0].mobile);
+                    $("#data_businessOrder").text(data.data.businessOrder);
+                    $("#data_orderTime").text(data.data.orderTime);
+                    $("#data_payment").text(data.data.payment);
+                    $("#data_checkTime").text(data.data.checkTime);
+                    $("#data_endTime").text(data.data.endTime);
+                    $("#data_orderName").text(data.data.orderName+"【"+data.data.businessType+"】");
+                    $("#data_orderPrice").text(data.data.orderPrice);
+                    $("#data_orderNum").text(data.data.orderNum);
+                    $("#data_totalPrice").text(data.data.totalPrice);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+
+	function cancel(){
+		$("#fabu").css('display','none');
+	    $("#content").css('display','block');
+	}
+	function mouseOver(t,e,complainType,complainContent){
+        $("#complain").modal("show");
+        $("#complainType").val(complainType);
+        if(complainContent==null || complainContent=='null'){complainContent='';}
+        $("#complainContent").text(complainContent);
+	}
+	function mouseOut(){
+        $("#complain").modal("hide");
+	}
+</script>
+
+<script type="application/javascript" charset="utf-8">
+var orderDT;
+$(document).ready(function(){
+	orderDT=$('#orderDT').DataTable( {
+        //-------------固定配置，不用改--------------
+        "ordering": false,
+        "serverSide": true,
+        "pagingType":"numbers",
+        "searching": false,
+        "processing": true,
+        "pageLength": 5,
+        "lengthChange": false,
+        "language": {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        },
+        //----------------------------------------------
+        ajax:{
+            //url:requestUrl+"business/order",
+            type:'POST',
+            data:{
+                "start": 0,
+                "length": 5
+            }
+        },
+		"aoColumns": [
+			//订单号
+			{ "data":"businessOrder"},
+			//名称
+			{ "data":"orderName",
+				"visible": true,
+				"render":function(data,type,full){
+				   if(full.orderName != null && full.orderName !=""){
+					   if(full.businessType=="法律咨询"){
+  								return '<a href="#" onclick="RedirectToPC(\'articles_consultinfo.html?articleId='+full.connectionId+'\')">'+full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>'+'</a>';
+					   }else if(full.businessType=="案件委托"){
+  								return '<a href="#" onclick="RedirectToPC(\'casebiddinginfo.html?caseId='+full.connectionId+'\')">'+full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>'+'</a>';
+					   }else if(full.businessType=="打赏"){
+						   if(full.sourceType=="法律咨询"){
+  								return '<a href="#" onclick="RedirectToPC(\'articles_consultinfo.html?articleId='+full.connectionId+'\')">'+full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>'+'</a>';
+						   }else if(full.sourceType=="百姓吐槽"){
+  								return '<a href="#" onclick="RedirectToPC(\'complaininfo.html?articleId='+full.connectionId+'\')">'+full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>'+'</a>';
+						   }else if(full.sourceType=="阿里裁判"){
+  								return '<a href="#" onclick="RedirectToPC(\'referee_info.html?articleId='+full.connectionId+'\')">'+full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>'+'</a>';
+						   }
+					   }else if(full.businessType=="协议律师费"){
+						   if(full.userName==null && full.mobile==null){
+								return full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>';
+						   }else if(full.userName==null && full.mobile!=null){
+								return full.orderName +'/'+ full.mobile + '<span style="color:#999;">【'+full.businessType+'】</span>';
+						   }else if(full.userName!=null && full.mobile==null){
+								return full.orderName +'/'+ full.userName + '<span style="color:#999;">【'+full.businessType+'】</span>';
+						   }else{
+								return full.orderName +'/'+ full.userName +'/'+ full.mobile + '<span style="color:#999;">【'+full.businessType+'】</span>';
+						   }
+					   }else if(full.businessType=="法律文书制作"){
+						   if(full.mobile==null){
+								return full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>';
+						   }
+							return full.orderName +'/'+ full.mobile + '<span style="color:#999;">【'+full.businessType+'】</span>';
+					   }
+					}
+					return full.orderName + '<span style="color:#999;">【'+full.businessType+'】</span>';
+				}
+			},
+			//总价(元)
+			{ "data":"totalPrice"},
+			//创建时间
+			{ "data":"orderTime"},
+			//咨询师
+			{ "data":"realName"},
+			//联系电话
+			{ "data":"mobile3"},
+			//状态
+			{ "data":"statusName",
+				"visible": true,
+				"render":function(data,type,full){
+				   if(full.statusName != null && full.statusName !=""){
+						if(full.statusName=='申诉中' || full.statusName=='待审核'){
+							return '<a href="#" onMouseOver="mouseOver(this,event,\''+full.complainType+'\',\''+full.complainContent+'\');" onMouseOut="mouseOut();">申诉</a>';
+						}
+						return full.statusName;
+					}
+					return "";
+				}
+			},
+			//操作
+			{ "data":null,
+				"visible": true,
+				"render":function(data,type,full){
+					var texta = '';
+					if(full.statusName=='申诉中' || full.statusName=='待审核'){
+						texta = '<input type="button" class="btn btn-success" value="审核" onclick="toExamine(\''+full.businessOrder+'\',\''+full.userId+'\')"/>&nbsp;';
+					}
+					return  texta + '<input type="button" class="btn btn-success" value="详情" onclick="fullMessage(\''+full.businessOrder+'\')"/>';
+				}
+			}
+		],
+
+		"fnServerData": function ( sSource, aoData, fnCallback ) {
+            	aoData.push({'name':'keyword','value':$('#id_input').val()});
+            	aoData.push({'name':'endTime','value':$('#addTimeEnd').val()});
+            	aoData.push({'name':'startTime','value':$('#addTimeStart').val()});
+            	aoData.push({'name':'special','value':$('#orderState').val()});
+            	aoData.push({'name':'businessType','value':$('#businessType').val()});
+
+            var oTable = $('#orderDT').dataTable();
+        		var tableSetings=oTable.fnSettings();  
+        		var paging_length=tableSetings._iDisplayLength;//当前每页显示多少  
+        		var page_start=tableSetings._iDisplayStart;//当前页开始  
+        		var pageNo = (page_start / paging_length)+1; //得到页码值
+		    $.ajax( {
+				"dataType": 'json',
+				"type": "POST",
+				"url": requestUrl_pc+'api/order/listBusinessOrder/3/'+pageNo+'/5',
+				"data": aoData,
+				"success": fnCallback
+			} );
+		}
+	} );
+});
+</script>
+

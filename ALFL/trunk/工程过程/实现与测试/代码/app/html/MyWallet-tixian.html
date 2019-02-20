@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class="MyWallet-tixian">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>申请提现</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/md5.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask MyWallet-tixian">
+	<div id="app">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+			</div>
+			<h2>申请提现</h2>
+			<div class="goback msgcenter">
+				<a href=""><img src="images/myinfo/order-msg.png" alt="" /></a>
+			</div>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter">
+			<div class="inputbox">
+				<div class="inputli">
+					<p>真实姓名：</p><span>{{loginUserInfo.realName}}</span>
+				</div>
+				<div class="inputli">
+					<p>钱包余额：</p><span>{{loginUserInfo.userBalance}}</span>
+				</div>
+				<div class="inputli">
+					<p>提现金额：</p><div class="tixiannum">￥<input type="number" name="" value="" placeholder="请输入提现金额" v-model.trim="money"/></div>
+				</div>
+				<div class="inputli">
+					<p>银行卡号：</p><div class="tixiankahao"><input type="text" name="" value="" placeholder="请输入银行卡号"/></div>
+				</div>
+				<div class="buttongroup">
+					<div class="tixianbtn" data-txtype="微信支付">
+						<img src="images/myinfo/tixian-1.png"/>
+						<p>微信提现</p>
+					</div>
+					<div class="tixianbtn" data-txtype="银行卡支付">
+						<img src="images/myinfo/tixian-2.png"/>
+						<p>银行卡提现</p>
+					</div>
+				</div>
+				<p class="tips">温馨提示：提现最低金额为100元起，提现申请处理时间为3个工作日.</p>
+				<input type="button" name="sureTixian" id="sureTixian" value="提交" />
+			</div>
+		</div>
+		<!--主体 end-->
+	</div>
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/MyWallet-tixian.js"></script>
+	</body>
+
+</html>

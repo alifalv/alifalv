@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<effectivenessGrades>
+	<effectivenessGrade>
+		<effectivenessGradeId>1</effectivenessGradeId>
+		<effectivenessGradeName>法律</effectivenessGradeName>
+	</effectivenessGrade>
+	<effectivenessGrade>
+		<effectivenessGradeId>2</effectivenessGradeId>
+		<effectivenessGradeName>司法解释</effectivenessGradeName>
+	</effectivenessGrade>
+	<effectivenessGrade>
+		<effectivenessGradeId>3</effectivenessGradeId>
+		<effectivenessGradeName>行政法规</effectivenessGradeName>
+	</effectivenessGrade>
+	<effectivenessGrade>
+		<effectivenessGradeId>4</effectivenessGradeId>
+		<effectivenessGradeName>部委违章</effectivenessGradeName>
+	</effectivenessGrade>
+	<effectivenessGrade>
+		<effectivenessGradeId>5</effectivenessGradeId>
+		<effectivenessGradeName>地方性法规</effectivenessGradeName>
+	</effectivenessGrade>
+</effectivenessGrades>

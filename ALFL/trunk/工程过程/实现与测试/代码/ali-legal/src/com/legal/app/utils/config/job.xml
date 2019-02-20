@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<jobs>
+	<job>
+		<jobId>1</jobId>
+		<jobName>律师</jobName>
+	</job>
+	<job>
+		<jobId>2</jobId>
+		<jobName>法官</jobName>
+	</job>
+	<job>
+		<jobId>3</jobId>
+		<jobName>法学专家</jobName>
+	</job>
+	<job>
+		<jobId>4</jobId>
+		<jobName>检察官</jobName>
+	</job>
+	<job>
+		<jobId>5</jobId>
+		<jobName>警察</jobName>
+	</job>
+	<job>
+		<jobId>6</jobId>
+		<jobName>税务师</jobName>
+	</job>
+	<job>
+		<jobId>7</jobId>
+		<jobName>法医</jobName>
+	</job>
+	<job>
+		<jobId>8</jobId>
+		<jobName>鉴定师</jobName>
+	</job>
+	<job>
+		<jobId>9</jobId>
+		<jobName>人民法院</jobName>
+	</job>
+	<job>
+		<jobId>10</jobId>
+		<jobName>律师事务所</jobName>
+	</job>
+</jobs>

@@ -1,0 +1,29 @@
+<div>
+    <div class="ui-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-5">
+                    <a class="ui-logo" href="index.html"><div class="ui-logo-img"></div></a>
+                </div>
+                <div class="col-xs-7">
+                    <ul class="nav navbar-nav ui-user-nav ui-right ui-margin-t-20">
+                        <li>
+                            <a href="personal_consult.html">
+                                <span class="ui-color-gray ui-bold ui-size-16">
+                                    <img src="{{userImg | createImgUrl}}" alt="" class="img-circle ui-margin-r-10 ui-inline-block" width="36" height="36" style="background: url('../img/defalut-head.png');background-size: 100%;margin-top: -10px">
+                                    <span class="ui-inline-block ui-width-110 ui-cut-1" title="{{userName}}">{{userName}}</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li><a href="javascript:void(0);" id="logout_user_btn" class="ui-color-gray js-logout">退出登录</a></li>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="findlawyer.html">找律师</a></li>
+                        <li><a href="statutesearch.html">查法律</a></li>
+                        <li><a href="personal_message.html"><i class="iconfont icon-email"></i><span class="badge ui-bg-red j-allmsg-count ui-hide" style="position:absolute;top: 10px;right: 9px;">0</span></a></li>
+                        <li><a href="user_consult.html"><i class="iconfont icon-edit"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

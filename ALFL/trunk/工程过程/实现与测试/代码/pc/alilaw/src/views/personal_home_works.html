@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 我的主页 - 工作动态</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-person-wrapper">
+    <div><script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script></div>
+</div>
+<div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+    <div class="container ">
+        <div class="ui-padding-b-no">
+            <div class="row">
+
+                <div class="col-xs-3">
+                    <div><script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script></div>
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="ui-bg-white">
+
+                        <ul class="nav nav-tabs ui-person-panel-top">
+                            <li role="presentation"><a href="personal_home_all.html" >全部</a></li>
+                            <li role="presentation"><a href="personal_home_styles.html" >我的风采</a></li>
+                            <li role="presentation" class="active"><a href="javascript:void(0);" >工作动态</a></li>
+                            <li role="presentation"><a href="personal_home_cases.html">成功案例</a></li>
+                            <li role="presentation"><a href="personal_home_essays.html">我的随笔</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content ui-person-panel-content ui-margin-lr-20 ui-margin-t-13" id="myWorkList">
+                            <div role="tabpanel" class="tab-pane active ui-block">
+                                <div class="ui-margin-lr-15 ui-relative"  pagination="mask">
+                                    <div class="row">
+                                        <script id="myWorkListTmpl" type="text/html">
+                                            {{if (getLength(rows) > 0)}}
+                                            {{each rows value i}}
+                                            <div class="col-xs-12 ui-border-gray-1 ui-margin-b-20 ui-hover-shadow">
+                                                <div class="col-xs-5 ui-size-12 ui-color-gray ui-margin-t-20">发布时间：{{value.sendTime | subDay}}</div>
+                                                <div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-t-20">分类：我的随笔</div>
+                                                <div class="col-xs-4 ui-size-12 ui-color-gray ui-cut-1 ui-margin-t-20 text-right"><i class="j-delete-btn iconfont icon-shanchu ui-pointer" data-articleid="{{value.articleId}}" title="删除"></i></div>
+
+                                                <div class="col-xs-12 ui-cut-1 ui-margin-t-20 ui-bold"><a href="home_work.html?articleId={{value.articleId}}&userId={{value.userId}}" title="{{value.title}}" target="_blank">{{value.title}}</a></div>
+                                                <div class="col-xs-12 ui-cut-1 ui-margin-t-5 ui-size-12 ui-margin-b-20"><a href="home_work.html?articleId={{value.articleId}}&userId={{value.userId}}" class="ui-color-gray" title="{{value.title}}" target="_blank">{{value.articleContent | removeHtmlTag}}</a></div>
+
+                                                {{if(value.coverImg)}}
+                                                <div class="col-xs-12 ui-margin-t-5 ui-size-12 ui-margin-b-20 ui-height-100"><img class="ui-img-height-fill" src="{{value.coverImg | createImgUrl}}"></div>
+                                                {{/if}}
+
+                                                <div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">收藏：<span class="ui-size-14 ui-bold ui-color-red">{{value.collectionNum}}</span></div>
+                                                <div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">浏览：<span class="ui-size-14 ui-bold ui-color-red">{{value.lookNum}}</span></div>
+                                                <div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">点赞：<span class="ui-size-14 ui-bold ui-color-red">{{value.likeNum}}</span></div>
+                                            </div>
+                                            {{/each}}
+                                            {{else}}
+                                            <div class="text-center ui-height-340">
+                                                <div class="ui-bg-box"></div>
+                                                <div class="ui-color-gray">{{error || '暂无记录'}}</div>
+                                            </div>
+                                            {{/if}}
+                                        </script>
+
+                                        <!--<div class="col-xs-12 ui-border-gray-1 ui-margin-b-20">-->
+                                            <!--<div class="col-xs-5 ui-size-12 ui-color-gray ui-margin-t-20">发布时间：2018-01-02 16:30</div>-->
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-t-20">分类：立案问题</div>-->
+                                            <!--<div class="col-xs-4 ui-size-12 ui-color-gray ui-cut-1 ui-margin-t-20 text-right"><i class="iconfont icon-shanchu ui-pointer"></i></div>-->
+
+                                            <!--<div class="col-xs-12 ui-cut-1 ui-margin-t-20 ui-bold">医生医生八错牙齿布擦拭的发生医生八错牙齿布擦拭的发生八错牙齿布擦拭的发生 </div>-->
+                                            <!--<div class="col-xs-12 ui-cut-1 ui-color-gray ui-margin-t-5 ui-size-12 ui-margin-b-20">医生医生八错牙齿布擦拭的发生医生八错牙齿布擦拭的发生八错牙齿布擦拭的发生 </div>-->
+
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">收藏：<span class="ui-size-14 ui-bold ui-color-red">6</span></div>-->
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">浏览：<span class="ui-size-14 ui-bold ui-color-red">6</span></div>-->
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">点赞：<span class="ui-size-14 ui-bold ui-color-red">6</span></div>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-12 ui-border-gray-1 ui-margin-b-20">-->
+                                            <!--<div class="col-xs-5 ui-size-12 ui-color-gray ui-margin-t-20">发布时间：2018-01-02 16:30</div>-->
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-t-20">分类：立案问题</div>-->
+                                            <!--<div class="col-xs-4 ui-size-12 ui-color-gray ui-cut-1 ui-margin-t-20 text-right"><i class="iconfont icon-shanchu ui-pointer"></i></div>-->
+
+                                            <!--<div class="col-xs-12 ui-cut-1 ui-margin-t-20 ui-bold">医生医生八错牙齿布擦拭的发生医生八错牙齿布擦拭的发生八错牙齿布擦拭的发生 </div>-->
+                                            <!--<div class="col-xs-12 ui-cut-1 ui-color-gray ui-margin-t-5 ui-size-12 ui-margin-b-20">医生医生八错牙齿布擦拭的发生医生八错牙齿布擦拭的发生八错牙齿布擦拭的发生 </div>-->
+
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">收藏：<span class="ui-size-14 ui-bold ui-color-red">6</span></div>-->
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">浏览：<span class="ui-size-14 ui-bold ui-color-red">6</span></div>-->
+                                            <!--<div class="col-xs-3 ui-size-12 ui-color-gray ui-cut-1 ui-margin-b-20 ">点赞：<span class="ui-size-14 ui-bold ui-color-red">6</span></div>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+                    <div><script class="user_count" type="text/html" src="../tmpl/user_count.html"></script></div>
+
+
+                    <div class="ui-panel">
+                        <div class="ui-panel-content ui-padding-t-10">
+                            <div class="row">
+                                <div class="col-xs-6 text-center ui-padding-tb-10"><a href="personal_addarticle.html?type=10" title="" target="_blank"><img src="../img/persion-wdfc.png" class="img-circle" width="60" height="60"><div class="ui-size-16 ui-padding-t-5">+我的风采</div></a></div>
+                                <div class="col-xs-6 text-center ui-padding-tb-10"><a href="personal_addarticle.html?type=13" title="" target="_blank"><img src="../img/persion-wdsb.png" class="img-circle" width="60" height="60"><div class="ui-size-16 ui-padding-t-5">+我的随笔</div></a></div>
+                                <div class="col-xs-6 text-center ui-padding-tb-10"><a href="personal_addarticle.html?type=12" title="" target="_blank"><img src="../img/persion-cgal.png" class="img-circle" width="60" height="60"><div class="ui-size-16 ui-padding-t-5">+成功案例</div></a></div>
+                                <div class="col-xs-6 text-center ui-padding-tb-10"><a href="personal_addarticle.html?type=11" title="" target="_blank"><img src="../img/persion-gzdt.png" class="img-circle" width="60" height="60"><div class="ui-size-16 ui-padding-t-5">+工作动态</div></a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div><script class="user_reply" type="text/html" src="../tmpl/user_reply.html"></script></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

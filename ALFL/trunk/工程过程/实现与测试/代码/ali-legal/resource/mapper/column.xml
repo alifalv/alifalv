@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Column">
+	<select id="queryAll" resultType="column">
+	    select * from ali_column where isDelete is null limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="queryAll_COUNT_TOTAL" resultType="int">
+	    select COUNT(1) from ali_column where isDelete is null
+	</select>
+    <update id="update" parameterType="column" >
+        update ali_column
+        <set>
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where columnId = #{columnId,jdbcType=INTEGER}
+    </update>
+</mapper>

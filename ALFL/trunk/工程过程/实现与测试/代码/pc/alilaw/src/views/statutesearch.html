@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 法律法规查询</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+
+    <div class="ui-content ui-content-row" id="legalList">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-xs-12">
+                    <div class="ui-panel ui-margin-b-30">
+                        <img src="../img/casebidding-top.png" class="img-responsive">
+                    </div>
+                </div> -->
+                <div class="col-xs-12">
+                    <dl class="ui-breadcrumb">
+                        <dt>当前位置：</dt>
+                        <dd><a href="index.html">首页</a></dd>
+                        <dd>法律法规查询</dd>
+                    </dl>
+                </div>
+                <div class="col-xs-9">
+                    <div class="ui-panel ui-padding-40">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <img src="../img/lawsearch.jpg" class="img-responsive">
+                            </div>
+                            <div class="col-xs-10">
+                                <form pagination="searchForm" class="form-horizontal ui-padding-lr-24 ui-regform ui-padding-t-no ui-margin-b-no" method="post">
+                                    <div class="form-group">
+                                        <label for="title" class="col-xs-2 control-label">标题关键词：</label>
+                                        <div class="col-xs-10">
+                                            <input id="title" name="title" type="text" class="form-control" placeholder="请输入标题关键词">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="articleContent" class="col-xs-2 control-label">正文关键词：</label>
+                                        <div class="col-xs-10">
+                                            <input id="articleContent" name="articleContent" type="text" class="form-control" placeholder="请输入正文关键词">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="effectLevel" class="col-xs-2 control-label">效力等级：</label>
+                                        <div class="col-xs-3">
+                                            <select class="form-control" name="effectLevel" id="effectLevel">
+                                            <script type="text/html" id="effectivenessGradeListTmpl">
+                                                <option value="">全部</option>
+                                                {{each data value i}}
+                                                <option value="{{value.effectivenessGradeId}}" {{value.effectivenessGradeId != selectedId ? '' : 'selected'}}>{{value.effectivenessGradeName}}</option>
+                                                {{/each}}
+                                            </script>
+                                        </select>
+                                        </div>
+                                        <label for="sendUnit" class="col-xs-2 control-label">发文单位：</label>
+                                        <div class="col-xs-5">
+                                            <select class="form-control" name="sendUnit" id="sendUnit">
+                                            <script type="text/html" id="unitListTmpl">
+                                                <option value="">全部</option>
+                                                {{each data value i}}
+                                                <option value="{{value.unitId}}" {{value.unitId != selectedId ? '' : 'selected'}}>{{value.unitName}}</option>
+                                                {{/each}}
+                                            </script>
+                                        </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="startTime" class="col-xs-2 control-label">发布日期：</label>
+                                        <div class="col-xs-4">
+                                            <input id="startTime" name="startTime" type="text" class="form-control ui-bg-white" placeholder="请选择" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')}',readOnly:true})">
+                                        </div>
+                                        <label for="endTime" class="col-xs-1 control-label">至：</label>
+                                        <div class="col-xs-5">
+                                            <input id="endTime" name="endTime" type="text" class="form-control ui-bg-white" placeholder="请选择" onclick="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',readOnly:true})">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ui-margin-b-no">
+                                        <div class="col-xs-offset-4 col-xs-4">
+                                            <button type="reset" class="btn btn-block ui-btn-bluegray">重置条件</button>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <button type="button" class="btn btn-block ui-btn-lightblue" id="search_btn" pagination="searchBtn">开始查询</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="ui-panel">
+                        <div class="ui-panel-content ui-padding-t-10 text-center">
+                            <!-- <div class="ui-size-20 ui-color-lightblue ui-margin-t-30">欢迎下载</div>
+                            <div class="ui-size-16 ui-color-lightblue ui-padding-t-10">
+                                <span class="ui-border-b-1  ui-inline-block ui-padding-b-5">阿里法律查询软件</span>
+                            </div>
+                            <div class="ui-margin-t-17">
+                                <a href="" class="ui-hover">
+                                    <img src="../img/lawsearch_download.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="row ui-size-12 ui-padding-30 ui-color-darkgray">
+                                <div class="col-xs-6"><i class="iconfont icon-gouxuan ui-size-12 ui-margin-r-5"></i>免费软件</div>
+                                <div class="col-xs-6 text-left"><i class="iconfont icon-gouxuan ui-size-12 ui-margin-r-5"></i>法律法规查询</div>
+                                <div class="col-xs-6 "><i class="iconfont icon-gouxuan ui-size-12 ui-margin-r-5"></i>案例查询</div>
+                                <div class="col-xs-6 text-left"><i class="iconfont icon-gouxuan ui-size-12 ui-margin-r-5"></i>诉讼费计算器</div>
+                                <div class="col-xs-12 text-left ui-margin-l-15 ui-margin-t-13"><a href="construction.html" class="ui-color-darkgray">查看软件说明>></a></div>
+                            </div> -->
+                            广告
+                            <div class="ui-panel">
+                                <script ad="flfgcx_right" type="text/html" src="../tmpl/ad.html"></script>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="ui-panel">
+                        <div class="ui-panel-top">
+                            <!--<ul class="nav nav-pills ">-->
+                            <!--<li role="presentation" class="active"><a href="#">Home</a></li>-->
+                            <!--<li role="presentation"><a href="#">Profile</a></li>-->
+                            <!--<li role="presentation"><a href="#">Messages</a></li>-->
+                            <!--</ul>-->
+                            <span class="ui-panel-title ui-color-gray">最新上传</span>
+                        </div>
+                        <div class="ui-panel-content" pagination="mask">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <script id="legalListTmpl" type="text/html">
+                                            {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                            <tr>
+                                                <td class="text-left">
+                                                    <div class="ui-margin-b-8 ui-cut-1 ui-width-450">
+                                                        <i class="iconfont icon-ring ui-left ui-color-gray"></i><a href="statuteinfo.html?articleId={{value.articleId}}" class="ui-cut-1" target="_blank">{{@ value.title | removeHtmlTag | searchLightKey searchKey}}</a>
+                                                    </div>
+                                                    <span class="ui-color-gray ui-size-12 ui-margin-l-15">{{searchKey}}发布机构：{{value.unitName}}</span>
+                                                </td>
+                                                <td class="ui-hideblock">
+                                                    <span class="ui-color-gray ui-size-12">发布日期：{{value.issueTime | subDay}}</span>
+                                                </td>
+                                                <td class="ui-hideblock">
+                                                    <span class="ui-color-gray ui-size-12">实施日期：{{value.implementTime | subDay}}</span>
+                                                </td>
+                                            </tr>
+                                            {{/each}} {{else}}
+                                            <tr>
+                                                <td class="text-center ui-color-gray">{{error || '暂无记录'}}</td>
+                                            </tr>
+                                            {{/if}}
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="Page navigation" class="text-center ui-padding-t-10" pagination="page"></nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="ui-panel" id="toDayRecommendList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">今日推荐</span><a class="ui-panel-link" href="todayrecommend.html">更多 ></a></div>
+                        <div class="ui-panel-content">
+                            <ul class="ui-article-list">
+                                <script id="toDayRecommendListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <li><a href="{{value.columnCode | getArticleUrlByColumnCode value.articleId value.userId}}" title="{{value.title}}" class="ui-cut-1">{{value.title}}</a></li>
+                                    {{/each}} {{else}}
+                                    <li>
+                                        <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    </li>
+                                    {{/if}}
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ui-panel" id="legalProblemsList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">法律疑难问题与观点</span><a class="ui-panel-link" href="articles_problem.html">更多 ></a></div>
+                        <div class="ui-panel-content">
+                            <ul class="ui-article-list">
+                                <script id="legalProblemsListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <li><a href="articles_probleminfo.html?articleId={{value.articleId}}" title="{{value.title}}" class="ui-cut-1" target="_blank">{{value.title}}</a></li>
+                                    {{/each}} {{else}}
+                                    <li>
+                                        <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    </li>
+                                    {{/if}}
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ui-panel" id="oftenDocList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">常用文书模板</span><a class="ui-panel-link" href="doctemplate.html" target="_blank">更多 ></a></div>
+                        <div class="ui-panel-content">
+                            <ul class="ui-article-list">
+                                <script id="oftenDocListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <li><a href="doctemplateinfo.html?articleId={{value.articleId}}" title="{{value.title}}" class="ui-cut-1">{{value.title}}</a></li>
+                                    {{/each}} {{else}}
+                                    <li>
+                                        <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    </li>
+                                    {{/if}}
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 用户绑定</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header"  type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-30">
+        <div class="row">
+            <div class="col-xs-5">
+                <h4 class="ui-size-18">欢迎加入阿里法律<span class="ui-size-12 ui-color-red text-left ui-margin-l-15">首次使用第三方账号登录，需与阿里法律网账号绑定</span></h4>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="ui-regpanel">
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="ui-regform ui-border-r-1">
+                        <form class="form-horizontal" id="bind_form">
+                            <div class="form-group ui-padding-tb-20">
+                                <span class="ui-size-18 ui-color-lightblue ui-margin-l-80">已有账户，登录并绑定</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="userName" class="col-xs-3 control-label">用户名：</label>
+                                <div class="col-xs-7">
+                                    <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入用户名" data-rule="用户名:required;username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-xs-3 control-label">密码：</label>
+                                <div class="col-xs-7">
+                                    <input type="password" name="password" class="form-control" id="password" placeholder="6-16位字符，建议字母数字组合" data-rule="密码:required;">
+                                </div>
+                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputPassword3" class="col-xs-3 control-label">验证码：</label>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<input type="number" class="form-control" id="inputPassword3" placeholder="请输入图形验证码">-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-3">-->
+                                    <!--<img src="../img/validimg.png" alt="" class="img-responsive ui-width-100p">-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-2">-->
+                                    <!--<a href="" class="ui-line-height-40 ui-color-lightblue">换一张</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group">
+                                <div class="col-xs-offset-3 col-xs-4">
+                                    <button type="submit" class="btn btn-block ui-btn-lightblue">立即绑定</button>
+                                </div>
+                                <div class="col-xs-3">
+                                    <a href="findpassword.html" target="_blank" class="ui-line-height-40 ui-color-lightblue">忘记密码？</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <script id="regBoxTmpl" type="text/html">
+                        <div class="ui-regform">
+                            <form class="form-horizontal" >
+                                <div class="form-group ui-padding-tb-20">
+                                    <span class="ui-size-18 ui-color-lightblue">还没有账户，注册并绑定</span>
+                                </div>
+                                <div class="form-group">
+                                    <a href="reg_advocate.html?key={{key}}&type={{type}}" class="btn btn-block ui-btn-red">咨询者注册并绑定</a>
+                                </div>
+                                <div class="form-group">
+                                    <a href="reg_counselor.html?key={{key}}&type={{type}}" class="btn btn-block ui-btn-red">咨询师注册并绑定</a>
+                                </div>
+                                <div class="form-group">
+                                    <a href="reg_enterprise.html?key={{key}}&type={{type}}" class="btn btn-block ui-btn-red">企业会员注册并绑定</a>
+                                </div>
+                            </form>
+                        </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

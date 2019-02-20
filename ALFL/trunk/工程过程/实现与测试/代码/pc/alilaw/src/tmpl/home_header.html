@@ -1,0 +1,22 @@
+<div>
+    <div class="ui-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-4">
+                    <a class="ui-logo ui-width-100p" href="home_index.html?userId={{data.userId}}" ><div style="width: 74px;height: 44px" class="ui-left ui-margin-r-10"><div class="ui-homelogo-img"></div></div><div class="ui-size-20 ui-margin-t-6">{{data.realName || data.userName}}</div></a>
+                </div>
+                <div class="col-xs-8">
+                    <ul class="nav navbar-nav ui-home-nav">
+                        <li><a href="index.html">网站首页</a></li>
+                        <li {{@ 'home_index.html' | createHomeHeadUrl}}><a href="home_index.html?userId={{data.userId}}">我的首页</a></li>
+                        <li {{@ 'home_about.html' | createHomeHeadUrl}}><a href="home_about.html?userId={{data.userId}}">我的介绍</a></li>
+                        <li {{@ 'home_works.html' | createHomeHeadUrl}}><a href="home_works.html?userId={{data.userId}}">工作动态</a></li>
+                        <li {{@ 'home_cases.html' | createHomeHeadUrl}}><a href="home_cases.html?userId={{data.userId}}">成功案例</a></li>
+                        <li {{@ 'home_essays.html' | createHomeHeadUrl}}><a href="home_essays.html?userId={{data.userId}}">我的随笔</a></li>
+                        <li {{@ 'home_styles.html' | createHomeHeadUrl}}><a href="home_styles.html?userId={{data.userId}}">我的风采</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

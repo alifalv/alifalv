@@ -1,0 +1,81 @@
+{
+  "html/Index-main.html": {
+    "refer": [
+      "html/Index-nav.html",
+      "html/DateSelect.html",
+      "html/Index.html",
+      "html/Myinfo.html",
+      "html/KuaiJie.html",
+      "html/Lawsearch.html"
+    ],
+    "resources": [
+      "html/Index.html"
+    ]
+  },
+  "html/Myinfo.html": {
+    "refer": [
+      "html/Set-center.html",
+      "html/Login.html",
+      "html/Lawask.html",
+      "html/Lawbuy.html"
+    ],
+    "resources": []
+  },
+  "html/Index-nav.html": {
+    "resources": [
+      "html/Index.html"
+    ],
+    "refer": [
+      "html/DateSelect.html",
+      "html/Index.html",
+      "html/Myinfo.html",
+      "html/KuaiJie.html",
+      "html/Lawsearch.html"
+    ]
+  },
+  "html/Set-center.html": {
+    "refer": [
+      "html/MyInfoEdit-changetel.html"
+    ],
+    "resources": []
+  },
+  "html/Login.html": {
+    "refer": [
+      "html/Register-main.html",
+      "html/Login-resetPwd-1.html"
+    ],
+    "resources": []
+  },
+  "html/Register-main.html": {
+    "refer": [
+      "html/Register-askman-1.html"
+    ],
+    "resources": []
+  },
+  "html/Register-askman-1.html": {
+    "refer": [
+      "html/Register-askman-2.html"
+    ],
+    "resources": []
+  },
+  "Myinfo.html": {
+    "refer": [
+      "Login.html"
+    ],
+    "resources": []
+  },
+  "Index-main.html": {
+    "resources": [
+      "Index.html"
+    ],
+    "refer": [
+      "Myinfo.html",
+      "Lawsearch.html",
+      "html/Index-nav.html",
+      "KuaiJie.html",
+      "DateSelect.html",
+      "Index.html",
+      "html/Myinfo.html"
+    ]
+  }
+}

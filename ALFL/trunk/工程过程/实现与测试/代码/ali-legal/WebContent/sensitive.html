@@ -1,0 +1,251 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>敏感词库</h1>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-success" onclick="showDialogModal()">新增</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="table_id">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>关键词</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">关键词</h5>
+				<input type="text" id="id_update" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="sensitiveValue" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary save" onclick="save()">保存</button>
+				<button type="button" class="btn btn-primary save" onclick="closeDialog()">取消</button>
+				<button type="button" class="btn btn-primary update" onclick="update()">修改</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<input type="text" id="id_del" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除？</span></li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	var tableData;
+	$(document).ready(function () {
+		tableData= $('#table_id').DataTable({
+	    		//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 10,
+			"lengthChange": false,
+			"language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	   			url:requestUrl+"sensitive/list",
+	   			type:'POST',
+                data:function(d){
+                    d.sensitiveValue="";
+                }
+	   		}, 
+	   		columns: [
+	           	{ "data": "sensitiveId" },
+	           	{ "data": "sensitiveValue" },
+	           	{ "data":null,
+	           		"visible": true,
+	                "render":function(data,type,full){
+	                	return  '<input type="button" class="btn btn-success" value="编辑" onclick="toEdit(\''+full.sensitiveId+'\')"/>&nbsp;' +
+							'<input type="button" class="btn btn-success" value="删除" onclick="toDelete(\''+full.sensitiveId+'\')"/>';
+					}
+				}
+			]
+		});
+	});
+	
+	//重新加载
+	function dtreload(){
+		tableData.ajax.reload();
+	}
+
+	//新增 按钮
+	function showDialogModal() {
+	    $("#dialogModal").modal("show");
+        $(".btn.btn-primary.update").hide();
+        $(".btn.btn-primary.save").show();
+	}
+	
+	//保存
+	function save() {
+	    saveData();
+	}
+	
+	//取消
+	function closeDialog(){
+	    $("#dialogModal").modal("hide");
+	    $('#sensitiveValue').val("");
+	}
+	
+	//新增
+	function saveData(){
+        Yajax({
+	        type:'POST',
+	        url:requestUrl+"sensitive/add",
+	        data:JSON.stringify({
+	        		"sensitiveValue":$('#sensitiveValue').val()
+	        }),
+	        contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+	        success : function(data) {
+	            console.log(data);
+	            alert("保存成功");
+		    	    $("#dialogModal").modal("hide");
+		    	    $('#sensitiveValue').val("");
+	            tableData.ajax.reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("保存失败");
+	        }
+	    });
+	}
+	
+	//编辑
+	function toEdit(sensitiveId){
+	    $("#dialogModal").modal("show");
+        $("#id_update").val(sensitiveId);
+        $(".btn.btn-primary.update").show();
+        $(".btn.btn-primary.save").hide();
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"sensitive/info/"+sensitiveId,
+	        success : function(data) {
+	            console.log(data);
+	            $('#sensitiveValue').val(data.data.sensitiveValue);
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("请求失败");
+	        }
+	    });
+	}
+	
+	//修改
+	function update(){
+        Yajax({
+	        type:'POST',
+	        url:requestUrl+"sensitive/update",
+	        data:JSON.stringify({
+		        	"sensitiveId":$("#id_update").val(),
+		        	"sensitiveValue":$('#sensitiveValue').val()
+	        }),
+	        contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+	        success : function(data) {
+	            console.log(data);
+	            alert("修改成功");
+                $("#dialogModal").modal("hide");
+                $("#id_update").val("");//重置
+	            tableData.ajax.reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("修改失败");
+	        }
+	    });
+	}
+	
+	//删除
+	function toDelete(sensitiveId){
+        $("#id_del").val(sensitiveId);
+        $("#mySmallModalLabel").modal("show");
+	}
+    //确认删除
+    function delResult(){
+        var sensitiveId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"sensitive/remove/"+sensitiveId,
+	        success : function(data) {
+	            console.log(data);
+	            alert("删除成功");
+	            tableData.ajax.reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("删除失败");
+	        }
+	    });
+    }
+</script>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="Myinfo-viprenzhen">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>案源委托</title>
+    <link rel="stylesheet" href="mui/mui.min.css" />
+    <link rel="stylesheet" href="vue/vant-min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .mui-navigate-right:after,
+        .mui-push-right:after {
+            right: 0!important;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask Myinfo-viprenzhen">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+        </div>
+        <h2>案源委托</h2>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class="Conter idx-band5 LawbuyFaBu" id="app" v-cloak>
+        <div class="newsBox page-slideright">
+            <div id="newCase" class="mui-control-content mui-active">
+                <section>
+                    <div>
+                        <label>标题：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" minlength="5" maxlength="30" placeholder="请输入案情标题（5-30个字符）" v-model.trim="companyName">
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>案情：</label>
+                    </div>
+                    <div class="mui-input-row" style="height:5rem">
+                        <textarea type="text" class="mui-input-clear" placeholder="请详细描述案件情况及想要律师提供什么帮助等，当事人隐式内容，具体姓名可以用“张某或张x”代替。" v-model.trim="companyName"></textarea>
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>期望：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请填写委托案件期望达到的结果" v-model.trim="companyName">
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>要求：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请填写特殊要求，如：希望律师主动联系我" v-model.trim="companyName">
+                    </div>
+                </section>
+                <!-- <div class="uploadimgbox">
+                        <p>证件照片上传：</p>
+                        <div class="uploadbox">
+                            <van-uploader :after-read="onRead">
+                                <div class="selectphoto">
+                                    <img :src="workImg">
+                                </div>
+                            </van-uploader>
+                        </div>
+                        <p class="redfont">温馨提示：请提交真实无误的会员资料，会员资料提交审核通过后，可不能更改哦！</p>
+                    </div> -->
+                <section>
+                    <div>
+                        <label>报价：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请输入报价" v-model.trim="companyName">
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>联系方式：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请留下联系方式" v-model.trim="companyName">
+                    </div>
+                </section>
+                <section>
+                    <!-- <div class="mui-input-row selectbox" @click="addrPop">
+                            <section>
+                                <p style="padding-left:.3rem;">请选择所属地区</p>
+                                <a class="hassubmit">{{addrText}}</a>
+                                <span class="mui-icon mui-icon mui-icon-arrowright"></span>
+                            </section>
+                        </div> -->
+                </section>
+                <section style="border: 0;margin-bottom: 2rem;">
+                    <div class="mui-input-row">
+                        <div>
+                            <label>请选择类型</label>
+                        </div>
+                        <div class="selectFabu mui-navigate-right" id="department">
+                            <select name="">
+                                    <option>sss</option>
+                                    <option>sss</option>
+                                    <option>sss</option>
+                                </select>
+                        </div>
+                    </div>
+                </section>
+                <input type="button" class="logininbtn" id="Nextstep" :value="btn" @click="saveFn" />
+            </div>
+        </div>
+        <!--主体 end-->
+
+    </div>
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+    <script src="vue/vant-min.js"></script>
+    <script src="js/ajax/ajax.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Myinfo-qiye-renzhen.js"></script>
+    <script src="js/lib/Lawbu-FaBu.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="Login">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>注册-咨询师注册</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="vue/vant-min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .selectphoto {
+            width: 3.2rem!important;
+            height: 3.2rem!important;
+            position: relative;
+            overflow: hidden;
+            background-image: url(images/addimg.png)!important;
+            background-size: 40px!important;
+            border: 1px solid #e3e3e3;
+        }
+        
+        .selectphoto img {
+            width: 4rem!important;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -2rem;
+            margin-top: inherit;
+            display: block;
+            max-height: none!important;
+            max-width: none!important;
+            height: auto;
+        }
+        
+        .Myinfo-viprenzhen .mui-control-content .uploadimgbox .uploadbox {
+            padding: 0 0.4rem;
+            display: inline!important; 
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask Myinfo-viprenzhen Login Register ResetPwd ">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+        </div>
+        <h2>案源委托</h2>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class="Conter idx-band5 LawbuyFaBu" id="app" v-cloak>
+        <!--输入部分-->
+        <div class="newsBox page-slideright main-bd Register-step1 Register-step2">
+            <div id="newCase" class="mui-control-content mui-active" style="padding: 0">
+                <section>
+                    <div>
+                        <label>标题：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" minlength="5" maxlength="30" placeholder="请输入案情标题（5-30个字符）" v-model.trim="caseTitle">
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>案情：</label>
+                    </div>
+                    <div class="mui-input-row" style="height:5rem">
+                        <textarea type="text" class="mui-input-clear" placeholder="请详细描述案件情况及想要律师提供什么帮助等，当事人隐式内容，具体姓名可以用“张某或张x”代替。" v-model.trim="caseDesc"></textarea>
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>期望：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请填写委托案件期望达到的结果" v-model.trim="caseHope">
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>要求：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请填写特殊要求，如：希望律师主动联系我" v-model.trim="caseAsk">
+                    </div>
+                </section>
+                <div class="uploadimgbox">
+                    <p>上传证据：</p>
+                    <div class="uploadbox">
+                        <van-uploader :after-read="onRead">
+                            <div class="selectphoto">
+                                <img :src="workImg1">
+                            </div>
+                        </van-uploader>
+                    </div>
+                    <div class="uploadbox">
+                        <van-uploader :after-read="onRead1">
+                            <div class="selectphoto">
+                                <img :src="workImg2">
+                            </div>
+                        </van-uploader>
+                    </div>
+                    <div class="uploadbox">
+                        <van-uploader :after-read="onRead2">
+                            <div class="selectphoto">
+                                <img :src="workImg3">
+                            </div>
+                        </van-uploader>
+                    </div>
+
+                </div>
+                <div>
+                    <p class="redfont">温馨提示：请提交真实无误的会员资料，会员资料提交审核通过后，可不能更改哦！</p>
+                </div>
+                <section>
+                    <div>
+                        <label>报价：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="可输入中文，如：面议" v-model.trim="offerMoney">
+                    </div>
+                </section>
+                <section>
+                    <div>
+                        <label>联系方式：</label>
+                    </div>
+                    <div class="mui-input-row">
+                        <input type="text" class="mui-input-clear" placeholder="请留下联系方式" v-model.trim="mobile">
+                    </div>
+                </section>
+                <div class="mui-input-row selectbox" @click="addrPop">
+                    <section>
+                        <p style="padding-left:.3rem;">请选择所属地区</p>
+                        <a class="hassubmit">{{addrText}}</a>
+                        <span class="mui-icon mui-icon mui-icon-arrowright"></span>
+                    </section>
+                </div>
+                <div class="mui-input-row selectbox" @click="casePop">
+                    <section>
+                        <p style="padding-left:.3rem;">请选择擅长专业</p>
+                        <a class="hassubmit">{{majorText}}</a>
+                        <span class="mui-icon mui-icon mui-icon-arrowright"></span>
+                    </section>
+                </div>
+                <input type="button" class="logininbtn" id="Nextstep" value="发布" @click="nextStep" />
+            </div>
+        </div>
+        <!-- 选择弹窗 -->
+        <div class="areaBox" v-show="addrShow">
+            <van-picker show-toolbar title="地址列表" :columns="areaList" :columns-num="2" @confirm="addrConfirm" @change="addrChange" @cancel="addrPop" />
+        </div>
+        <div class="areaBox" v-show="caseShow">
+            <van-picker show-toolbar title="职业列表" :columns="caseList" @confirm="caseConfirm" @cancel="casePop" />
+        </div>
+    </div>
+    <!--主体 end-->
+
+
+
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="swiper/swiper.min.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="vue/vant-min.js"></script>
+    <!-- <script src="vue/area.js"></script> -->
+    <script src="js/lib/Lawbu-FaBu.js"></script>
+</body>
+
+</html>

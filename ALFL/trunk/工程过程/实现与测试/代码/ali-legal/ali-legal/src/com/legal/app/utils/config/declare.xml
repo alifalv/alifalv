@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<declares>
+	<declare>
+		<declareId>1</declareId>
+		<declareName>要案裁判</declareName>
+	</declare>
+	<declare>
+		<declareId>2</declareId>
+		<declareName>事案不同判</declareName>
+	</declare>
+	<declare>
+		<declareId>3</declareId>
+		<declareName>指导性裁判</declareName>
+	</declare>
+	<declare>
+		<declareId>4</declareId>
+		<declareName>有意见的裁判</declareName>
+	</declare>
+	<declare>
+		<declareId>5</declareId>
+		<declareName>枉法裁判</declareName>
+	</declare>
+</declares>

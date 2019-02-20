@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 我要申报</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/img.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header" type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-30">
+        <div class="ui-regpanel">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ui-regform ui-padding-lr-80 ui-padding-l-no">
+                        <form class="form-horizontal" id="form">
+                            <div class="form-group ui-margin-b-20">
+                                <div class="col-xs-offset-1 col-xs-10 ui-size-18"><img src="../img/img-flwszz.png" width="27" height="27" class="ui-margin-r-5">我要申报</div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="title" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>标题：</label>
+                                <div class="col-xs-10">
+                                    <input name="title" type="text" class="form-control" id="title" placeholder="请输入标题（5-100个字符）" data-rule="标题:required;length(5~100, true)">
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="realName" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>申报人：</label>
+                                <div class="col-xs-4">
+                                    <input name="realName" type="text" class="form-control" id="realName" placeholder="请输入申报人名称" data-rule="申报人:required" readonly>
+                                </div>
+                                <!--<label for="mobile" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>手机：</label>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<input name="mobile" type="text" class="form-control" id="mobile" placeholder="请输入正确手机号，以便客服与您取得联系！" data-rule="手机:required;mobile">-->
+                                <!--</div>-->
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="declareType" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>类型：</label>
+                                <div class="col-xs-4">
+                                    <select class="form-control" name="declareType" id="declareType">
+                                        <option value="1">要案裁判</option>
+                                        <!--<option value="2">事案不同判</option>-->
+                                        <option value="3">指导性判决</option>
+                                        <option value="4">有意见的裁判</option>
+                                        <option value="5">枉法裁判</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="reasonInfo" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>理由：</label>
+                                <div class="col-xs-10">
+                                    <input name="reasonInfo" type="text" class="form-control" id="reasonInfo" placeholder="请描述您申报的案件理由" data-rule="理由:required">
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>案情：</label>
+                                <div class="col-xs-10">
+                                    <script id="caseDesc" name="caseDesc" placeholder="请完整描述您申报的案情" type="text/plain" data-rule="案情:required"></script>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="caseUrl" class="col-xs-2 control-label">案件链接：</label>
+                                <div class="col-xs-10">
+                                    <input name="caseUrl" type="text" class="form-control" id="caseUrl" placeholder="请输入此案件裁判文书网链接地址">
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-2 control-label">法律意见书：</label>
+                                <div class="col-xs-10">
+                                    <section class="img-section">
+                                        <div class="z_photo upimg-div clear" >
+                                            <section class="z_file fl">
+                                                <input type="file" id="bookName" class="file" value="" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                                <!--<div class="col-xs-8">-->
+                                    <!--<div class="ui-size-12 ui-color-gray ui-margin-t-13">未选择任何文件</div>-->
+                                <!--</div>-->
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <div class="col-xs-offset-2 col-xs-10">
+                                    <span class="ui-size-12 ui-color-gray"><i class="iconfont icon-deng"></i>上传的法律意见书可为图片文件或WORD文档文件，图片文件后缀支持jpg、png、gif、jpeg格式，单张图片大小建议在4M以下！
+                                        <a href="../assets/alpjmb.docx" class="ui-color-red" target="_blank">【模板下载】</a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label class="col-xs-2 control-label">判决书图片：</label>
+                                <div class="col-xs-10">
+                                    <section class=" img-section">
+                                        <div class="z_photo upimg-div clear" >
+                                            <section class="z_file fl">
+                                                <input type="file" id="declareImgs" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                    <span class="ui-size-12 ui-color-gray"><i class="iconfont icon-deng"></i>您可上传与咨询问题相关的证据照片供咨询师参考，图片文件后缀支持jpg、png、gif、jpeg格式，单张图片大小建议在4M以下，最多可上传50张照片！</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label class="col-xs-2 control-label">证据图片：</label>
+                                <div class="col-xs-10">
+                                    <section class="img-section">
+                                        <div class="z_photo upimg-div clear" >
+                                            <section class="z_file fl">
+                                                <input type="file" id="evidenceImgs" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                    <span class="ui-size-12 ui-color-gray"><i class="iconfont icon-deng"></i>您可上传与咨询问题相关的证据照片供咨询师参考，图片文件后缀支持jpg、png、gif、jpeg格式，单张图片大小建议在4M以下，最多可上传50张照片！</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label class="col-xs-2 control-label">主题图片：</label>
+                                <div class="col-xs-10">
+                                    <section class="img-section">
+                                        <div class="z_photo upimg-div clear" >
+                                            <section class="z_file fl">
+                                                <input type="file" id="primaryImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <div class="col-xs-offset-2 col-xs-2">
+                                    <button type="submit" class="btn btn-block ui-btn-red">提交审核</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-offset-2 col-xs-10">
+                                    <span class="ui-size-12 ui-color-gray"><i class="iconfont icon-gou ui-color-lightblue"></i>如果您的文章通过审核成功发布，查询打赏金请联系客服0731-85577722</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

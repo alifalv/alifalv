@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <title>AdminLTE 3 | Data Tables</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../views/plugins/datatables/dataTables.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../views/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="../views/plugins/js/jedate-6.0.0/skin/jedate.css">
+
+
+   <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../views/dist/css/adminlte.min.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="../views/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  
+   <!-- DataTables CSS -->
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css"></link>
+	
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.2.3/css/buttons.dataTables.min.css"></link>
+	
+	
+	
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="../../index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-comments-o"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  John Pierce
+                  <span class="float-right text-sm text-muted"><i class="fa fa-star"></i></span>
+                </h3>
+                <p class="text-sm">I got your message bro</p>
+                <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Nora Silvester
+                  <span class="float-right text-sm text-warning"><i class="fa fa-star"></i></span>
+                </h3>
+                <p class="text-sm">The subject goes here</p>
+                <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-bell-o"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fa fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fa fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fa fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+          <i class="fa fa-th-large"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link">
+      <img src="../../dist/img/AdminLTELogo.png"
+           alt="AdminLTE Logo"
+           class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Alexander Pierce</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-dashboard"></i>
+              <p>
+                Dashboard
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../../index.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Dashboard v1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../../index2.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Dashboard v2</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../../index3.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Dashboard v3</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="../widgets.html" class="nav-link">
+              <i class="nav-icon fa fa-th"></i>
+              <p>
+                Widgets
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-pie-chart"></i>
+              <p>
+                Charts
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../charts/chartjs.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>ChartJS</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../charts/flot.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Flot</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../charts/inline.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Inline</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-tree"></i>
+              <p>
+                UI Elements
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../UI/general.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>General</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../UI/icons.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Icons</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../UI/buttons.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Buttons</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../UI/sliders.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Sliders</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-edit"></i>
+              <p>
+                Forms
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../forms/general.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>General Elements</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../forms/advanced.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Advanced Elements</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../forms/editors.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Editors</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fa fa-table"></i>
+              <p>
+                Tables
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../tables/simple.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Simple Tables</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../tables/data.html" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Data Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-item">
+            <a href="../calendar.html" class="nav-link">
+              <i class="nav-icon fa fa-calendar"></i>
+              <p>
+                Calendar
+                <span class="badge badge-info right">2</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-envelope-o"></i>
+              <p>
+                Mailbox
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../mailbox/mailbox.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Inbox</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/compose.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Compose</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/read-mail.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Read</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-book"></i>
+              <p>
+                Pages
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../examples/invoice.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Invoice</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../examples/profile.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Profile</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../examples/login.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Login</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../examples/register.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Register</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../examples/lockscreen.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Lockscreen</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-plus-square-o"></i>
+              <p>
+                Extras
+                <i class="fa fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../examples/404.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Error 404</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../examples/500.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Error 500</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../examples/blank.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Blank Page</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../../starter.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Starter Page</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-header">MISCELLANEOUS</li>
+          <li class="nav-item">
+            <a href="https://adminlte.io/docs" class="nav-link">
+              <i class="nav-icon fa fa-file"></i>
+              <p>Documentation</p>
+            </a>
+          </li>
+          <li class="nav-header">LABELS</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-circle-o text-danger"></i>
+              <p class="text">Important</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-circle-o text-warning"></i>
+              <p>Warning</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-circle-o text-info"></i>
+              <p>Informational</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>会员列表</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+           
+				  <form class="form-inline">
+					  
+					   <!-- <div class="row my-1 mr-2">
+						<div class="col">
+						  <input type="text" class="form-control" placeholder="ID">
+						</div>
+						<div class="col">
+						  <input type="text" class="form-control " placeholder="真实姓名">
+						</div>
+					  </div>-->
+
+					  <div class="form-group">
+						<label for="id_input">ID</label>
+						<input type="text" id="id_input" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
+					  </div>
+
+					  <div class="form-group">
+						<label for="realName">真实姓名</label>
+						<input type="text" id="realName" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
+					  </div>
+					  <!--  会员类型 1：个人咨询者2：咨询师3：企业咨询者  -->
+					  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">会员类型</label>
+					  <select class="form-control my-1 mr-sm-2" id="userType">
+						<option selected value="0">全部</option>
+						<option value="1">个人咨询者</option>
+						<option value="3">企业咨询者</option>
+						<option value="2">咨询师</option>
+					  </select>
+
+					  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">认证</label>
+					  <select class="form-control my-1 mr-sm-2" id="isAuthentication">
+						<option selected value="0">全部</option>
+						<option value="1">未认证</option>
+						<option value="2">待审核</option>
+						<option value="3">已通过</option>
+						<option value="3">未通过</option>
+					  </select>
+
+					  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">状态</label>
+					  <select class="form-control my-1 mr-sm-2" id="userState">
+						<option selected value="0">全部</option>
+						<option value="1">正常</option>
+						<option value="2">锁定</option>
+					  </select>
+
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;">重置</button>
+					  </div>
+				   </form>
+
+
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="cashDT" class="table table-bordered table-hover">
+                <thead>
+                  <th>id</th>
+                  <th>手机号</th>
+                  <th>昵称</th>
+                  <th>用户名</th>
+                  <th>真实姓名</th>
+                  <th>所在地区</th>
+                  <th>会员类型</th>
+                  <th>微信帐号</th>
+                  <th>QQ帐号</th>
+                  <th>新浪微博</th>
+                  <th>积分</th>
+                  <th>认证</th>
+                  <th>状态</th>
+                  <th>是否签约</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- <tr>
+                  <td>22222</td>
+                  <td>15566668888
+                  </td>
+                  <td>爱哭的小馒头</td>
+                  <td>--</td>
+                  <td>王凡</td>
+                  <td>北京</td>
+                  <td>企业咨询者
+                  </td>
+                  <td>csdn120</td>
+                  <td>103635987</td>
+                  <td>ddkdkdkdk</td>
+                  <td>103635987</td>
+                  <td>已通过</td>
+                  <td>正常
+                  </td>
+                  <td>是</td>
+                  <td>
+                  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                      审核
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      签约
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                      推荐
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">
+                      启用
+                    </button>
+                  </td>
+     
+                </tr> -->
+               
+               </tbody>
+
+              
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			...
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary">Save changes</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">个人咨询者VIP资料</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			  <form>
+				  <div class="form-group row">
+					<label for="inputPassword1" class="col-sm-2 col-form-label">ID</label>
+					<div class="col-sm-5">
+					  <input type="text" class="form-control mx-sm-3" id="inputPassword1" placeholder="Password">
+					</div>
+				  </div>
+				  <div class="form-group row">
+					<label for="inputPassword2" class="col-sm-2 col-form-label">真实姓名</label>
+					<div class="col-sm-5">
+					  <input type="text" class="form-control mx-sm-3" id="inputPassword2" placeholder="Password">
+					</div>
+				  </div>
+				  <div class="form-group row">
+				  <label for="id_input" class="col-sm-2 col-form-label">身份证正面</label>
+				  <img src="../img/photo2.png" id="plate_number_image" class="img-responsive center-block" style="width:400px;height:200px;margin-left:25px;">
+				  </div>
+				  <div class="form-group row">
+				  <label for="id_input" class="col-sm-2 col-form-label">身份证正面</label>
+				  <img src="../img/photo2.png" id="plate_number_image" class="img-responsive center-block" style="width:400px;height:200px;margin-left:25px;">
+				  </div>
+				</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary">Save changes</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-sm">
+		<<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			...
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary">Save changes</button>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+	</div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.0.0-alpha
+    </div>
+    <strong>Copyright &copy; 2014-2018 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../views/plugins/jquery/jquery.min.js"></script>
+<!-- <script src="../views/jquery-1.8.3.min.js"></script> -->
+<!-- Bootstrap 4 -->
+<script src="../views/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<!-- <script src="../views/plugins/datatables/jquery.dataTables.js"></script>
+<script src="../views/plugins/datatables/dataTables.bootstrap4.js"></script> -->
+<!-- SlimScroll -->
+<script src="../views/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../views/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../views/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../views/dist/js/demo.js"></script>
+
+<script src="../views/plugins/js/jedate-6.0.0/jquery.jedate.js"></script>
+<script src="../views/plugins/js/jedate-6.0.0/jquery.jedate.min.js"></script>
+
+<script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+<script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<!-- <script src="debugger:///VM308 jquery.dataTables.min.js"></script> -->
+
+<!-- datatables jQuery -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+
+
+
+
+<script type="application/javascript" charset="utf-8">
+    var start = {
+        format: 'YYYY-MM-DD',
+        minDate: '2017-01-01', //设定最小日期为当前日期
+        isinitVal:true,
+        maxDate: $.nowDate({DD:0}), //最大日期
+        okfun: function(obj){
+            end.minDate = obj.val; //开始日选好后，重置结束日的最小日期
+            endDates();
+        }
+    };
+    var end = {
+        format: 'YYYY-MM-DD',
+        minDate: $.nowDate({DD:0}), //设定最小日期为当前日期
+        maxDate: '2099-12-31', //最大日期
+        okfun: function(obj){
+            start.maxDate = obj.val; //将结束日的初始值设定为开始日的最大日期
+        }
+    };
+    
+  //查找按钮
+	function search(){
+		sourceDT.ajax.reload();
+	} 
+	
+	//重置按钮
+	function reset(){
+		$("#id_input").val("");
+		$("#realName").val("");
+		$("#authenticationType").val("0");
+		$("#userType").val("0");
+		$("#statusType").val("0");
+	} 
+    //审核
+    function toExamine(userId) {
+    	var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/check',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("审核通过");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取审核数据失败");
+            }
+        });
+	}
+    
+    
+    //取消签约
+	function unContract(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/contract',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("取消签约成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取取消数据失败");
+            }
+        });
+	}
+    
+	//签约
+	function contract(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/contract/un',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("签约成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取签约数据失败");
+            }
+        });
+	}
+
+	//推荐
+	function recommend(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/push',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("推荐成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取推荐数据失败");
+            }
+        });
+	}
+	
+	//撤销
+	function push(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/push/un',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("撤销成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取撤销数据失败");
+            }
+        });
+	}
+	
+	//获取会员信息（个人咨询者）
+	function consultant(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/info/consultant',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("获取会员信息成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取会员信息失败");
+            }
+        });
+	}
+	
+	
+	//获取会员信息（咨询师信息）
+	function counselor(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/info/counselor',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("获取会员信息成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取会员信息失败");
+            }
+        });
+	}
+	
+	//禁用
+	function disabled(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/disabled',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("禁用成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("禁用失败");
+            }
+        });
+	}
+
+	//启用
+	function enable(userId) {
+		var parameter = new FormData();
+        parameter.append("userId",userId);
+        $.ajax({
+            type:'POST',
+            url:'http://123.56.133.241:8091/user/enable',
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("启用成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("启用失败");
+            }
+        });
+	}
+</script>
+<script type="text/javascript"> 
+var cashDT;
+$(document).ready(function(){
+	//var cashDT;
+	//$("#startTime").val(getNowDateStart());
+	//$("#endTime").val(getNowDateEnd());
+    //getSum();
+    //alert("33333");
+	//if($("#myGid").val() != ""){
+		cashDT=$('#cashDT').DataTable( {
+			"language": {
+		        "sProcessing": "处理中...",
+		        "sLengthMenu": "显示 _MENU_ 项结果",
+		        "sZeroRecords": "没有匹配结果",
+		        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+		        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+		        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+		        "sInfoPostFix": "",
+		        "sSearch": "搜索:",
+		        "sUrl": "",
+		        "sEmptyTable": "表中数据为空",
+		        "sLoadingRecords": "载入中...",
+		        "sInfoThousands": ",",
+		        "oPaginate": {
+		            "sFirst": "首页",
+		            "sPrevious": "上页",
+		            "sNext": "下页",
+		            "sLast": "末页"
+		        },
+		        "oAria": {
+		            "sSortAscending": ": 以升序排列此列",
+		            "sSortDescending": ": 以降序排列此列"
+		        }
+		    },
+		    "searching": false,
+		    "scrollX": false,
+		    "bLengthChange": false,
+			"bServerSide": true,
+		    //"sAjaxSource": "http://hermitcrab.vipgz1.idcfengye.com/alifalv/user",
+		    "sAjaxSource": "http://123.56.133.241:8091/ali/user",
+		    //"sAjaxSource": "http://192.168.0.103:8091/ali/user",
+		    "sAjaxDataProp": "data",
+		    "sServerMethod": "POST",
+		    "bPaginate": true,                      
+		    "bProcessing": false,                    
+		    "bFilter": true, 
+		    "iDisplayStart": 0,
+		    "iDisplayLength": 10,
+			"aoColumns": [
+					//ID
+					{ "mData":"userId",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.userId != null && full.userId !=""){
+								return full.userId;
+							};
+							return "";
+						}
+					},		
+					//手机号
+					{ "mData":"mobile",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.mobile != null && full.mobile !=""){
+								return full.mobile;
+							};
+							return "";
+						}
+					},
+					//呢称
+					{ "mData":"nickName",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.nickName != null && full.nickName !=""){
+								return full.nickName;
+							};
+							return "";
+						}
+					},
+					//用户名
+					{ "mData":"userName",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.userName != null && full.userName!=""){
+								return full.userName;
+							};
+							return "";
+						}
+					},
+					//真实姓名
+					{ "mData":"realName",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.realName != null){
+								return full.realName;
+							};
+							return "";
+						}
+					},
+					//所在地区
+					{ "mData":"cityDescription",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.cityDescription != null){
+								return full.cityDescription;
+							};
+							return "";
+						}
+					},
+					//会员类型
+					{ "mData":"userTypeDescription",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.userTypeDescription != null && full.userTypeDescription!=""){
+								return full.userTypeDescription;
+							};
+							return "";
+						}
+					},
+					//微信帐号
+					{ "mData":"weChat",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.weChat != null && full.weChat!=""){
+								return full.weChat;
+							};
+							return "";
+						}
+					},
+					//QQ帐号
+					{ "mData":"qq",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.qq != null && full.qq!=""){
+								return full.qq;
+							};
+							return "";
+						}
+					},
+					//新浪微博
+					{ "mData":"weiBo",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.weiBo != null && full.weiBo!=""){
+								return full.weiBo;
+							};
+							return "";
+						}
+					},
+					//积分
+					{ "mData":"userScore",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.userScore != null && full.userScore !=""){
+								return full.userScore;
+							};
+							return "";
+						}
+					},
+					//认证
+					{ "mData":"isAuthentication ",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.isAuthentication != null && full.isAuthentication !=""){
+								return full.isAuthentication;
+							};
+							return "";
+						}
+					},
+					//状态
+					{ "mData":"realName",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.dname != null && full.userId!=""){
+								return full.dname;
+							};
+							return "";
+						}
+					},
+					//是否签约
+					{ "mData":"isContract",
+						"visible": true,
+						"mRender":function(data,type,full){
+						   if(full.isContract != null && full.isContract!=""){
+								return full.isContract;
+							};
+							return "";
+						}
+					},
+					//操作
+					{ "mData":"userId",
+	                    render: function (data, type, full ,row, meta) {
+	                        //if (full.status == 0){
+	                        //    return '<input type="button" class="btn btn-xs btn-danger" value="强制下班" onclick="endWork('+full.id+')"/>';
+	                        //}else{
+	                        //    return "--";
+	                        //}
+	                        return '<input type="button" class="btn btn-success" value="审核" onclick="toExamine('+full.userId+')"/>&nbsp;'+
+	                               '<input type="button" class="btn btn-success" value="签约" onclick="sign('+full.userId+')"/>&nbsp;'+
+	                               '<input type="button" class="btn btn-success" value="推荐" onclick="recommend('+full.userId+')"/>&nbsp;'+
+	                               '<input type="button" class="btn btn-success" value="启用" onclick="enable('+full.userId+')"/>';
+							  // '<input type="button" class="btn btn-success" value="审核" onclick="toExamine('+full.userId+')"/>&nbsp;' +
+							  // '<input type="button" class="btn btn-success" value="签约" onclick="sign('+full.userId+')"/>&nbsp;' +
+							  // '<input type="button" class="btn btn-success" value="推荐" onclick="recommend('+full.userId+')"/>&nbsp;' +
+							  // '<input type="button" class="btn btn-success" value="启用" onclick="enable('+full.userId+')"/>';
+	                    }
+	                }
+					
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+				aoData.push({'name':'userId','value':$('#id_input').val()});
+				aoData.push({'name':'realName','value':$('#realName').val()});
+				if( $('#isAuthentication').find("option:selected").val() != 0){
+					aoData.push({'name':'isAuthentication','value':$('#isAuthentication').find("option:selected").val()});
+				}
+				if( $('#userState').find("option:selected").val() != 0){
+					aoData.push({'name':'userState','value':$('#userState').find("option:selected").val()});
+				}
+				if( $('#userType').find("option:selected").val() != 0){
+					aoData.push({'name':'userType','value':$('#userType').find("option:selected").val()});
+				}
+				
+				
+				oSettings.jqXHR = $.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					//"url": "http://hermitcrab.vipgz1.idcfengye.com/alifalv/user",
+					"url": "http://123.56.133.241:8091/ali/user",
+					//"url": "http://192.168.0.103:8091/alifalv/user",
+					"data": aoData,
+					"success": fnCallback
+				});
+			}
+		} );
+	//}
+});
+</script>
+
+<script type="text/javascript">
+//查询汇总
+function  getSum() {
+    var para = new FormData();
+    para.append("userId",1);
+    $.ajax({
+        type:'GET',
+        url:'http://123.56.133.241:8091/ali/user/check',
+        //data: { userId: "1"},
+        data: para,
+        processData: false,// 告诉jQuery不要去处理发送的数据
+        contentType: false,
+		dataType:"json",
+        success:function(data){
+			alert(1);
+            // $('#sum_cost_money').val(data.money);
+            // $('#sum_budget_money').val(data.dis);
+            // $('#sum_discout').val(data.sumds);
+        }
+    });
+}
+</script>
+</body>
+</html>

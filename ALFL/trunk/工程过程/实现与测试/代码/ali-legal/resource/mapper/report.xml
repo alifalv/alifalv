@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Report">
+    <resultMap id="BaseResultMap" type="Report" >
+        <id column="reportId" property="reportId" jdbcType="INTEGER" />
+        <result column="reportTitle" property="reportTitle" jdbcType="VARCHAR" />
+        <result column="reportType" property="reportType" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="reportTime" property="reportTime" jdbcType="TIMESTAMP" />
+        <result column="mobile" property="mobile" jdbcType="CHAR" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        ali_report
+        <where>
+            <if test="true">
+                and (isDelete != 1 or isDelete is null )
+            </if>
+            <if test="reportTimeStart != null and reportTimeStart != ''">
+                and reportTime &gt;= #{reportTimeStart}
+            </if>
+            <if test="reportTimeEnd != null and reportTimeEnd != ''">
+                and reportTime &lt; #{reportTimeEnd}
+            </if>
+            <if test="reportType != null and reportType != 0">
+                and reportType = #{reportType,jdbcType=INTEGER}
+            </if>
+            <if test="content != null and content != ''">
+                and (reportTitle like '%${content}%' or reportTitle like '%${content}%')
+            </if>
+        </where>
+        ORDER BY reportId DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+          count(reportId)
+        FROM
+        ali_report
+        <where>
+            <if test="true">
+                and (isDelete != 1 or isDelete is null )
+            </if>
+            <if test="reportTimeStart != null and reportTimeStart != ''">
+                and reportTime &gt;= #{reportTimeStart}
+            </if>
+            <if test="reportTimeEnd != null and reportTimeEnd != ''">
+                and reportTime &lt; #{reportTimeEnd}
+            </if>
+            <if test="reportType != null and reportType != 0">
+                and reportType = #{reportType,jdbcType=INTEGER}
+            </if>
+            <if test="content != null and content != ''">
+                and (reportTitle like '%${content}%' or reportTitle like '%${content}%')
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="Report" resultMap="BaseResultMap">
+        select * from ali_report
+        <where>
+            <if test="reportId != null">
+                and reportId = #{reportId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="Report" >
+        update ali_report
+        <set >
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where reportId = #{reportId,jdbcType=INTEGER}
+    </update>
+    <select id="numberOfReport" resultType="Integer">
+        select count(reportId) from ali_report where isDelete is null or isDelete != 1;
+    </select>
+    <delete id="deletetrain" parameterType="Map">
+        delete from ali_train
+        <where>
+            <if test="reportBusinessId != null">
+                and trainId = #{reportBusinessId}
+            </if>
+        </where>
+    </delete>
+    <delete id="deleteadvertise" parameterType="Map">
+        delete from ali_advertise
+        <where>
+            <if test="reportBusinessId != null">
+                and advertiseId = #{reportBusinessId}
+            </if>
+        </where>
+    </delete>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BusinessOrder">
+
+
+	<insert id="savePayOrder" parameterType="map">
+		insert into ali_business_order 
+		(businessOrder,orderName,userId,userName,userImg,businessType,orderNum,
+		orderPrice,connectionId,orderTime,orderState,mobile,orderType) 
+		values (#{businessOrder},#{orderName},#{userId},#{userName},#{userImg},#{businessType},#{orderNum},
+		,#{orderPrice},#{connectionId},#{orderTime},#{orderState},#{mobile},#{orderType})
+	</insert>
+	
+	
+	<select id="findOrderByUserId" parameterType="map">
+		select * from ali_business_order where userId = #{userId}
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findOrderByUserId_TOTAL_COUNT" parameterType="map">
+		select COUNT(businessOrder) from ali_business_order where userId = #{userId}
+	</select>
+	
+
+</mapper>

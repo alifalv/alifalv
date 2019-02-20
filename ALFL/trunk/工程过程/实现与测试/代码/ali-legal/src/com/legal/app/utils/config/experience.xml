@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<experiences>
+	<experience>
+		<experienceId>1</experienceId>
+		<experienceName>不限</experienceName>
+	</experience>
+	<experience>
+		<experienceId>2</experienceId>
+		<experienceName>一年以内</experienceName>
+	</experience>
+	<experience>
+		<experienceId>3</experienceId>
+		<experienceName>1-2年</experienceName>
+	</experience>
+	<experience>
+		<experienceId>4</experienceId>
+		<experienceName>2-3年</experienceName>
+	</experience>
+	<experience>
+		<experienceId>5</experienceId>
+		<experienceName>3-4年</experienceName>
+	</experience>
+	<experience>
+		<experienceId>6</experienceId>
+		<experienceName>4-5年</experienceName>
+	</experience>
+	<experience>
+		<experienceId>7</experienceId>
+		<experienceName>5-10年</experienceName>
+	</experience>
+	<experience>
+		<experienceId>8</experienceId>
+		<experienceName>10年以上</experienceName>
+	</experience>
+</experiences>

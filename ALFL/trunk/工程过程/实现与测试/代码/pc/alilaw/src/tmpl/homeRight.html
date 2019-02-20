@@ -1,0 +1,48 @@
+<div class="ui-home-right">
+    <div class="ui-home-right-row ui-padding-b-20">
+        <div class="ui-block">
+            <div class="ui-left ui-margin-r-10">
+                <div class="ui-height-180 ui-width-140 ui-block ui-margin-center">
+                    <img src="{{data.userImg | createImgUrl}}" class="ui-img-height-fill">
+                </div>
+            </div>
+            <div class="ui-size-22 ui-margin-t-85 ui-bold text-center ui-cut-1" title="{{data.realName || data.userName}}">{{data.realName || data.userName}}</div>
+            <div class="ui-margin-t-6 text-center">ID：{{data.userId}}</div>
+            <div class="ui-margin-t-6">
+                {{if (data.is_contract == '1')}}
+                <i class="ui-icon-signed-big" title="签约律师"></i>
+                {{/if}}
+
+                {{if (data.vipLevel == '1')}}
+                <i class="ui-icon-vip-gold-big" title="黄金会员"></i>
+                {{else if (data.vipLevel == '2')}}
+                <i class="ui-icon-vip-ptvip-big" title="白金会员"></i>
+                {{else if (data.vipLevel == '3')}}
+                <i class="ui-icon-vip-masonryvip-big" title="钻石会员"></i>
+                {{/if}}
+
+                {{if (data.isAuthentication == '2')}}
+                <i class="ui-icon-certified-big ui-margin-l-5" title="已认证"></i>
+                {{/if}}
+            </div>
+        </div>
+        <p class="ui-color-gray ui-margin-t-13">所在地区：{{data.workAddress || '暂未填写'}}</p>
+        <p class="ui-color-gray">工作单位：{{data.companyName || '暂未填写'}}</p>
+        <div class="j-operbtn-box">
+            <button type="button" class="j-free-btn btn btn-block ui-btn-blue ui-size-16 ui-margin-t-20">免费咨询</button>
+            <button type="button" class="j-markdoc-btn btn btn-block ui-btn-blue ui-size-16 ui-margin-t-20">文书制作</button>
+            <button type="button" class="j-dj-btn btn btn-block btn-link ui-size-16 ui-margin-t-20">协议律师费订金>></button>
+        </div>
+    </div>
+    <div class="ui-home-right-row">
+        <p class="ui-margin-l-60 ui-margin-t-13"><i class="iconfont icon-dianhua ui-size-36 ui-color-blue"></i><span class="ui-bold ui-margin-l-15">{{data.mobile || '暂未填写'}}</span></p>
+        <p class="ui-margin-l-60"><i class="iconfont icon-qq ui-size-36 ui-color-blue"></i><span class="ui-bold ui-margin-l-15">{{data.qq || '暂未填写'}}</span></p>
+    </div>
+    <div class="ui-home-right-row text-center ui-padding-tb-20">
+        欢迎扫一扫 个人二维码
+        <!--<div id="user_right_qrcode" class="ui-heightwidth-145 ui-margin-t-10" style="margin: 0 auto"></div>-->
+        <div class="ui-heightwidth-145 ui-margin-t-10 ui-bg-gray" style="margin: 0 auto">
+            <img src="{{data.codeImg | createImgUrl}}" class="ui-img-fill ui-block " alt="二维码挂了">
+        </div>
+    </div>
+</div>

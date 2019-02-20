@@ -1,0 +1,49 @@
+<div id="top">
+    <div class="ui-header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul class="ui-left">
+                        <li><i class="iconfont icon-gps ui-color-gray" title="定位"></i><input type="text" class="ui-ctiyselect-input" id="citySelect" value="加载中..." readonly></li>
+                        <!--<li>【<a rel="nofollow" href="javascript:void(0);" >重新定位</a>】</li>-->
+                        <li class="ui-width-100"></li>
+                        <li>
+                            {{if (userName)}}
+                            <a rel="nofollow" href="personal_consult.html" title="{{userName}}">{{userName}}</a> {{else}}
+                            <a rel="nofollow" href="http://www.alifalv.cn/login.html" title="登录">登录</a> {{/if}}
+                        </li>
+                        <li>|</li>
+                        <li>
+                            {{if (userName)}}
+                            <a rel="nofollow" id="logout_top_btn" href="javascript:void(0);" title="退出">退出</a> {{else}}
+                            <a href="http://www.alifalv.cn/reg.html" title="免费注册">免费注册</a> {{/if}}
+                        </li>
+                    </ul>
+                    <div id="in_city" style="display: none"></div>
+                </div>
+                <div class="col-xs-6">
+                    <ul class="ui-right">
+                        <li><a target="_blank" rel="nofollow" href="http://www.alifalv.cn/findlawyer.html" title="找律师">找律师</a></li>
+                        <li>|</li>
+                        <li><a target="_blank" rel="nofollow" href="http://www.alifalv.cn/statutesearch.html" title="查法律">查法律</a></li>
+                        <li>|</li>
+                        <li><a target="_blank" rel="nofollow" href="http://www.alifalv.cn/statutesearch.html" title="APP下载">APP下载</a></li>
+                        <li>|</li>
+                        <li class="ui-topqrcode ui-top-wechat ui-pointer">
+                            <a href="javascript:void(0);" class="ui-decoration-no" title="微信"><i class="iconfont icon-wechat ui-color-gray"></i></a>
+                            <div class="ui-topqrcode-box"><img src="../img/qrcode-wechat.jpg" alt="">
+                                <div class="ui-bg-green ui-padding-lr-20 ui-margin-t-10 ui-color-white ui-size-16"><i class="iconfont icon-wechat ui-color-white ui-size-20 ui-margin-r-5"></i>微信公众号</div>
+                            </div>
+                        </li>
+                        <!-- <li class="ui-topqrcode ui-top-sina ui-pointer">
+                            <a href="javascript:void(0);" class="ui-decoration-no" title="新浪"><i class="iconfont icon-sina ui-color-gray "></i></a>
+                            <div class="ui-topqrcode-box"><img src="../img/qrcode-sina.jpg" alt="">
+                                <div class="ui-bg-red ui-padding-lr-20 ui-margin-t-10 ui-color-white ui-size-16"><i class="iconfont icon-sina ui-color-white ui-size-20 ui-margin-r-5"></i>新浪微博</div>
+                            </div>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

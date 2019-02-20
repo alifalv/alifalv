@@ -1,0 +1,178 @@
+{{if (userType == 1)}}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="ui-margin-t-17">
+                <div class="ui-img-adaptive-width ui-height-100 ui-width-100 img-circle ui-left ui-border-darkred-3" style="background: url('../img/defalut-head.png');background-size: 100%"><img class="j-headimg" src="{{userImg | createImgUrl}}" alt="" ></div>
+                <div class="ui-size-18 ui-color-white ui-margin-t-6 ui-margin-l-120">{{userName}}
+                    {{if (is_contract == '1')}}
+                        <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i>
+                    {{/if}}
+
+                    {{if (isExpire == '0')}}
+                        {{if (vipLevel == '1')}}
+                        <a href="personal_vipcert.html"><i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i></a>
+                        {{else if (vipLevel == '2')}}
+                        <a href="personal_vipcert.html"><i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i></a>
+                        {{else if (vipLevel == '3')}}
+                            <a href="personal_vipcert.html"><i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i></a>
+                        {{/if}}
+                    {{/if}}
+
+                    {{if (isAuthentication == '2')}}
+                        <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i>
+                    {{/if}}
+                </div>
+                <div class="ui-size-18 ui-color-white ui-margin-t-6 ui-margin-l-120"><span class="ui-margin-r-20">{{mobile}}</span> <a href="personal_info.html" class="btn ui-inline-block ui-btn-darkred" style="padding-top: 3px;padding-bottom: 3px">完善个人资料</a></div>
+                <div class="ui-size-16 ui-color-white ui-margin-t-6 ui-margin-l-120">当前积分：<span class="ui-color-lightblue2">{{integral || 0}}</span></div>
+            </div>
+        </div>
+        <div class="col-xs-6 text-right">
+            <ul class="ui-person-top">
+                <li>
+                    <a href="personal_viprenew_advocate.html" class="ui-hover ui-decoration-no">
+                        <i class="ui-icon-vipup"></i>
+                        <div>会员升级</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="j-free-btn ui-hover ui-decoration-no">
+                        <i class="ui-icon-mfflzxred"></i>
+                        <div>免费<br/>法律咨询</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="personal_coupons_notused.html" class="j-quan-btn ui-hover ui-decoration-no">
+                        <i class="ui-icon-docmark"></i>
+                        <div>文书制作券</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" id="jtsgamfls_btn" class="ui-hover ui-decoration-no {{isExpire != '0' ? 'disabled' : ''}}">
+                        <i class="ui-icon-jtsgamfls"></i>
+                        <div>交通事故案<br/>免费律师</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{{else if (userType == 2)}}
+<!-- 咨询师 -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="ui-margin-t-17">
+                <div class="ui-left ui-height-100 ui-width-100">
+                    <img src="{{userImg | createImgUrl}}" alt="" class="j-headimg img-circle ui-img-fill ui-border-darkred-3">
+                </div>
+                <div class="ui-size-18 ui-color-white ui-margin-t-6 ui-margin-l-120">{{userName}}
+                    {{if (is_contract == '1')}}
+                        <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i>
+                    {{/if}}
+
+                    {{if (isExpire == '0')}}
+                    {{if (vipLevel == '1')}}
+                    <a href="personal_vipcert.html"><i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i></a>
+                    {{else if (vipLevel == '2')}}
+                    <a href="personal_vipcert.html"><i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i></a>
+                    {{else if (vipLevel == '3')}}
+                    <a href="personal_vipcert.html"><i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i></a>
+                    {{/if}}
+                    {{/if}}
+
+                    {{if (isAuthentication == '2')}}
+                        <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i>
+                    {{/if}}
+                    <a href="personal_info.html" class="btn ui-inline-block ui-btn-darkred"  style="padding-top: 3px;padding-bottom: 3px">完善个人资料</a>
+                </div>
+                <div class="ui-size-16 ui-color-white ui-margin-t-6 ui-margin-l-120">
+                    <span class="ui-margin-r-20">个人主页：{{@ personUrl | createHomeUrl}}</span>
+                </div>
+                <div class="ui-size-16 ui-color-white ui-margin-t-10 ui-margin-l-120"><a href="personal_wallet.html" class="ui-color-white"><span class="ui-color-white">余额：</span><span class="ui-color-lightblue2">¥{{userBalance}}</span></a><span class="ui-color-white"> | </span>当前积分：<span class="ui-color-lightblue2">{{integral || 0}}</span></div>
+            </div>
+        </div>
+        <div class="col-xs-6 text-right">
+            <ul class="ui-person-top">
+                <li>
+                    <a href="personal_viprenew_counselor.html" class="ui-hover ui-decoration-no">
+                        <i class="ui-icon-vipup"></i>
+                        <div>会员升级</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="j-free-btn ui-hover ui-decoration-no">
+                        <i class="ui-icon-mfflzxred"></i>
+                        <div>免费<br/>法律咨询</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="personal_coupons_notused.html" class="j-quan-btn ui-hover ui-decoration-no">
+                        <i class="ui-icon-docmark"></i>
+                        <div>文书制作券</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" id="jtsgamfls_btn" class="ui-hover ui-decoration-no {{isExpire != '0' ? 'disabled' : ''}}">
+                        <i class="ui-icon-jtsgamfls"></i>
+                        <div>交通事故案<br/>免费律师</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{{else if (userType == 3)}}
+<!-- 企业会员 -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="ui-margin-t-17">
+                <div class="ui-img-adaptive-width ui-height-100 ui-width-100 img-circle ui-left ui-border-darkred-3" style="background: url('../img/defalut-head.png');background-size: 100%"><img class="j-headimg" src="{{userImg | createImgUrl}}" alt="" ></div>
+                <div class="ui-size-18 ui-color-white ui-margin-t-6 ui-margin-l-120">{{userName}}
+                    {{if (is_contract == '1')}}
+                        <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i>
+                    {{/if}}
+
+                    {{if (isExpire == '0')}}
+                    {{if (vipLevel == '1')}}
+                    <a href="personal_vipcert.html"><i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i></a>
+                    {{else if (vipLevel == '2')}}
+                    <a href="personal_vipcert.html"><i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i></a>
+                    {{else if (vipLevel == '3')}}
+                    <a href="personal_vipcert.html"><i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i></a>
+                    {{/if}}
+                    {{/if}}
+                    {{if (isAuthentication == '2')}}
+                        <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i>
+                    {{/if}}
+                </div>
+                <div class="ui-size-18 ui-color-white ui-margin-t-6 ui-margin-l-120"><span class="ui-margin-r-20">{{mobile}}</span> <a href="personal_info.html" class="btn ui-inline-block ui-btn-darkred">完善企业资料</a></div>
+                <div class="ui-size-16 ui-color-white ui-margin-l-120">当前积分：<span class="ui-color-lightblue2">{{integral || 0}}</span></div>
+            </div>
+        </div>
+        <div class="col-xs-6 text-right">
+            <ul class="ui-person-top">
+                <li>
+                    <a href="personal_viprenew_enterprise.html" class="ui-hover ui-decoration-no">
+                        <i class="ui-icon-vipup"></i>
+                        <div>会员升级</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="j-free-btn ui-hover ui-decoration-no">
+                        <i class="ui-icon-mfflzxred"></i>
+                        <div>免费<br/>法律咨询</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="personal_coupons_notused.html" class="j-quan-btn ui-hover ui-decoration-no">
+                        <i class="ui-icon-docmark"></i>
+                        <div>文书制作券</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{{/if}}

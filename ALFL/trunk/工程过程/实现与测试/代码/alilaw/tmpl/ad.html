@@ -1,0 +1,12 @@
+{{if (error)}}
+<!--<div class="text-center ui-height-100p" style="background: #e8e8e8">-->
+<!--<img src="../img/img-error.jpg" class="img-responsive ui-inline-block" alt="{{error}}">-->
+<!--</div>-->
+<div class="text-center ui-height-100p">
+    <img src="" class="img-responsive ui-inline-block" alt="{{error}}">
+</div>
+{{else}}
+<a href="{{data.url ? data.url : 'javascript:void(0);'}}" class="ui-hover" target="_blank" style="height: 100%;display: block;overflow: hidden;">
+    <img src="{{data.image | createImgUrl}}" class="ui-img-width-fill" alt="{{data.name}}">
+</a>
+{{/if}}

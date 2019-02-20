@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 评价</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+    <div class="ui-content ui-padding-b-40">
+        <div class="container ui-padding-tb-50">
+            <div class="ui-regpanel">
+                <div class="row">
+                    <div class="col-xs-12 ui-padding-lr-15">
+                        <div class="ui-top-wrapper ui-order-wrapper">
+                            <h3 class="ui-padding-tb-20 text-center ui-bold"></h3>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="ui-reg-result ui-padding-lr-50">
+                            <div class="ui-border-b-1 text-left ui-padding-b-20"><span class="ui-color-red ui-size-18 ui-bold ui-padding-lr-50">评 价</span></div>
+                            <div class="ui-padding-lr-50">
+                                <div class="row ui-border-b-1 ui-padding-tb-30">
+                                    <div class="col-xs-12 text-left ui-bold">订单信息</div>
+                                </div>
+                                <div class="row ui-border-b-1 ui-padding-tb-30">
+                                    <script type="text/html" id="orderTmpl">
+                                        <div class="col-xs-5 text-left ">
+                                            <p class="ui-padding-b-10"><span class="ui-color-gray">订单名称：</span>{{userName}}/ID:{{userId}} 【{{data[0].businessType}}】</p>
+                                            <p><span class="ui-color-gray">创建时间：</span>{{data[0].orderTime}}</p>
+                                        </div>
+                                        <div class="col-xs-6 text-left">
+
+                                            <dl>
+                                                <dt class="ui-inline-block ui-left ui-align-top ui-margin-r-40 ui-normal"><span class="ui-color-gray">律师:</span></dt> {{if data[0].userA}}
+                                                <dd class="ui-inline-block text-center ui-margin-r-40">
+                                                    <p class="ui-padding-b-10">{{data[0].userAname}}</p>
+                                                    {{if data[0].ua == '0'}}
+                                                    <p><a href="javascript:void(0);" data-userid="{{data[0].userA}}" class="j-evalchange-btn btn btn-block ui-btn-red-b  btn-xs">待评价</a></p>
+                                                    {{else}}
+                                                    <p><a href="javascript:void(0);" data-userid="{{data[0].userA}}" class="j-evaled-btn btn btn-block ui-btn-green-b btn-xs">已评价</a></p>
+                                                    {{/if}}
+                                                </dd>
+                                                {{/if}} {{if data[0].userB}}
+                                                <dd class="ui-inline-block text-center ui-margin-r-40">
+                                                    <p class="ui-padding-b-10">{{data[0].userBname}}</p>
+                                                    {{if data[0].ub == '0'}}
+                                                    <p><a href="javascript:void(0);" data-userid="{{data[0].userB}}" class="j-evalchange-btn btn btn-block ui-btn-red-b btn-xs">待评价</a></p>
+                                                    {{else}}
+                                                    <p><a href="javascript:void(0);" data-userid="{{data[0].userB}}" class="j-evaled-btn btn btn-block ui-btn-green-b btn-xs">已评价</a></p>
+                                                    {{/if}}
+                                                </dd>
+                                                {{/if}} {{if data[0].userC}}
+                                                <dd class="ui-inline-block text-center ui-margin-r-40">
+                                                    <p class="ui-padding-b-10">{{data[0].userCname}}</p>
+                                                    {{if data[0].uc == '0'}}
+                                                    <p><a href="javascript:void(0);" data-userid="{{data[0].userC}}" class="j-evalchange-btn btn btn-block ui-btn-red-b btn-xs">待评价</a></p>
+                                                    {{else}}
+                                                    <p><a href="javascript:void(0);" data-userid="{{data[0].userC}}" class="j-evaled-btn btn btn-block ui-btn-green-b btn-xs">已评价</a></p>
+                                                    {{/if}}
+                                                </dd>
+                                                {{/if}}
+                                            </dl>
+                                        </div>
+                                    </script>
+                                </div>
+                                <div class="row ui-border-b-1 ui-padding-tb-50">
+                                    <form id="evalform" method="post">
+                                        <div id="msg_holder" style="position: absolute;top: 234px;right: 104px;"></div>
+                                        <input type="hidden" name="userId" id="userId" data-rule="required" data-msg-required="请先选择要评价的律师" data-target="#msg_holder">
+                                        <div class="col-xs-5">
+                                            <ul class="text-left">
+                                                <li class="j-starscore ui-margin-b-10">法律水平：
+                                                    <ol class="ui-starscore">
+                                                        <li class="active"><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                    </ol>
+                                                    <input class="j-starscore-val" name="levelScore" type="hidden" value="1">
+                                                </li>
+                                                <li class="j-starscore ui-margin-b-10">服务态度：
+                                                    <ol class="ui-starscore">
+                                                        <li class="active"><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                    </ol>
+                                                    <input class="j-starscore-val" name="mannerScore" type="hidden" value="1">
+                                                </li>
+                                                <li class="j-starscore ui-margin-b-10">社会资源：
+                                                    <ol class="ui-starscore">
+                                                        <li class="active"><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                    </ol>
+                                                    <input class="j-starscore-val" name="sourceScore" type="hidden" value="1">
+                                                </li>
+                                                <li class="j-starscore ui-margin-b-10">收费标准：
+                                                    <ol class="ui-starscore">
+                                                        <li class="active"><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                        <li><i class="iconfont icon-xingxing"></i></li>
+                                                    </ol>
+                                                    <input class="j-starscore-val" name="scaleScore" type="hidden" value="1">
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-xs-7">
+                                            <div class="form-group text-left">
+                                                <label class="ui-normal">给律师评价：</label>
+                                                <div id="evaluateldContentBox"></div>
+                                                <textarea name="evaluateldContent" class="j-evaluateld form-control" rows="5" data-rule="给律师评价:required"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-offset-10 col-xs-22">
+                                            <button type="submit" class="j-evaluateld btn btn-block ui-btn-red">发表评价</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

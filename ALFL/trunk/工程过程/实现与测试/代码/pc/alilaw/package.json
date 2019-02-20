@@ -1,0 +1,21 @@
+{
+  "name": "alilaw",
+  "version": "1.0.0",
+  "description": "阿里法律",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage" : "https://www.yimicat.com",
+  "author": "Li Hongwei",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-header": "^2.0.5",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-seajs-transport": "^0.4.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}

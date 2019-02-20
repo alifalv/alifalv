@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AccessLog">
+	<!-- 查询最近访问过我的访客 -->
+	<select  id="listAccessLog"  parameterType="map"  resultType="map">
+			select 
+			  u.*
+			 from
+			   ali_access_log  as a
+			 LEFT JOIN
+			    ali_user as u on  u.userId =  a.counselorId
+			where a.userId = #{userId}
+		  order by browseTime DESC
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select  id="listAccessLog_COUNT_TOTAL"  parameterType="map"  resultType="int">
+			select 
+			 count(*)
+			 from
+			   ali_access_log  as a 
+			where a.userId = #{userId} 
+	</select>
+	
+	
+	 <!-- 查询访问者与被访问者的数据，没有补个 -->
+	 
+	 <select id="queryVisitAndBeVisited" parameterType="map" resultType="map">
+		 select 
+		 	IFNULL(sum(CASE WHEN userId = #{userId}  AND counselorId = #{counselorId}  then 1 end ),0) as visit ,
+  			IFNULL(sum(CASE WHEN userId = #{counselorId}  AND counselorId = #{userId}  then 1 end ),0) as beVisited
+		 from ali_access_log where (userId = #{userId}  and counselorId = #{counselorId}) or (userId = #{counselorId} and counselorId = #{userId}  )
+	 </select>
+		 
+</mapper>

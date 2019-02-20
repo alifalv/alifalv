@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="Login">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>注册-律师用户注册</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<link href="vue/vant-min.css" rel="stylesheet" type="text/css" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Login Register ResetPwd">
+		<!--主体 begin-->
+		<div class="Conter page-slideright" id="app" v-cloak>
+			<div class="main-top">
+				<div class="top-left">
+					<a class="mui-icon mui-icon-back mui-action-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+				</div>
+				<div class="top-center">
+
+				</div>
+				<div class="top-right">
+
+				</div>
+			</div>
+			<div class="main-bd Register-step1 Register-step2">
+				<!--输入部分-->
+				<div class="inputbox">
+					<h2>律师用户注册</h2>
+					<form action="" method="post">
+						<div class="mui-input-row">
+							<label></label>
+							<input type="text" class="mui-input-clear username" placeholder="请输入手机号" v-model.trim="mobile">
+							<span class="input-row-right"></span>
+						</div>
+						
+						<div class="mui-input-row btn-row">
+							<label></label>
+							<input type="text" class="" placeholder="请输入短信校验码" v-model.trim="code">
+							<input class="input-row-right" type="button" :disabled="disabled" :value="codeValue" @click="sendCode"/>
+						</div>
+						<div class="mui-input-row">
+							<label></label>
+							<input type="text" class="mui-input-clear" placeholder="请输入账户用户名(选填)" v-model.trim="userName">
+							<span class="input-row-right"></span>
+						</div>
+						<div class="mui-input-row">
+							<label></label>
+							<input type="password" class="mui-input-password password" placeholder="请输入6-16位密码，字母数字组合" v-model.trim="password">
+							<span class="input-row-right"></span>
+						</div>
+						<div class="mui-input-row">
+							<label></label>
+							<input type="password" class="mui-input-password" placeholder="请再次输入密码" v-model.trim="password2">
+							<span class="input-row-right"></span>
+						</div>
+						<div class="mui-input-row">
+							<label></label>
+							<input type="text" class="mui-input-clear" placeholder="请输入您的昵称" v-model.trim="nickName">
+							<span class="input-row-right"></span>
+						</div>
+					
+						<div class="mui-input-row selectbox" @click="addrPop">
+							<section>
+								<p style="padding-left:.3rem;">请选择所属地区</p>
+								<a class="hassubmit">{{addrText}}</a>
+								<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+							</section>
+						</div>
+						<div class="mui-input-row selectbox" @click="jobPop">
+							<section>
+								<p style="padding-left:.3rem;">请选择职业</p>
+								<a class="hassubmit">{{jobText}}</a>
+								<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+							</section>
+						</div>
+						<div class="mui-input-row selectbox" @click="casePop">
+							<section>
+								<p style="padding-left:.3rem;">请选择擅长专业</p>
+								<a class="hassubmit">{{majorText}}</a>
+								<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+							</section>
+						</div>
+						<!-- <div class="mui-input-row selectbox">
+							<section>
+								<p style="padding-left:.3rem;">请上传形象照片</p>
+								<a class="hassubmit">{{upLoad}}</a>
+								<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+							</section>
+						</div> -->
+			
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label for="checkboxRead">我已阅读并同意<a href="">《平台服务协议》</a></label>
+							<input name="checkboxRead" value="read" type="checkbox" v-model="checked">
+						</div>
+						<input type="button" class="logininbtn" id="Nextstep" value="注册" @click="nextStep"/>
+					</form>
+				</div>
+
+			</div>
+
+			
+			<div class="areaBox" v-show="addrShow">
+				<van-picker 
+					show-toolbar
+					title="地址列表"
+					:columns="areaList"
+					:columns-num="2" 
+					:loading="addrLoading"
+					@confirm="addrConfirm"
+					@change="addrChange"
+					@cancel="addrPop"
+				/>
+			</div>
+
+
+			<div class="areaBox" v-show="jobShow">
+				<van-picker 
+					show-toolbar
+					title="职业列表"
+					:columns="jobList"
+					@confirm="jobConfirm"
+					@cancel="jobPop"
+				/>
+			</div>
+
+			<div class="areaBox" v-show="caseShow">
+				<van-picker
+						show-toolbar
+						title="职业列表"
+						:columns="caseList"
+						@confirm="caseConfirm"
+						@cancel="casePop"
+				/>
+			</div>
+			
+		</div>
+		<!--主体 end-->
+
+
+
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="swiper/swiper.min.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="vue/vant-min.js"></script>
+		<!-- <script src="vue/area.js"></script> -->
+		<script src="js/lib/Register-ansman.js"></script>
+	</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html class="Login">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>注册-企业咨询者第二步</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Login ResetPwd Register">
+		<!--主体 begin-->
+		<div class="Conter page-slideright" id="app" v-cloak>
+			<div class="main-top">
+				<div class="top-left">
+					<a class="mui-icon mui-icon-back mui-action-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+				</div>
+				<div class="top-center">
+
+				</div>
+				<div class="top-right">
+
+				</div>
+			</div>
+			<div class="main-bd Register-step2">
+				<div class="inputbox">
+					<h2>开通企业VIP</h2>
+					<form action="">
+						<div class="selectbox">
+							<section>
+								<p>请选择会员类型</p>
+								<select name="" v-model="vipIndex" @change="sumJinE">
+									<option v-for="(item, index) in vipList" :key="index" :value="item[0]" :selected="index == 0">
+										{{item[1]}}
+									</option>
+								</select>
+								<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+							</section>
+							<section>
+								<p>请选择开通年限</p>
+								<select name="" v-model="yearIndex" @change="sumJinE">
+									<option v-for="(item, index) in yearList" :key="index" :value="item[0]" :selected="index == 0">
+										{{item[1]}}
+									</option>
+								</select>
+						
+								<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+							</section>
+						</div>
+
+						<div class="vipbox">
+							<div class="vipbox-left">
+								<img :src="'images/myinfo/level'+(vipIndex)+'.png'">
+								<p>{{vipList[vipIndex-1][1]}}</p>
+							</div>
+							<div class="vipbox-right">
+								<span>1</span>全年不限量免费法律咨询<br>
+								<span>2</span>免费文书制作券{{vipIndex == 1 ? '4' : vipIndex == 2 ? '12' : '50'}}张
+							</div>
+						</div>
+						<div class="tipbox">
+							<p class="money">需充值：<span class="redfont">￥{{jinE}}</span></p>
+							<p class="tipsinfo"><img src="images/loginregister/register-s-1.png" />温馨提示：本服务不支持退款。</p>
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label for="checkboxRead">我已阅读并同意<a href="">《平台服务协议》</a></label>
+								<input name="checkboxRead" v-model="checked" type="checkbox">
+							</div>
+						</div>
+						<div class="nextbox">
+							<input type="button" name="" id="Nextstep" value="立即开通" @click="kaitong" />
+						</div>
+					</form>
+				</div>
+				
+				
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/lib/Register-qiye-2.js"></script>
+	</body>
+
+</html>

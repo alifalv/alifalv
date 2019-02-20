@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<educations>
+	<education>
+		<educationId>1</educationId>
+		<educationName>不限</educationName>
+	</education>
+	<education>
+		<educationId>2</educationId>
+		<educationName>初中及以下</educationName>
+	</education>
+	<education>
+		<educationId>3</educationId>
+		<educationName>高中</educationName>
+	</education>
+	<education>
+		<educationId>4</educationId>
+		<educationName>中技</educationName>
+	</education>
+	<education>
+		<educationId>5</educationId>
+		<educationName>中专</educationName>
+	</education>
+	<education>
+		<educationId>6</educationId>
+		<educationName>大专</educationName>
+	</education>
+	<education>
+		<educationId>7</educationId>
+		<educationName>本科</educationName>
+	</education>
+	<education>
+		<educationId>8</educationId>
+		<educationName>硕士</educationName>
+	</education>
+	<education>
+		<educationId>9</educationId>
+		<educationName>MBA</educationName>
+	</education>
+	<education>
+		<educationId>10</educationId>
+		<educationName>博士</educationName>
+	</education>
+</educations>

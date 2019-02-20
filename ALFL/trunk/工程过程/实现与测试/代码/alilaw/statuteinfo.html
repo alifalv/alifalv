@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 法律法规 - 详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+
+    <div class="ui-content ui-content-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ui-panel ui-margin-b-30">
+                        <img src="../img/casebidding-top.png" class="img-responsive">
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <dl class="ui-breadcrumb">
+                        <dt>当前位置：</dt>
+                        <dd><a href="index.html">首页</a></dd>
+                        <dd><a href="statutesearch.html">法律法规查询</a></dd>
+                        <dd>法规详情</dd>
+                    </dl>
+                </div>
+                <div class="col-xs-9">
+                    <div class="ui-panel ui-padding-40">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <img src="../img/lawsearch.jpg" class="img-responsive">
+                            </div>
+                            <div class="col-xs-10">
+                                <form class="form-horizontal ui-padding-lr-24 ui-regform ui-padding-t-no ui-margin-b-no" method="get" action="statutesearch.html">
+                                    <div class="form-group">
+                                        <label for="title" class="col-xs-2 control-label">标题关键词：</label>
+                                        <div class="col-xs-10">
+                                            <input id="title" name="title" type="text" class="form-control" placeholder="请输入标题关键词">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="articleContent" class="col-xs-2 control-label">正文关键词：</label>
+                                        <div class="col-xs-10">
+                                            <input id="articleContent" name="articleContent" type="text" class="form-control" placeholder="请输入正文关键词">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="effectLevel" class="col-xs-2 control-label">效力等级：</label>
+                                        <div class="col-xs-3">
+                                            <select class="form-control" name="effectLevel" id="effectLevel">
+                                            <script type="text/html" id="effectivenessGradeListTmpl">
+                                                <option value="">全部</option>
+                                                {{each data value i}}
+                                                <option value="{{value.effectivenessGradeId}}" {{value.effectivenessGradeId != selectedId ? '' : 'selected'}}>{{value.effectivenessGradeName}}</option>
+                                                {{/each}}
+                                            </script>
+                                        </select>
+                                        </div>
+                                        <label for="sendUnit" class="col-xs-2 control-label" id="sendLabel">发文单位：</label>
+                                        <div class="col-xs-5" id="sendSelect">
+                                            <select class="form-control" id="sendUnit">
+                                            <script type="text/html" id="unitListTmpl">
+                                                <option value="">全部</option>
+                                                {{each data value i}}
+                                                <option value="{{value.unitId}}" {{value.unitId != selectedId ? '' : 'selected'}}>{{value.unitName}}</option>
+                                                {{/each}}
+                                            </script>
+                                        </select>
+                                        </div>
+                                        <div class="col-xs-5" id="provinceSelect" style="display:none">
+                                            <select id="sendUnit2" class="form-control">
+                                                    <option value="1">北京市</option>
+                                                    <option value="2">天津市</option>
+                                                    <option value="3">河北省</option>
+                                                    <option value="4">山西省</option>
+                                                    <option value="5">内蒙古自治区</option>
+                                                    <option value="6">辽宁省</option>
+                                                    <option value="7">吉林省</option>
+                                                    <option value="8">黑龙江省</option>
+                                                    <option value="9">上海市</option>
+                                                    <option value="10">江苏省</option>
+                                                    <option value="11">浙江省</option>
+                                                    <option value="12">安徽省</option>
+                                                    <option value="13">福建省</option>
+                                                    <option value="14">江西省</option>
+                                                    <option value="15">山东省</option>
+                                                    <option value="16">河南省</option>
+                                                    <option value="17">湖北省</option>
+                                                    <option value="18">湖南省</option>
+                                                    <option value="19">广东省</option>
+                                                    <option value="20">海南省</option>
+                                                    <option value="21">广西壮族自治区</option>
+                                                    <option value="22">甘肃省</option>
+                                                    <option value="23">陕西省</option>
+                                                    <option value="24">新疆维吾尔自治区</option>
+                                                    <option value="25">青海省</option>
+                                                    <option value="26">宁夏回族自治区</option>
+                                                    <option value="27">重庆市</option>
+                                                    <option value="28">四川省</option>
+                                                    <option value="29">贵州省</option>
+                                                    <option value="30">云南省</option>
+                                                    <option value="31">西藏自治区</option>
+                                                    <option value="32">台湾省</option>
+                                                    <option value="33">澳门特别行政区</option>
+                                                    <option value="34">香港特别行政区</option>
+                                                </script>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="startTime" class="col-xs-2 control-label">发布日期：</label>
+                                        <div class="col-xs-4">
+                                            <input id="startTime" name="startTime" type="text" class="form-control ui-bg-white" placeholder="请选择" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')}',readOnly:true})">
+                                        </div>
+                                        <label for="endTime" class="col-xs-1 control-label">至：</label>
+                                        <div class="col-xs-5">
+                                            <input id="endTime" name="endTime" type="text" class="form-control ui-bg-white" placeholder="请选择" onclick="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',readOnly:true})">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ui-margin-b-no">
+                                        <div class="col-xs-offset-4 col-xs-4">
+                                            <button type="reset" class="btn btn-block ui-btn-bluegray">重置条件</button>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <button type="submit" class="btn btn-block ui-btn-lightblue">开始查询</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-article">
+                        <script id="activeTmpl" type="text/html">
+                            <div class="ui-article-top">
+                                <h3>{{data.title}}</h3>
+                                <div class="row ui-border-b-1 ui-size-12 ui-color-gray ui-padding-tb-10" style="margin-right: -8px;margin-left: -8px">
+                                    <div class="col-xs-4">发布机构：{{data.unitName}}</div>
+                                    <div class="col-xs-4">效力等级：{{data.egName}}</div>
+                                    <div class="col-xs-4">文号：{{data.referenceNo}}</div>
+                                </div>
+                                <div class="row ui-border-b-1 ui-size-12 ui-color-gray ui-padding-tb-10" style="margin-right: -8px;margin-left: -8px">
+                                    <div class="col-xs-4">颁布日期：{{data.issueTime}}</div>
+                                    <div class="col-xs-4">实施日期：{{data.implementTime}}</div>
+                                    <div class="col-xs-4">上传日期：{{data.uploadTime}}</div>
+                                </div>
+                                <div class="ui-padding-t-10">
+                                    <div class="j-share-box ui-inline-block"></div>
+                                    <span class="{{data.isCollection == '是' ? 'active' : ''}} ui-article-star" id="star_btn">收藏</span>
+                                </div>
+                            </div>
+                            <div class="ui-article-content">
+                                <div class="ui-article-text">
+                                    {{@ data.articleContent}}
+                                </div>
+                            </div>
+                            <div class="ui-article-bottom">
+                                <div class="ui-article-page">
+                                    {{if (data.lastArticleId) }}
+                                    <p>上一条：<a href="?articleId={{data.lastArticleId}}">{{data.lastArticleTitle}}</a></p>{{/if}} {{if (data.nextArticleId) }}
+                                    <p>下一条：<a href="?articleId={{data.nextArticleId}}">{{data.nextArticleTitle}}</a></p>{{/if}}
+                                </div>
+                            </div>
+                        </script>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                    <!-- 常见咨询问题 -->
+                    <div class="ui-panel" id="toDayRecommendList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">今日推荐</span><a class="ui-panel-link" href="todayrecommend.html">更多 ></a></div>
+                        <div class="ui-panel-content">
+                            <ul class="ui-article-list">
+                                <script id="toDayRecommendListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <li><a href="{{value.columnCode | getArticleUrlByColumnCode value.articleId value.userId}}" title="{{value.title}}" class="ui-cut-1" target="_blank">{{value.title}}</a></li>
+                                    {{/each}} {{else}}
+                                    <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    {{/if}}
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 法律疑难问题与观点 -->
+                    <div class="ui-panel" id="legalProblemsList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">法律疑难问题与观点</span><a class="ui-panel-link" href="articles_problem.html">更多 ></a></div>
+                        <div class="ui-panel-content">
+                            <ul class="ui-article-list">
+                                <script id="legalProblemsListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <li><a href="articles_probleminfo.html?articleId={{value.articleId}}" title="{{value.title}}" class="ui-cut-1" target="_blank">{{value.title}}</a></li>
+                                    {{/each}} {{else}}
+                                    <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                    {{/if}}
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ui-panel" id="bookMakeModelList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray">常用文书模板</span><a class="ui-panel-link" href="doctemplate.html" target="_blank">更多 ></a></div>
+                        <div class="ui-panel-content">
+                            <ul class="ui-article-list">
+                                <script id="bookMakeModelListTmpl" type="text/html">
+                                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                    <li><a href="doctemplateinfo.html?articleId={{value.articleId}}" title="{{value.title}}" class="ui-cut-1">{{value.title}}</a></li>
+                                    {{/each}} {{else}}
+                                    <div class="text-center">{{error || '暂无记录'}}</div>
+                                    {{/if}}
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="NewsInfo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>文章详情</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="js/fastclick.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/md5.min.js"></script>
+</head>
+
+<body class="Lawsearch">
+    <div id="app">
+        <!--公共头部 begin-->
+        <div class="header">
+            <div class="goback">
+                <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+            </div>
+            <h2>文章详情</h2>
+            <div class="goback msgcenter">
+                <a href=""><img src="images/myinfo/order-msg.png" alt="" /></a>
+            </div>
+        </div>
+        <!--公共头部 end-->
+
+        <!--主体 begin-->
+        <div class="Conter lawbuyDatail">
+            <div class="newsbox">
+                <div style="float: left">
+                    <img :src="data.userImg | createImgUrl" />
+                </div>
+                <div class="rightConter">
+                    <div class="top">
+                        <div><span>{{data.userName  || '无'}}</span></div>
+                        <div class="news-comes">
+                            <span class="spanBorder">{{data.deputeTime}}</span>
+                            <span class="spanBorder">{{data.caseTypeName || '无'}}</span>
+                            <span>{{data.provinceName}}{{data.cityName}}</span>
+                        </div>
+                    </div>
+                    <div class="conter">
+                        <div class="title">
+                            <span>{{data.caseTitle}}</span>
+                        </div>
+                        <div class="desc">
+                            <span>详情：{{data.caseDesc || '无'}}</span>
+                        </div>
+                        <div class="hope">
+                            <p><span>期望</span></p>
+                            <span>{{data.caseHope || '无'}}</span>
+                        </div>
+                        <div class="ask">
+                            <p><span>要求</span></p>
+                            <span>{{data.caseAsk || '无'}}</span>
+                        </div>
+                        <div class="caseImg">
+                            <img src="" style="width:100px;height: 100px;" />
+                        </div>
+                        <div class="ask">
+                            <span>报价：{{data.offerMoney || '无'}}</span>
+                        </div>
+                        <div class="ask">
+                            <span>竞拍人数：{{data.counts}}人</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="news-tool">
+                <!-- <ul>
+                    <li>
+                        <i></i>
+                        <span>上一条</span>
+                    </li>
+                    <li>
+                        <i></i>
+                        <span>下一条</span>
+                    </li>
+                    <li>
+                        <i></i>
+                        <span>分享</span>
+                    </li>
+                    <li>
+                        <i></i>
+                        <span>收藏</span>
+                    </li>
+				</ul> -->
+                <button @click="jinPai">我要竞拍</button>
+            </div>
+        </div>
+
+    </div>
+    <!--主体 end-->
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue2.5.9.js"></script>
+    <script src="vue/axios.min.js"></script>
+    <script src="vue/httpVueLoader.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Lawbuy-detail.js"></script>
+</body>
+
+</html>

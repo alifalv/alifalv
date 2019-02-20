@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="Alicaipan HighestPoints">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>百姓吐槽</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.cookie.min.js"></script>
+		<style>
+			.mui-scroll-wrapper {
+				top: 4.3rem;
+			}
+		</style>
+	</head>
+
+	<body class="Lawsearch Lawask Alicaipan HighestPoints">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>百姓吐槽</h2>
+			<div class="goback msgcenter">
+				<a href=""><img src="images/myinfo/order-msg.png" alt="" /></a>
+			</div>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter page-slideright" id="app" v-cloak>
+			<div class="searchbox">
+				<div class="mui-input-row mui-search">
+					<input type="search" class="mui-input-clear" placeholder="输入搜索关键字" ref="conditionValue">
+				</div>
+				<input type="button" name="searchbtn" id="searchbtn" value="搜索" />
+			</div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" v-cloak>
+				<div class="mui-scroll">
+					<div class="listbox">
+						<section v-for="(item, index) in list" :key="index">
+							<a :href="'BaiXingTuCao-Info.html?articleId=' + item.articleId">
+								<p class="tit">{{item.title}}</p>
+								<p class="times">发布日期：<span>{{item.sendTime}}</span></p>
+							</a>
+						</section>
+						<p v-if="isNoList" class="ui-nolist">没有找到数据</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+		<script src="vue/vue.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/BaixingList.js"></script>
+	
+	</body>
+
+</html>

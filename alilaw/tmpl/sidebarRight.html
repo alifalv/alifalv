@@ -1,0 +1,88 @@
+<!--右侧边栏-->
+<ul class="sidebar-right" id="rightSidebar">
+    <li class="meau-msg">
+        <a href="personal_message.html" class="sidebar-right-btn">
+            <i class="demo-icon iconfont icon-msg"></i>
+            <p>
+                我的<br /> 消息
+            </p>
+            <sup class="j-msg-unread ui-hide"></sup>
+        </a>
+        <div class="sidebar-right-box">
+            <div class="box-border">
+                <div class="sev-t ui-padding-t-5">
+                    <p class="ui-color-gray">新消息</p>
+                </div>
+                <div class="sev-b">
+                    <ul class="ui-msg-list ui-size-12" id="sidebarMsg">
+                        {{if (getLength(rows) > 0)}} {{each rows value i}}
+                        <li class="ui-margin-t-10"><a href="personal_messageinfo.html?messageId={{value.messageId}}" title="【{{value.messageType}}】{{value.messageContent}}" class="ui-cut-1"><i class="iconfont icon-yuandian ui-color-red ui-margin-r-5" {{value.isRead == '0' ? '' : 'style="visibility: hidden"' }}></i>【{{value.messageType}}】{{value.messageContent}}<span class="ui-color-yellow">去查看</span></a></li>
+                        {{/each}} {{else}}
+                        <li class="text-center">
+                            <div class="ui-color-gray">{{error || '暂无记录'}}</div>
+                        </li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="meau-sev">
+        <a href="javascript:" class="sidebar-right-btn">
+            <i class="demo-icon iconfont icon-group"></i>
+            <p>
+                联系<br /> 客服
+            </p>
+        </a>
+        <div class="sidebar-right-box">
+            <div class="box-border">
+                <div class="sev-t ui-padding-t-5">
+                    <p class="ui-color-gray">有疑问？</p>
+                </div>
+                <div class="sev-b text-center">
+                    <div class="ui-padding-t-10">您可以联系<span class="ui-color-pink">【在线客服】</span></div>
+                    <div class="ui-padding-t-20"><a href="http://wpa.qq.com/msgrd?v=3&uin=3037196390&site=qq&menu=yes" target="_blank" class="btn ui-btn-pink-b ui-color-darkgray ui-margin-r-5"><i class="iconfont icon-qq1 ui-color-pink"></i>客服菁菁</a><a href="http://wpa.qq.com/msgrd?v=3&uin=2091708508&site=qq&menu=yes"
+                            target="_blank" class="btn ui-btn-pink-b ui-color-darkgray"><i class="iconfont icon-qq1 ui-color-pink"></i>客服茗茗</a></div>
+                    <div class="ui-padding-t-20">也可以拨打<span class="ui-color-pink">【客服热线】</span></div>
+                    <div class="ui-padding-t-20"><span class="ui-size-18 ui-color-lightgray ui-bold">0731—85580003</span></div>
+                    <div class="ui-padding-t-20 ui-padding-b-20">您可以选择<a class="ui-hover" href="user_advice.html" target="_blank"><span class="ui-color-pink">【投诉建议】</span></a></div>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <li class="meau-code">
+        <a href="javascript:" class="sidebar-right-btn">
+            <i class="demo-icon iconfont icon-qrCode"></i>
+            <p>
+                关注<br /> 微信
+            </p>
+        </a>
+        <div class="sidebar-right-box">
+            <div class="box-border">
+                <div class="sev-t">
+                    <p>关注微信公众号，即享免费法律服务</p>
+                    <img src="../img/ercode.jpg" width="100" height="100" />
+                    <p>打开微信扫一扫 即可关注</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="meau-contact">
+        <a href="statutesearch.html" class="sidebar-right-btn" target="_blank">
+            <i class="demo-icon iconfont icon-download"></i>
+            <p>
+                软件<br/> 下载
+            </p>
+        </a>
+    </li>
+    <li class="meau-top">
+        <a href="javascript:void(0);" class="sidebar-right-btn" id="top_back">
+            <i class="demo-icon iconfont icon-top"></i>
+            <p>
+                返回<br/> 顶部
+            </p>
+        </a>
+    </li>
+
+</ul>

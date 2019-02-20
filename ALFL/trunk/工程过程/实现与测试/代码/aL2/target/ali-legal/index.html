@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>H5微信支付</title>
+<script type="text/javascript" src="jquery.min.js"></script>
+</head>
+<body>
+  <form action="/ali-legal/api/order/gotoPay_H5"  method="post">
+  <div style=" font-size: 16px; width: 100%; text-align: center;">
+  <p>H5 支付测试页面</p>
+  <input type="button" value="提交" onclick="getOrderState();"/>
+  </div>
+  </form>
+  <script type="text/javascript">
+  
+		  function getOrderState(){
+			  var oid = $("#orderId").val();
+			  $.ajax({ 
+				   url:'/ali-legal/api/order/gotoPay_H5',
+				   type:"post",  
+				   data:{
+					   businessOrder:'20181012154127553694',  
+					   orderPrice:1,
+					   userName:"张三",
+					   payment:'微信支付'
+				   },
+				  dataType:"json", 
+				   success:function(res){ 
+				   console.log(res);
+				   alert(res);
+				   alert(res.msg);
+				    
+				   }, 
+				   error:function(err){ 
+				    alert("网络连接失败,稍后重试",err); 
+				   } 
+				  
+				  }) 
+		  }
+  	
+  </script>
+  </body>
+</html>

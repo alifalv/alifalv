@@ -1,0 +1,77 @@
+html,body{width: 100%;color:#333333;font-family:"PingFang SC Medium", "微软雅黑",arial !important;padding: 0;margin: 0;line-height: inherit;}
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,th,td,button{margin:0;padding:0;outline:none;list-style:none;font-family:"PingFang SC Medium", "微软雅黑",arial !important;}
+body{-webkit-overflow-scroll:touch;}
+a,a:hover,a:active,a:visited,a:link,a:focus{color:#333333;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color: transparent;background: none;text-decoration:none;outline:none;}
+img{display:block;width:100%;}
+
+@media screen and (min-width:320px){
+    html,body{font-size:21.333333333333332px !important;}
+}
+@media screen and (min-width:360px){
+    html,body{font-size:24px !important;}
+}
+@media screen and (min-width:375px){
+    html,body{font-size:25px !important;}
+}
+@media screen and (min-width:384px){
+    html,body{font-size:25.6px !important;}
+}
+@media screen and (min-width:400px){
+    html,body{font-size:26.666666666666668px !important;}
+}
+@media screen and (min-width:414px){
+    html,body{font-size:27.6px !important;}
+}
+@media screen and (min-width:424px){
+    html,body{font-size:28.266666666666667px !important;}
+}
+@media screen and (min-width:480px){
+    html,body{font-size:32px !important;}
+}
+@media screen and (min-width:540px){
+    html,body{font-size:34px !important;}
+}
+@media screen and (min-width:720px){
+    html,body{font-size:36px !important;}
+}
+@media screen and (min-width:750px){
+    html,body{font-size:38px !important;}
+}
+
+.Index{background-color: #f0f0f0;}
+.Index p{font-size: 0.52rem;color: #999999;}
+.Index .Conter .swiper-container{width: 100%;}
+.Index .Conter .swiper-container img{width:100%;}
+.Index .Conter .swiper-pagination{bottom:0.2rem !important;}
+.Index .Conter .swiper-pagination .swiper-pagination-bullet{margin: 1px 6px;width: 6px;height: 6px; border-radius:100%;border: 1px solid #de352c;background:transparent;opacity: 1;}
+.Index .Conter .swiper-pagination .swiper-pagination-bullet-active{background-color: #de352c;}
+.Index .mainintr{display:flex;display:-webkit-flex;justify-content:space-between;align-items:center;background-color: #fff;padding:0.4rem 0.5rem 0.4rem 0rem;width: 100%;}
+.Index .mainintr .m-left{width:38%;padding-right:0rem;height:100%;align-self:center;}
+.Index .mainintr .m-left a{display:block;width:100%;height:100%;}
+.Index .mainintr .m-left a img{width:100%;height:100%;}
+.Index .mainintr .m-right{width:62%;height: 100%; display:flex;display:-webkit-flex;justify-content: space-between;flex-direction: column;}
+.Index .mainintr .m-right .info-top{margin-bottom:0.3rem;padding-top: 0.16rem;}
+.Index .mainintr .m-right .info-top p{margin-top: 0.15rem;}
+.Index .mainintr .m-right a{font-size:0.6rem;display:block;}
+.Index .mainintr .m-right .info-bottom{display:flex;display:-webkit-flex;justify-content:space-between;}
+.Index .mainintr .m-right .info-b-l{padding-top: 0.3rem;}
+.Index .mainintr .m-right .info-b-l p:nth-child(2){font-size: 0.7rem;color: #e02e24;}
+.Index .mainintr .m-right .info-b-l p:nth-child(2) span{margin-left: 0.2rem;}
+.Index .mainintr .m-right .info-b-r a{display: block;width:2rem;height:2rem;background:url(../images/buybus.png) center center no-repeat;background-size:100% auto;}
+.Index .vipforgood{margin-top: 0.4rem;}
+.Index .intrlist{width: 100%;overflow-x: hidden;margin-top: 0.4rem;}
+.Index .intrlist ul{display:flex;display:-webkit-flex;flex-wrap: wrap;flex-flow: row wrap;align-content: flex-start;width:100.5%;}
+.Index .intrlist ul li{flex: 0 0 49.5%;background-color:#fff;margin-right:0.5%;margin-bottom:0.3rem;border-bottom: 1px solid #d7d7d7;box-shadow:0 0.1rem 0.15rem #d7d7d7;}
+.Index .intrlist ul li a{display: block; padding:0.5rem 0.4rem 0.3rem;}
+.Index .intrlist ul li .infobox{padding-top:0.3rem;height: 100%;}
+.Index .intrlist ul li .info-t p{color:#333333;font-size: 0.6rem;}
+.Index .intrlist ul li .info-b p{color:#e02e24;}
+.Index .intrlist ul li .info-b p span:nth-child(1){color:#e02e24;font-size: 0.7rem;margin: 0 0.5rem 0 0.2rem;}
+.Index .intrlist ul li .info-b p span:nth-child(2){color:#999999;}
+.Index .intrlist ul li .info-b p span i{font-style: normal;font-size: 0.58rem;}
+.mui-icon{font-family:Muiicons !important;}
+.mui-icon:after{font-family:Muiicons !important;}
+/*mui上拉加载样式修改*/
+.mui-pull-bottom-pocket{margin-top: 0.2rem;}
+.mui-pull-caption{font-size:0.55rem;color: #999999;font-weight:normal;}
+.GoodsClassfy .mui-toast-container{top:0;}

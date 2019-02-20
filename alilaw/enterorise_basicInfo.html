@@ -1,0 +1,178 @@
+<!-- 工商信息 -->
+<div class="g-basic">
+    <div class="u-top">
+        <span>工商信息</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <tbody>
+                <tr>
+                    <td>法定代表人</td>
+                    <td>雷军</td>
+                    <td>成立日期 </td>
+                    <td>2010-03-03</td>
+                </tr>
+                <tr>
+                    <td>注册资本</td>
+                    <td>185000万元人民币</td>
+                    <td>经营状态 </td>
+                    <td>开业</td>
+                </tr>
+                <tr>
+                    <td>统一社会信用代码</td>
+                    <td>91110108551385082Q</td>
+                    <td>曾用名</td>
+                    <td>北京小米科技有限责任公司</td>
+                </tr>
+                <tr>
+                    <td>公司类型</td>
+                    <td>有限责任公司(自然人投资或控股)</td>
+                    <td>所属地区 </td>
+                    <td>北京市</td>
+                </tr>
+                <tr>
+                    <td>登记机关</td>
+                    <td>北京市工商行政管理局海淀分局</td>
+                    <td>核准日期 </td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>注册地址</td>
+                    <td colspan="4">北京市海淀区清河中街68号华润五彩城购物中心二期13层</td>
+                </tr>
+                <tr>
+                    <td>经营范围</td>
+                    <td colspan="4">技术开发;货物进出口、技术进出口、代理进出口;销售通讯设备、厨房用品、卫生用品(含个人护理用品)、日用杂货、化妆品、医疗器械I类、II类、避孕器具、玩具、体育用品、文化用品、服装鞋帽、钟表眼镜、针纺织品、家用电器、家具(不从事实体店铺经营)、花、草及观赏植物、不再分装的包装种子、照相器材、工艺品、礼品、计算机、软件及辅助设备、珠宝首饰、食用农产品、宠物食品、电子产品、摩托车、电动车、自行车及零部件、智能卡、五金交电(不从事实体店铺经营)、建筑材料(不从事实体店铺经营);维修仪器仪表;维修办公设备;承办展览展示活动;会议服务;筹备、策划、组织大型庆典;设计、制作、代理、发布广告;摄影扩印服务;文艺演出票务代理、体育赛事票务代理、展览会票务代理、博览会票务代理;手机技术开发;手机生产、手机服务(限海淀区永捷北路2号二层经营);从事互联网文化活动;出版物零售;出版物批发;销售第三类医疗器械;销售食品;零售药品;广播电视节目制作。(企业依法自主选择经营项目,开展经营活动;从事互联网文化活动、出版物批发、出版物零售、销售食品、广播电视节目制作、零售药品、销售第三类医疗器械以及依法须经批准的项目,经相关部门批准后依批准的内容开展经营活动;不得从事本市产业政策禁止和限制类项目的经营活动。)</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- 股东及出资信息 -->
+<div class="g-basic">
+    <div class="u-top">
+        <span>股东及出资信息</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>股东</th>
+                    <th>持股比例</th>
+                    <th>认缴出资额(万元)</th>
+                    <th>认缴出资日期</th>
+                    <th>公示日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script id="onlineConsultListTmpl" type="text/html">
+                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                    <tr>
+                        <td class="ui-color-gray">
+                            <div class="ui-cut-1 text-left ui-width-400"><a href="articles_consultinfo.html?articleId={{value.adviceId}}" title="{{value.title}}">{{value.title}}</a></div>
+                        </td>
+                    </tr>
+                    {{/each}} {{else}}
+                    <tr>
+                        <td colspan="6" class="text-center ui-color-gray">{{error || '暂无内容'}}</td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60 ui-color-red" title="{{value.reward}}">{{value.reward}}</div>
+                        </td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60" title="{{value.replyNum || 0}}">{{value.replyNum || 0}}</div>
+                        </td>
+                        <td>{{value.sendTime | subDay}}</td>
+                        <td><a href="articles_consultinfo.html?articleId={{value.adviceId}}" class="ui-color-lightblue">我要解答</a></td>
+                    </tr>
+                    {{/if}}
+                </script>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 主要人员信息 -->
+<div class="g-basic">
+    <div class="u-top">
+        <span>主要人员信息</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>职务</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script id="onlineConsultListTmpl" type="text/html">
+                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                    <tr>
+                        <td class="ui-color-gray">
+                            <div class="ui-cut-1 text-left ui-width-400"><a href="articles_consultinfo.html?articleId={{value.adviceId}}" title="{{value.title}}">{{value.title}}</a></div>
+                        </td>
+                    </tr>
+                    {{/each}} {{else}}
+                    <tr>
+                        <td colspan="6" class="text-center ui-color-gray">{{error || '暂无内容'}}</td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60 ui-color-red" title="{{value.reward}}">{{value.reward}}</div>
+                        </td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60" title="{{value.replyNum || 0}}">{{value.replyNum || 0}}</div>
+                        </td>
+                        <td>{{value.sendTime | subDay}}</td>
+                        <td><a href="articles_consultinfo.html?articleId={{value.adviceId}}" class="ui-color-lightblue">我要解答</a></td>
+                    </tr>
+                    {{/if}}
+                </script>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- 分支机构 -->
+<div class="g-basic">
+    <div class="u-top">
+        <span>分支机构</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <tbody>
+                <tr>
+                    <td>法定代表人</td>
+                    <td>雷军</td>
+                    <td>成立日期 </td>
+                    <td>2010-03-03</td>
+                </tr>
+                <tr>
+                    <td>注册资本</td>
+                    <td>185000万元人民币</td>
+                    <td>经营状态 </td>
+                    <td>开业</td>
+                </tr>
+                <tr>
+                    <td>统一社会信用代码</td>
+                    <td>91110108551385082Q</td>
+                    <td>曾用名</td>
+                    <td>北京小米科技有限责任公司</td>
+                </tr>
+                <tr>
+                    <td>公司类型</td>
+                    <td>有限责任公司(自然人投资或控股)</td>
+                    <td>所属地区 </td>
+                    <td>北京市</td>
+                </tr>
+                <tr>
+                    <td>登记机关</td>
+                    <td>北京市工商行政管理局海淀分局</td>
+                    <td>核准日期 </td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

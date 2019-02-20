@@ -1,0 +1,279 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>咨询师回复咨询问题统计</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content" id="content" style="display: block;">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<div class="form-group">
+							<label class="control-label" for="starttime">时间:</label>
+							<div style="display: inline; margin-left: 10px; margin-right: 10px;">
+								<input type="text" style="border: 1px solid #ccc;" value="" id="starttime" readonly> 到 
+								<input type="text" style="border: 1px solid #ccc;" value="" id="endtime" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="text" id="id_input" class="form-control mx-sm-3" placeholder="咨询师姓名、咨询师ID">
+						</div>
+						<div class="form-group action">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px; margin-right: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="CRCQSDT">
+						<thead>
+							<tr>
+								<th>咨询师ID</th>
+								<th>咨询师姓名</th>
+								<th>解答咨询总数</th>
+								<th>获得赏金总额</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+					<div class="dataTables_length">
+						<label>每页
+							<select id="pageSize" onchange="changePageSize()">
+								<option selected="selected" value="10">10</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+								<option value="100000">All</option>
+							</select>条
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content" id="showDetails" style="display: none">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">咨询详情</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()"></button>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="showDetailsDT">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>回复内容</th>
+								<th>回复时间</th>
+								<th>回复人</th>
+								<th>回复赏金</th>
+								<th>咨询标题</th>
+								<th>咨询类型</th>
+								<th>发布者</th>
+								<th>赏金</th>
+								<th>发布时间</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(start);
+
+	//查找按钮
+	function search() {
+		CRCQSDT.ajax.reload();
+	}
+
+	function reload() {
+		var table = $('#CRCQSDT').DataTable();
+		table.draw(false); //  重新绘制维护当前分页位置的表格。
+	}
+
+	//重置按钮
+	function reset() {
+		$("#id_input").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
+	}
+
+	//咨询详情
+	function showDetails(userId) {
+		$("#showDetails").css('display', 'block');
+		$("#content").css('display', 'none');
+		$('#showDetailsDT').DataTable({
+			//-------------固定配置，不用改--------------
+			"destroy" : true,
+			"ordering" : false,
+			"serverSide" : true,
+			"pagingType" : "numbers",
+			"searching" : false,
+			"processing" : true,
+			"pageLength" : 10,
+			"lengthChange" : false,
+			"language" : {
+				"sProcessing" : "处理中...",
+				"sLengthMenu" : "显示 _MENU_ 项结果",
+				"sZeroRecords" : "没有匹配结果",
+				"sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty" : "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered" : "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix" : "",
+				"sSearch" : "搜索:",
+				"sEmptyTable" : "表中数据为空",
+				"sLoadingRecords" : "载入中...",
+				"sInfoThousands" : ",",
+				"oPaginate" : {
+					"sFirst" : "首页",
+					"sPrevious" : "上页",
+					"sNext" : "下页",
+					"sLast" : "末页"
+				},
+				"oAria" : {
+					"sSortAscending" : ": 以升序排列此列",
+					"sSortDescending" : ": 以降序排列此列"
+				}
+			},
+			"aoColumns" : [ 
+				{ "data" : "replyId" }, 
+				{ "data" : "replyContent" }, 
+				{ "data" : "replyTime" }, 
+				{ "data" : "realName" }, 
+				{ "data" : "orderPrice" }, 
+				{ "data" : "title" }, 
+				{ "data" : "caseTypeName" }, 
+				{ "data" : "userName" }, 
+				{ "data" : "reward" }, 
+				{ "data" : "sendTime" } 
+			],
+			"fnServerData" : function(sSource, aoData, fnCallback) {
+				aoData.push({ 'name' : 'userId', 'value' : userId });
+				aoData.push({ 'name' : 'endTime', 'value' : $('#endtime').val() });
+				aoData.push({ 'name' : 'startTime', 'value' : $('#starttime').val() });
+				Yajax({
+					"dataType" : 'json',
+					"type" : "POST",
+					"url" : requestUrl + 'advice/detailsOfCounselorsReply',
+					"data" : aoData,
+					"success" : fnCallback
+				});
+			}
+		});
+	}
+	function cancel() {
+		$("#showDetails").css('display', 'none');
+		$("#content").css('display', 'block');
+	}
+
+	var CRCQSDT;
+	$(function() {
+		CRCQSDT = $('#CRCQSDT').DataTable({
+			dom : 'Bfrtip',
+			buttons : [ {
+				extend : 'excelHtml5',
+				text : '导出Excel',//定义导出excel按钮的文字  
+				exportOptions : {
+					'modifier' : { 'page' : 'current' }
+				}
+			} ],
+			//-------------固定配置，不用改--------------
+			"ordering" : false,
+			"serverSide" : true,
+			"pagingType" : "numbers",
+			"searching" : false,
+			"processing" : true,
+			"pageLength" : 10,
+			"lengthChange" : true,
+			"language" : {
+				"sProcessing" : "处理中...",
+				"sLengthMenu" : "显示 _MENU_ 项结果",
+				"sZeroRecords" : "没有匹配结果",
+				"sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty" : "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered" : "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix" : "",
+				"sSearch" : "搜索:",
+				"sEmptyTable" : "表中数据为空",
+				"sLoadingRecords" : "载入中...",
+				"sInfoThousands" : ",",
+				"oPaginate" : {
+					"sFirst" : "首页",
+					"sPrevious" : "上页",
+					"sNext" : "下页",
+					"sLast" : "末页"
+				},
+				"oAria" : {
+					"sSortAscending" : ": 以升序排列此列",
+					"sSortDescending" : ": 以降序排列此列"
+				}
+			},
+			"aoColumns" : [
+				{ "data" : "userId" },
+				{ "data" : "realName" },
+				{ "data" : "replynum",
+					"visible" : true,
+					"render" : function(data, type, full) {
+						return full.replynum + "次";
+					}
+				},
+				{ "data" : "replyPrice",
+					"visible" : true,
+					"render" : function(data, type, full) {
+						return full.replyPrice + "元";
+					}
+				},
+				//操作
+				{ "data" : null,
+					"visible" : true,
+					"render" : function(data, type, full) {
+						return '<input type="button" class="btn btn-success" value="查看详情" onclick="showDetails(\'' + full.userId + '\')"/>&nbsp;';
+					}
+				} 
+			],
+			"fnServerData" : function(sSource, aoData, fnCallback) {
+				aoData.push({ 'name' : 'content', 'value' : $('#id_input').val() });
+				aoData.push({ 'name' : 'endTime', 'value' : $('#endtime').val() });
+				aoData.push({ 'name' : 'startTime', 'value' : $('#starttime').val() });
+				Yajax({
+					"dataType" : 'json',
+					"type" : "POST",
+					"url" : requestUrl + 'advice/numbersOfCounselorsReply',
+					"data" : aoData,
+					"success" : fnCallback
+				});
+			}
+		});
+		$(".form-group.action").after($(".dt-buttons"));
+		$(".dt-buttons").css({ "top" : "2px" });
+		$(".dataTables_info").after($(".dataTables_length"));
+		$(".dataTables_length").css({ "padding-top" : "0.7em" });
+	});
+	function changePageSize() {
+		var oTable = $('#CRCQSDT').dataTable();
+		var oSettings = oTable.fnSettings();
+		oSettings._iDisplayLength = $("#pageSize").val();
+		search();
+	}
+</script>

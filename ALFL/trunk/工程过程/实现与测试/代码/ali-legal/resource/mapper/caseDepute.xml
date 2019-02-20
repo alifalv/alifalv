@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CaseDepute">
+    <resultMap id="BaseResultMap" type="CaseDepute" >
+        <id column="caseId" property="caseId" jdbcType="INTEGER" />
+        <result column="caseTitle" property="caseTitle" jdbcType="VARCHAR" />
+        <result column="caseDesc" property="caseDesc" jdbcType="VARCHAR" />
+        <result column="caseHope" property="caseHope" jdbcType="VARCHAR" />
+        <result column="caseAsk" property="caseAsk" jdbcType="VARCHAR" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="caseType" property="caseType" jdbcType="INTEGER" />
+        <result column="mobile" property="mobile" jdbcType="CHAR" />
+        <result column="offerType" property="offerType" jdbcType="INTEGER" />
+        <result column="offerMoney" property="offerMoney" jdbcType="DECIMAL" />
+        <result column="caseState" property="caseState" jdbcType="INTEGER" />
+        <result column="deputeTime" property="deputeTime" jdbcType="TIMESTAMP" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectCaseDeputePageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+            a.*,b.isPay
+        FROM
+        ali_case_depute a left join ali_business_order b on a.caseId=b.connectionId and businessType = '案件委托'
+        <where>
+            <if test="true">
+                and (is_delete is null or is_delete=0)
+            </if>
+            <if test="caseId != null">
+                and caseId = #{caseId,jdbcType=INTEGER}
+            </if>
+            <if test="caseType != null and caseType != 0">
+                and caseType = #{caseType,jdbcType=INTEGER}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="deputeTimeStart != null and deputeTimeStart != ''">
+                and deputeTime &gt;= #{deputeTimeStart}
+            </if>
+            <if test="deputeTimeEnd != null and deputeTimeEnd != ''">
+                and deputeTime &lt; #{deputeTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (caseTitle like '%${content}%' or a.userName like '%${content}%')
+            </if>
+        </where>
+        ORDER BY caseId DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectCaseDeputePageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+            count(caseId)
+        FROM
+        ali_case_depute a left join ali_business_order b on a.caseId=b.connectionId and businessType = '案件委托'
+        <where>
+            <if test="true">
+                and (is_delete is null or is_delete=0)
+            </if>
+            <if test="caseId != null">
+                and caseId = #{caseId,jdbcType=INTEGER}
+            </if>
+            <if test="caseType != null and caseType != 0">
+                and caseType = #{caseType,jdbcType=INTEGER}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="deputeTimeStart != null and deputeTimeStart != ''">
+                and deputeTime &gt;= #{deputeTimeStart}
+            </if>
+            <if test="deputeTimeEnd != null and deputeTimeEnd != ''">
+                and deputeTime &lt; #{deputeTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (caseTitle like '%${content}%' or a.userName like '%${content}%')
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="CaseDepute" resultMap="BaseResultMap">
+        select * from ali_case_depute
+        <where>
+            <if test="caseId != null">
+                and caseId = #{caseId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="CaseDepute" >
+        update ali_case_depute
+        <set >
+            <if test="isDelete != null" >
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where caseId = #{caseId,jdbcType=INTEGER}
+    </update>
+    <select id="numbersOfCaseDepute" resultType="Integer">
+        select count(caseId) from ali_case_depute where is_delete is null or is_delete=0;
+    </select>
+    <select id="numbersOfCaseType" resultType="map">
+        select caseType,count(caseId) as caseTypeNum from ali_case_depute where is_delete is null or is_delete=0 GROUP BY caseType;
+    </select>
+</mapper>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>法律咨询</title>
+    <link rel="stylesheet" href="mui/mui.min.css" />
+    <link rel="stylesheet" href="vue/vant-min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .mui-scroll-wrapper {
+            top: 1.7rem;
+        }
+        
+        .mui-control-content {
+            height: -webkit-fill-available;
+            height: -moz-fill-available;
+            height: -moz-available;
+            /* FireFox目前这个生效 */
+            height: fill-available;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-back" href="javascript :history.back(-1);"></a>
+        </div>
+        <h2>法律咨询</h2>
+        <div class="goback msgcenter">
+            <a href=""><img src="images/myinfo/order-msg.png" alt="" /></a>
+        </div>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class="Conter idx-band5 Lawsearch lawbuyDatail" id="app">
+        <!-- 搜索 -->
+        <div class="lawsearch-top borderBottom">
+            <form class="inputbox">
+                <div class="mui-input-row">
+                    <label><img src="images/other/search.png"/><span>标题</span></label>
+                    <input type="text" class="mui-input-clear" v-model.trim="caseTitle" placeholder="请输入标题">
+                </div>
+                <div class="caseGroup">
+                    <select v-model="caseId">
+                            <option value="">案源类型</option>
+                            <option v-for="(item, index) in caseList" :key="index" :value="item.caseId" :selected="index == 0">
+                                {{item.caseName}}
+                            </option>
+                    </select>
+                    <button type="button" @click="searchCase" style="font-size: 0.5rem;">搜索</button>
+                </div>
+            </form>
+        </div>
+        <!--id="app" v-cloak -->
+        <div id="pullrefresh" class="mui-content" v-cloak>
+            <div class="newsBox">
+                <div id="newCase" class="mui-control-content mui-active mui-scroll-wrapper" v-cloak>
+                    <div class="mui-scroll">
+                        <ul class="mui-scroll">
+                            <li class="flex_Horizontal" v-for="(item, index) in list" :key="index" :href="'Lawask-Info.html?articleId=' + item.adviceId">
+                                <!-- <div class="left">
+									<img :src="item.userImg | createImgUrl" />
+								</div> -->
+                                <div class="right" style="width: 100%;">
+                                    <div class="t">
+                                        <span>{{item.userName}}</span><span>{{item.sendTime | subDay}}</span>
+                                    </div>
+                                    <div class="c">
+                                        <h4>{{item.caseTypeName}}｜{{item.title}} </h4>
+                                        <p class="greyfont"></p>
+                                    </div>
+                                    <div class="b">
+                                        <p class="redfont">赏金：￥<span>{{item.reward}}</span>回复：<span>{{item.replyNum}}</span></p>
+                                        <a :href="'Lawask-Info.html?articleId=' + item.adviceId">我要咨询</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li v-if="isNoList" class="ui-nolist">没有找到数据</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--</van-list>-->
+            </div>
+        </div>
+        <div class="news-tool" style="height:1.75rem">
+            <a href="WoYaoZiXun.html"><button type="button" style="height:1.75rem">我要咨询</button></a>
+        </div>
+    </div>
+    <!--主体 end-->
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Lawask.js"></script>
+</body>
+
+</html>

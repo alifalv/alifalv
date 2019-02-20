@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>底部导航</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/footnav.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="Index-nav">
+</body>
+<script src="mui/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    //mui初始化
+    mui.init();
+
+    var subpages = ['Index.html', 'Lawsearch.html', 'KuaiJie.html', 'DateSelect.html', 'Myinfo.html'];
+    var subpage_style;
+
+    if (mui.os.android) { //针对部分安卓手机屏幕下方有黑色工具条，如华为
+        mui.plusReady(function() { //需要再plusready后是因为黑色工具条在这准备好才显示
+            var oheight, _height, _heightstr;
+            setTimeout(function() {
+                oheight = document.documentElement.clientHeight;
+                _height = (oheight - 50) + 'px';
+                _heightstr = _height.toString();
+            }, 1000);
+            subpage_style = {
+                top: '0px',
+                bottom: '50px',
+                height: _heightstr,
+                scrollIndicator: 'horizontal',
+                hardwareAccelerated: true
+            };
+        });
+    } else {
+        subpage_style = {
+            top: '0px',
+            bottom: '50px',
+            scrollIndicator: 'horizontal'
+        };
+    }
+
+    var aniShow = {};
+
+    //创建子页面，首个选项卡页面显示，其它均隐藏
+    mui.plusReady(function() {
+        //当前激活选项
+        var activeTab = subpages[0];
+
+        var self = plus.webview.currentWebview();
+        for (var i = 0; i < subpages.length; i++) {
+            var temp = {};
+            var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+            temp[subpages[i]] = "true";
+            mui.extend(aniShow, temp);
+            self.append(sub);
+        }
+        // var footernav = plus.webview.create('Index-nav.html', 'Index-nav.html', {
+        //     bottom: '0px',
+        //     height: '56px',
+        //     background: 'transparent',
+        //     dock: 'bottom',
+        //     zindex: 99
+        // });
+
+        plus.webview.show(activeTab, "fade-in", 300);
+        // plus.webview.show(footernav, "fade-in", 300);
+    });
+
+
+    //console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+    document.addEventListener('plusready', function() {
+        //获取客户端数据
+        setTimeout(getPushInfo, 3000);
+
+        // 监听点击消息事件
+        plus.push.addEventListener("click", function(msg) {
+            // 提示点击的内容
+            alert(msg.content);
+            alert(msg);
+        }, false);
+
+        // 监听在线消息事件
+        plus.push.addEventListener("receive", function(msg) {
+            alert(msg);
+            alert(msg.content);
+        }, false);
+    });
+
+
+    function getPushInfo() {
+        var info = plus.push.getClientInfo();
+        //			alert("获取客户端推送标识信息：" + "token: " + info.token + "clientid: " + info.clientid + "appid: " + info.appid + "appkey: " + info.appkey);
+    }
+</script>
+
+</html>

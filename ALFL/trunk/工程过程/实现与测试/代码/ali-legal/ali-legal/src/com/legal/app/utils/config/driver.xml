@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<driverType>
+
+	<driver>
+		<driverId>1</driverId>
+		<driverName>客车</driverName>
+		<money>500</money>
+	</driver>
+	<driver>
+		<driverId>2</driverId>
+		<driverName>货车</driverName>
+		<money>400</money>
+	</driver>
+	<driver>
+		<driverId>3</driverId>
+		<driverName>其他</driverName>
+		<money>200</money>
+	</driver>
+
+</driverType>

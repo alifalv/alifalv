@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Company">
+    <select id="queryInfo" resultType="Company">
+        select * from ali_company
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null">
+                and userId = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="Map" >
+        update ali_company
+        <set>
+            <if test="companyName != null or companyName != ''" >
+                companyName = #{companyName},
+            </if>
+            <if test="companyCode != null or companyCode != ''" >
+                companyCode = #{companyCode},
+            </if>
+            <if test="registerAddress != null or registerAddress != ''" >
+                registerAddress = #{registerAddress},
+            </if>
+            <if test="workAddress != null or workAddress != ''" >
+                workAddress = #{workAddress},
+            </if>
+            <if test="email != null or email != ''" >
+                email = #{email},
+            </if>
+            <if test="realName != null or realName != ''" >
+                realName = #{realName},
+            </if>
+            <if test="weChat != null or weChat != ''" >
+                weChat = #{weChat},
+            </if>
+            <if test="qq != null or qq != ''" >
+                qq = #{qq},
+            </if>
+            <if test="workImg != null or workImg != ''" >
+                workImg = #{workImg},
+            </if>
+        </set>
+        where userId = #{userId}
+    </update>
+</mapper>

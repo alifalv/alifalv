@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 管理中心 - 消息设置</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-person-wrapper">
+    <div><script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script></div>
+</div>
+<div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+    <div class="container ">
+        <div class="ui-padding-b-no">
+            <div class="row">
+
+                <div class="col-xs-3">
+                    <div><script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script></div>
+                </div>
+
+                <div class="col-xs-9">
+                    <div class="ui-bg-white">
+
+                        <ul class="nav nav-tabs ui-person-panel-top">
+                            <script class="user_managetabs" type="text/html" src="../tmpl/user_managetabs.html"></script>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content ui-person-panel-content">
+                            <div role="tabpanel" class="tab-pane active ui-block ui-padding-30">
+                                <script id="infoTmpl" type="text/html">
+                                <div class="row">
+                                    <div class="col-xs-2 text-right ui-color-gray">消息设置</div>
+                                    <div class="col-xs-10">
+                                        <label class="radio-inline ui-margin-r-20">
+                                            <input type="radio" name="replymsg" value="1" {{data.is_accept_replylMsg == '1' ? 'checked' : ''}}> 接收回复消息
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="replymsg" value="0" {{data.is_accept_replylMsg == '0' ? 'checked' : ''}}> 不接受回复消息
+                                        </label>
+                                    </div>
+
+                                    <div class="col-xs-offset-2 col-xs-10 ui-margin-t-20">
+                                        <label class="radio-inline ui-margin-r-20">
+                                            <input type="radio" name="sysmsg" value="1" {{data.is_accept_sysMsg == '1' ? 'checked' : ''}}> 接收系统消息
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="sysmsg" value="0" {{data.is_accept_sysMsg == '0' ? 'checked' : ''}}> 不接受系统消息
+                                        </label>
+                                    </div>
+                                </div>
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

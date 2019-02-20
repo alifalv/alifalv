@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 我的随笔</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/swiper.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/home.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="home_header" type="text/html" src="../tmpl/home_header.html"></script>
+        </div>
+    </header>
+    <div class="ui-content ui-about-wrapper" style="background: url('../img/home-top.png');padding: 200px 0;">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+    <div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-bg-white">
+        <div class="container ">
+            <div class="ui-padding-b-no">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="ui-home-center">
+                            <div class="ui-home-center-title">
+                                <h4>我的随笔</h4>
+                            </div>
+                            <div class="ui-home-center-content">
+                                <div class="ui-home-essays-list" id="essayList">
+                                    <div class="row">
+                                        <script id="essayListTmpl" type="text/html">
+                                            {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                            <div class="col-xs-4">
+                                                <div class="ui-home-essays">
+                                                    <div class="ui-img-adaptive-width ui-height-100"><img src="{{value.coverImg | createImgUrl}}" alt="{{value.title}}"></div>
+                                                    <div class="ui-home-essays-title ui-cut-1">{{value.title}}</div>
+                                                    <div class="ui-home-essays-content ui-cut-4 ui-height-88">{{value.articleContent | removeHtmlTag}}</div>
+                                                    <div><a href="home_essay.html?type=13&articleId={{value.articleId}}" class="ui-size-12 ui-color-lightblue">查看详情 >></a></div>
+                                                </div>
+                                            </div>
+                                            {{/each}} {{else}}
+                                            <div class="col-xs-12">
+                                                <div class="ui-color-gray text-center">暂无内容</div>
+                                            </div>
+                                            {{/if}}
+                                        </script>
+                                    </div>
+                                    <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <script class="home_right" type="text/html" src="../tmpl/homeRight.html"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html" data-color="black"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="Myinfo-viprenzhen">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>咨询师认证</title>
+		<link rel="stylesheet" href="mui/mui.min.css" />
+		<link rel="stylesheet" href="vue/vant-min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask Myinfo-viprenzhen">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>咨询者认证</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter idx-band5" id="app" >
+			<div class="newsBox page-slideright">
+				<div id="newAsk" class="mui-control-content mui-active">
+					<section>
+						<div class="mui-input-row">
+							<label>真实姓名：</label>
+							<input type="text" class="mui-input-clear" placeholder="填写真实的姓名" v-model.trim="realName">
+						</div>
+					</section>
+					<section>
+						<div class="mui-input-row">
+							<label>银行卡号：</label>
+							<input type="text" class="mui-input-clear" placeholder="请正确填写本人的银行卡号" v-model.trim="bankAccount">
+						</div>
+					</section>
+					<div class="uploadimgbox">
+						<p>证件照片：</p>
+						<div class="uploadbox">
+							<van-uploader :after-read="onRead1">
+								<div class="selectphoto photo-sfz1">
+									<img :src="workImg">
+								</div>
+							</van-uploader>
+						</div>
+						<div class="uploadbox">
+							<van-uploader :after-read="onRead2" >
+								<div class="selectphoto photo-sfz2" >
+									<img :src="personImg">
+								</div>
+							</van-uploader>
+						</div>
+						<p class="redfont">温馨提示：请提交真实无误的会员资料，会员资料提交审核通过后，可不能更改哦！</p>
+					</div>
+					<input type="button" class="logininbtn" id="Nextstep" value="提交审核" @click="saveFn"/>
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="vue/vant-min.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/Myinfo-ask-renzhen.js"></script>
+	</body>
+
+</html>

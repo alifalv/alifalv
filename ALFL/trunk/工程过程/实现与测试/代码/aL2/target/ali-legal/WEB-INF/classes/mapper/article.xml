@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Article">
+
+	<select id="findArticleListByColumnCode" parameterType="map" resultType="map">
+		select * from ali_article where columnCode = #{columnCode} 
+			<if test="conditionValue != null and conditionValue != ''">
+				and title like '%${conditionValue}%' or realName = #{conditionValue}
+			</if>
+			<if test="timeFlag == 1">
+				and sendTime between #{startTime} and #{endTime}
+			</if>
+			<if test="userId != null and userId!=0">
+				and userId = #{userId}
+			</if>
+			<if test="model == 1">
+				and isPush = 1
+			</if>
+		  order by sendTime DESC
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findArticleListByColumnCode_COUNT_TOTAL" parameterType="map" resultType="int">
+		select COUNT(articleId) from ali_article where columnCode = #{columnCode} 
+		    <if test="conditionValue != null and conditionValue != ''">
+				and title like '%${conditionValue}%' or realName = #{conditionValue}
+			</if>
+			<if test="timeFlag == 1">
+				and sendTime between #{startTime} and #{endTime}
+			</if>
+			<if test="userId != null and userId!=0">
+				and userId = #{userId}
+			</if>
+			<if test="model == 1">
+				and isPush = 1
+			</if>
+	</select>
+	
+	<select id="findAliAdjudicationList" resultType="map" parameterType="map">
+		select b.*,c.declareType from (
+			select a.* from ali_article a where a.columnCode = #{columnCode} 
+				<if test="conditionValue != null and conditionValue != ''">
+					and a.title like '%${conditionValue}%' or realName = #{conditionValue}
+				</if>
+				<if test="timeFlag == 1">
+					and a.sendTime between #{startTime} and #{endTime}
+				</if>
+				<if test="model == 1">
+				and a.isPush = 1
+				</if>
+		) b inner join ali_declare c on b.articleId = c.articleId
+		where c.declareType = #{declareId}
+		order by b.sendTime DESC
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findAliAdjudicationList_COUNT_TOTAL" resultType="int" parameterType="map">
+		select COUNT(b.articleId) from (
+			select a.* from ali_article a where a.columnCode = #{columnCode} 
+				<if test="conditionValue != null and conditionValue != ''">
+					and a.title like '%${conditionValue}%' or realName = #{conditionValue}
+				</if>
+				<if test="timeFlag == 1">
+					and a.sendTime between #{startTime} and #{endTime}
+				</if>
+				<if test="model == 1">
+					and a.isPush = 1
+				</if>
+		) b inner join ali_declare c on b.articleId = c.articleId
+		where c.declareType = #{declareId}
+		order by b.sendTime DESC
+	</select>
+	
+	
+	<select id="findLegalTrainListByApp" resultType="map" parameterType="map">
+		select b.*,c.* from (
+			select a.* from ali_article a where 1=1 
+			<if test="title!=null and title!=''">
+			    and a.title like '%${title}%'
+		    </if>
+		    and a.sendTime between #{startTime} and #{endTime}
+			and a.columnCode = #{columnCode}
+				
+		) b inner join ali_train  c on b.articleId = c.articleId
+		where 1=1 
+		<if test="trainName!=null and trainName!=''">
+			and c.trainName = #{trainName}
+		</if>
+		and c.city = #{city}
+		order by b.sendTime DESC 
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findLegalTrainListByApp_COUNT_TOTAL" resultType="int" parameterType="map">
+		select COUNT(b.articleId) from (
+			select a.* from ali_article a where 1=1 
+			<if test="title!=null and title!=''">
+			    and a.title like '%${title}%'
+		    </if>
+		    and a.sendTime between #{startTime} and #{endTime}
+			and a.columnCode = #{columnCode}
+				
+		) b inner join ali_train c on b.articleId = c.articleId
+		where 1=1 
+		<if test="trainName!=null and trainName!=''">
+			and c.trainName = #{trainName}
+		</if>
+		and c.city = #{city}
+		order by b.sendTime DESC
+	</select>
+	
+	<select id="findArticleById" parameterType="int" resultType="map">
+		select * from ali_article where articleId = #{articleId}
+	</select>
+	
+	<select id="isCollection" parameterType="map" resultType="int">
+		select COUNT(collectionId) from ali_article_collection
+		  where userId = #{userId} and articleId = #{articleId} 
+	</select>
+	
+	<update id="updateLookNum" parameterType="int">
+		update ali_article set lookNum = lookNum+1 where articleId = #{articleId}
+	</update>
+	
+	<select id="isLike" parameterType="map" resultType="int">
+		select COUNT(likeId) from ali_article_like
+		  where userId = #{userId} and articleId = #{articleId} 
+	</select>
+	
+	<select id="findCollectionArticle" parameterType="int" resultType="map">
+		select a.articleId,a.userId,a.realName,a.title,
+		a.columnCode,a.coverImg,b.collectionTime from ali_article a 
+		inner join ali_article_collection b
+		on a.articleId = b. articleId 
+		where b.userId = #{userId}
+	</select>
+	
+	<insert id="saveArticle" parameterType="map" useGeneratedKeys="true" keyProperty="articleId">
+		insert into ali_article
+		  (userId,realName,isofficial,isOutJoin,title,columnCode,txtPath,sendTime,lookNum,
+		  outJoinUrl,coverImg,articleState,isDelete,isPush,likeNum,articleContent,collectionNum)
+		  values
+		  (#{userId},#{realName},#{isofficial},#{isOutJoin},#{title},#{columnCode},#{txtPath},
+		  NOW(),#{lookNum},#{outJoinUrl},#{coverImg},#{articleState},#{isDelete}
+		  ,#{isPush},#{likeNum},#{articleContent},#{collectionNum})
+	</insert>
+	
+	<insert id="sendLegal" parameterType="map">
+		insert into ali_legislation (articleId,effectLevel,sendUnit,referenceNo,issueTime,implementTime,uploadTime) 
+		  values (#{articleId},#{effectLevel},#{sendUnit},#{referenceNo},#{issueTime},#{implementTime},NOW())
+	</insert>
+	
+	
+	<insert id="sendLegalTrain" parameterType="map" >
+		insert into ali_train (articleId,trainName,province,city,trainAddress,cost,size,mobile,email,trinDesc,trainTime)
+		  values (#{articleId},#{trainName},#{province},#{city},#{trainAddress},#{cost},#{mobile},#{email},#{trinDesc},NOW())
+	</insert>
+	
+	
+	
+
+</mapper>

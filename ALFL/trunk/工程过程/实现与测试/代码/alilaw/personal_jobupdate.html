@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 修改岗位</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-30">
+        <div class="ui-regpanel ui-padding-tb-20">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ui-regform ui-padding-lr-80">
+                        <form class="form-horizontal" id="form" method="post">
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <div class="ui-size-16 ui-margin-l-15">修改岗位信息</div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group ui-margin-tb-30">
+                                <label for="jobName" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>岗位名称：</label>
+                                <div class="col-xs-10">
+                                    <input type="text" name="jobName" class="form-control" id="jobName" placeholder="岗位名称（2-100个字符）" data-rule="岗位名称:required;length(2~100, true)">
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="type" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>工作性质：</label>
+                                <div class="col-xs-10">
+                                    <select class="form-control" name="type" data-rule="工作性质:required" id="type">
+                                        <option value="1">全职</option>
+                                        <option value="0">兼职</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="sal" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>薪资范围：</label>
+                                <div class="col-xs-10">
+                                    <select class="form-control" name="sal" data-rule="薪资范围:required" id="sal">
+                                        <script id="salListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.salId}}">{{value.salName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="jobNum" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>招聘人数：</label>
+                                <div class="col-xs-10">
+                                    <input type="number" name="jobNum" class="form-control" id="jobNum" placeholder="招聘人数" data-rule="招聘人数:required;">
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="city" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>工作地点：</label>
+                                <div class="col-xs-5">
+                                    <select class="form-control" name="province" data-rule="工作地点:required" id="province">
+                                        <script id="provinceListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.provinceId}}">{{value.provinceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                                <div class="col-xs-5">
+                                    <select class="form-control" name="city" data-rule="工作地点:required" id="city">
+                                        <script id="cityListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.cityId}}">{{value.cityName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="workExperience" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>工作经验：</label>
+                                <div class="col-xs-10">
+                                    <select class="form-control" name="workExperience" data-rule="工作经验:required" id="workExperience">
+                                        <script id="experienceListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.experienceId}}">{{value.experienceName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="qualification" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>学历要求：</label>
+                                <div class="col-xs-10">
+                                    <select class="form-control" name="qualification" data-rule="学历要求:required" id="qualification">
+                                        <script id="educationListTmpl" type="text/html">
+                                            {{each data value i}}
+                                            <option value="{{value.educationId}}">{{value.educationName}}</option>
+                                            {{/each}}
+                                        </script>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="jobDesc" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>职位描述：</label>
+                                <div class="col-xs-10">
+                                    <script id="jobDesc" name="jobDesc" placeholder="职位描述" type="text/plain" data-rule="职位描述:required"></script>
+                                    <!--<textarea class="form-control" name="jobDesc" id="jobDesc" rows="4" placeholder="职位描述"></textarea>-->
+                                </div>
+                            </div>
+
+
+                            <div class="form-group ui-margin-b-30">
+                                <div class="col-xs-offset-2 col-xs-4">
+                                    <button type="submit" class="btn btn-block ui-btn-red">提交资料</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

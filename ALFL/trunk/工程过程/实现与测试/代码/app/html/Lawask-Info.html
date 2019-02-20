@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" /> 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>咨询详情</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="fonts/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="css/imgzoom.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <!-- <script src="js/jquery.cookie.min.js"></script> -->
+    <style type="text/css">
+        #pullrefresh {
+            bottom: 1.44rem
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Alicaipan page-slideright">
+    <div id="app">
+        <!--公共头部 begin-->
+        <div class="header">
+            <div class="goback">
+                <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+            </div>
+            <h2>咨询详情</h2>
+        </div>
+        <!--公共头部 end-->
+
+        <!--主体 begin-->
+        <div class="Conter lc-conter">
+            <ul class="mui-table-view " >
+                <li class="mui-table-view-cell  mui-collapse-content mui-media">
+                    <!-- <img class="mui-media-object mui-pull-left" :src="articleData.userImg | createImgUrl" @error="setErrorImg"> -->
+                    <img class="mui-media-object mui-pull-left" src="images/index/moren.png" @error="setErrorImg">
+					 
+                    <div class="mui-media-body ui-color-greengray">
+                        <p class="mui-ellipsis ui-color-greengray ">{{articleData.userName | hidename }}</p>
+                        <p class="mui-ellipsis ui-color-greengray ui-border-b1 ui-padding-b-4"><span>{{articleData.sendTime | formatDate1  }} </span>&nbsp;|&nbsp;<span>&nbsp;咨询类型：{{articleData.caseTypeName}}</span></p>
+                        <p class="mui-ellipsis ll-titel ui-margin-b-3 ui-margin-t-4"><span class="ui-size-58">{{articleData.title}}</span></p>
+                        <p class=" ui-color-greengray ui-border-b1 ui-padding-b-4 no-line"><span class="ui-artice-content" v-html="articleData.adviceContent"></span></p>
+
+                        <p v-if="articleData.imgs" class="mui-ellipsis ui-color-greengray ui-margin-b-3 ui-margin-t-4"><span class="ui-bold">相关证据</span></p>
+                        <div v-if="articleData.imgs" class=" ui-color-greengray ui-padding-b-4 ">
+                            <ul class="ui-imglist ui-imglist-3">
+                                <li v-for="img in articleData.imgs"><img :src="img | createImgUrl" alt="" class="ui-docimg ui-bg-gray" data-preview-src="" data-preview-group="2"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+            <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <ul class="mui-table-view " id="lc-tj">
+                        <li class="mui-table-view-cell mui-collapse-content mui-media" v-for="(value, index) in list" :key="index">
+                            <img class="mui-media-object mui-pull-left" :src="value.userImg | createImgUrl" @error="setErrorImg">
+                            <div class="mui-media-body">
+                                <p class="mui-ellipsis ui-padding-b-3 ui-inline-block ">{{value.nickName}}
+                                    <div class="ui-iconbox ui-inline-block fllr " style="">
+                                        <img src="images/myinfo/level1.png" v-if="value.vipLevel == '1'" />
+                                        <img src="images/myinfo/level2.png" v-else-if="value.vipLevel == '2'" />
+                                        <img src="images/myinfo/level3.png" v-else-if="value.vipLevel == '3'" />
+
+                                        <img v-if="value.is_contract == 1" src="images/other/mywatch-wb.png" />
+										<img src="images/other/mywatch-rz.png" v-if="value.isAuthentication == '2'" />
+                                        <img v-if="value.isAuthentication == 1" src="images/other/mywatch-rz.png" />
+                                    </div>
+                                </p>
+                                <p class="">{{value.replyContent}}</p>
+                                <div class="lawaskInfoclick">
+                                    <span class="ui-color-greengray">{{value.replyTime}}</span>
+                                    <!-- <div class="ui-right" @click="reply(value.userId, value.replyId)"><i class="iconfont icon-pinglun ui-color-pink"></i></div> -->
+                                    <div class="ui-right " @click="daShang(value.replyId)"><i class="iconfont icon-shang ui-color-pink"></i><span>{{value.rewardNum || 0}}</span></div>
+                                    <div class="ui-right " @click="reply(value.userId, value.replyId)"><i class="iconfont icon-pinglun ui-color-pink"></i><span>{{value.replyNum || 0}}</span></div>
+                                    <div class="ui-right " @click="dianZan(value.replyId,index)"><i class="iconfont icon-zan ui-color-pink"></i><span>{{value.likeNum || 0}}</span></div>
+                                </div>
+
+                                <div v-if="null != value.nextReplyData && value.nextReplyData.length > 0">
+                                    <ul class="mui-table-view">
+                                        <li class="mui-table-view-cell mui-media" v-for="(nextValue, nextIndex) in value.nextReplyData" :key="nextIndex">
+                                            <!-- <img class="mui-media-object mui-pull-left" :src="authorUserImg | createImgUrl" @error="setErrorImg"> -->
+                                            <img class="mui-media-object mui-pull-left" src="images/index/moren.png" @error="setErrorImg">
+                                            <div class="mui-media-body">
+                                                <!-- <p class="mui-ellipsis ui-padding-b-3">{{authorUserName}} -->
+                                                <p class="mui-ellipsis ui-padding-b-3">{{articleData.userName | hidename}} 
+                                                    <!-- <div class="ui-iconbox ui-inline-block" style="">
+                                                          <img src="images/myinfo/level1.png" v-if="value.vipLevel == '1'" />
+                                                        <img src="images/myinfo/level2.png" v-else-if="value.vipLevel == '2'" />
+                                                        <img src="images/myinfo/level3.png" v-else-if="value.vipLevel == '3'" />
+                                                        <img v-if="value.is_contract == 1" src="images/other/mywatch-wb.png" />
+                                                        <img v-if="value.isAuthentication == 1" src="images/other/mywatch-rz.png" />  
+                                                    </div> -->
+                                                </p>
+                                                <p class="">{{nextValue.replyContent}}</p>
+                                                <div><span class="ui-color-greengray">{{nextValue.replyTime}}</span></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- <li v-if="isNoList" class="ui-nolist">暂无留言</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div v-if="isNotAuthentication!=2" class="footer"> -->
+        <div  class="footer">
+            <div class="mui-content ui-border-t1 ui-margin-t-4 ">
+                <div class="mui-row ">
+                    <!-- div class="mui-col-xs-3 ui-text-center" @click="share">
+                        <i class="mui-icon mui-icon-redo ui-color-pink"></i><span class="mui-tab-label">分享</span>
+                    </div>< -->
+                    <!-- <div class="mui-col-xs-3 ui-text-center" @click="star">
+                        <i class="mui-icon mui-icon-star ui-color-pink"></i>
+                        <span v-if="articleData.isCollection == '是'" class="mui-tab-label">已收藏</span>
+                        <span v-else-if="articleData.isCollection != '是'" class="mui-tab-label">收藏</span>
+                    </div> -->
+                    <!-- <div class="mui-col-xs-6 ui-text-center">
+                        <button type="button" class="mui-btn mui-btn-danger ui-margin-t-3 ui-width-90p" @click="levelOneReply"></button>
+                    </div> -->
+                <!--   <div class="mui-col-xs-12 ui-text-center">
+                        <button type="button" class="mui-btn  lcjieda-btn ui-margin-t-3 ui-width-90p" @click="jieDa">我要解答</button>
+                    </div> -->
+					
+					<div class="zixun-btn">
+						<span  v-if="userType == 2" class="news-tool" @click="jieDa">发布解答 </span>
+					</div>
+					
+					
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--主体 end-->
+    <script src="vue/vue.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="mui/mui.zoom.js"></script>
+    <script src="js/share.js"></script>
+    <script src="mui/mui.previewimage.js"></script>
+    <script src="vue/vant-min.js"></script> 
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Lawask-Info.js"></script>
+</body>
+
+</html>

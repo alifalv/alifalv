@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 管理中心 - VIP资料</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+    <link href="../css/img.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="user_header" type="text/html" src="../tmpl/user_header.html"></script>
+        </div>
+    </header>
+    <div class="ui-person-wrapper">
+        <div>
+            <script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script>
+        </div>
+    </div>
+    <div class="ui-content ui-padding-b-40 ui-padding-t-30 ui-person-bg">
+        <div class="container ">
+            <div class="ui-padding-b-no">
+                <div class="row">
+
+                    <div class="col-xs-3">
+                        <div>
+                            <script class="user_menu" type="text/html" src="../tmpl/user_menu.html"></script>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-9">
+                        <div class="ui-bg-white">
+
+                            <ul class="nav nav-tabs ui-person-panel-top">
+                                <script class="user_managetabs" type="text/html" src="../tmpl/user_managetabs.html"></script>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content ui-person-panel-content ui-relative">
+                                <div class="ui-disabled-mask"></div>
+                                <div role="tabpanel" class="tab-pane active ui-block">
+                                    <div class="ui-color-red ui-margin-lr-20 ui-border-b-1 ui-padding-tb-20 ui-bold">企业会员认证 <span id="authenticationStatus" class="ui-right ui-normal">加载中</span></div>
+                                    <div class="ui-color-red ui-margin-lr-20 ui-margin-t-20">认证说明：补全企业信息。认证后，即可点亮平台认证标识，享受优质企业会员服务。</div>
+
+                                    <div class="ui-regform ui-padding-lr-80 ui-padding-l-no">
+                                        <form class="form-horizontal" id="form" method="post">
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="companyCode" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>单位代码：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="companyCode" class="form-control" id="companyCode" placeholder="请填写营业执照上统一社会信用代码" data-rule="单位代码:required">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="companyName" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>单位全称：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="companyName" class="form-control" id="companyName" placeholder="请填写营业执照上登记的组织机构全称" data-rule="单位全称:required">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="registerAddress" class="col-xs-2 control-label">注册地址：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="registerAddress" class="form-control" id="registerAddress" placeholder="请填写营业执照上登记企业地址">
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group ui-margin-b-30">
+                                            <label for="workAddress" class="col-xs-2 control-label">办公地址：</label>
+                                            <div class="col-xs-8">
+                                                <input type="text" name="workAddress" class="form-control" id="workAddress" placeholder="如与注册地址一致，则填写注册地址">
+                                            </div>
+                                        </div> -->
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="email" class="col-xs-2 control-label">邮箱：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="email" class="form-control" id="email" placeholder="请填写联系人邮箱" data-rule="email">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="realName" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>联系人姓名：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="realName" class="form-control" id="realName" placeholder="请填写联系人姓名" data-rule="联系人姓名:required">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="weChat" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>联系人微信号：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="weChat" class="form-control" id="weChat" placeholder="请填写联系人微信号" data-rule="联系人微信号:required">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <label for="qq" class="col-xs-2 control-label">联系人QQ号：</label>
+                                                <div class="col-xs-8">
+                                                    <input type="text" name="qq" class="form-control" id="qq" placeholder="请填写联系人QQ号" data-rule="qq">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label class="col-xs-2 control-label">上传资料：</label>
+                                                <div class="col-xs-10">
+                                                    <!--workImg   工商营业执照-->
+                                                    <section class="img-section">
+                                                        <div class="ui-margin-l-15 ui-margin-t-17">工商营业执照：</div>
+                                                        <div class="z_photo upimg-div clear">
+                                                            <section class="z_file fl">
+                                                                <input type="file" id="workImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple data-rule="从业执照:required" />
+                                                            </section>
+                                                        </div>
+                                                        <!--<div class="msg-box" id="workImg_holder" style="position: absolute;top: 57px;left: 236px;"></div>-->
+                                                        <div class="img-tips">请上传清晰、无污渍、完整的证件原件照片或彩色扫描件，图片文件后缀支持jpg、png、gif、jpeg格式，上传图片大小建议在4M一下。</div>
+                                                    </section>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ui-margin-b-30">
+                                                <div class="col-xs-offset-2 col-xs-2">
+                                                    <button id="save_btn" type="submit" class="btn btn-block ui-btn-red ui-hide">申请认证</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

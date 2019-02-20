@@ -1,0 +1,176 @@
+<!-- 行政处罚 -->
+<div class="g-basic">
+    <div class="u-top">
+        <span>行政处罚</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>决定文书号</th>
+                    <th>违法行为类型</th>
+                    <th>行政处罚内容</th>
+                    <th>公示日期</th>
+                    <th>决定机关</th>
+                    <th>决定日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script id="onlineConsultListTmpl" type="text/html">
+                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                    <tr>
+                        <td class="ui-color-gray">
+                            <div class="ui-cut-1 text-left ui-width-400"><a href="articles_consultinfo.html?articleId={{value.adviceId}}" title="{{value.title}}">{{value.title}}</a></div>
+                        </td>
+                    </tr>
+                    {{/each}} {{else}}
+                    <tr>
+                        <td colspan="6" class="text-center ui-color-gray">{{error || '暂无内容'}}</td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60 ui-color-red" title="{{value.reward}}">{{value.reward}}</div>
+                        </td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60" title="{{value.replyNum || 0}}">{{value.replyNum || 0}}</div>
+                        </td>
+                        <td>{{value.sendTime | subDay}}</td>
+                        <td><a href="articles_consultinfo.html?articleId={{value.adviceId}}" class="ui-color-lightblue">我要解答</a></td>
+                    </tr>
+                    {{/if}}
+                </script>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+    </div>
+    <!-- 列入经营异常名录信息 -->
+    <div class="u-top">
+        <span>列入经营异常名录信息</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>列入原因</th>
+                    <th>列入日期</th>
+                    <th>列入决定机关</th>
+                    <th>移出原因</th>
+                    <th>移出日期</th>
+                    <th>移除决定机关</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script id="onlineConsultListTmpl" type="text/html">
+                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                    <tr>
+                        <td class="ui-color-gray">
+                            <div class="ui-cut-1 text-left ui-width-400"><a href="articles_consultinfo.html?articleId={{value.adviceId}}" title="{{value.title}}">{{value.title}}</a></div>
+                        </td>
+                    </tr>
+                    {{/each}} {{else}}
+                    <tr>
+                        <td colspan="6" class="text-center ui-color-gray">{{error || '暂无内容'}}</td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60 ui-color-red" title="{{value.reward}}">{{value.reward}}</div>
+                        </td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60" title="{{value.replyNum || 0}}">{{value.replyNum || 0}}</div>
+                        </td>
+                        <td>{{value.sendTime | subDay}}</td>
+                        <td><a href="articles_consultinfo.html?articleId={{value.adviceId}}" class="ui-color-lightblue">我要解答</a></td>
+                    </tr>
+                    {{/if}}
+                </script>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+    </div>
+    <!-- 列入严重违法失信企业名单（黑名单）信息 -->
+    <div class="u-top">
+        <span>列入严重违法失信企业名单（黑名单）信息</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>类别</th>
+                    <th>列入原因</th>
+                    <th>列入日期</th>
+                    <th>列入决定机关</th>
+                    <th>移出原因</th>
+                    <th>移出日期</th>
+                    <th>移除决定机关</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script id="onlineConsultListTmpl" type="text/html">
+                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                    <tr>
+                        <td class="ui-color-gray">
+                            <div class="ui-cut-1 text-left ui-width-400"><a href="articles_consultinfo.html?articleId={{value.adviceId}}" title="{{value.title}}">{{value.title}}</a></div>
+                        </td>
+                    </tr>
+                    {{/each}} {{else}}
+                    <tr>
+                        <td colspan="6" class="text-center ui-color-gray">{{error || '暂无内容'}}</td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60 ui-color-red" title="{{value.reward}}">{{value.reward}}</div>
+                        </td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60" title="{{value.replyNum || 0}}">{{value.replyNum || 0}}</div>
+                        </td>
+                        <td>{{value.sendTime | subDay}}</td>
+                        <td><a href="articles_consultinfo.html?articleId={{value.adviceId}}" class="ui-color-lightblue">我要解答</a></td>
+                    </tr>
+                    {{/if}}
+                </script>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+    </div>
+    <!-- 股权出质 -->
+    <div class="u-top">
+        <span>股权出质</span>
+    </div>
+    <div class="g-table-top">
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>登记编号</th>
+                    <th>出质人</th>
+                    <th>质权人</th>
+                    <th>出质股权数额</th>
+                    <th>设立登记日期</th>
+                    <th>状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script id="onlineConsultListTmpl" type="text/html">
+                    {{if (getLength(rows) > 0)}} {{each rows value i}}
+                    <tr>
+                        <td class="ui-color-gray">
+                            <div class="ui-cut-1 text-left ui-width-400"><a href="articles_consultinfo.html?articleId={{value.adviceId}}" title="{{value.title}}">{{value.title}}</a></div>
+                        </td>
+                    </tr>
+                    {{/each}} {{else}}
+                    <tr>
+                        <td colspan="6" class="text-center ui-color-gray">{{error || '暂无内容'}}</td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60 ui-color-red" title="{{value.reward}}">{{value.reward}}</div>
+                        </td>
+                        <td>
+                            <div class="ui-cut-1 ui-width-60" title="{{value.replyNum || 0}}">{{value.replyNum || 0}}</div>
+                        </td>
+                        <td>{{value.sendTime | subDay}}</td>
+                        <td><a href="articles_consultinfo.html?articleId={{value.adviceId}}" class="ui-color-lightblue">我要解答</a></td>
+                    </tr>
+                    {{/if}}
+                </script>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation" class="text-center" pagination="page"></nav>
+    </div>
+
+</div>

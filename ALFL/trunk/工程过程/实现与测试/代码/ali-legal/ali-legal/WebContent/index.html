@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>阿里法律后台管理系统</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- jQuery -->
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="../plugins/jquery/jquery.min.js"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- DataTables -->
+  <!-- <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap4.css"> -->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  
+  <link rel="stylesheet" href="jedate-6.0.0/skin/jedate.css">
+  
+
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../plugins/datatables/jquery.dataTables.js"></script>
+<!-- <script src="../plugins/datatables/dataTables.bootstrap4.js"></script>  -->
+<script src="../plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- SlimScroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- page script -->
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../plugins/iCheck/flat/blue.css">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="../plugins/morris/morris.css">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker-bs3.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+<script type="text/javascript" charset="utf8" src="js/echarts.js"></script>
+  
+  <!-- datatables jQuery -->
+<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+
+<link type="text/css" rel="stylesheet" href="../jedate-6.0.0/skin/jedate.css">
+<link type="text/css" rel="stylesheet" href="../css/zTreeStyle/zTreeStyle.css">
+<script src="../jedate-6.0.0/jquery.jedate.js"></script>
+<script src="../jedate-6.0.0/jquery.jedate.min.js"></script> 
+
+    <link href="umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="umeditor/third-party/template.min.js"></script>
+    <script type="text/javascript" src="umeditor/umeditor.config.js" charset="utf-8"></script>
+    <script type="text/javascript" src="umeditor/umeditor.js" charset="utf-8"></script>
+    <script type="text/javascript" src="umeditor/lang/zh-cn/zh-cn.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+<style>
+	body{font-size:13px !important}
+	h1{font-size:18px !important}
+	select{font-size:13px !important}
+	input{font-size:13px !important}
+	textarea{font-size:13px !important}
+	button{font-size:13px !important}
+	select.form-control:not([size]):not([multiple]) {
+	    width:90px;height: calc(2rem);
+	}
+	label.save-edit{width:90px;text-align:left;align-self:left;margin-top:10px;}
+</style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+      </li>
+      <!-- <li class="nav-item d-none d-sm-inline-block">
+        <a href="../index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li> -->
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <!-- <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form> -->
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-envelope"></i>
+          <span class="badge badge-danger navbar-badge one"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item" onClick="choicePageheader('0','opinion.html')">
+            <!-- Message Start -->
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  <span class="float-left text-sm text-danger"><i class="fa fa-star mr-2"></i></span>意见反馈
+                </h3>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-bell-o"></i>
+          <span class="badge badge-warning navbar-badge two"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item" onClick="choicePageheader('1','member.html')">
+            <i class="fa fa-envelope mr-2"></i> 会员认证
+          <span class="badge badge-warning navbar-badge two-one"></span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item" onClick="choicePageheader('免费文书制作','vipDeclare.html')">
+            <i class="fa fa-file mr-2"></i> 法律文书制作
+          <span class="badge badge-warning navbar-badge two-two"></span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item" onClick="choicePageheader('免费交通案件','vipDeclare.html')">
+            <i class="fa fa-file mr-2"></i> 交通事故案件
+          <span class="badge badge-warning navbar-badge two-three"></span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item" onClick="choicePage('tipManager.html')">
+            <i class="fa fa-users mr-2"></i> 举报信息
+          <span class="badge badge-warning navbar-badge two-four"></span>
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" onClick="logout()">
+          <i class="fa fa-power-off">退出</i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <!-- <a href="../index3.html" class="brand-link">
+      <img src="../dist/img/AdminLTELogo.png"
+           alt="AdminLTE Logo"
+           class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a> -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Alexander Pierce</a>
+        </div>
+      </div> -->
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+         <ul id="top_menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+           <!-- <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-dashboard"></i>
+              <p>
+                Dashboard
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../index.html" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Dashboard v1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../index2.html" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Dashboard v2</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../index3.html" class="nav-link active">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Dashboard v3</p>
+                </a>
+              </li>
+            </ul>
+          </li> -->
+        </ul> 
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" id="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1></h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+    </section>
+  </div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	var requestUrl = "../api/";
+	var requestUrl_pc = "http://www.alifalv.cn/ali-legal/";
+	//var requestUrl_pc = "http://localhost/ali-api/";
+	var requestUrl_img = "http://www.alifalv.cn/";
+	var PC_Front_URL= "http://www.alifalv.cn/";
+	$(document).ready(function(){
+		menu();
+		showCounts();
+		choicePage("overview.html");
+	});
+	/**
+	 * 加载菜单
+	 */
+	function menu(){
+		var sys_userId = sessionStorage.getItem('sys_userId');
+		console.log(sys_userId);
+		var data = new FormData();
+		data.append("mmuserId", sessionStorage.getItem('sys_userId'));
+		Yajax({
+			url:requestUrl+'menu/userlist/'+sys_userId,
+			//url : "http://localhost:8080/ali-legal/demo/menu",
+			type : 'GET',
+			data : data,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data.data.length);
+				if(data.data.length==0){
+					alert("该用户角色没有访问权限");
+					window.location.href= "login.html";
+				}
+				console.log(data.data[0]);
+	            for (var n = 0; n < data.data.length; n++) {
+	                var menuid = data.data[n].premissonId//子菜单div的动态id
+	                if( data.data[n].level == 1){ //一级菜单
+	                    $("#top_menu").append(
+	                       '<li class="nav-item has-treeview">'
+	                       		//+'<a onclick="choicePage(\''+data.data[n].premissonUri+'\')" class="nav-link active">'
+	                       		+'<a class="nav-link" href="#">'
+					              +'<i class="nav-icon fa fa-dashboard"></i>'
+					              +'<p>'+data.data[n].premissonName+
+					                '<i class="right fa fa-angle-left"></i>'
+					                //+'</i>'
+					              +'</p>'
+					            +'</a>'
+					            +'<ul class="nav nav-treeview" id="'+'ul'+menuid+'">'
+	                    );
+	                }
+	              	//加载二级菜单
+	                for (var i = 0; i < data.data.length; i++) {
+	                		//二级菜单
+	                		if( data.data[i].parentId == menuid){
+	                			$("#ul"+menuid).append(
+	               	              '<li class="nav-item">'
+	               	                +'<a onclick="choicePage(\''+data.data[i].premissonUri+'\')" class="nav-link menu-action active">'
+	               	                 + '<i class="fa fa-circle-o nav-icon"></i>'
+	               	                  +'<p>'+data.data[i].premissonName+'</p>'
+	               	                +'</a>'
+	               	              +'</li>'
+	               	         );
+	                		}
+	                }
+	            }
+	            $("#top_menu").append(
+	            		'<li id="testli" ></li >'
+            			+'</ul >'
+            		);
+            		$(".menu-action").click(function() {
+            	        $(".menu-action").css("background-color","rgba(255, 255, 255)");
+            	        $(this).css("background-color","rgba(222, 222, 222)");
+            	    });
+			},
+			error : function() {
+				alert("失败!");
+				window.location.href= "login.html";
+			}
+		});
+	}
+	/**
+	 * 显示统计数字
+	 */
+	function showCounts() {
+		Yajax({
+			url:requestUrl+'overview/indexCount',
+			type : 'GET',
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data.data);
+				$(".badge.badge-danger.navbar-badge.one").text(data.data.numberOfSuggest);
+				$(".badge.badge-warning.navbar-badge.two").text(data.data.numberOfLegalDocument+data.data.numberOfNotAuthentication+data.data.numberOfReport+data.data.numberOfTrafficCase);
+				$(".badge.badge-warning.navbar-badge.two-one").text(data.data.numberOfNotAuthentication);
+				$(".badge.badge-warning.navbar-badge.two-two").text(data.data.numberOfLegalDocument);
+				$(".badge.badge-warning.navbar-badge.two-three").text(data.data.numberOfTrafficCase);
+				$(".badge.badge-warning.navbar-badge.two-four").text(data.data.numberOfReport);
+			},
+			error : function(data) {
+				console.log(data.data);
+			}
+		});
+	}
+	/**
+	 * 选择子菜单
+	 */
+	function choicePage(point) {
+		removeBackdrop();
+		if(point!=null || point!=''){
+			if(point=='opinion.html'){sessionStorage.setItem("opinion_type","");}
+			if(point=='member.html'){sessionStorage.setItem("member_type","");}
+			if(point=='vipDeclare.html'){sessionStorage.setItem("vipDeclare_type","");}
+			$("#content-wrapper").empty();
+			$("#content-wrapper").load("../"+point);
+		}
+	}
+	function choicePageheader(text,point) {
+		removeBackdrop();
+		if(point=='opinion.html'){
+			sessionStorage.setItem("opinion_type",text);
+		}else if(point=='member.html'){
+			sessionStorage.setItem("member_type",text);
+		}else if(point=='vipDeclare.html'){
+			sessionStorage.setItem("vipDeclare_type",text);
+		}
+		if(point!=null || point!=''){
+			$("#content-wrapper").empty();
+			$("#content-wrapper").load("../"+point);
+		}
+	}
+	
+	//去除背景阴影
+	function removeBackdrop(){
+		$(".modal-backdrop.fade.show").remove();
+	}
+	/**
+	 * 重定向到PC
+	 */
+	function RedirectToPC(point){
+		if(point!=null || point!=''){
+			window.open(PC_Front_URL+point); 
+		}
+	}
+	/**
+	 * ajax封装
+	 */
+	var Yajax=function(obj){  
+		$.ajax({
+	        type: null == obj.type ? 'post' : obj.type,
+	        url: obj.url,
+	        async: null == obj.async ? true : obj.async,
+	        headers: {
+	            SYSUSERID: sessionStorage.getItem('sys_userId'),
+	            TOKEN: sessionStorage.getItem('token')
+	        },
+	        dataType: null == obj.dataType ? 'json' : obj.dataType,
+	        data: null == obj.data ? {} : obj.data,
+    	        xhrFields: {withCredentials: true},
+    	        crossDomain: true,
+	        contentType: null == obj.contentType ?  "application/x-www-form-urlencoded; charset=UTF-8" :  obj.contentType,
+	        processData: null == obj.processData ?  true  :  obj.processData,
+	        success: function (data) {
+	            if (typeof (obj.success) == "function") {
+	                if (filterAjaxReturn(data)) {
+	                    obj.success(data);
+	                }
+	            }
+	        },
+	        error: function (er) {
+	            if (typeof (obj.error) == "function") {
+	                obj.error(er);
+	            }
+	        },
+	        complete: function (XHR, TS) {
+	            //console.log(XHR.getAllResponseHeaders());
+	        		var redirect = XHR.getResponseHeader("sessionstatus");//若HEADER中含有REDIRECT说明后端想重定向
+	        		if (redirect == "timeOut") {
+	        			alert("会话过期,请重新登录");
+	        			window.top.location.href= "login.html";
+	        		}
+	        		// 通过XMLHttpRequest取得响应头，REDIRECT
+	        		var redirect = XHR.getResponseHeader("redirect");//若HEADER中含有REDIRECT说明后端想重定向
+	        		if (redirect == "REDIRECT") {
+	        			alert("没有访问权限");
+	        			/* var win = window;
+	        			while (win != win.top){
+	        				win = win.top;
+	        			} */
+	        			//window.top.location.href= "login.html";
+	        			//将后端重定向的地址取出来,使用win.location.href去实现重定向的要求
+	        			//layerAlert(layer,"您的登录信息已超时，请重新登录<p class='ps'>ps:在客户端闲置10分钟后系统会自动登出</p>",'登录超时提示',5,'',0,function(){	
+	        			//	win.location.href= XHR.getResponseHeader("contextpath");
+	        			//})
+	        		}
+	            if (typeof (obj.complete) == "function") {
+	                obj.complete(XHR, TS);
+	            }
+	        },
+	        beforeSend: function (XHR) {
+	            if (typeof (obj.beforeSend) == "function") {
+	                obj.beforeSend(XHR);
+	            }
+	        }
+	    })
+	};
+	/**
+	 * 过滤返回值,
+	 * @returns
+	 */
+	function filterAjaxReturn(data) {  
+	    if (data.code == "-999" || data.code == -999) { 
+	        alert(data.error); 
+	        return false;
+	    } else if (data.code == "-998" || data.code == -998) {
+	         alert(data.error); 
+	         return false;
+	    } else if (data.code == "-997" || data.code == -997) { 
+	         alert(data.error); 
+	         return false;
+	    } else if (data.code == "-996" || data.code == -996) { 
+	         alert(data.error); 
+	         return false;
+	    } else {
+	        return true;
+	    } 
+	}
+	/**
+	 * 当Code 等于整个系统定义的全局权限错误时,对alert 连续弹出的处理;
+	 * @returns
+	 */
+	function err_Alert(msg){
+		removeToken();
+		var htmlPage = window.location.href; 
+		var loginurl = "ytbadmin/login.html?status=true";
+		if(htmlPage.indexOf(loginurl) == -1 ){
+			parent.location.href =v_basePath+loginurl;
+		} 
+		if(alert_count == 0  || alert_count % 20 == 1){
+			var status = true;
+			if(htmlPage.indexOf(loginurl) == -1){
+				for(var i = 0 ; i < page_data.length ; i++){
+					if(page_data[i] == htmlPage){
+						status = false;
+						break;
+					}
+				}
+			}
+			if(status){ 
+				alert(msg);
+				page_data.push(htmlPage);
+			}
+		}
+	}
+	/**
+	 * 退出
+	 */
+	function logout() {
+		Yajax({
+			url:requestUrl+'login/out/',
+			type : 'GET',
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				if(data.code==1){
+	            		sessionStorage.removeItem('sys_userId');
+	            		sessionStorage.removeItem('token');
+	    				window.location.href = "login.html";
+				}
+			},
+			error : function(data) {
+				console.log(data);
+			}
+		});
+	}
+	function divide(exp1, exp2) {  //整除
+	    var n1 = Math.round(exp1); //四舍五入     
+	    var n2 = Math.round(exp2); //四舍五入    
+
+	    var result = n1 / n2; //除    
+	    if (result >= 0) {  
+	        result = Math.floor(result); //返回小于等于原result的最大整数。     
+	    }  
+	    else {  
+	        result = Math.ceil(result); //返回大于等于原result的最小整数。     
+	    }  
+	    return result;  
+	} 
+</script>
+<style>
+.one{top:9px;}
+.two{top:9px;}
+</style>
+</body>
+</html>

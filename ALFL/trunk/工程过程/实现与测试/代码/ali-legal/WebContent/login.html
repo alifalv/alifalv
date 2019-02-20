@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>阿里法律后台管理系统</title>
+<style>
+@charset "utf-8";
+html,body{margin:0;padding:0;width:100%;}
+body{font-size:12px;font-family: "微软雅黑";color:#333;line-height:160%;background: url(image/grass.jpg) center top repeat-x #FFF;height:100%;}
+p,ul,.name,.pwd,dd,h1,h2,h3,form,input,select,textarea{margin:0;padding:0;border:0;font-family:"微软雅黑";line-height:150%;}
+ul,li{list-style:none;}
+div,p{word-wrap: break-word;}
+img{border: none;}
+input,button,select,textarea{outline:none}
+/*login*/
+.login{padding:1px 0 0 0;padding:150px 0 0 0;}
+.login input.submit{border:none;font-weight:bold;color:#FFF;margin:25px 0 0 150px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow: #CCC 0px 0px 5px;-moz-box-shadow: #CCC 0px 0px 5px;box-shadow: #CCC 0px 0px 5px;background: #31b6e7;cursor: pointer;}
+.login input.submit:hover{background:#ff9229;}
+.login input.submit{padding:6px 20px;}
+.login .box{position:relative;z-index:100;margin:0 auto;width:700px;height:320px;background:url(image/login.png) center top no-repeat;}
+.login .log{position:relative;width:370px;height:260px;margin:0 auto;padding:90px 0 0 20px;}
+.login .logo{height:85px;position:absolute;top:25px;left:200px;background:url(image/alilegal-logo.png) no-repeat;width:350px;height:50px;}
+.login label{display:inline-block;width:70px;text-align:right;padding-right:20px;vertical-align:middle;}
+.login .name{padding:10px 5px;font-size:14px;}
+.login .pwd{padding:10px 5px;font-size:14px;}
+.login .alt{position:absolute;top:43px;left:260px;font-size:20px;}
+.login .text{filter:alpha(opacity=80);-moz-opacity:0.8;opacity:0.8;}
+.login .copyright{position:absolute;left:0;width:100%;bottom:-40px;text-align:center;color:#AAA;}
+.text{border:1px solid #CCC;padding:5px;background-color:#FCFCFC;line-height:14px;width:220px;font-size:12px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow: #CCC 0px 0px 5px;-moz-box-shadow: #CCC 0px 0px 5px;box-shadow: #CCC 0px 0px 5px;border:1px solid #CCC;font-size:12px;}
+.text:focus{border:1px solid #31b6e7;background-color:#FFF;-webkit-box-shadow: #CCC 0px 0px 5px;-moz-box-shadow: #CCC 0px 0px 5px;box-shadow: #0178a4 0px 0px 5px;}
+.text:hover{background-color:#FFF;}
+</style>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<script type="application/javascript" charset="utf-8">
+	document.onkeydown = function(e){
+	    var ev = document.all ? window.event : e;
+	    if(ev.keyCode==13) {
+	    		login();
+	    }
+	}
+	function login(){
+		var username = $("#username").val();
+		var password = $("#password").val();
+		if(username==''||password==''){
+			alert("用户名或密码不能为空");
+		}else{
+	        $.ajax({
+	            type:'POST',
+	            url:"../api/login",
+	            data:JSON.stringify({
+		            	sys_userName:username,
+		            	sys_userPassword:password
+		        }),
+		        xhrFields: {withCredentials: true},
+		        crossDomain: true,
+	            processData : false, // 告诉jQuery不要去处理发送的数据
+	            contentType: "application/json", // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                var result = JSON.parse(data);
+	                if(result.code==1){
+	                		sessionStorage.setItem('sys_userId',result.sysuserId);
+	                		sessionStorage.setItem('token',result.token);
+	        				window.location.href = "index.html";
+	                }else{
+	                    alert(result.data);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("登录失败");
+	            }
+	        });
+		}
+	}
+</script>
+</head>
+<body>
+<div class="login">
+    <div class="box png">
+		<div class="logo png"><span style="font-size:25px;padding-left:70px;">阿里法律后台管理系统</span></div>
+		<div class="input">
+			<div class="log">
+				<div class="name">
+					<label>用户名</label><input type="text" class="text" id="username" name="value_1" tabindex="1">
+				</div>
+				<div class="pwd">
+					<label>密　码</label><input type="password" class="text" id="password" name="value_2" tabindex="2">
+					<input type="button" class="submit" tabindex="3" value="登录" onclick="login()">
+					<div class="check"></div>
+				</div>
+				<div class="tip"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

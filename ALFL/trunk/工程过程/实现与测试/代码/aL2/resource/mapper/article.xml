@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Article">
+   
+   <select id="listArticle" parameterType="map" resultType="map">
+   			SELECT
+				  *
+				FROM
+			    	ali_article
+			    <where>
+			        <if test="articleId != null  and articleId !='' ">
+			        	 and articleId = #{articleId}
+			        </if> 
+			         <if test="userId != null  and userId !='' ">
+			           and 	userId = #{userId}
+			        </if> 
+			         <if test="realName != null  and realName !='' ">
+			        	and realName = #{realName}
+			        </if>
+			        <if test="isofficial != null  and isofficial !='' ">
+			        	and isofficial = #{isofficial}
+			        </if>
+			         <if test="title != null  and title !='' ">
+			        	and title like '%${title}%'
+			        </if>
+			        <if test="columnCode != null  and columnCode !='' ">
+			        	and columnCode = #{columnCode}
+			        </if>
+			        <if test="startTime!=null and startTime!=''">
+						and sendTime &gt;= #{startTime}
+					</if>
+					
+					<if test="endTime!=null and endTime!=''">
+						and sendTime &lt;= #{endTime}
+					</if>
+			         <if test="articleState != null  and articleState !='' ">
+			        	and articleState = #{articleState}
+			        </if>
+			         <if test="isDelete != null  and isDelete !='' ">
+			        	and isDelete = #{isDelete}
+			        </if>
+			         <if test="isPush != null  and isPush !='' ">
+			        	and isPush = #{isPush}
+			        </if>
+			        <if test="articleContent != null  and articleContent !='' ">
+			        	and articleContent  like‘%${articleContent}%' 
+			        </if>  
+			        <if test="homepage !=null and homepage eq 'A'.toString() ">
+			        <!-- 查询个人主页，全部 -->
+			        	and ( columnCode  = 10  or  columnCode  = 11 or  columnCode  = 12 or  columnCode  = 13 )
+			        </if>
+			    </where>
+   		     order by  sendTime DESC
+   		       limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    
+       <select id="listArticle_COUNT_TOTAL" parameterType="map" resultType="int">
+   			SELECT
+				  count(*)
+				FROM
+			    	ali_article
+			    <where>
+			        <if test="articleId != null  and articleId !='' ">
+			        	 and articleId = #{articleId}
+			        </if> 
+			         <if test="userId != null  and userId !='' ">
+			           and 	userId = #{userId}
+			        </if> 
+			         <if test="realName != null  and realName !='' ">
+			        	and realName = #{realName}
+			        </if>
+			        <if test="isofficial != null  and isofficial !='' ">
+			        	and isofficial = #{isofficial}
+			        </if>
+			         <if test="title != null  and title !='' ">
+			        	and title like '%${title}%'
+			        </if>
+			        <if test="columnCode != null  and columnCode !='' ">
+			        	and columnCode = #{columnCode}
+			        </if>
+			        <if test="startTime!=null and startTime!=''">
+						and sendTime &gt;= #{startTime}
+					</if> 
+					<if test="endTime!=null and endTime!=''">
+						and sendTime &lt;= #{endTime}
+					</if>
+			         <if test="articleState != null  and articleState !='' ">
+			        	and articleState = #{articleState}
+			        </if>
+			         <if test="isDelete != null  and isDelete !='' ">
+			        	and isDelete = #{isDelete}
+			        </if>
+			         <if test="isPush != null  and isPush !='' ">
+			        	and isPush = #{isPush}
+			        </if>
+			        <if test="articleContent != null  and articleContent !='' ">
+			        	and articleContent like‘%${articleContent}%' 
+			        </if>  
+			        <if test="homepage !=null and homepage eq 'A'.toString() ">
+			        <!-- 查询个人主页，全部 -->
+			        	and ( columnCode  = 10  or  columnCode  = 11 or  columnCode  = 12 or  columnCode  = 13 )
+			        </if>
+			    </where> 
+    </select>
+   
+  <delete  id="deleteArticle" parameterType="int" >
+  		 update ali_article set isDelete = 1 where articleId =#{articleId}
+  </delete> 
+  <!-- 设置今日推荐 -->
+  <update id="updateRecommend" parameterType="map" >
+  		update ali_article set articleState= #{articleState} where articleId  in(${articleId})
+  </update>
+  <update id="updateArticle" parameterType="map">
+  			update ali_article 
+  			<set>
+  					<if test="isPush != null and isPush !=''">
+						    isPush = #{isPush},
+					</if>
+					<if test="realName != null and realName !=''">
+						    realName = #{realName},
+					</if>
+					<if test="isofficial != null and isofficial !=''">
+						    isofficial = #{isofficial},
+					</if>
+					<if test="isOutJoin != null and isOutJoin !=''">
+						    isOutJoin = #{isOutJoin},
+					</if>
+					<if test="title != null and title !=''">
+						    title = #{title},
+					</if>
+					<if test="columnCode != null and columnCode !=''">
+						    columnCode = #{columnCode},
+					</if>
+					<if test="txtPath != null and txtPath !=''">
+						    txtPath = #{txtPath},
+					</if>
+					<if test="sendTime != null and sendTime !=''">
+						    sendTime = #{sendTime},
+					</if>
+					<if test="lookNum != null and lookNum !=''">
+						    lookNum = #{lookNum},
+					</if>
+					<if test="outJoinUrl != null and outJoinUrl !=''">
+						    outJoinUrl = #{outJoinUrl},
+					</if>
+					<if test="coverImg != null and coverImg !=''">
+						    coverImg = #{coverImg},
+					</if>
+					<if test="articleState != null and articleState !=''">
+						    articleState = #{articleState},
+					</if> 
+					<if test="isPush != null and isPush !=''">
+						    isPush = #{isPush},
+					</if>
+					<if test="likeNum != null and likeNum !=''">
+						    likeNum = #{likeNum},
+					</if>
+					<if test="collectionNu != null and collectionNu !=''">
+						    collectionNu = #{collectionNu},
+					</if>
+					<if test="imgs != null and imgs !=''">
+						    imgs = #{imgs},
+					</if>
+					<if test="articleContent != null and articleContent !=''">
+						    articleContent = #{articleContent},
+					</if> 
+					<if test="indexs != null and indexs !=''">
+							<if   test="indexs == 0 || indexs =='0'">
+						           indexs = null,
+						    </if>
+						    <if   test="indexs != 0 || indexs !='0'">
+						           indexs = #{indexs},
+						    </if>
+					</if> 
+					<if test="rewardNum != null and rewardNum !=''">
+						    rewardNum = (IFNULL(rewardNum,0)) +#{rewardNum},
+					</if>
+					<if test="articleType != null and articleType !=''">
+						    articleType = #{articleType},
+					</if>
+					<if test="articleId != null and articleId !=''">
+						    articleId = #{articleId},
+					</if>
+  			</set> 
+  		 where articleId =#{articleId}
+  </update>
+    
+    <select  id="getMaxIndexs"  resultType="map">
+      	 select  IFNULL(max(indexs),0) as indexs from ali_article;
+    </select>
+
+	<select id="commonPeopleMessageList" parameterType="map" resultType="map">
+			select * from ali_article where columnCode=#{columnCode}       
+			<if test="isDelete != null and isDelete !=''">
+			  and  isDelete = #{isDelete}
+			</if>
+			
+			<if test="isPush != null and isPush !=''">
+			  and  isPush = #{isPush}
+			</if>
+			
+			 ORDER BY sendTime DESC	limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>	
+	
+	<select id="commonPeopleMessageList_COUNT_TOTAL" parameterType="map" resultType="int">
+			select count(articleId) as total  from ali_article where columnCode=#{columnCode}
+			<if test="isDelete != null and isDelete !=''">
+			  and  isDelete = #{isDelete}
+			</if> 
+			<if test="isPush != null and isPush !=''">
+			  and  isPush = #{isPush}
+			</if>
+	</select>	
+		
+
+
+	<select id="findArticleListByColumnCode" parameterType="map" resultType="map">
+		select * from ali_article where columnCode = #{columnCode} 
+			<if test="conditionValue != null and conditionValue != ''">
+				and ( title like '%${conditionValue}%' or realName = #{conditionValue} )
+			</if>
+			
+			<if test="startTime!=null and startTime!=''">
+				and sendTime &gt;= #{startTime}
+			</if>
+			
+			<if test="endTime!=null and endTime!=''">
+				and sendTime &lt;= #{endTime}
+			</if>
+			<if test="isDelete == null or  isDelete =='' ">
+				and isDelete = 0
+			</if>
+			<if test="isDelete != null and   isDelete  !='' ">
+				and isDelete = #{isDelete}
+			</if>
+			<if test="userId != null and userId!=0">
+				and userId = #{userId}
+			</if>
+			<if test="model == 1">
+				and isPush = 1
+			</if>
+		  order by sendTime DESC
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findArticleListByColumnCode_COUNT_TOTAL" parameterType="map" resultType="int">
+		select COUNT(articleId) from ali_article where columnCode = #{columnCode} 
+		    <if test="conditionValue != null and conditionValue != ''">
+				and ( title like '%${conditionValue}%' or realName = #{conditionValue} )
+			</if>
+			<if test="startTime!=null and startTime!=''">
+				and sendTime &gt;= #{startTime}
+			</if>
+			
+			<if test="endTime!=null and endTime!=''">
+				and sendTime &lt;= #{endTime}
+			</if>
+			<if test="userId != null and userId!=0">
+				and userId = #{userId}
+			</if>
+			<if test="isDelete == null or  isDelete =='' ">
+				and isDelete = 0
+			</if>
+			<if test="isDelete != null and   isDelete  !='' ">
+				and isDelete = #{isDelete}
+			</if>
+			<if test="model == 1">
+				and isPush = 1
+			</if>
+	</select>
+	
+	<select id="findAliAdjudicationList" resultType="map" parameterType="map">
+		select b.*,c.* from (
+			select a.* from ali_article a where a.columnCode = #{columnCode} 
+				<if test="conditionValue != null and conditionValue != ''">
+					and a.title like '%${conditionValue}%' or realName = #{conditionValue}
+				</if>
+				<if test="startTime!=null and startTime!=''">
+					and sendTime &gt;= #{startTime}
+				</if> 
+				<if test="endTime!=null and endTime!=''">
+					and sendTime &lt;= #{endTime}
+				</if> 
+				 <if test="isPush !=null  and isPush !=''">
+					and a.isPush = #{isPush}
+				</if>
+				<if test="isDelete !=null  and isDelete !=''">
+					and a.isDelete = #{isDelete}
+				</if>
+		) b inner join ali_declare c on b.articleId = c.articleId
+		<where>
+			<if test="null != declareId  ">
+				and  c.declareId = #{declareId}
+			</if>
+				<if test="declareType !=null and declareType !='' ">
+					and c.declareType  = #{declareType}
+				</if>
+		</where>
+		 
+		order by b.indexs DESC ,b.sendTime DESC
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findAliAdjudicationList_COUNT_TOTAL" resultType="int" parameterType="map">
+		select COUNT(b.articleId) from (
+			select a.* from ali_article a where a.columnCode = #{columnCode} 
+				<if test="conditionValue != null and conditionValue != ''">
+					and a.title like '%${conditionValue}%' or realName = #{conditionValue}
+				</if>
+				<if test="startTime!=null and startTime!=''">
+					and sendTime &gt;= #{startTime}
+				</if>
+				
+				<if test="endTime!=null and endTime!=''">
+					and sendTime &lt;= #{endTime}
+				</if>
+				 <if test="isPush !=null  and isPush !=''">
+					and a.isPush = #{isPush}
+				</if>
+				<if test="isDelete !=null  and isDelete !=''">
+					and a.isDelete = #{isDelete}
+				</if>
+		) b inner join ali_declare c on b.articleId = c.articleId
+		<where>
+			<if test="null != declareId  ">
+				 and  c.declareId = #{declareId}
+			</if>
+			<if test="declareType !=null and declareType !='' "  >
+					and c.declareType  = #{declareType}
+				</if>
+		</where> 
+	</select>
+	
+	
+	<select id="findLegalTrainListByApp" resultType="map" parameterType="map">
+		select b.*,c.* from (
+			select a.* from ali_article a where 1=1 
+			<if test="title!=null and title!=''">
+			    and a.title like '%${title}%'
+		    </if>
+		    <if test=" null  !=  startTime  and  startTime != ''">
+		  	  and a.sendTime between #{startTime} and #{endTime}
+		    </if>
+		    <if test ="null != isDelete and isDelete !='' ">
+				and a.isDelete = #{isDelete}
+		</if>
+		<if test ="null != isPush and isPush !='' ">
+				and a.isPush = #{isPush}
+		</if>
+		<if test = "null == isDelete  or isDelete == ''">
+			and a.isDelete = 0
+		</if>
+			and a.columnCode = #{columnCode}
+				
+		) b inner join ali_train  c on b.articleId = c.articleId
+		where 1=1 
+		<if test="trainName!=null and trainName!=''">
+			and c.trainName = #{trainName}
+		</if>
+		<if test="province != null and province !=''">
+			and c.province = #{province}
+		</if>
+		<if test=" null != city and  city !='' ">
+		and c.city = #{city}
+		</if>
+		
+		
+		order by b.sendTime DESC 
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+
+	<!-- 最新法律法规 列表查询 -->
+	<select  id="newestLegalList"  parameterType="map" resultType="map">
+	     select 
+	  	 a.articleId,
+		 a.title
+	   from ali_article as a
+	    LEFT JOIN
+	     ali_legislation as le on le.articleId = a.articleId
+	    where 
+			a.columnCode = 8
+			and a.isDelete = 0
+			and le.effeCtLevel IN('1','2')
+			order by le.issueTime DESC 
+		limit 1,8
+	</select>
+	
+	<!-- 法律法规 列表查询 -->
+	<select  id="legalList"  parameterType="map" resultType="map">
+	    select 
+	  	 a.title,le.*
+	   from ali_article as a
+	    LEFT JOIN
+	     ali_legislation as le on le.articleId = a.articleId
+	    where 
+			a.columnCode = 8
+			and a.isDelete = 0
+			<if  test="null != title  and title !='' ">   
+			 <![CDATA[ ${title} ]]>  	 
+			</if>
+	       	<if  test="null != articleContent  and articleContent !='' ">
+			<![CDATA[ ${articleContent} ]]> 
+	       </if>
+	      	<if  test="null != startTime  and startTime !='' ">   
+	      		and   a.sendTime  &gt;= #{startTime} 
+	       </if>
+	       <if  test="null != endTime  and endTime !='' ">   
+	      		and   a.sendTime  &lt;= #{endTime} 
+	       </if> 
+	       	<if  test="null != effectLevel  and effectLevel !='' ">   
+	      		and  le.effectLevel = #{effectLevel}
+	       </if>
+	       	<if  test="null != sendUnit  and sendUnit !='' ">   
+	      		and  le.sendUnit = #{sendUnit}
+	       </if>
+			<if  test="null != titleKey  and titleKey !='' ">   
+	      		and  le.titleKey like  CONCAT('%',#{titleKey},'%')
+	       </if>
+			<if  test="null != contentKey  and contentKey !='' ">   
+	      		and  le.contentKey like  CONCAT('%',#{contentKey},'%')
+	       </if>
+	      order by le.issueTime DESC 
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<!-- 法律法规 列表查询 -->
+	<select  id="legalList_COUNT_TOTAL" resultType="int" parameterType="map">
+	    select 
+	  	 count(a.articleId)
+	     from ali_article as a
+	       LEFT JOIN
+	     ali_legislation as le on le.articleId = a.articleId
+	    where 
+			a.columnCode =8
+			and a.isDelete =0
+			<if  test="null != title  and title !='' ">   
+				<![CDATA[ ${title}]]>  	 	 
+			</if>
+	       	<if  test="null != articleContent  and articleContent !='' ">   
+				<![CDATA[ ${articleContent}]]>  
+			</if>
+	      	<if  test="null != startTime  and startTime !='' ">   
+	      		and   a.sendTime  &gt;= #{startTime} 
+	       </if>
+	       <if  test="null != endTime  and endTime !='' ">   
+	      		and   a.sendTime  &lt;= #{endTime} 
+	       </if>
+	       	<if  test="null != effectLevel  and effectLevel !='' ">   
+	      		and  le.effectLevel = #{effectLevel}
+	       </if>
+	       	<if  test="null != sendUnit  and sendUnit !='' ">   
+	      		and  le.sendUnit = #{sendUnit}
+	       </if>
+	</select>
+	
+	 
+	
+	<select id="findLegalTrainListByApp_COUNT_TOTAL" resultType="int" parameterType="map">
+		select COUNT(b.articleId) from (
+			select a.* from ali_article a where 1=1 
+			<if test="title!=null and title!=''">
+			    and a.title like '%${title}%'
+		    </if>
+		     <if test=" null  !=  startTime  and  startTime != ''">
+		  	  and a.sendTime between #{startTime} and #{endTime}
+		    </if>
+		    <if test ="null != isDelete and isDelete !='' ">
+				and a.isDelete = #{isDelete}
+		</if>
+		<if test ="null != isPush and isPush !='' ">
+				and a.isPush = #{isPush}
+		</if>
+		<if test = "null == isDelete  or isDelete == ''">
+			and a.isDelete = 0
+		</if>
+			and a.columnCode = #{columnCode}
+				
+		) b inner join ali_train c on b.articleId = c.articleId
+		where 1=1 
+		<if test="trainName!=null and trainName!=''">
+			and c.trainName = #{trainName}
+		</if>
+		<if test="province != null and province !=''">
+			and c.province = #{province}
+		</if>
+		<if test=" null != city and  city !='' ">
+		and c.city = #{city}
+		</if>
+		order by b.sendTime DESC
+	</select>
+	
+	<!-- 文章的详情，包括了上一页与下一页，用户是否收藏和点赞 -->
+	<select id="articleDetails"  parameterType="map" resultType="map">  
+		select  
+ 		a.*,
+ 		<if test="columnCode == '9'  or   columnCode  == 9 ">
+ 		    decl.*,
+ 		</if>
+ 		<if test="columnCode == '7'  or   columnCode  == 7 ">
+ 		    tra.*,
+ 		</if>
+ 		<if test="columnCode == '8'  or   columnCode  == 8 ">
+ 		    leg.*,
+ 		</if>
+ 		<if test="columnCode == '0'  or   columnCode  == 0 ">
+ 		   ( select count(*) from ali_common_reply where   upId= 0  and  businessType = 1 and relativeId = #{articleId} ) as replyNum,
+ 		  </if> 
+ 		  <if test="columnCode == '9'  or   columnCode  == 9">
+ 		   ( select count(*) from ali_common_reply where   upId= 0  and  businessType = 2 and relativeId = #{articleId} ) as replyNum,
+ 		  </if> 
+		 (select CASE WHEN COUNT(articleLikeId) > 0 then  '是' ELSE '否' end '否'   from ali_article_like where articleId = #{articleId}  and userId = #{userId}  ) as isLike, 
+		 (select CASE WHEN COUNT(collectionId) > 0 then  '是' ELSE '否' end '否'   from ali_article_collection where articleId = #{articleId}  and userId = #{userId}  ) as isCollection,
+		 (SELECT CONCAT_WS("8m_m_8",IFNULL(articleId,""),IFNULL(title,""))   from 	ali_article where   articleId  &gt;  #{articleId}  and   columnCode = #{columnCode}  and isDelete =0  ORDER BY articleId  LIMIT 0,1) as gt,
+		 (SELECT CONCAT_WS("8m_m_8",IFNULL(articleId,""), IFNULL(title,""))   from 	ali_article where   articleId  &lt;  #{articleId}   and   columnCode = #{columnCode}   and isDelete =0  ORDER BY articleId  DESC LIMIT 0,1) as lt
+		  
+		 from
+		 
+		 	 ali_article as a
+		 	<if test="columnCode == '9'  or   columnCode  == 9 ">
+ 		    left join ali_declare as decl on decl.articleId = a.articleId
+ 		  </if> 
+ 		   <if test="columnCode == '7'  or   columnCode  == 7">
+ 		    left join ali_train  as tra  on tra.articleId = a.articleId
+ 		  </if> 
+ 		   <if test="columnCode == '8'  or   columnCode  == 8">
+ 		       left join ali_legislation  as leg  on leg.articleId = a.articleId 
+ 		  </if> 
+ 		  
+		  where a.articleId = #{articleId}   and   a.columnCode = #{columnCode} 
+   
+	</select>
+	
+	<select id="findArticleById" parameterType="int" resultType="map">
+		select * from ali_article where articleId = #{articleId}
+	</select>
+	
+	<insert id="saveArticleCollection"  parameterType="map" useGeneratedKeys="true" keyProperty="collectionId">
+			INSERT INTO  ali_article_collection (
+				userId,
+				articleId,
+				collectionTime,
+				userName
+			)
+			VALUES
+				( 
+					#{userId},
+					#{articleId},
+					NOW(),
+					#{userName}
+				)
+	</insert>
+	<delete id="deleteArticleCollection"  parameterType="int" >
+					delete
+					from
+						ali_article_collection
+					where collectionId = #{collectionId}
+	</delete>
+	
+	<!-- 根据我的收藏连表查询出我收藏的文章 -->
+	<select id="listCollectionJoinArticle" parameterType="map"   resultType="map">
+	      SELECT
+			 coll.collectionId,
+			  coll.collectionTime,
+			  ar.*
+			FROM
+				ali_article_collection as coll
+			LEFT JOIN
+			  ali_article as ar on ar.articleId = coll.articleId 
+			WHERE
+				coll.userId = #{userId}
+				order by coll.collectionTime DESC 
+	      	limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<!-- 根据我的收藏连表查询出我收藏的文章 -->
+	<select id="listCollectionJoinArticle_COUNT_TOTAL" parameterType="map" resultType="int">
+	      SELECT
+			  count(*)
+			FROM
+				ali_article_collection as coll 
+			WHERE
+				coll.userId = #{userId}
+	</select>
+	
+	
+	<!-- 查询记录收藏    -->
+	<select id="listArticleCollection" parameterType="map" resultType="map">
+	     select * from ali_article_collection
+		  where
+		  	1=1
+		  	<if test="userId  !=null and userId !=''">
+		  	  and    userId = #{userId} 
+		  	</if>
+		  	<if test="articleId != null and articleId !=''">
+		  	 and articleId = #{articleId} 
+		  	</if> 
+	</select>
+	
+	<select id="isCollection" parameterType="map" resultType="int">
+		select COUNT(collectionId) from ali_article_collection
+		  where userId = #{userId} and articleId = #{articleId} 
+	</select>
+	
+	<update id="updateLookNum" parameterType="map">
+		update ali_article set lookNum = IFNULL(lookNum,0)+(#{lookNum}) where articleId = #{articleId}
+	</update>
+	<update id="updateLikeNum" parameterType="map">
+		update ali_article set likeNum = IFNULL(likeNum,0)+(#{likeNum}) where articleId = #{articleId}
+	</update>
+	
+	<update id="updateCollectionNum" parameterType="map">
+		update ali_article set collectionNum = collectionNum+(#{collectionNum}) where articleId = #{articleId}
+	</update>
+	
+	<insert id="saveArticleLike" parameterType="map"  useGeneratedKeys="true" keyProperty="articleLikeId">
+				INSERT INTO  ali_article_like   (articleId, userId, likeTime) VALUES (  #{articleId},#{userId},NOW());
+	</insert>
+	
+	<delete id="deleteArticleLike" parameterType="int">
+		delete from  ali_article_like  where articleLikeId = #{articleLikeId}
+	</delete>
+	
+	<select id="listArticleLike" parameterType="map" resultType="map">
+		select * from ali_article_like
+		  where 1=1 
+		  	<if test="userId != null and userId !=''">
+		  		and userId = #{userId}
+		  	</if>
+		  	<if test="articleId != null and articleId !=''">
+		  		and articleId = #{articleId}
+		  	</if> 
+	</select>
+	
+	<select id="isLike" parameterType="map" resultType="int">
+		select COUNT(articleLikeId) from ali_article_like
+		  where userId = #{userId} and articleId = #{articleId} 
+	</select>
+	
+	<select id="findCollectionArticle" parameterType="int" resultType="map">
+		select a.articleId,a.userId,a.realName,a.title,
+		a.columnCode,a.coverImg,b.collectionTime from ali_article a 
+		inner join ali_article_collection b
+		on a.articleId = b. articleId
+		where b.userId = #{userId}
+	</select>
+ 
+	
+	<insert id="saveArticle" parameterType="map" useGeneratedKeys="true" keyProperty="articleId">
+		insert into ali_article
+		  (userId,realName,isofficial,isOutJoin,title,columnCode,txtPath,sendTime,lookNum,outJoinUrl,coverImg,
+		  articleState,isDelete,isPush,likeNum,articleContent,collectionNum,imgs,indexs,rewardNum,articleType)
+		  values
+		  (#{userId},#{realName},#{isofficial},#{isOutJoin},#{title},#{columnCode},#{txtPath},
+		  NOW(),0,#{outJoinUrl},#{coverImg},#{articleState},#{isDelete}
+		  ,#{isPush},#{likeNum},#{articleContent},0,#{imgs},#{indexs},#{rewardNum},#{articleType})
+	</insert>
+	
+ 
+	
+	<insert id="sendLegal" parameterType="map">
+		insert into ali_legislation (articleId,effectLevel,sendUnit,referenceNo,issueTime,implementTime,uploadTime) 
+		  values (#{articleId},#{effectLevel},#{sendUnit},#{referenceNo},#{issueTime},#{implementTime},NOW())
+	</insert>
+	
+	<update id="updateLegal" parameterType="map">
+			UPDATE 
+						ali_legislation
+				 <set>
+				          uploadTime = now(), 
+				        <if test="null !=legislationId   and legislationId !='' " >
+				             legislationId =#{legislationId},
+				        </if>
+				        <if test="null !=articleId   and articleId !='' " >
+				              articleId =#{articleId},
+				        </if>
+				        <if test="null  !=titleKey   and titleKey !='' " >
+				              titleKey =#{titleKey},
+				        </if>
+				        <if test="null != contentKey   and contentKey !='' " >
+				              contentKey =#{contentKey},
+				        </if>
+				        <if test="null  !=effectLevel   and effectLevel !='' " >
+				              effectLevel =#{effectLevel},
+				        </if>
+				        <if test="null !=sendUnit   and sendUnit !='' " >
+				              sendUnit =#{sendUnit},
+				        </if>
+				        <if test="null !=referenceNo   and referenceNo !='' " >
+				              referenceNo =#{referenceNo},
+				        </if>
+				        <if test="null !=issueTime   and issueTime !='' " >
+				              issueTime =#{issueTime},
+				        </if>
+				        <if test="null !=implementTime   and implementTime !='' " >
+				              implementTime =#{implementTime},
+				        </if>  
+				</set>
+				
+				WHERE
+					     legislationId=#{legislationId} 
+	</update>
+	
+	
+	<insert id="sendLegalTrain" parameterType="map" >
+		insert into ali_train (articleId,trainName,province,city,trainAddress,cost,size,mobile,email,trainDesc,trainTime,isComplain)
+		  values (#{articleId},#{trainName},#{province},#{city},#{trainAddress},#{cost},#{size},#{mobile},#{email},#{trainDesc},NOW(),#{isComplain})
+	</insert>
+	
+	<update id="updateTrain" parameterType="map">
+		UPDATE  ali_train
+			<set>
+			<!--  
+					<if  test="trainId != null and trainId !=''">
+							trainId = #{trainId},
+					</if>
+					-->
+					<if  test="trainName != null and trainName !=''">
+							trainName = #{trainName},
+					</if>
+					  
+					<if  test="trainAddress != null and trainAddress !=''">
+							trainAddress = #{trainAddress},
+					</if>
+					
+					<if  test="mobile != null and mobile !=''">
+							mobile = #{mobile},
+					</if>
+					
+					<if  test="email != null and email !=''">
+							email = #{email},
+					</if>
+					
+					<if  test="trainDesc != null and trainDesc !=''">
+							trainDesc = #{trainDesc},
+					</if>
+					
+					<if  test="cost != null and cost !=''">
+							cost = #{cost},
+					</if>
+					 
+					
+				
+					<if  test="province != null">
+							province = #{province},
+					</if>
+					 
+					<if  test="articleId != null ">
+							articleId = #{articleId},
+					</if> 
+					<if  test="city != null">
+							city = #{city},
+					</if> 
+					<if  test="trainTime != null and trainTime !=''">
+							trainTime = #{trainTime},
+					</if> 
+						
+					<if  test="size != null and size !=''">
+							size = '${size}',
+					</if>
+					<if  test="isComplain != null and isComplain !=''">
+							isComplain = #{isComplain},
+					</if> 
+			</set>  
+			WHERE
+				 trainId = #{trainId}
+	
+	</update>
+	
+	<insert id="saveDeclare" parameterType="map" useGeneratedKeys="true" keyProperty="declareId">
+		INSERT INTO ali_declare( 
+				articleId,
+				declareType,
+				reasonInfo,
+				caseDesc,
+				caseUrl,
+				bookName,
+				primaryImg,
+				declareImgs,
+				evidenceImgs
+			)
+			VALUES
+				(
+					#{articleId},
+					#{declareType},
+					#{reasonInfo},
+					#{caseDesc},
+					#{caseUrl},
+					#{bookName},
+					#{primaryImg},
+					#{declareImgs},
+					#{evidenceImgs}
+				);
+	</insert>  
+	
+	<update id="updateDeclare" parameterType="map">
+		UPDATE
+ 			ali_declare 
+ 			<set>
+ 					<if test="articleId != null  and  articleId !='' ">
+ 					     articleId = #{articleId},
+ 					</if>
+ 					<if test="declareType != null  and  declareType !='' ">
+ 					     declareType = #{declareType},
+ 					</if>
+ 					<if test="reasonInfo != null  and  reasonInfo !='' ">
+ 					     reasonInfo = #{reasonInfo},
+ 					</if>
+ 					<if test="caseDesc != null  and  caseDesc !='' ">
+ 					     caseDesc = #{caseDesc},
+ 					</if>
+ 					<if test="caseUrl != null  and  caseUrl !='' ">
+ 					     caseUrl = #{caseUrl},
+ 					</if>
+ 					<if test="bookName != null  and  bookName !='' ">
+ 					     bookName = #{bookName},
+ 					</if>
+ 					<if test="primaryImg != null  and  primaryImg !='' ">
+ 					     primaryImg = #{primaryImg},
+ 					</if>
+ 					<if test="declareImgs != null  and  declareImgs !='' ">
+ 					     declareImgs = #{declareImgs},
+ 					</if>
+ 					<if test="evidenceImgs != null  and  evidenceImgs !='' ">
+ 					     evidenceImgs = #{evidenceImgs},
+ 					</if>
+ 					<if test="declareId != null  and  declareId !='' ">
+ 					     declareId = #{declareId},
+ 					</if>
+ 			</set> 
+					WHERE
+						 declareId  = #{declareId} 
+	</update>
+	
+	
+	
+	<!-- 法律法规查询 -->
+	<select id="findLegalList" parameterType="map" resultType="map">
+		select a.* from ali_article a 
+		    inner join ali_legislation b on a.articleId = b.articleId
+		    where 1=1
+			<if test="conditionValue != null and conditionValue != ''">
+				and a.title like '%${conditionValue}%' or a.realName = #{conditionValue}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+				and a.sendTime &gt;= #{startTime}
+			</if>
+			
+			<if test="endTime!=null and endTime!=''">
+				and a.sendTime &lt;= #{endTime}
+			</if>
+			<if test="userId != null and userId!=0">
+				and a.userId = #{userId}
+			</if>
+			<if test="titleKey != null and titleKey!=''">
+				and a.title = #{title}
+			</if>
+			
+			<if test="contentKey != null and contentKey!=''">
+				and MATCH (a.articleContent) AGAINST ('${contentKey}' IN NATURALLANGUAGE MODE)
+			</if> 
+			<if test="model == 1">
+				and a.isPush = 1
+			</if>
+			<if test="effectivenessGradeId != null">
+				and b.effectLevel = #{effectivenessGradeId}
+			</if>
+			<if test="unitId != null">
+				and b.sendUnit = #{unitId}
+			</if>
+			and a.columnCode = 'flfg'
+		  order by a.sendTime DESC
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	
+	
+	<select id="findLegalList_COUNT_TOTAL" parameterType="map" resultType="map">
+		select COUNT(a.articleId) from ali_article a 
+		    inner join ali_legislation b on a.articleId = b.articleId
+		    where 1=1
+			<if test="conditionValue != null and conditionValue != ''">
+				and a.title like '%${conditionValue}%' or a.realName = #{conditionValue}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+				and a.sendTime &gt;= #{startTime}
+			</if>
+			
+			<if test="endTime!=null and endTime!=''">
+				and a.sendTime &lt;= #{endTime}
+			</if>
+			<if test="userId != null and userId!=0">
+				and a.userId = #{userId}
+			</if>
+			<if test="titleKey != null and titleKey!=''">
+				and a.title = #{title}
+			</if>
+			
+			<if test="contentKey != null and contentKey!=''">
+				and MATCH (a.articleContent) AGAINST ('${contentKey}' IN NATURALLANGUAGE MODE)
+			</if>
+			<if test="model == 1">
+				and a.isPush = 1
+			</if>
+			<if test="effectivenessGradeId != null">
+				and b.effectLevel = #{effectivenessGradeId}
+			</if>
+			<if test="unitId != null">
+				and b.sendUnit = #{unitId}
+			</if>
+			and a.columnCode = 'flfg'
+	</select> 
+	<!-- 关注、收藏、咨询的统计个数 -->
+	<select id="listATT_COLL_CONS" parameterType="int" resultType="map">
+			( 
+			 select count(userId) as counts  from ali_article_collection where  userId = #{userId}
+			)
+			union  all
+			(
+			 select count(userId) as counts  from ali_follow  where userId = #{userId} 
+			)
+			union  all  
+			(
+			 select count(userId) as counts  from  ali_advice  where userId = #{userId} and is_delete = 0 and state=0
+			 )
+	</select>
+	
+		<!-- 今日推荐列表查询 -->
+	<select  id="todayPushlistArticle"  parameterType="map" resultType="map">
+	  select articleId ,title  from ali_article where articleState='1' ORDER BY sendTime desc 	limit 1,7
+	</select>
+	
+ 
+	
+	<select  id="newest200LegalList"  parameterType="map" resultType="map">
+	    select 
+	  	 a.*,
+		   le.*
+	   from ali_article_newest as a
+	    LEFT JOIN
+	     ali_legislation_newest as le on le.articleId = a.articleId
+	    where 
+			a.columnCode = 8
+			and a.isDelete = 0
+	      order by le.issueTime DESC 
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<!-- 法律法规 列表查询 -->
+	<select  id="newest200LegalList_COUNT_TOTAL" resultType="int" parameterType="map">
+	    select 
+	  	 count(*)
+	     from ali_article_newest as a
+	       LEFT JOIN
+	     ali_legislation_newest as le on le.articleId = a.articleId
+	    where 
+			a.columnCode = 8
+			and a.isDelete = 0
+			
+	
+	</select>
+	
+	
+	
+	
+
+</mapper>

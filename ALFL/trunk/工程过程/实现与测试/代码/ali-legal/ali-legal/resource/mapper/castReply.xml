@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CastReply">
+    <resultMap id="BaseResultMap" type="CastReply" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="mobile" property="mobile" />
+        <result column="userId" property="userId" />
+        <result column="replyState" property="replyState" jdbcType="INTEGER" />
+        <result column="replyTime" property="replyTime" jdbcType="TIMESTAMP" />
+        <result column="type" property="type"/>
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        acr.*,
+        au.userType,
+        acs.realName as consultant_realName,
+        ac.realName as counselor_realName,
+        acom.realName as company_realName,
+        au.mobile as mobile
+        FROM
+        ali_cast_reply as acr
+        left join ali_user as au on acr.userId=au.userId 
+        left join ali_consultant acs on au.userId = acs.userId
+        LEFT JOIN ali_counselor ac ON au.userId = ac.userId
+        LEFT JOIN ali_company acom ON au.userId = acom.userId
+        <where>
+            <if test="replyState != null">
+                and replyState = #{replyState,jdbcType=INTEGER}
+            </if>
+            <if test="type != null and type != ''">
+                and type like '%${type}%'
+            </if>
+            <if test="createTimeStart != null and createTimeStart != ''">
+                and replyTime &gt;= #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and replyTime &lt; #{CastReplyTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (au.userId like '%${content}%' or au.mobile like '%${content}%' or (acs.realName like '%${content}%' or ac.realName like '%${content}%' or acom.realName like '%${content}%'))
+            </if>
+        </where>
+        ORDER BY id DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(acr.id)
+        FROM
+        ali_cast_reply as acr
+        left join ali_user as au on acr.userId=au.userId 
+        left join ali_consultant acs on au.userId = acs.userId
+        LEFT JOIN ali_counselor ac ON au.userId = ac.userId
+        LEFT JOIN ali_company acom ON au.userId = acom.userId
+        <where>
+            <if test="replyState != null">
+                and replyState = #{replyState,jdbcType=INTEGER}
+            </if>
+            <if test="type != null and type != ''">
+                and type like '%${type}%'
+            </if>
+            <if test="createTimeStart != null and createTimeStart != ''">
+                and replyTime &gt;= #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and replyTime &lt; #{CastReplyTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (au.userId like '%${content}%' or au.mobile like '%${content}%' or (acs.realName like '%${content}%' or ac.realName like '%${content}%' or acom.realName like '%${content}%'))
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="CastReply" resultMap="BaseResultMap">
+        select * from ali_cast_reply
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="CastReply" >
+        update ali_cast_reply
+        <set >
+            <if test="userId != null" >
+                userId = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="replyState != null" >
+                replyState = #{replyState,jdbcType=INTEGER},
+            </if>
+            <if test="replyTime != null" >
+                replyTime = #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="completeTime != null" >
+                completeTime = #{completeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null" >
+                type = #{type},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateVoucher" parameterType="map">
+  UPDATE ali_voucher 
+    <set>
+      <if  test="voucherDesc !=null  and voucherDesc !=''">
+          voucherDesc  = #{voucherDesc},
+      </if>
+      <if  test="userId !=null ">
+          userId  = #{userId},
+      </if>
+      <if  test="startTime !=null ">
+          startTime  = #{startTime},
+      </if>
+      <if  test="endTime !=null  ">
+          endTime  = #{endTime},
+      </if>
+       <if  test="state !=null  ">
+          state  = #{state},
+      </if> 
+     </set>
+   WHERE
+     voucherId  = #{voucherId}
+ </update>
+    <select id="numbersOfLegalDocumentProduction" resultType="Integer">
+        select count(id) from ali_cast_reply where replyState=0 and type='免费文书制作' ;
+    </select>
+    <select id="numbersOfTrafficCase" resultType="Integer">
+        select count(id) from ali_cast_reply where replyState=0 and type='免费交通案件' ;
+    </select>
+</mapper>

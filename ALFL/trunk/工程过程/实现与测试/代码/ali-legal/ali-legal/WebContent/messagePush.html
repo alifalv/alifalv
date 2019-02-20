@@ -1,0 +1,356 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>消息推送</h1>
+			</div>
+			<div class="form-group" >
+			 	<button type="button" class="btn btn-success" onclick="showDialogModal()">新增</button>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+				  <form class="form-inline">
+					  <div class="form-group">
+						<label class="control-label" for="addTimeStart">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="addTimeStart" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="addTimeEnd" readonly>
+						</div>
+					  </div>
+			            <label class="my-1 mr-2" >状态</label>
+			            <select class="form-control my-1 mr-sm-2" id="is_send" title="">
+			              <option selected value="0">全部</option>
+			              <option value="2">未发送</option>
+			              <option value="1">已发送</option>
+			            </select>
+					  <div class="form-group">
+						<input type="text" id="content" class="form-control mx-sm-4" aria-describedby="passwordHelpInline" placeholder="标题、内容关键词">
+					  </div>
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="table_id">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>标题</th>
+								<th>内容</th>
+								<th>收件人</th>
+								<th>创建时间</th>
+								<th>状态</th>
+								<th>最近发送时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">消息推送</h5>
+        		<input type="text" id="id_update" style="display:none;"/>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">标题：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="title">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label  class="col-sm-2 col-form-label">内容：</label>
+						<div class="col-sm-5">
+							<textarea rows="3" cols="50" id="messageContent"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="save()">保存</button>
+				<button type="button" class="btn btn-primary" onclick="closeDialog()">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" >提醒</h6>
+        <input type="text" id="id_del" style="display:none;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <span class="nav-link" id="attention"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary send" onclick="delSend()">确认发送</button>
+        <button type="button" class="btn btn-primary delete" onclick="delDelete()">确认删除</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#addTimeStart").jeDate(start);
+	$("#addTimeEnd").jeDate(end);
+	//时间控件 结束
+
+	var tableData;
+	$(document).ready(function () {
+		tableData = showdata(false);
+	});
+	
+	function showdata(TorF){
+		return $('#table_id').DataTable({
+			"destroy": TorF,
+	    	//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 5,
+			"lengthChange": false,
+			"language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	   			url:requestUrl+"message/list",
+	   			type:'POST',
+                data:function(d){
+                    d.addTimeStart=$("#addTimeStart").val();
+                    d.addTimeEnd=$("#addTimeEnd").val();
+                    d.state=$("#is_send").val();
+                    d.content=$("#content").val();
+                }
+	   		}, 
+	   		columns: [
+	           	{ "data": "messageId" },
+	           	{ "data": "messageTitle" },
+	           	{ "data": "messageContent" },
+	           	{ "data": "sys_userName" },
+	           	{ "data": "create_time" },
+	           	{ "data": "sysStateDescription" },
+	           	{ "data": "sendTime" },
+	           	{ "data":null,
+	           		"visible": true,
+	                "render":function(data,type,full){
+	                	var SendOrNot = "";
+	                	if(full.is_send!="1"){
+	                		SendOrNot = '<input type="button" class="btn btn-success" value="发送" onclick="toSend(\''+full.messageId+'\')"/>&nbsp;';
+	                	}
+	                	return  SendOrNot +
+								'<input type="button" class="btn btn-success" value="删除" onclick="toDelete(\''+full.messageId+'\')"/>';
+					}
+				}
+			]
+		});
+	}
+
+	//新增 按钮
+	function showDialogModal() {
+	    $("#dialogModal").modal("show");
+	}
+
+    //保存
+    function save() {
+        saveData();
+        $("#dialogModal").modal("hide");
+	    $('#title').val("");
+	    $('#messageContent').val("");
+    }
+
+    //取消
+	function closeDialog(){
+        $("#dialogModal").modal("hide");
+	    $('#title').val("");
+	    $('#messageContent').val("");
+	}
+
+	//新增
+	function saveData(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/add",
+            data:JSON.stringify({
+            		"messageType":"系统消息",
+	            	"messageTitle":$('#title').val(),
+	            	"messageContent":$('#messageContent').val()
+            }),
+            contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                alert("保存成功");
+                reload();//刷新表格
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("保存失败");
+            }
+        });
+	}
+	
+	//查询
+	function search(){
+		tableData.ajax.reload();
+	}
+    function reload(){
+		var table = $('#table_id').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//重新加载
+	function reset(){
+		$("#addTimeStart").val("");
+		$('#addTimeEnd').val("");
+		$('#is_send').val("0");
+		$('#content').val("");
+	}
+	
+	//发送
+	function toSend(messageId){
+        $("#id_del").val(messageId);
+        $("#mySmallModalLabel").modal("show");
+        $(".btn.btn-primary.delete").hide();
+        $(".btn.btn-primary.send").show();
+        $("#attention").text("确认发送所有会员？");
+	}
+    //确认发送
+    function delSend(){
+        var messageId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+            type:'GET',
+            url:requestUrl+"message/send/"+messageId,
+            success : function(data) {
+                console.log(data);
+                alert("发送成功");
+                reload();//刷新表格
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("发送失败");
+            }
+        });
+    }
+	
+	//删除
+	function toDelete(messageId){
+        $("#id_del").val(messageId);
+        $("#mySmallModalLabel").modal("show");
+        $(".btn.btn-primary.delete").show();
+        $(".btn.btn-primary.send").hide();
+        $("#attention").text("确认删除？");
+	}
+    //确认删除
+    function delDelete(){
+        var messageId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"message/remove/"+messageId,
+	        success : function(data) {
+	            console.log(data);
+	            alert("删除成功");
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("删除失败");
+	        }
+	    });
+    }
+</script>
+

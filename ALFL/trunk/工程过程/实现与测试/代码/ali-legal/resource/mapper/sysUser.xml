@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysUser">
+    <resultMap id="BaseResultMap" type="SysUser" >
+        <id column="sys_userId" property="sys_userId" jdbcType="INTEGER" />
+        <result column="sys_userName" property="sys_userName" jdbcType="VARCHAR" />
+        <result column="sys_userPassword" property="sys_userPassword" jdbcType="VARCHAR" />
+        <result column="sys_roleId" property="sys_roleId" jdbcType="INTEGER" />
+        <result column="sysRoleName" property="sysRoleName" jdbcType="VARCHAR" />
+        <result column="sys_nickName" property="sys_nickName" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="sys_state" property="sys_state" jdbcType="INTEGER" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        asu.*,
+        asr.sys_roleName as sysRoleName
+        FROM
+        ali_sys_user as asu
+        left join ali_sys_role as asr on asu.sys_roleId = asr.sys_roleId
+        <where>
+            <if test="true">
+                and (asu.isDelete is null or asu.isDelete=0)
+            </if>
+            <if test="sys_userId != null">
+                and asu.sys_userId = #{sys_userId,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY asu.sys_userId DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(asu.sys_userId)
+        FROM
+        ali_sys_user as asu
+        left join ali_sys_role as asr on asu.sys_roleId = asr.sys_roleId
+        <where>
+            <if test="true">
+                and (asu.isDelete is null or asu.isDelete=0)
+            </if>
+            <if test="sys_userId != null">
+                and asu.sys_userId = #{sys_userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="SysUser" resultMap="BaseResultMap">
+        SELECT
+        asu.*,
+        asr.sys_roleName as sysRoleName
+        FROM
+        ali_sys_user as asu
+        left join ali_sys_role as asr on asu.sys_roleId = asr.sys_roleId
+        <where>
+            <if test="sys_userId != null">
+                and asu.sys_userId = #{sys_userId,jdbcType=INTEGER}
+            </if>
+            <if test="sys_userName != null and sys_userName != ''">
+                and asu.sys_userName = #{sys_userName,jdbcType=VARCHAR}
+            </if>
+            <if test="sys_userPassword != null and sys_userPassword != ''">
+                and asu.sys_userPassword = #{sys_userPassword,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="SysUser" useGeneratedKeys="true" keyProperty="sys_userId" >
+	    insert into ali_sys_user (sys_userName, sys_userPassword,sys_roleId, sys_nickName, sys_state, mobile,isDelete)
+	    values (#{sys_userName,jdbcType=VARCHAR}, #{sys_userPassword,jdbcType=VARCHAR},
+	      	#{sys_roleId,jdbcType=INTEGER}, #{sys_nickName,jdbcType=VARCHAR}, 1, #{mobile,jdbcType=VARCHAR},0)
+  	</insert>
+    <update id="update" parameterType="SysUser" >
+        update ali_sys_user
+        <set >
+            <if test="sys_userName != null" >
+                sys_userName = #{sys_userName,jdbcType=VARCHAR},
+            </if>
+            <if test="sys_userPassword != null" >
+                sys_userPassword = #{sys_userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="sys_roleId != null" >
+                sys_roleId = #{sys_roleId,jdbcType=INTEGER},
+            </if>
+            <if test="sys_nickName != null" >
+                sys_nickName = #{sys_nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null" >
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sys_state != null" >
+                sys_state = #{sys_state,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sys_userId = #{sys_userId,jdbcType=INTEGER}
+    </update>
+</mapper>

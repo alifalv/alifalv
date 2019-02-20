@@ -1,0 +1,588 @@
+{
+	"@platforms": [
+		"android",
+		"iPhone",
+		"iPad"
+	],
+	"id": "2882303761517467367",
+	/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"name": "阿里法律",
+	/*应用名称，程序桌面图标名称*/
+	"version": {
+		"name": "1.0.6",
+		/*应用版本名称*/
+		"code": ""
+	},
+	"description": "阿里法律",
+	/*应用描述信息*/
+	"icons": {
+		"72": "icon.png"
+	},
+	"launch_path": "html/Index-main.html",
+	/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"developer": {
+		"name": "",
+		/*开发者名称*/
+		"email": "",
+		/*开发者邮箱地址*/
+		"url": ""
+	},
+	"permissions": {
+		"Messaging": {},
+		"Cache": {
+			"description": "管理应用缓存"
+		},
+		"Console": {
+			"description": "跟踪调试输出日志"
+		},
+		"Contacts": {
+			"description": "访问系统联系人信息"
+		},
+		"Events": {
+			"description": "应用扩展事件"
+		},
+		"Speech": {},
+		"OAuth": {
+			"description": "登录授权"
+		},
+		"Payment": {},
+		"Push": {},
+		"Maps": {}
+	},
+	"plus": {
+		"secondwebview": {
+			"launch_path": "html/Index-nav.html",
+			"id": "Index-nav.html",
+			"bottom": "0px",
+			"height": "56px",
+			"background": "transparent",
+			"dock": "bottom"
+		},
+		"splashscreen": {
+			"autoclose": true,
+			/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+			"waiting": true,
+			"delay": "1000"
+		},
+		"popGesture": "close",
+		/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
+		"runmode": "normal",
+		/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
+		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",
+		/*可选，保留给应用签名，暂不使用*/
+		"distribute": {
+			"plugins": {
+				"push": {
+					"mipush": {
+						"appid_android": "1000270",
+						"appkey_android": "670100056270",
+						"appid_ios": "",
+						"appkey_ios": ""
+					}
+				},
+				"oauth": {
+					"weixin": {
+						"appid": "wx50120b6fecb7aa43",
+						"appsecret": "d4624c36b6795d1d99dcf0547af5443d"
+					},
+					"qq": {
+						"appid": "1104968226"
+					},
+					"sina": {
+						"appkey": "1863321258",
+						"appsecret": "1043602547",
+						"redirect_uri": "http://www.alifalv.cn/"
+					}
+				},
+				"speech": {
+					"ifly": {}
+				},
+				"payment": {
+					"weixin": {
+						"appid": "wx50120b6fecb7aa43"
+					}
+				}
+			},
+			"apple": {
+				"appid": "",
+				/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
+				"mobileprovision": "",
+				/*iOS应用打包配置文件*/
+				"password": "",
+				/*iOS应用打包个人证书导入密码*/
+				"p12": "",
+				/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
+				"devices": "universal",
+				/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+				"frameworks": []
+			},
+			"google": {
+				"packagename": "",
+				/*Android应用包名，如io.dcloud.HelloH5*/
+				"keystore": "",
+				/*Android应用打包使用的密钥库文件*/
+				"password": "",
+				/*Android应用打包使用密钥库中证书的密码*/
+				"aliasname": "",
+				/*Android应用打包使用密钥库中证书的别名*/
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TASKS\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+					"<uses-permission  android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TOP_ACTIVITY_INFO\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>",
+					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.SEND_SMS\"/>",
+					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.INTERACT_ACROSS_USERS_FULL\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SMS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_SMS\"/>"
+				]
+			},
+			"orientation": [
+				"portrait-primary"
+			],
+			/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"icons": {
+				"ios": {
+					"prerendered": true,
+					/*应用图标是否已经高亮处理，在iOS6及以下设备上有效*//*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+					"iphone": {
+						"normal": "",
+						/*iPhone3/3GS程序图标，分辨率：57x57*/
+						"retina": "",
+						/*iPhone4程序图标，分辨率：114x114*/
+						"retina7": "",
+						/*iPhone4S/5/6程序图标，分辨率：120x120*/
+						"retina8": "",
+						/*iPhone6 Plus程序图标，分辨率：180x180*/
+						"spotlight-normal": "",
+						/*iPhone3/3GS Spotlight搜索程序图标，分辨率：29x29*/
+						"spotlight-retina": "",
+						/*iPhone4 Spotlight搜索程序图标，分辨率：58x58*/
+						"spotlight-retina7": "",
+						/*iPhone4S/5/6 Spotlight搜索程序图标，分辨率：80x80*/
+						"settings-normal": "",
+						/*iPhone4设置页面程序图标，分辨率：29x29*/
+						"settings-retina": "",
+						/*iPhone4S/5/6设置页面程序图标，分辨率：58x58*/
+						"app@2x": "unpackage/res/icons/120x120.png",
+						"app@3x": "unpackage/res/icons/180x180.png",
+						"notification@2x": "unpackage/res/icons/40x40.png",
+						"notification@3x": "unpackage/res/icons/60x60.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"settings@3x": "unpackage/res/icons/167x167.png",
+						"spotlight@2x": "unpackage/res/icons/80x80.png",
+						"spotlight@3x": "unpackage/res/icons/120x120.png"
+					},
+					"ipad": {
+						"normal": "",
+						/*iPad普通屏幕程序图标，分辨率：72x72*/
+						"retina": "",
+						/*iPad高分屏程序图标，分辨率：144x144*/
+						"normal7": "",
+						/*iPad iOS7程序图标，分辨率：76x76*/
+						"retina7": "",
+						/*iPad iOS7高分屏程序图标，分辨率：152x152*/
+						"spotlight-normal": "",
+						/*iPad Spotlight搜索程序图标，分辨率：50x50*/
+						"spotlight-retina": "",
+						/*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
+						"spotlight-normal7": "",
+						/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
+						"spotlight-retina7": "",
+						/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						"settings-normal": "",
+						/*iPad设置页面程序图标，分辨率：29x29*/
+						"settings-retina": "",
+						"app": "unpackage/res/icons/76x76.png",
+						"app@2x": "unpackage/res/icons/152x152.png",
+						"notification": "unpackage/res/icons/20x20.png",
+						"notification@2x": "unpackage/res/icons/40x40.png",
+						"proapp@2x": "unpackage/res/icons/167x167.png",
+						"settings": "unpackage/res/icons/29x29.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"spotlight": "unpackage/res/icons/40x40.png",
+						"spotlight@2x": "unpackage/res/icons/80x80.png"
+					},
+					"appstore": "unpackage/res/icons/167x167.png"
+				},
+				"android": {
+					"mdpi": "unpackage/res/icons/logo2.png",
+					/*普通屏程序图标，分辨率：48x48*/
+					"ldpi": "unpackage/res/icons/logo2.png",
+					/*大屏程序图标，分辨率：48x48*/
+					"hdpi": "unpackage/res/icons/logo2.png",
+					/*高分屏程序图标，分辨率：72x72*/
+					"xhdpi": "unpackage/res/icons/logo2.png",
+					/*720P高分屏程序图标，分辨率：96x96*/
+					"xxhdpi": "unpackage/res/icons/logo2.png",
+					"xxxhdpi": "unpackage/res/icons/logo2.png"
+				}
+			},
+			"splashscreen": {
+				"ios": {
+					"iphone": {
+						"default": "",
+						/*iPhone3启动图片选，分辨率：320x480*/
+						"retina35": "html/images/loginregister/iPhone4s-640x960.png",
+						/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "html/images/loginregister/iPhone5s-640x1136.png",
+						/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
+						"retina47": "html/images/loginregister/iPhone6-750x1334.png",
+						/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
+						"retina55": "html/images/loginregister/iPhone6plus-1242x2208.png",
+						/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
+						"retina55l": "html/images/loginregister/iPhone6plus-2208x1242.png",
+						"iphonex": "html/images/loginregister/iPhonex-1125x2436.png",
+						"iphonexl": "html/images/loginregister/iPhonex-2435x1125.png"
+					},
+					"ipad": {
+						"portrait": "html/images/loginregister/ipad-768x1004.png",
+						/*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "html/images/loginregister/ipad-1536x2008.png",
+						/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "html/images/loginregister/ipad-1024x748.png",
+						/*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "html/images/loginregister/ipad-2048x1496.png",
+						/*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "html/images/loginregister/ipad-ios7-768x1024.png",
+						/*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "html/images/loginregister/ipad-ios7-1536x2048.png",
+						/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "html/images/loginregister/ipad-ios7-1024x768.png",
+						/*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "html/images/loginregister/ipad-ios7-2048x1536.png"
+					}
+				},
+				"android": {
+					"mdpi": "",
+					/*普通屏启动图片，分辨率：240x282*/
+					"ldpi": "",
+					/*大屏启动图片，分辨率：320x442*/
+					"hdpi": "html/images/loginregister/repape480-762.png",
+					/*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "html/images/loginregister/repape720-1242.png",
+					/*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "html/images/loginregister/repape1080-1882.png"
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"pages": {
+			"html/Index-main.html": {
+				"resources": [
+					"html/Index.html"
+				],
+				"refer": [
+					"html/Index-nav.html",
+					"html/DateSelect.html",
+					"html/Myinfo.html",
+					"html/KuaiJie.html",
+					"html/Lawsearch.html"
+				],
+				"priority": 0
+			},
+			"html/Myinfo.html": {
+				"resources": [],
+				"refer": [
+					"html/Set-center.html",
+					"html/Login.html",
+					"html/Lawask.html",
+					"html/Lawbuy.html"
+				],
+				"priority": 0
+			},
+			"html/Index-nav.html": {
+				"resources": [
+					"html/Index.html"
+				],
+				"refer": [
+					"html/DateSelect.html",
+					"html/Myinfo.html",
+					"html/KuaiJie.html",
+					"html/Lawsearch.html"
+				],
+				"priority": 0
+			},
+			"html/Set-center.html": {
+				"resources": [],
+				"refer": [
+					"html/MyInfoEdit-changetel.html"
+				],
+				"priority": 0
+			},
+			"html/Login.html": {
+				"resources": [],
+				"refer": [
+					"html/Register-main.html"
+				],
+				"priority": 0
+			},
+			"html/Register-main.html": {
+				"resources": [],
+				"refer": [
+					"html/Register-askman-1.html"
+				],
+				"priority": 0
+			},
+			"html/Register-askman-1.html": {
+				"resources": [],
+				"refer": [
+					"html/Register-askman-2.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"html/Myinfo-viprenzhen.html",
+				"html/js/md5.min.js",
+				"html/images/index/idx-band2-2.png",
+				"html/js/assets/calendar_showcase_util.js",
+				"html/MyWallet-tixian.html",
+				"html/css/MyIndex.css",
+				"html/images/myinfo/youhuiquan2.png",
+				"html/js/ajax/MyOrderList.js",
+				"html/js/mui.slideleft.js",
+				"html/images/sonpages/sure.png",
+				"html/css/qrorder.css",
+				"html/js/assets/datas.js",
+				"html/images/nav/foot_2-2.png",
+				"html/images/sonpages/findlawer-icon3.png",
+				"html/images/index/idx-band2-8.png",
+				"html/images/index/banner.png",
+				"html/images/myinfo/sureright.png",
+				"html/js/fastclick.bak.js",
+				"html/images/index/idx-lawer3.png",
+				"html/images/index/idx-band1-2.png",
+				"html/css/cropper.css",
+				"html/images/index/idx-band2-9.png",
+				"html/js/jquery.min.js",
+				"html/Login-resetPwd.html",
+				"html/js/assets/mustache.min.js",
+				"html/css/dateselect.css",
+				"html/MyWatching2.html",
+				"html/images/dateselect/headicon1.png",
+				"html/images/loginregister/register-logo.png",
+				"html/images/myinfo/setting.png",
+				"html/images/loginregister/login-qq.png",
+				"html/images/index/idx-band2-3.png",
+				"html/js/assets/sexchoser.js",
+				"html/images/loginregister/register-sucess-icon2.png",
+				"html/FindLawer.html",
+				"html/images/other/plus-5.png",
+				"html/js/fastclick.js",
+				"html/images/dateselect/headicon2.png",
+				"html/images/loginregister/login-name.png",
+				"html/css/myorder.css",
+				"html/Datelist.html",
+				"html/js/assets/calendar_showcase.js",
+				"html/images/myinfo/myinfo-viprenzhen.png",
+				"html/images/sonpages/zhaopin1.png",
+				"html/fonts/mui.ttf",
+				"html/images/myinfo/myinfo-bg.png",
+				"html/js/assets/picker.rebuild.js",
+				"html/js/cropper.min.js",
+				"html/images/loginregister/login-pwd.png",
+				"html/images/myinfo/order2.png",
+				"html/images/other/plus-3.png",
+				"html/css/showcase.css",
+				"html/vue/ydui1.2.1.js",
+				"html/Myinfo-vipUp.html",
+				"html/js/assets/calendar_base.js",
+				"html/js/ajax/commonfuc.js",
+				"html/images/other/showmore2.png",
+				"html/Register-askman-sucess.html",
+				"html/css/mui.min.css",
+				"html/images/sonpages/search.png",
+				"html/js/assets/picker.min.js",
+				"html/images/sonpages/findlawer-icon2.png",
+				"html/images/other/down.png",
+				"html/swiper/swiper.min.js",
+				"html/fonts/iconfont.css",
+				"html/images/myinfo/tixian-2.png",
+				"html/images/myinfo/myinfo-viprenzhen-xx.png",
+				"html/images/other/mywatch-lv1.png",
+				"html/images/index/idx-band1-4.png",
+				"html/MyQiuzhi.html",
+				"html/images/index/idx-band3-1.png",
+				"html/css/common.css",
+				"html/images/dateselect/bottomicon1.png",
+				"html/images/other/plus-1.png",
+				"html/fonts/iconfont.woff",
+				"html/Register-askman-fill.html",
+				"html/images/loginregister/register-fill2.png",
+				"html/images/loginregister/register-sucess-icon.png",
+				"html/images/index/idx-tel.png",
+				"html/css/calendar_base.css",
+				"html/images/loginregister/register-fill1.png",
+				"html/images/myinfo/order-msg.png",
+				"html/mui/mui.min.js",
+				"html/images/myinfo/message.png",
+				"html/images/myinfo/order4.png",
+				"html/images/nav/foot_1-1.png",
+				"html/images/index/idx-band2-6.png",
+				"html/images/myinfo/right.png",
+				"html/Login-bind.html",
+				"html/images/loginregister/login-wb.png",
+				"html/images/other/search.png",
+				"html/js/dateselect.js",
+				"html/fonts/iconfont.js",
+				"html/images/myinfo/vipserver1.png",
+				"html/js/assets/timechoser.js",
+				"html/images/myinfo/tixian-1.png",
+				"html/images/nav/foot_2-1.png",
+				"html/scss/dateselect.scss",
+				"html/images/myinfo/vipserver3.png",
+				"html/images/loginregister/eye-show.png",
+				"html/js/mui.min.js",
+				"html/vue/axios.min.js",
+				"html/NewsInfo.html",
+				"html/images/myinfo/myqiuzhi1.png",
+				"html/js/mui.slideright.js",
+				"html/fonts/mui-icons-extra.ttf",
+				"html/images/sonpages/findlawer-icon4.png",
+				"html/images/sonpages/findlawerbg.png",
+				"html/images/sonpages/up.png",
+				"html/images/index/idx-posi.png",
+				"html/vue/ydui.rem.js",
+				"html/scss/myorder.scss",
+				"html/images/index/idx-lawer2.png",
+				"html/js/mui.js",
+				"html/Caculater.html",
+				"html/images/nav/foot_plus.png",
+				"html/images/nav/foot_3-1.png",
+				"html/js/exif.js",
+				"html/Myinfo-Vipcenter.html",
+				"html/images/myinfo/level1.png",
+				"html/fonts/iconfont.ttf",
+				"html/images/index/idx-band2-7.png",
+				"html/swiper/swiper.min.css",
+				"html/images/dateselect/bottomicon2.png",
+				"html/MyWatching.html",
+				"html/Myyouhuiquan.html",
+				"html/images/sonpages/backtop.png",
+				"html/images/myinfo/order3.png",
+				"html/images/sonpages/zhaopin2.png",
+				"html/css/mui.css",
+				"html/css/footnav.css",
+				"html/images/loginregister/register-s-1.png",
+				"html/MyInfoEdit.html",
+				"html/fonts/iconfont.eot",
+				"html/Order-pay.html",
+				"html/images/nav/foot_4-1.png",
+				"html/vue/vue2.5.9.js",
+				"html/css/main.css",
+				"html/images/other/mywatch-wb.png",
+				"html/images/loginregister/eye-hide.png",
+				"html/images/myinfo/level2.png",
+				"html/js/mui.slideright.bak.js",
+				"html/images/sonpages/orderpay.png",
+				"index.html",
+				"html/images/index/idx-xfdx.png",
+				"html/Orderlist.html",
+				"html/js/app.js",
+				"html/Date-create.html",
+				"html/ZhaopinIdx.html",
+				"html/css/login.css",
+				"html/MyInfoEdit-pname.html",
+				"html/images/index/idx-band1-3.png",
+				"html/images/myinfo/myqiuzhi3.png",
+				"html/LawerInfo.html",
+				"html/mui/mui.lazyload.img.js",
+				"html/js/assets/jquery.loadTemplate-1.4.4.min.js",
+				"html/images/index/idx-band1-1.png",
+				"html/images/index/idx-lawer1.png",
+				"html/scss/main.scss",
+				"html/js/assets/jquery.tmpl.js",
+				"html/images/sonpages/fengxiang.png",
+				"html/images/other/showmore1.png",
+				"html/images/myinfo/delet.png",
+				"html/images/myinfo/tobevip.png",
+				"html/images/loginregister/login-wx.png",
+				"html/images/myinfo/level3.png",
+				"html/images/myinfo/nodetill.png",
+				"html/css/passwordkeyboard.css",
+				"html/Alicaipan.html",
+				"html/HighestPoints.html",
+				"html/Msgcenter.html",
+				"html/images/sonpages/msg-white.png",
+				"html/vue/vant.min.js",
+				"html/MyWallet.html",
+				"html/fonts/iconfont.svg",
+				"html/images/myinfo/order1.png",
+				"html/images/loginregister/register-s-2.png",
+				"html/images/myinfo/myqiuzhi4.png",
+				"html/js/litigationCost.js",
+				"html/images/nav/foot_3-2.png",
+				"html/images/sonpages/shoucang.png",
+				"html/images/other/mywatch-rz.png",
+				"html/mui/mui.min.css",
+				"html/images/sonpages/zhaopin.png",
+				"html/images/index/idx-band2-4.png",
+				"html/images/index/idx-band2-1.png",
+				"html/images/sonpages/cancle.png",
+				"html/images/other/plus-bg.png",
+				"html/images/sonpages/findlawer-icon1.png",
+				"html/images/other/plus-2.png",
+				"html/images/myinfo/youhuiquan1.png",
+				"html/images/myinfo/vipserver2.png",
+				"html/images/loginregister/logo-1.png",
+				"html/vue/ydui.flexible1.1.3.js",
+				"html/images/other/plus-4.png",
+				"html/js/assets/citychoser.js",
+				"html/images/loginregister/register-sucess-bg.png",
+				"html/MyZhaopin.html",
+				"html/images/nav/foot_1-2.png",
+				"html/images/loginregister/register-bg.png",
+				"html/vue/httpVueLoader.js",
+				"html/Dateinfo.html",
+				"html/mui/mui.lazyload.js",
+				"html/images/sonpages/delet.png",
+				"html/images/index/idx-defaluthead.png",
+				"html/Set-aboutus.html",
+				"html/images/myinfo/myinfo-viprenzhen-zy.png",
+				"html/images/loginregister/login-close.png",
+				"html/images/sonpages/datemsg.png",
+				"html/images/index/idx-band2-5.png",
+				"html/images/index/idx-band2-10.png",
+				"html/images/loginregister/register-close.png",
+				"html/images/nav/foot_4-2.png",
+				"html/js/ajax/fetch.js",
+				"html/images/other/plus-6.png",
+				"html/images/myinfo/vipserver4.png",
+				"html/Set-msgsetting.html",
+				"html/js/orderZYQH.js",
+				"html/css/search.css",
+				"html/images/index/idx-band3-2.png",
+				"html/js/lib/Login.js",
+				"html/images/other/plus-close.png"
+			]
+		}
+	},
+	"fullscreen": false
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>法律法规查询</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/footnav.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="js/fastclick.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <style>
+        .mui-control-content {
+            height: -webkit-fill-available;
+            height: -moz-fill-available;
+            height: -moz-available;
+            /* FireFox目前这个生效 */
+            height: fill-available;
+            ;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch">
+    <!--公共头部 begin-->
+    <div class="header">
+        <!--<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>-->
+        <h2>法律法规查询</h2>
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class="Conter page-slideright" id="app">
+        <div class="lawsearch-top">
+            <form class="inputbox">
+                <div class="mui-input-row">
+                    <label><img src="images/other/search.png"/><span>标题</span></label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入标题" v-model.trim="title">
+                </div>
+                <div class="mui-input-row">
+                    <label><img src="images/other/search.png"/><span>正文</span></label>
+                    <input type="text" class="mui-input-clear" placeholder="请输入正文" v-model.trim="articleContent">
+                </div>
+
+                <!--折叠部分-->
+                <div class="hiddenpart">
+                    <div class="selectrow" id="department">
+                        <select name="" v-model="unitId">
+								<option value="">选择发文单位</option>
+								<option v-for="(item, index) in unitList" :key="index" :value="item.unitId" :selected="index == 0">
+									{{item.unitName}}
+								</option>
+							</select>
+                        <img src="images/other/down.png" />
+                    </div>
+                    <div class="selectrow" id="powerlevel">
+                        <select name="" v-model="effectivenessId">
+								<option value="">选择效力等级</option>
+								<option v-for="(item, index) in effectivenessGradeList" :key="index" :value="item.effectivenessGradeId" :selected="index == 0">
+									{{item.effectivenessGradeName}}
+								</option>
+							</select>
+                        <img src="images/other/down.png" />
+                    </div>
+                </div>
+
+                <!--按钮部分-->
+                <div class="buttongroup">
+                    <input type="button" name="" id="showmore" value="" />
+                    <input type="reset" name="" id="reset" value="重置" />
+                    <input type="button" name="" id="search" value="搜索" @click="search" />
+                </div>
+            </form>
+        </div>
+
+
+        <div class="lawsearch-bottom">
+            <div class="idx-band5">
+                <!-- <div class="newsBox-tit flex_Horizontal mui-segmented-control">
+                    <a class="mui-control-item mui-active" href="#newAsk">最新上传</a>
+                    <a class="mui-control-item" href="#newCase">我的收藏</a>
+                </div> -->
+                <div class="newsBox">
+                    <div id="newAsk" class="mui-control-content mui-active">
+                        <div id="list1" class="mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="listbox">
+                                    <li class="list" v-for="(value, index) in list1List" :key="index">
+                                        <a :href="'Law-Info.html?articleId=' + value.articleId">
+                                            <h3>{{value.title}}</h3>
+                                            <div class="info">
+                                                <p>发布机构：<span>{{value.unitName}}</span></p>
+                                                <p>发布日期：<span>{{value.issueTime | subDay}}</span></p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div id="newCase" class="mui-control-content">-->
+                    <!--<div id="list2" class="mui-scroll-wrapper">-->
+                    <!--<div class="mui-scroll">-->
+                    <!--<ul>-->
+                    <!--<li>-->
+                    <!--<a href="">-->
+                    <!--<h3>国家发展改革委、财政部关于完善市场约束机制严格防范外债风险和地方债务风险的通知 </h3>-->
+                    <!--<div class="info">-->
+                    <!--<p>发布机构：<span>国务院 </span></p>-->
+                    <!--<p>发布日期：<span>2018-05-23</span></p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--主体 end-->
+
+    <!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		</div>-->
+
+    <script src="vue/vue.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/axios.min.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+
+    <script src="vue/httpVueLoader.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/Lawsearch.js"></script>
+</body>
+
+</html>

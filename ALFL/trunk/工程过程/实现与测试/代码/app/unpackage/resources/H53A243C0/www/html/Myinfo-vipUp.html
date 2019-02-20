@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="Login">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>会员升级</title>
+		<link rel="stylesheet" href="mui/mui.min.css" />
+		<link rel="stylesheet" href="vue/vant-min.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Login ResetPwd Register Lawsearch">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+			</div>
+			<h2>会员升级</h2>
+		</div>
+		<!--公共头部 end-->
+		
+		<!--主体 begin-->
+		<div class="Conter page-slideright" style="padding-top: 2rem;">
+			<div class="main-bd Register-step2">
+				<div class="levelbox">
+					<img src="images/myinfo/tobevip.png" />
+				</div>
+				<div class="selectbox">
+					<section>
+						<p>请选择会员类型</p>
+						<select name="">
+							<option value="1">黄金会员</option>
+							<option value="2">伯金会员</option>
+							<option value="3">钻石会员</option>
+						</select>
+						<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+					</section>
+					<section>
+						<p>请选择车辆类型</p>
+						<select name="">
+							<option value="2">客车</option>
+							<option value="1">货车</option>
+							<option value="0">其他</option>
+						</select>
+						<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+					</section>
+					<section>
+						<p>请选择开通年限</p>
+						<select name="">
+							<option value="1">1年</option>
+							<option value="2">2年</option>
+							<option value="3">3年</option>
+							<option value="4">4年</option>
+							<option value="5">5年</option>
+							<option value="6">6年</option>
+							<option value="7">7年</option>
+							<option value="8">8年</option>
+							<option value="9">9年</option>
+							<option value="10">10年</option>
+						</select>
+						<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+					</section>
+					<section>
+						<p>请补充资料：可升级后补充</p>
+						<a class="hassubmit" href="Register-askman-fill.html">未提交</a>
+						<span class="mui-icon mui-icon mui-icon-arrowright"></span>
+					</section>
+				</div>
+				<div class="tipbox">
+					<p class="money">需充值：<span class="redfont">￥400</span></p>
+					<p class="tipsinfo"><img src="images/loginregister/register-s-1.png" />温馨提示：本服务不支持退款。</p>
+					<p class="tipsinfo"><img src="images/loginregister/register-s-2.png"/>
+						<a href="">查看车辆选择说明</a>
+					</p>
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label for="checkboxRead">我已阅读并同意<a href="">《平台服务协议》</a></label>
+						<input name="checkboxRead" value="read" type="checkbox">
+					</div>
+				</div>
+				<div class="nextbox">
+					<input type="button" name="" id="Nextstep" value="下一步" />
+				</div>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/ajax/ajax.js"></script>
+		<script src="vue/axios.min.js"></script>
+		<script src="vue/httpVueLoader.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script type="text/javascript">
+//			window.onload = function searchSS() {
+//				FastClick.attach(document.body); //ios点击优化
+//			};
+		</script>
+	</body>
+
+</html>

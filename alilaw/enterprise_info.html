@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 企业信息查询</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/enterprise.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+
+    <div class="ui-content ui-content-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ui-lawer-list ui-lawer-list-8" id="counselorRecommendList">
+                        <script id="counselorRecommendListTmpl" type="text/html">
+                            {{if (getLength(data) > 0)}} {{each data value i}}
+                            <a href="{{if value.userId}}home_index.html?userId={{value.userId}}{{else}}javascript:void(0);{{/if}}" target="_blank">
+                                <img src="{{value.userImg | createImgUrl}}" alt="..." class="img-circle">
+                                <p class="name ui-cut-1" title="{{value.userName}}">{{value.userName}}</p>
+                                <p class="address ui-cut-1" title="{{value.provinceName}} {{value.cityName}}">{{value.provinceName}} {{value.cityName}}</p>
+                                <p class="mobile">{{value.mobile}}</p>
+                            </a>
+                            {{/each}} {{else}}
+                            <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                            {{/if}}
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container info">
+            <div class="row">
+                <div class="col-xs-12">
+                    <dl class="ui-breadcrumb">
+                        <dd><span class="indexicon"></span><a href="index.html">首页</a></dd>
+                        <dd>企业查询</dd>
+                        <dd>查询列表</dd>
+                        <dd>广东小米科技有限公司</dd>
+                    </dl>
+                </div>
+                <div class="col-xs-12" id="adviceList">
+                    <div class="ui-panel">
+                        <div class="info baseinfo">
+                            <div class="table-responsive" pagination="mask" style="padding: 0 20px 0 20px;">
+                                <div class="s-list col-xs-12">
+                                    <div class="g-lefttImg col-xs-12">
+                                        <img src="../img/logo.png" alt="" />
+                                    </div>
+                                    <div class="g-rightContent">
+                                        <div class="col-xs-12" style="height: 30px;">
+                                            <p class="s-company col-xs-4">小米科技有限公司</p>
+                                            <p class="s-pfcinfo">
+                                                在业
+                                            </p>
+                                            <p class="s-oldname" style="margin-left:25px">
+                                                曾用名：北京小米科技责任有限公司
+                                            </p>
+                                        </div>
+                                        <div class="s-info">
+                                            <div class="col-xs-12">
+                                                <p class="col-xs-4">
+                                                    电话： 010-60606666-1101
+                                                </p>
+                                                <p class="col-xs-7">
+                                                    官网：http://www.mi.com
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <p class="col-xs-4">
+                                                    邮箱：maozhaoyu@xiaomi.com
+                                                </p>
+                                                <p class="col-xs-7">
+                                                    地址： 北京市海淀区清河中街68号华润五彩城购物中心二期13层
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <p class="col-xs-10">
+                                                    简介：小米公司正式成立于2010年4月，是一家专注于高端智能手机、互联网电视以及智能家居生态链建设的创新型科技企…
+                                                </p>
+                                                <p class="col-xs-2">查看详情</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="g-foot">
+                                <div class="ftleft">
+                                    <span>浏览：10万+</span>
+                                    <span class="ui-margin-l-40"><i class="icon-btn-6"></i>更新时间：2018年12月18日</span>
+                                </div>
+                                <div class="ftright">
+                                    <span class="spanred3"><i class="icon-btn-4"></i>收藏</span>
+                                    <span class="spanred4"><i class="icon-btn-3"></i>下载报告</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g-basic">
+                        <div class="ui-margin-l-50" id="cut">
+                            <li class="lichange currer">基础信息</li>
+                            <li class="lichange">法律诉讼</li>
+                            <li class="lichange">经营风险</li>
+                            <li class="lichange">历史信息</li>
+                        </div>
+                        <!-- 基础信息 -->
+                        <div class="g-change" style="display: block;" id="basicInfo">
+                            <span>工商信息</span>
+                            <span>股东及出资信息<i>5</i></span>
+                            <span>主要人员信息<i>2</i></span>
+                            <span>分支机构<i>1</i></span>
+                        </div>
+                        <!-- 法律诉讼 -->
+                        <div class="g-change" id="legalAction">
+                            <span>裁判文书<i>1505</i></span>
+                            <span>法院公告<i>200</i></span>
+                            <span>开庭公告<i>2</i></span>
+                            <span>被执行人信息<i>1</i></span>
+                            <span>失信人信息<i>1</i></span>
+                        </div>
+                        <!-- 经营风险 -->
+                        <div class="g-change" id="businessRisk">
+                            <span>行政处罚</span>
+                            <span>经营异常<i>5</i></span>
+                            <span>严重违法<i>2</i></span>
+                            <span>股权出质<i>1</i></span>
+                        </div>
+                    </div>
+                    <div id='container'></div>
+
+                    <!-- <div id="tbbusinessRisk" style="display:none;">
+                        <script class="header" type="text/html" src="enterorise_legalAction.html"></script>
+                    </div>
+                    <div id="tbhistoricalInfo" style="display:none;">
+                        <script class="header" type="text/html" src="../tmpl/header.html"></script>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html

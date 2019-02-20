@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CaseDepute">
+
+	<insert id="saveCaseDepute" useGeneratedKeys="true" keyProperty="caseId" parameterType="map">
+		insert into ali_case_depute 
+		  (caseTitle,caseDesc,caseHope,caseAsk,province,city,caseType,mobile,
+		  offerType,offerMoney,caseState,deputeTime,userId,userName,userImg,is_delete)
+		  values 
+		  (#{caseTitle},#{caseDesc},#{caseHope},#{caseAsk},#{province},#{city}
+		  ,#{caseType},#{mobile},#{offerType},#{offerMoney},0,NOW()
+		  ,#{userId},#{userName},#{userImg},0)
+	</insert>
+	
+	<insert id="saveCaseDeputeImgs" parameterType="map">
+		insert into ali_case_img (caseId,img)
+		values
+		<foreach collection="caseImgs" item="img" separator="," >
+			(#{caseId},#{img})
+		</foreach>
+	</insert>
+	
+	
+	<select id="findCaseList" parameterType="map" resultType="map">
+		select caseId,caseType,offerType,offerMoney,
+		  province,city,deputeTime,caseState,userId,userName,userImg
+		  from ali_case_depute where 1=1
+			<if test="city!=null">
+				and city = #{city}
+			</if>
+			<if test="caseType!=null">
+				and caseType = #{caseType}
+			</if>
+			order by deputeTime desc
+			limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findCaseList_COUNT_TOTAL" parameterType="map" resultType="int">
+		select COUNT(caseId)
+		  from ali_case_depute where 1=1
+			<if test="city!=null">
+				and city = #{city}
+			</if>
+			<if test="caseType!=null">
+				and caseType = #{caseType}
+			</if>
+	</select>
+	
+	
+	<select id="findCaseDetailsById" parameterType="int" resultType="map">
+		select a.*,
+			(select count(b.offerId) from ali_case_offer b where b.caseId = a.caseId) as offerNum
+		 from ali_case_depute a where caseId = #{caseId}
+	</select>
+	
+	<select id="findCaseImgs"  resultType="map">
+		select caseId,img from ali_case_img where caseId in 
+		  <foreach collection="array" open="(" close=")" separator="," item="caseId">
+		  	#{caseId}
+		  </foreach>
+	</select>
+	
+	
+	<!-- 获取案件详情  上一章  下一章 -->
+	<select id="findCaseDetailsPreAndNext" parameterType="map" resultType="map">
+		
+		select 'pre' as infoType,caseId,caseTitle from ali_case_depute where
+		  caseId &lt; #{caseId} 
+		  <if test="city!=null">
+		      and city = #{city}
+		  </if>
+		  <if test="caseType!=null">
+		      and caseType = #{caseType}
+		  </if>
+		  limit 1
+		  union all
+		 select 'next' as infoType,caseId,caseTitle from ali_case_depute where
+		  caseId &gt; #{caseId} 
+		  <if test="city!=null">
+		      and city = #{city}
+		  </if>
+		  <if test="caseType!=null">
+		      and caseType = #{caseType}
+		  </if>
+		  limit 1
+	</select>
+	
+	<insert id="offerCase" parameterType="map" useGeneratedKeys="true" keyProperty="offerId">
+		insert into ali_case_offer 
+		  (caseId,userId,nickName,userImg,effect,thinking,offerMoney,mobile,isSuccess,offerTime)
+		  values
+		  (#{caseId},#{userId},#{nickName},#{userImg},#{effect},#{thinking},#{offerMoney},#{mobile},0,NOW())
+	</insert>
+	
+	<update id="employ" parameterType="int">
+		update ali_case_offer set isSuccess = 1 where offerId = #{offerId}
+	</update>
+	
+	<select id="findCaseListByUserId" parameterType="int" resultType="map">
+		select a.*,b.isAuthentication,b.vipLevel from ali_case_depute a 
+		  inner join ali_user b on a.userId = b.userId
+		  where a.userId = #{userId}
+	</select>
+	
+	<select id="findOfferList" parameterType="int" resultType="map">
+		select a.*, b.isAuthentication,b.vipLevel from ali_case_offer a inner join
+		  ali_user b on a.userId = b.userId
+		  where a.caseId = #{caseId}
+	</select>
+	
+	<select id="myOfferCase" parameterType="int" resultType="map">
+		select a.* ali_case_depute a 
+		  inner join 
+		  ali_case_offer b on a.caseId = b.caseId
+		  where b.userId = #{userId} 
+	</select>
+
+</mapper>

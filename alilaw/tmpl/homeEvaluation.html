@@ -1,0 +1,38 @@
+<div class="ui-home-evaluation">
+    <div class="ui-home-evaluation-title"><h4>用户评价</h4></div>
+    <div class="row ui-padding-lr-10 ui-color-darkgray">
+
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">法律水平：</span>{{data.levelScore || '0'}}</div>
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">服务态度：</span>{{data.attitudeScore || '0'}}</div>
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">社会资源：</span>{{data.sourceScore || '0'}}</div>
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">收费标准：</span>{{data.chargeScore || '0'}}</div>
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">解答咨询：</span>{{data.complateAdviceNum || '0'}}次</div>
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">代写文书：</span>{{data.makeNum || '0'}}次</div>
+        <div class="col-xs-6 ui-margin-t-13"><span class="ui-color-gray">接收委托：</span>{{data.entrustNum || '0'}}人</div>
+    </div>
+    <hr/>
+    <div class="row ui-padding-lr-10 ui-color-darkgray">
+        <div class="col-xs-4 text-center">好评（<span class="ui-color-blue2">{{data.goodNum || '无'}}</span>）</div>
+        <div class="col-xs-4 text-center">中评（<span class="ui-color-blue2">{{data.middleNum || '无'}}</span>）</div>
+        <div class="col-xs-4 text-center">差评（<span class="ui-color-blue2">{{data.badNum || '无'}}</span>）</div>
+    </div>
+    <ul class="ui-home-ul">
+        {{if (getLength(data.evaluationList) > 0)}}
+            {{each data.evaluationList}}
+                {{if ($index < 3)}}
+                <li>
+                    <div>{{$value.realName}}</div>
+                    <div class="ui-home-mark">{{$value.evaluateldContent}}</div>
+                    <div>{{$value.evaluateTime}}</div>
+                </li>
+                {{/if}}
+            {{/each}}
+        {{else}}
+            <li>
+                <div class="ui-color-gray2">
+                   暂无评价
+                </div>
+            </li>
+        {{/if}}
+    </ul>
+</div>

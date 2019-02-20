@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="MyZhaopin MyQiuzhi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>岗位详情</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="fonts/iconfont.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <style type="text/css">
+        .MyZhaopin .newsBox ul li {
+            padding: 0 1rem;
+            margin:  0 0 0.25rem;
+        }
+
+        .ui-right-btn{
+            position: absolute;
+            right: -.5rem;
+            top: 0.7rem;
+            font-size: .8rem;
+        }
+        .MyQiuzhi {
+            top: 0;
+            bottom: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body class="Lawsearch Lawask MyQiuzhi">
+<div id="app">
+    <!--公共头部 begin-->
+    <div class="header">
+        <div class="goback">
+            <a class="mui-action-back mui-icon mui-icon-closeempty" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+        </div>
+        <!--<div class="goback msgcenter">-->
+            <!--<a href=""><img src="images/myinfo/123123.png" alt="" /></a>-->
+        <!--</div>-->
+    </div>
+    <!--公共头部 end-->
+
+    <!--主体 begin-->
+    <div class=" idx-band5 page-slideright ui-bg-gray">
+
+            <div class="newsBox page-slideright">
+                <div id="newAsk" class="mui-control-content mui-active">
+                    <ul>
+                        <li >
+                            <a >
+                                <div class="left"></div>
+                                <div class="right">
+                                    <div class="t">
+                                        <h2>{{articleData.companyName}}</h2>
+                                        <!-- <span class="deletebtn"></span> -->
+                                    </div>
+                                    <div class="c">
+                                        <p style="background: none;padding-left: 0" class="ui-color-greengray ui-margin-t-2">规模：{{articleData.companySize}}</p>
+                                    </div>
+                                    <div class="b">
+                                        <p style="background: none;padding-left: 0"><i class="ui-myqiuzhi2"></i>{{articleData.provinceName}} {{articleData.cityName}} {{articleData.companyAddress}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        <div class="ui-box">
+            <div class="ui-box-content">
+                <div><label>联系人：</label><span>{{articleData.contactName}}</span></div>
+                <div><label>电话：</label><span>{{articleData.contactMobile}}</span></div>
+                <div><label>邮箱：</label><span>{{articleData.email}}</span></div>
+                <div><label>网站：</label><span>{{articleData.companyUrl}}</span></div>
+            </div>
+        </div>
+
+        <div class="ui-box">
+            <div class="ui-box-content">
+                <div><label>公司简介：</label></div>
+                <div><span v-html="articleData.companyDesc"></span></div>
+            </div>
+        </div>
+
+        <fieldset class="ui-text-center" style="border-bottom: 0;border-right: 0;border-left: 0;">
+            <legend class="ui-size-58 ui-padding-lr-4">在招岗位</legend>
+        </fieldset>
+
+        <div id="pullrefresh" class="mui-content ui-bg-gray">
+
+            <div class="newsBox page-slideright">
+                <ul class="mui-scroll ui-bg-gray">
+                    <li v-for="(item, index) in list" :key="index" style="margin: 0 .25rem .25rem">
+                        <a :href="'GangWei.html?advertiseId=' + item.advertiseId">
+                            <div class="left"></div>
+                            <div class="right">
+                                <div class="t">
+                                    <h2>{{item.jobName}}</h2>
+                                    <!-- <span class="deletebtn"></span> -->
+                                </div>
+                                <div class="c">
+                                    <p>{{item.salName}}</p>
+                                    <p>{{item.provinceName}} {{item.cityName}}</p>
+                                    <p>{{item.sendTime  | subDay}}</p>
+                                </div>
+                                <div class="b">
+                                    <p style="margin-right:0">{{item.companyName}}
+                                        <span class="ui-right ui-block j-starRow" :data-advertiseid="item.advertiseId" :data-collectionid="item.collectionId" v-if="isShowStar == true">
+                                            <i class="iconfont icon-xingxing" v-if="item.collectionId == 0"></i>
+                                            <i class="iconfont icon-xingxing ui-color-pink" v-else-if="item.collectionId != 0"></i>
+                                            收藏
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+            <div class="backtop">
+
+            </div>
+        </div>
+    </div>
+    <!--主体 end-->
+
+    <script src="vue/vue.js"></script>
+    <script src="mui/mui.min.js"></script>
+    <script src="js/share.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <!--<script src="vue/axios.min.js"></script>-->
+    <!--<script src="vue/httpVueLoader.js"></script>-->
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/QiYe.js"></script>
+</div>
+</body>
+
+</html>

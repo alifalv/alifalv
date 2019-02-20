@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 个人流水表     -->
+<mapper namespace="WalletRecord">
+	 <insert id="saveWalletRecord"   parameterType="map" useGeneratedKeys="true" keyProperty="walletId">  
+		INSERT INTO 
+			ali_wallet_record  
+			(userId, businessOrder, balance, orderTime, totalFee)
+			 VALUES
+			  ( #{userId}, #{businessOrder}, #{balance}, NOW(), #{totalFee}); 
+	   </insert>
+	   
+	   <select id="listWalletRecord"   parameterType="map"  resultType="map"> 
+	   		select
+	   			a. * ,
+	   		    b.*
+	   		from
+	   		    ali_wallet_record   as a
+	   		left  join
+	   		    ali_business_order as b  on b.businessOrder = a.businessOrder
+	   		  where
+	   		    a.userId  = #{userId}   
+	   		   order by a.orderTime desc
+	   		    limit #{PAGE_START},#{PAGE_LENGTH}
+	   </select>	
+	                                                
+	      <select id="listWalletRecord_COUNT_TOTAL"   parameterType="map"  resultType="int"> 
+	   		select
+	   			count(*)  
+	   		from
+	   		    ali_wallet_record   as a 
+	   		  where
+	   		    a.userId  = #{userId}    
+	   </select>	
+</mapper>

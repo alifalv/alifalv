@@ -1,0 +1,55 @@
+
+{{if(userType == '2')}}
+    {{if(error)}}
+        <div class="ui-panel">
+            <div class="ui-panel-top ui-border-b-1 ui-padding-b-10">最近访客 <span class="ui-size-12 ui-right ui-color-gray">历史浏览人数：<span class="ui-bold ui-size-14 ui-color-darkgray">{{error}}</span></span></div>
+            <div class="ui-panel-content ui-padding-t-10">
+                <div class="row">
+                    <div class="col-xs-12 text-center ui-color-gray">{{error}}</div>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <div class="ui-panel">
+            <div class="ui-panel-top ui-border-b-1 ui-padding-b-10">最近访客 <span class="ui-size-12 ui-right ui-color-gray">历史浏览人数：<span class="ui-bold ui-size-14 ui-color-darkgray">{{records}}</span></span></div>
+            <div class="ui-panel-content ui-padding-t-10">
+                <div class="row">
+                    {{if (getLength(rows) > 0)}}
+                    {{each rows value i}}
+                    <div class="col-xs-4 text-center"><a href="javascript:void(0);" title="" ><img src="{{value.userImg | createImgUrl}}" alt="..." class="img-circle" width="60" height="60"><div class="ui-size-12 ui-cut-1 ui-padding-t-5">{{value.nickName || value.userName}}</div></a></div>
+                    {{/each}}
+                    {{else}}
+                    <div class="col-xs-12 text-center ui-color-gray">{{error || '暂无'}}</div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/if}}
+
+{{else}}
+    {{if(error)}}
+        <div class="ui-panel">
+            <div class="ui-panel-top ui-border-b-1 ui-padding-b-10">最近回复 <span class="ui-size-12 ui-right ui-color-gray">历史回复我的咨询师：<span class="ui-bold ui-size-14 ui-color-darkgray">{{error}}</span></span></div>
+            <div class="ui-panel-content ui-padding-t-10">
+                <div class="row">
+                    <div class="col-xs-12 text-center ui-color-gray">{{error}}</div>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <div class="ui-panel">
+            <div class="ui-panel-top ui-border-b-1 ui-padding-b-10">最近回复 <span class="ui-size-12 ui-right ui-color-gray">历史回复我的咨询师：<span class="ui-bold ui-size-14 ui-color-darkgray">{{data.counts}}</span></span></div>
+            <div class="ui-panel-content ui-padding-t-10">
+                <div class="row">
+                    {{if (getLength(data.lists) > 0)}}
+                    {{each data.lists value i}}
+                    <div class="col-xs-4 text-center"><a href="home_index.html?userId={{value.userId}}" title="" ><img src="{{value.userImg | createImgUrl}}" alt="..." class="img-circle" width="60" height="60"><div class="ui-size-12 ui-cut-1 ui-padding-t-5">{{value.nickName || value.userName}}</div></a></div>
+                    {{/each}}
+                    {{else}}
+                    <div class="col-xs-12 text-center ui-color-gray">{{error || '暂无'}}</div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/if}}
+{{/if}}

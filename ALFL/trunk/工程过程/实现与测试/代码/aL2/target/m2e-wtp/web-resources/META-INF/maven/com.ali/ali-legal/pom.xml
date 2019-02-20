@@ -1,0 +1,767 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ali</groupId>
+  <artifactId>ali-legal</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+  
+  <properties>
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+		<!-- spring版本号 -->
+		<spring.version>4.2.2.RELEASE</spring.version>
+		<!-- mybatis版本号 -->
+		<mybatis.version>3.2.8</mybatis.version>
+		<!-- log4j日志文件管理包版本 -->
+		<slf4j.version>1.7.12</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+		<!-- Powermock版本 -->
+		<powermock.version>1.6.4</powermock.version>
+		<!-- POI 版本 -->
+		<poi.version>3.13</poi.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+
+		<!-- 日志文件管理包 -->
+		<!-- log start -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- log end -->
+		<!-- spring核心包 -->
+		<!-- springframe start -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+
+		<!-- springframe end -->
+
+		<!-- mybatis核心包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<!-- mybatis/spring包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<!-- mysql驱动包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- junit测试包 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Powermock -->
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- AES包 -->
+		<dependency>
+			<groupId>org.cryptonode.jncryptor</groupId>
+			<artifactId>jncryptor</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+
+		<!-- generator包 -->
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tinygroup</groupId>
+			<artifactId>org.tinygroup.UEditor</artifactId>
+		</dependency>
+		<!-- freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>smstool</groupId>
+			<artifactId>smstool</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/smstools.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>ueditor</groupId>
+			<artifactId>ueditor</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/ueditor-1.1.2.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>json</groupId>
+			<artifactId>json</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/json.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		
+		
+		
+		
+		
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<!-- swagger start -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<!-- jackson 相关， Spring 依赖jackson将http请求的内容转成json对象，@ResponseBody 将Java对象转成json -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.7.4</version>
+		</dependency>
+		<!-- swagger end -->
+		
+		<!-- 个推 -->
+		<dependency>
+			<groupId>com.gexin.platform</groupId>
+			<artifactId>gexin-rp-sdk-http</artifactId>
+			<version>4.0.1.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gexin.platform</groupId>
+			<artifactId>gexin-rp-sdk-template</artifactId>
+			<version>4.0.0.16</version>
+		</dependency>
+		<!-- 华为短信 -->
+		<dependency>
+        		<groupId>org.apache.httpcomponents</groupId>
+        		<artifactId>fluent-hc</artifactId>
+        <version>4.5.5</version>
+    </dependency>	
+	</dependencies>
+
+	<build>
+	<defaultGoal>compile</defaultGoal>
+		<finalName>ali-legal</finalName>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>resource</directory>
+				<includes>
+					<include>conf/*</include>
+					<include>mapper/**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>resource</directory>
+				<includes>
+					<include>conf/*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+					<failOnMissingWebXml>true</failOnMissingWebXml>
+					<includeEmptyDirectories>true</includeEmptyDirectories>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>jar</nonFilteredFileExtension>
+						<nonFilteredFileExtension>zip</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+
+			</plugin>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<configuration>
+					<verbose>true</verbose>
+					<overwrite>true</overwrite>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<!-- 定义运行环境相关参数 start -->
+	<profiles>
+		<!-- 开发环境 -->
+		<profile>
+			<id>dev</id>
+			<properties>
+				<model>DEBUG</model>
+				<domainContext>http://simplyto.com/ali-legal/</domainContext>
+				<!--token的超时时长(秒） -->
+				<MAX_INTERVAL>86400</MAX_INTERVAL>
+				<!-- 配置加密密钥 -->
+				<APP_KEY>h9a9o1m6a8i9m9rm</APP_KEY>
+				<ivParameter>9916873921086199</ivParameter>
+				<!-- 数据库连接配置 -->
+				 <db.w1.url>jdbc:mysql://47.107.27.249:3318/ali?characterEncoding=utf8&amp;amp;autoReconnect=true</db.w1.url>
+				 <db.w1.user>alfl</db.w1.user>
+				<db.w1.password>alfl123456</db.w1.password>
+				<db.w1.url>jdbc:mysql://39.108.169.135:3318/ali?characterEncoding=utf8&amp;amp;autoReconnect=true</db.w1.url>
+				<!--<db.w1.url>jdbc:mysql://localhost:3306/ali?characterEncoding=utf8&amp;amp;autoReconnect=true</db.w1.url>-->
+				<!--<db.w1.password>12345678</db.w1.password>-->
+				<!-- 阿里云 -->
+				<accessKeyId>LTAI0QelWbomy6Zr</accessKeyId>
+				<accessKeySecret>tpTT3D1Y6Gkx5ECjmhZBt1nviV1ozR</accessKeySecret>
+				<!-- 阿里短信 -->
+				<msnEndpoint>http://1245549784769599.mns.cn-shenzhen.aliyuncs.com</msnEndpoint>
+				<signName>醉猫科技</signName>
+				<topicTxt>sms.topic-cn-shenzhen</topicTxt>
+				<templateCode1>SMS_71095203</templateCode1>
+				<templateCode2>SMS_71095203</templateCode2>
+				<templateCode3>SMS_71095203</templateCode3>
+				<templateCode4>SMS_71095203</templateCode4>
+				<!-- 阿里推送 -->
+				<appKey>24555698</appKey>
+				<appSecret>56380a4d7c36ae33f0f7159c1d29fa40</appSecret>
+				
+				<!--支付宝 -->
+
+				<ali-appId>2017062007527353</ali-appId>
+				<!--应用私钥-->
+				<appPrivateKey>MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVBo+hJnFu02/jtd7WPo3BNDCsGVnV7SFcLVm5mN+kYB2WpHm3PEhLKBy5bV2lfnjyRdxQAQC5MkcgUgltnC6bp8mj/8o7II/n97ovwVqbT86MsvYr8eUoD9zV+deJckubcFU2igq+7puzPZ4zhYSjlJ6fUzBICsa87JlMI/tbbOTFb7yZ+CezEUXLAVNkpMXJ1gQJworgfD0krB0yy+yvSZhh0GuKdZyHZOGfyxKxLqLkH1O0REcPiFG9mvTmYb8Xj29g7Mxio6rqwI6t9X7hpV9X8L149nB6spxbTnMw4EUwRrbXH6nc3qudor8lbeD3n6UcyDxJLitVxIt7okrvAgMBAAECggEAC27pbg+o/Du0hd/aLM23ym7anRmEzujWel/wVlDoN5A4NOqBfBFf6oQ1T/SYDq5ZUR0S/gBVsd+tnUkt9/7XhJGm4rIpLcgdwko7Opa3ANtqmVjRkiWI0z4ET1ZPtvfR3ScNIpYMpQFhaKr9jC5eMr6gPNEBD0XkYXI1gKXyDt15Phf2+uDdn55bDFOrNwF+2KtAzGtuaY1eDUwSJApR/nr9WrHPe5A+Q9ARVqgoMgpFYY7fEJ++Rm7WAYemev7fiUcfS4mlmiVOxrnahMzP0oTLMSxzORiIg9hFpO0lfZqZENcquV4q/TduUh/pqJpKuY8jaRMq8WFn2Y64g6+UIQKBgQDw3ooe0DuzVf0SInaoHAvVEUr/NWpxc1ai7oFILZCPoXS4AgD28ReRV4ElRJGe+ilsEVhpC7rdA8c1ZyEW9rRaB2itv+npxUPu+QZplEqVnaq8k/XbEoafIkJYe4VqqcdAZbESwWSra+6Emyml484wanwWOEp5FLej/Gd9yP2OZQKBgQCeYxFZNrOr8B9EbO9M2mGnfzU0GFrObfkFZ4xp487pvfJqXqGFbtEEqsf6vbgvyNEbVogoZJM+9oRl1xrB5nGX+GQ7fE36P/Mi/oaOQdKX1fi3PChHvm4bQS5oRKiHRH8er0hFw2gWGNV/HXIvbdIHHTwmz8pWbD96Xh7U9TxEwwKBgQCCU6bgLUNgMXKQ0VzqcOJmEslFdR127TU/S1VgPGcvj+ibd1oWQzTBS1txUryIDEtFUc1IaTReSaEL4BUjW7ER1VhqSqDCAB5VuyAhGD+S3JB5IIWyVz/H8r17KrpxkBNjYKKCx2k0511TGrFaNPxnbfZd/28sPG1wqS1F/e5TkQKBgHT0QFY5L1kR+XSkX9vHEf8FzrqGFV+DEzOrb6KtRheRXBSxheGqn4srtHlxaDVYuxfNwMLa6WO/0qoEuUxeppiKITFPq6DTYe0AN0mKT0AxDvP25uN7OYDEk8kIkc04hgmZcuuYzB4s/lFb4/ojxMfeDZG3M/i2+/SW1Xt5DqTTAoGAMjrK53i7hNSI6NpOFVVF5svPjfRA+V1pO98WihkcPePzLUsYDzuC81GGXp+RWnQQztQv88dybBsAQ7D9i/Y2TV/m1tQqgbmu9e4RAIxWDzQ2qHPBIVQRKOjUjqWVYirVfow4s4EWIlLxetcDPQ/O1G+Q6LIYndvl/ukmbhToPO8=</appPrivateKey>
+				<!--支付宝公钥 -->
+				<alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhMZvT07oAql4Ttk3sHvhX+MZUF8rR0yxgXU3BxJEmzDPbvNtyj8KuCdSAPQyBeH4iN+VF1a3l1MjHxEOIcFTnTXn9rsiP0K3aRdOSwZGlxQo7luNxsZCRWZCcmA36vkZpVHXRpCqiFsxorWxqFI92yakZZRNMH3PapjfJ+WU+T6XuUIjNuPW36BU+IfOm9wA1sMbEcmlbQAlD23TgWqqs5ljOB7RgZpD7GiXpeYMt987BZ8w+BoSebRUZSlrWqNPrr9rhpxZl5FqVp4wLDH3S/0u6Fe29R/oU5AUO6iVwTKx40FoogQ49RAHmPhb2y5A+w0xeC8NQUM4acO/NbApsQIDAQAB</alipayPublicKey>
+
+				<!-- 微信支付相关 -->
+				<wx-appId>wx50120b6fecb7aa43</wx-appId>
+				<!--商户ID-->
+				<mchId>1287364701</mchId>
+				<wapUrl>http://www.catuncel.com/zuimao/dist/app/mall/index.html</wapUrl>
+				<!--商户密钥； -->
+				<mkey>j7GsPSIwdt5IAQbos4AtPaclxCKIEld3</mkey>
+				
+                <!-- 车300 -->
+				
+				<carUrl>http://testapi.che300.com/service/</carUrl>
+				<carDetailsOper>getModelParameters</carDetailsOper>
+				<carToken>a056d619790d961fcfa003fd97944bdb</carToken>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- 测试环境 -->
+		<profile>
+			<id>test</id>
+			<properties>
+				<model>DEBUG</model>
+				<domainContext>http://www.catuncel.com/zuimao</domainContext>
+				<!--token的超时时长(秒） -->
+				<MAX_INTERVAL>86400</MAX_INTERVAL>
+				<!-- 配置加密密钥 -->
+				<APP_KEY>h9a9o1m6a8i9m9rm</APP_KEY>
+				<ivParameter>9916873921086199</ivParameter>
+				<!-- 数据库连接配置 -->
+				<db.w1.url>jdbc:mysql://39.108.169.135:3318/alfl?characterEncoding=utf8&amp;amp;autoReconnect=true</db.w1.url>
+				<db.w1.user>alfl</db.w1.user>
+				<db.w1.password>123456</db.w1.password>
+
+				<!-- 阿里云 -->
+				<accessKeyId>LTAI0QelWbomy6Zr</accessKeyId>
+				<accessKeySecret>tpTT3D1Y6Gkx5ECjmhZBt1nviV1ozR</accessKeySecret>
+				<!-- 阿里短信 -->
+				<msnEndpoint>http://1245549784769599.mns.cn-shenzhen.aliyuncs.com</msnEndpoint>
+				<signName>醉猫科技</signName>
+				<topicTxt>sms.topic-cn-shenzhen</topicTxt>
+				<templateCode1>SMS_71095203</templateCode1>
+				<!-- 阿里推送 -->
+				<appKey>24555698</appKey>
+				<appSecret>56380a4d7c36ae33f0f7159c1d29fa40</appSecret>
+				
+				<!--支付宝 -->
+				<ali-appId>2017062007527353</ali-appId>
+				<appPrivateKey>MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCykZorXFkVtsmVNvC2VQk3acIFdh+vvAfRQh7oJ4hpqz+UEIOsHs7Myd1tVvkGQ15o2TPB20njttMsJh/bhLFzBA2DTXRcM7p6uvr5Rcn+g66uNjR/uHx9WIgQ4Z4NdzdXtIeQIFgyrJPieQ8RKoydrGHBWctTdFAqK8vAdFi7WOnwR7CYL3Yh/Q4nBhDLVCt7knDitJ5sF6jfDAPDCIsDwkKcUCwtVIjDFD5oJbYzkbJGNlICFO6eqHL7v9Y0VsJZ6pBUa59YOkenF+JlX3XYaKeRkimFuAxtnMelt3jWz016u+o7ciUCyartZuiKACKoH474ctiLRFmG4o33pWdfAgMBAAECggEAD9M3hoA4pOP+GWs1CfOfTXnh5/n/9OMFDlZ9xrU6MaMrj0OnZ6mTSjLZnMcIarWtuD0HiTaV5cheDpuSVzH7R+YkDG7g0QsEi7vmYhD9RcEFygqjvG3tGm6uIFDeYPMfxHYLTYqQRm1k7b0syKisrYyJXUlH661zLUmUVQn6kx+3sJEQHATjOxI6g+Q+RYI7m9aF/UN/eTrzVndojr2arPZE6VTiOa0/ufJKcprTEvV7ZNvaEj3TkYKJqUuzNvhDxGMPtnzTXIdSt6GYbkSpQe+RpxXpjCWFEVY2ZclbBmsjHGh49ST3+vkCZZ4PF+YGOavYz8jG4YbkJzIcIL93gQKBgQD8XtEhsxMg3I7uEQO7HrjznEyaEdVrsbK7yp/WDY6NzANlhNHfGaF/3K8YHUO5h3/W+WtRw8SL87hJjQgyVEggsMlYE1hpeXRmads0kRdnYfJTIkdNHQflgwY6BhIirgLH2xTGMpr2+wxbi2psK+UtPc1qSo31Zl8kNqlg3UvVtQKBgQC1Iw+Qbx3G0NNuzWy6zFHTG9Q3RByyhQrOsTdUOcn4hUeYs5+kluVlrHoc6J9x1rY/sVJz/GEOEaIX/DusOGkiKS5wQIW6v0WPemb9htV6EqKZ9aihFBniNNiBGxKcsVe9ASt8/8OPWunbFGPylZfeJ/ABnDF2ygSxhNcAjBY1QwKBgQCyeygySiBUFEgtS/E0jATHnRl7uPMUCAdc0m96Bfp0g/0+9dErlEfoUp2uUzwLYS3jTmA84lQFmmcR9WD/nyWnoP+0f3H+njvZFjJGGfrQTbAAZXTBr69e/OwRayu2RRSIXYNyrGV2GJRjxdSNDfo1pci5zGJbVHwi81mUvM0eJQKBgAJ+Nwqf3OMNoLtXrHVttnqXWXZhQ5vZZOqvWbmZCgSXoQKjBkF3qjSaCRw4v2kLsXpy8FWUVamh6H84A4I9TIUh1/fHi4+kbkqpPp2iq3GArCg+T1HYOvr4CzrLqpfpgPGjAHw58PEaKTnQsAd4s5xlJFKBWdTutt3SnDrvsqaNAoGAVmUdjyeFA5zi2TAZoGghshiMLxUlkwurF2UQir8XvOV26vzMr+j7J9Ew8crnylUEsDpdLEq0+5yWts5/qlTOia9tvMWmldg3N3FBo7BdwwvIbLcydg8pUulp75O/1Gd4WfhogtXtWlJeduZE0QE7Yt20+xsEmzrzBuephtdOH1s=</appPrivateKey>
+				<alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhMZvT07oAql4Ttk3sHvhX+MZUF8rR0yxgXU3BxJEmzDPbvNtyj8KuCdSAPQyBeH4iN+VF1a3l1MjHxEOIcFTnTXn9rsiP0K3aRdOSwZGlxQo7luNxsZCRWZCcmA36vkZpVHXRpCqiFsxorWxqFI92yakZZRNMH3PapjfJ+WU+T6XuUIjNuPW36BU+IfOm9wA1sMbEcmlbQAlD23TgWqqs5ljOB7RgZpD7GiXpeYMt987BZ8w+BoSebRUZSlrWqNPrr9rhpxZl5FqVp4wLDH3S/0u6Fe29R/oU5AUO6iVwTKx40FoogQ49RAHmPhb2y5A+w0xeC8NQUM4acO/NbApsQIDAQAB</alipayPublicKey>
+				
+				<!-- 微信支付相关 -->
+				<wx-appId>wx4e04927d7b6b632d</wx-appId>
+				<!--商户ID -->
+				<mchId>1484405722</mchId>
+				<wapUrl>http://www.catuncel.com/zuimao/dist/mall/index.html</wapUrl>
+				<!--商户密钥； -->
+				<mkey>4364bfbaa95899f3937c6ee32a3d0041</mkey>
+				<!-- 车300 -->
+				<carUrl>http://testapi.che300.com/service/</carUrl>
+				<carDetailsOper>getModelParameters</carDetailsOper>
+				<carToken>a056d619790d961fcfa003fd97944bdb</carToken>
+			</properties>
+		</profile>
+
+		<!-- 生产环境 -->
+		<profile>
+			<id>product</id>
+			<properties>
+				<model>PRODUCT</model>
+				<domainContext>http://www.catuncel.com/zuimao</domainContext>
+				<!--token的超时时长(秒） -->
+				<MAX_INTERVAL>86400</MAX_INTERVAL>
+				<!-- 配置加密密钥 -->
+				<APP_KEY>h9a9o1m6a8i9m9rm</APP_KEY>
+				<ivParameter>9916873921086199</ivParameter>
+				<!-- 数据库连接配置 -->
+				<db.w1.url>jdbc:mysql://localhost:3306/zuimao?characterEncoding=utf8&amp;amp;autoReconnect=true</db.w1.url>
+				<db.w1.user>root</db.w1.user>
+				<db.w1.password>root</db.w1.password>
+				<!-- 阿里云 -->
+				<accessKeyId>LTAI0QelWbomy6Zr</accessKeyId>
+				<accessKeySecret>tpTT3D1Y6Gkx5ECjmhZBt1nviV1ozR </accessKeySecret>
+				<!-- 阿里短信 -->
+				<msnEndpoint>http://1245549784769599.mns.cn-shenzhen.aliyuncs.com</msnEndpoint>
+				<signName>醉猫科技</signName>
+				<topicTxt>sms.topic-cn-shenzhen</topicTxt>
+				<templateCode1>SMS_71095203</templateCode1>
+				<templateCode2>SMS_71095203</templateCode2>
+				<templateCode3>SMS_71095203</templateCode3>
+				<templateCode4>SMS_71095203</templateCode4>
+				<!-- 阿里推送 -->
+				<appKey>24555698</appKey>
+				<appSecret>56380a4d7c36ae33f0f7159c1d29fa40</appSecret>
+				<!--支付宝 -->
+				<ali-appId>2016080600183193</ali-appId>
+				<appPrivateKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlQaPoSZxbtNv47Xe1j6NwTQwrBlZ1e0hXC1ZuZjfpGAdlqR5tzxISygcuW1dpX548kXcUAEAuTJHIFIJbZwum6fJo//KOyCP5/e6L8Fam0/OjLL2K/HlKA/c1fnXiXJLm3BVNooKvu6bsz2eM4WEo5Sen1MwSArGvOyZTCP7W2zkxW+8mfgnsxFFywFTZKTFydYECcKK4Hw9JKwdMsvsr0mYYdBrinWch2Thn8sSsS6i5B9TtERHD4hRvZr05mG/F49vYOzMYqOq6sCOrfV+4aVfV/C9ePZwerKcW05zMOBFMEa21x+p3N6rnaK/JW3g95+lHMg8SS4rVcSLe6JK7wIDAQAB</appPrivateKey>
+				<alipayPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA57TpnmhBS29cxP72rWwhp6+PsNR3dUI9mQgwpN+dKoGAsXXqSwokxU61b8vGYBKgseAYywFnQL/cw6b0HhSTlt5/9bp3TrlJpvlJ/HZPi0Vb7JjKs5wbVEbBpiUc5J1EsWvJaHFRryCmb9yqLENpcWXJTXEVQVkSLw3yBLTgSF8yY1cdpIbraDTFfya4cd1NUeMRYjR5Yc+ILayX2F2TNEyaiIpbTncOOOqXz2kabuUHq4bhZSA0kUJvHrtntUUc5VoE4zbqTT5P0kbsroxF5GFvjc25y1QrIP3JcpiA3XqoxeoqzF6lXC49SA4h3GdMBho3fOQv1d88WMQepT4DSQIDAQAB</alipayPublicKey>
+				
+				<!-- 微信支付相关 -->
+				<wx-appId>wx4e04927d7b6b632d</wx-appId>
+				<!--商户ID -->
+				<mchId>1287364701</mchId>
+				<wapUrl>http://www.catuncel.com/zuimao/dist/mall/index.html</wapUrl>
+				<!--商户密钥； -->
+				<mkey>4364bfbaa95899f3937c6ee32a3d0041</mkey>				
+				
+				<!-- 车300 -->				
+				<carUrl>http://testapi.che300.com/service/</carUrl>
+				<carDetailsOper>getModelParameters</carDetailsOper>
+				<carToken>a056d619790d961fcfa003fd97944bdb</carToken>
+			</properties>
+		</profile>
+
+	</profiles>
+	<!-- 定义运行环境相关参数 end -->
+
+	<repositories>
+		<repository>
+			<id>people.apache.snapshots</id>
+			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		
+    <repository>
+        <id>getui-nexus</id>
+        <url>http://mvn.gt.igexin.com/nexus/content/repositories/releases/</url>
+    </repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>apache.snapshots</id>
+			<name>Apache Snapshots</name>
+			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>commons-net</groupId>
+				<artifactId>commons-net</artifactId>
+				<version>3.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpmime</artifactId>
+				<version>4.4.1</version>
+			</dependency>
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>7.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>1.6.11</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>1.6.11</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>1.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>1.2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.29</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+			</dependency>
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-mockito</artifactId>
+				<version>${powermock.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<version>${powermock.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.cryptonode.jncryptor</groupId>
+				<artifactId>jncryptor</artifactId>
+				<version>1.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-jdbc</artifactId>
+				<version>7.0.27</version>
+			</dependency>
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>2.8.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-core</artifactId>
+				<version>1.3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>1.2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.tinygroup</groupId>
+				<artifactId>org.tinygroup.UEditor</artifactId>
+				<version>2.0.31</version>
+			</dependency>
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.20</version>
+			</dependency>
+			<dependency>
+				<groupId>smstool</groupId>
+				<artifactId>smstool</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>ueditor</groupId>
+				<artifactId>ueditor</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>json</groupId>
+				<artifactId>json</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>5.2.4.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+				<version>1.6.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.9</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+  
+</project>

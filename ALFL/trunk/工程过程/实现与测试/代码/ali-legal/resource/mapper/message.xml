@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Message">
+    <resultMap id="BaseResultMap" type="Message" >
+        <id column="messageId" property="messageId" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="messageContent" property="messageContent" jdbcType="VARCHAR" />
+        <result column="sys_userName" property="sys_userName" jdbcType="VARCHAR" />
+        <result column="businessId" property="businessId" jdbcType="INTEGER" />
+        <result column="businessType" property="businessType" jdbcType="VARCHAR" />
+        <result column="sendTime" property="sendTime" jdbcType="VARCHAR" />
+        <result column="messageType" property="messageType"/>
+        <result column="isRead" property="isRead" jdbcType="INTEGER" />
+        <result column="messageTitle" property="messageTitle" jdbcType="VARCHAR" />
+        <result column="addresser" property="addresser" jdbcType="VARCHAR" />
+        <result column="messageState" property="messageState" jdbcType="INTEGER" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+        <result column="is_send" property="is_send" jdbcType="INTEGER" />
+        <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        am.*,
+        au.nickName as sys_userName
+        FROM
+          ali_message as am
+        left join ali_user au on am.userId = au.userId 
+        <where>
+            <if test="true">
+                and (am.isDelete != 1 or am.isDelete is null ) and businessType=1
+            </if>
+            <if test="state != null and state != 0">
+                and am.is_send = #{state,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and am.sendTime &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd != ''">
+                and am.sendTime &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (am.messageTitle like '%${content}%' or am.messageContent like '%${content}%')
+            </if>
+        </where>
+        ORDER BY messageId DESC
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(am.messageId)
+        FROM
+          ali_message as am
+        <where>
+            <if test="true">
+                and (am.isDelete != 1 or am.isDelete is null ) and businessType=1
+            </if>
+            <if test="state != null and state != 0">
+                and am.is_send = #{state,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and am.sendTime &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd != ''">
+                and am.sendTime &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (am.messageTitle like '%${content}%' or am.messageContent like '%${content}%')
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="Message" resultMap="BaseResultMap">
+        SELECT
+        am.*,
+        au.nickName as sys_userName
+        FROM
+          ali_message as am
+        left join ali_user au on am.userId = au.userId 
+        <where>
+            <if test="messageId != null">
+                and am.messageId = #{messageId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="Message" useGeneratedKeys="true" keyProperty="id" >
+      insert into ali_message (messageId, userId, messageContent,businessId, businessType, sendTime,
+      messageType, isRead, messageTitle,addresser, messageState, isDelete,is_send, create_time)
+    values (#{messageId,jdbcType=INTEGER}, '', #{messageContent,jdbcType=VARCHAR},
+      #{businessId,jdbcType=INTEGER}, 1, #{sendTime,jdbcType=VARCHAR},
+      #{messageType}, 0, #{messageTitle,jdbcType=VARCHAR},
+      #{addresser,jdbcType=VARCHAR}, #{messageState,jdbcType=INTEGER}, 0,0, NOW())
+    </insert>
+    <insert id="messageSend"  parameterType="map">
+  INSERT INTO ali_message 
+  (userId, messageContent, businessId, businessType, sendTime, messageType, isRead, messageTitle, addresser,
+   messageState, isDelete,is_send, create_time) VALUES (#{userId},#{messageContent},#{businessId}
+   ,#{businessType},#{sendTime},#{messageType},#{ isRead},#{messageTitle},#{addresser},#{messageState},
+   #{ isDelete},#{ is_send},#{ create_time})
+ </insert>
+    <update id="update" parameterType="Message" >
+        update ali_message
+        <set >
+            <if test="userId != null" >
+                userId = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="messageContent != null" >
+                messageContent = #{messageContent,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null" >
+                businessId = #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="businessType != null" >
+                businessType = #{businessType,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null" >
+                sendTime = #{sendTime,jdbcType=VARCHAR},
+            </if>
+            <if test="messageType != null" >
+                messageType = #{messageType},
+            </if>
+            <if test="isRead != null" >
+                isRead = #{isRead,jdbcType=INTEGER},
+            </if>
+            <if test="messageTitle != null" >
+                messageTitle = #{messageTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="addresser != null" >
+                addresser = #{addresser,jdbcType=VARCHAR},
+            </if>
+            <if test="messageState != null" >
+                messageState = #{messageState,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="is_send != null" >
+                is_send = #{is_send,jdbcType=INTEGER},
+            </if>
+        </set>
+        where messageId = #{messageId,jdbcType=INTEGER}
+    </update>
+</mapper>

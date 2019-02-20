@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="NewsInfo">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+	<title>文章详情</title>
+	<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/main.css" rel="stylesheet" type="text/css" />
+	<script src="js/fastclick.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/md5.min.js"></script>
+	<style type="text/css">
+		.newsbox{margin-bottom: 1.44rem}
+	</style>
+</head>
+
+<body class="Lawsearch NewsInfo">
+<div id="app">
+	<!--公共头部 begin-->
+	<div class="header">
+		<div class="goback">
+			<a class="mui-action-back mui-icon mui-icon-closeempty" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+		</div>
+		<div class="goback msgcenter">
+			<a href=""><img src="images/myinfo/123123.png" alt="" /></a>
+		</div>
+	</div>
+	<!--公共头部 end-->
+
+	<!--主体 begin-->
+	<div class="Conter">
+		<div class="newsbox">
+			<div class="news-top ui-margin-b-3">
+				<h2>{{articleData.title}}</h2>
+				<!--<div class="news-comes">-->
+					<!--<p>文章来源：<span>{{articleData.realName}}</span></p>-->
+					<!--<p>发布日期：<span>{{articleData.sendTime}}</span></p>-->
+				<!--</div>-->
+
+				<p class="ui-margin-b-8">
+					<span class="ui-width-30p ui-inline-block"><i class="ui-myqiuzhi1"></i><span>{{articleData.cost}}</span></span>
+					<span class="ui-width-30p ui-inline-block"><i class="ui-myqiuzhi2"></i><span>{{articleData.provinceName}}{{articleData.cityName}}</span></span>
+					<span class="ui-width-30p ui-inline-block"><i class="ui-myqiuzhi3"></i><span>{{articleData.trainTime}}</span></span>
+				</p>
+				<p><i class="ui-myqiuzhi4"></i><span class="ui-color-greengray">{{articleData.trainAddress}}</span></p>
+			</div>
+			<div class="news-body" >
+				<div style="padding: .2rem .4rem .4rem">
+					<img src="images/qiuzhi.png" alt="">
+				</div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-2"><span>培训机构：</span><span class="ui-color-greengray">{{articleData.trainName}}</span></div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-2"><span>培训时间：</span><span class="ui-color-greengray">{{articleData.trainTime}}</span></div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-2"><span>培训地点：</span><span class="ui-color-greengray">{{articleData.provinceName}} {{articleData.cityName}} {{articleData.trainAddress}}</span></div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-2"><span>培训费用：</span><span class="ui-color-greengray">{{articleData.cost}}</span></div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-2"><span>培训规模：</span><span class="ui-color-greengray">{{articleData.size}}</span></div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-2-b-1"><span>联系电话：</span><span class="ui-color-greengray">{{articleData.mobile}}</span></div>
+				<div style="padding: 0 .4rem" class="ui-margin-b-4 ui-padding-b-4"><span>电子邮箱：</span><span class="ui-color-greengray">{{articleData.email}}</span></div>
+
+				<div style="padding: 0 .4rem"><span>培训内容：</span></div>
+				<div class="ui-artice-content ui-padding-6 ui-color-greengray" v-html="articleData.trainDesc"></div>
+			</div>
+		</div>
+		<div class="news-tool">
+			<ul>
+				<li>
+					<span v-if="articleData.lastArticleId"><a :href="'TrainInfo.html?articleId=' + articleData.lastArticleId"><i style="float: left"></i>上一条</a></span>
+					<span v-else style="color: #e3e3e3"><i style="float: left;color: #e3e3e3"></i>上一条</span>
+				</li>
+				<li>
+					<span v-if="articleData.nextArticleId"><a :href="'TrainInfo.html?articleId=' + articleData.nextArticleId"><i style="float: left"></i>下一条</a></span>
+					<span v-else style="color: #e3e3e3"><i style="float: left;color: #e3e3e3"></i>下一条</span>
+				</li>
+				<li @click="share">
+					<i></i>
+					<span>分享</span>
+				</li>
+				<li @click="star">
+					<i></i>
+					<span v-if="articleData.isCollection == '是'">已收藏</span>
+					<span v-else-if="articleData.isCollection != '是'">收藏</span>
+				</li>
+			</ul>
+			<div class="backtop">
+
+			</div>
+		</div>
+	</div>
+	<!--主体 end-->
+
+	<script src="vue/vue.js"></script>
+	<script src="mui/mui.min.js"></script>
+	<script src="js/share.js"></script>
+	<script src="js/store.js"></script>
+	<script src="js/rest.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/ajax/commonfuc.js"></script>
+	<!--<script src="vue/axios.min.js"></script>-->
+	<!--<script src="vue/httpVueLoader.js"></script>-->
+	<script src="js/mui.slideright.js"></script>
+	<script src="js/lib/TrainInfo.js"></script>
+</div>
+</body>
+
+</html>

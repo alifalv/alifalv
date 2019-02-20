@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="LawerInfo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>个人主页</title>
+    <link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="vue/vant-min.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+</head>
+
+<body class="LawerInfo">
+
+    <!--主体 begin-->
+    <div class="Conter" id="app" v-cloak>
+        <div class="lawer-wrap">
+            <div class="lawer-head">
+                <div class="head-btnbox">
+                    <div class="btnbox-l">
+                        <a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript :history.back(-1);"></a>
+                    </div>
+                    <div class="btnbox-r">
+                        <span class="shoucang"></span>
+                        <span class="share"></span>
+                    </div>
+                </div>
+                <div class="headimgbox">
+                    <div class="headimg-l">
+                        <img :src="userInfo.userImg | createImgUrl" />
+                    </div>
+                    <div class="headimg-r">
+                        <div class="t">
+                            <p class="tit">{{userInfo.realName}}</p>
+                            <div class="iconbox">
+                                <img v-if="userInfo.vipLevel > 0" :src="'images/other/mywatch-lv'+userInfo.vipLevel+'.png'" />
+                                <img v-if="userInfo.is_contract == 1" src="images/other/mywatch-wb.png" />
+                                <img v-if="userInfo.isAuthentication == 1" src="images/other/mywatch-rz.png" />
+                            </div>
+                        </div>
+                        <div class="c">
+                            <p>
+                                <img src="images/sonpages/findlawer-icon3.png" />
+                                <span>{{userInfo.mobile}}</span>
+                            </p>
+                            <p>
+                                <img src="images/sonpages/findlawer-icon4.png" />
+                                <span>{{userInfo.provinceName+' '+userInfo.cityName}}</span>
+                            </p>
+                        </div>
+                        <div class="b">
+                            <span v-for="(item, index) in userInfo.specialityList" :key="index">{{item.typeName}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lawer-top">
+                <div class="haoping-t">
+                    <ul>
+                        <li>
+                            <h3>{{userInfo.goodNum || 0}}</h3>
+                            <span>用户好评</span>
+                        </li>
+                        <li>
+                            <h3>{{userInfo.complateAdviceNum || 0}}</h3>
+                            <span>解答咨询</span>
+                        </li>
+                        <li>
+                            <h3>{{userInfo.entrustNum || 0}}</h3>
+                            <span>接受委托</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="haoping-b">
+                    <ul>
+                        <li>法律水平：{{userInfo.levelScore || 0}}</li>
+                        <li>服务态度：{{userInfo.attitudeScore || 0}}</li>
+                        <li>社会资源：{{userInfo.sourceScore || 0}}</li>
+                        <li>收费标准：{{userInfo.chargeScore || 0}}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lawer-center idx-band5">
+                <div class="newsBox-tit flex_Horizontal mui-segmented-control">
+                    <a class="mui-control-item mui-active" href="#myinfo">个人简介</a>
+                    <a class="mui-control-item" href="#mywrite">我的随笔</a>
+                    <a class="mui-control-item" href="#mycase">成功案例</a>
+                    <a class="mui-control-item" href="#mynews">工作动态</a>
+                </div>
+                <div class="newsBox">
+                    <div id="myinfo" class="mui-control-content mui-active">
+                        <div class="box">
+                            <h4>个性签名</h4>
+                            <p>{{userInfo.characterSign}}</p>
+                        </div>
+                        <div class="box">
+                            <h4>个人简介</h4>
+                            <p v-html="userInfo.personDesc"></p>
+                        </div>
+                        <div class="box">
+                            <h4>我的风采</h4>
+                            <div class="imgbox">
+                                <ul>
+                                    <li v-for="(item, index) in list1" :key="index">
+                                        <img :src="item.coverImg | createImgUrl" />
+                                        <p class="ui-cut-1">{{item.title}}</p>
+                                        <span>{{item.sendTime | subDay}}</span>
+                                    </li>
+                                    <li v-if="list1.length <=0 " class="ui-nolist">暂无</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mywrite" class="newslist mui-control-content">
+                        <ul>
+                            <li v-for="(item, index) in list2" :key="index">
+                                <img :src="item.coverImg | createImgUrl" />
+                                <div class="infobox">
+                                    <p>{{item.title}}</p>
+                                    <span>{{item.sendTime}}</span>
+                                    <p class="descrip">{{item.articleContent | removeHtmlTag}}</p>
+                                </div>
+                            </li>
+                            <li v-if="list2.length <=0 " class="ui-nolist">暂无</li>
+                        </ul>
+                    </div>
+                    <div id="mycase" class="newslist mui-control-content">
+                        <ul>
+                            <li v-for="(item, index) in list3" :key="index">
+                                <img :src="item.coverImg | createImgUrl" />
+                                <div class="infobox">
+                                    <p>{{item.title}}</p>
+                                    <span>{{item.sendTime}}</span>
+                                    <p class="descrip">{{item.articleContent | removeHtmlTag}}</p>
+                                </div>
+                            </li>
+                            <li v-if="list3.length <=0 " class="ui-nolist">暂无</li>
+                        </ul>
+                    </div>
+                    <div id="mynews" class="newslist mui-control-content">
+                        <ul>
+                            <li v-for="(item, index) in list4" :key="index">
+                                <!--<img :src="item.coverImg | createImgUrl" />-->
+                                <div class="infobox">
+                                    <p>{{item.title}}</p>
+                                    <span>{{item.sendTime}}</span>
+                                    <p class="descrip">{{item.articleContent | removeHtmlTag}}</p>
+                                </div>
+                            </li>
+                            <li v-if="list4.length <=0 " class="ui-nolist">暂无</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lawer-bottom">
+            <a href="WoYaoZiXun.html">立即咨询</a>
+            <a href="javascript:void(0);" @click="dj">协议律师费</a>
+        </div>
+    </div>
+    <!--主体 end-->
+
+    <script src="mui/mui.min.js"></script>
+    <script src="vue/vue.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ajax/commonfuc.js"></script>
+    <script src="vue/vant-min.js"></script>
+    <script src="js/mui.slideright.js"></script>
+    <script src="js/lib/LawerInfo.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1201 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>会员列表</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="id_input">ID</label>
+							<input type="text" id="id_input" class="form-control" style="width: 100px;">
+						</div>
+						<div class="form-group">
+							<label for="realName">手机号</label>
+							<input type="text" id="mobile" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="realName">真实姓名</label>
+							<input type="text" id="realName" class="form-control">
+						</div>
+						<label class="my-1 mr-2">会员类型</label>
+						<select class="form-control my-1 mr-sm-2" id="userType" title="">
+							<option selected value="0">全部</option>
+							<option value="1">个人咨询者</option>
+							<option value="3">企业咨询者</option>
+							<option value="2">咨询师</option>
+						</select>
+						<label class="my-1 mr-2">认证</label>
+						<select class="form-control my-1 mr-sm-2" id="isAuthentication" title="">
+							<option selected value="">全部</option>
+							<option value="0">未认证</option>
+							<option value="1">待审核</option>
+							<option value="2">已通过</option>
+							<option value="3">未通过</option>
+						</select>
+						<label class="my-1 mr-2">状态</label>
+						<select class="form-control my-1 mr-sm-2" id="userState" title="">
+							<option selected value="">全部</option>
+							<option value="0">锁定</option>
+							<option value="1">正常</option>
+						</select>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="memberDT">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>手机号</th>
+								<th>昵称</th>
+								<th>用户名</th>
+								<th>真实姓名</th>
+								<th>所在地区</th>
+								<th>会员类型</th>
+								<th>会员等级</th>
+								<th>车辆类型</th>
+								<th>微信帐号</th>
+								<th>QQ帐号</th>
+								<th>新浪微博</th>
+								<th>积分</th>
+								<th>注册时间</th>
+								<th>认证</th>
+								<th>状态</th>
+								<th>是否签约</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除?</span></li>
+				</ul>
+				<input type="text" id="id_del" style="display: none;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title member"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<input type="text" id="user-Type" style="display: none;">
+				<div class="form-group row member1">
+					<label class="col-sm-2 col-form-label">真实姓名：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member1span1"/></div>
+				</div>
+				<div class="form-group row member1">
+					<label class="col-sm-2 col-form-label">ID号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member1span2"/></div>
+				</div>
+				<div class="form-group row member1">
+					<label class="col-sm-2 col-form-label">证件号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member1span3"/></div>
+				</div>
+				<div class="form-group row member1">
+					<label class="col-sm-2 col-form-label">身份证正面：</label> 
+					<img src="" id="member1img1" class="img-responsive center-block" style="width: 400px; height: 200px; margin-left: 25px;"/>
+					<section class="form-control mx-sm-3 img-section" style="width: 231px;">
+						<div class="z_photo upimg-div clear idCardFront">
+							<section class="z_file fl idCardFront">
+								<input type="file" id="file_idCardFront" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+				<div class="form-group row member1">
+					<label class="col-sm-2 col-form-label">身份证反面：</label> 
+					<img src="" id="member1img2" class="img-responsive center-block" style="width: 400px; height: 200px; margin-left: 25px;" />
+					<section class="form-control mx-sm-3 img-section" style="width: 231px;">
+						<div class="z_photo upimg-div clear idCardBack">
+							<section class="z_file fl idCardBack">
+								<input type="file" id="file_idCardBack" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+				
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">咨询师姓名：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off"id="member3span1" disabled="disabled"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">所在地区：</label>
+					<div class="col-sm-5">
+						<input class="form-control mx-sm-3 disabled-on-off text-responsive" id="member3span2"/>
+						<div class="form-check form-check-inline text-section">
+							<select class="form-control mx-sm-3" id="select_province" onchange="changeProvince('select_province','select_city')">
+								<option value="1">北京市</option><option value="2">天津市</option><option value="3">上海市</option><option value="4">重庆市</option><option value="5">河北省</option>
+								<option value="6">山西省</option><option value="7">台湾省</option><option value="8">辽宁省</option><option value="9">吉林省</option><option value="10">黑龙江省</option>
+								<option value="11">江苏省</option><option value="12">浙江省</option><option value="13">安徽省</option><option value="14">福建省</option><option value="15">江西省</option>
+								<option value="16">山东省</option><option value="17">河南省</option><option value="18">湖北省</option><option value="19">湖南省</option><option value="20">广东省</option>
+								<option value="21">甘肃省</option><option value="22">四川省</option><option value="23">贵州省</option><option value="24">海南省</option><option value="25">云南省</option>
+								<option value="26">青海省</option><option value="27">陕西省</option><option value="28">广西壮族自治区</option><option value="29">西藏自治区</option><option value="30">宁夏回族自治区</option>
+								<option value="31">新疆维吾尔自治区</option><option value="32">内蒙古自治区</option><option value="33">澳门特别行政区</option><option value="34">香港特别行政区</option>
+							</select> 
+							<select class="form-control mx-sm-3" id="select_city">
+
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">职业：</label>
+					<div class="col-sm-5">
+						<input class="form-control mx-sm-3 disabled-on-off text-responsive" id="member3span3"/> 
+						<select class="form-control mx-sm-3 text-section" id="select_job">
+							<option value="1">律师</option><option value="2">法官</option><option value="3">法学专家</option><option value="4">检察官</option><option value="5">警察</option>
+							<option value="6">税务师</option><option value="7">法医</option><option value="8">鉴定师</option><option value="9">人民法院</option><option value="10">律师事务所</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">擅长专业：</label>
+					<div class="col-sm-5 showSpeciality"></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">执照号码：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span4"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">银行卡号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span5"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">开户行：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span6"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">开户姓名：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span7"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">单位全称：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span8"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">注册地址：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span9"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">办公地址：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span10"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">常用邮箱：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span11"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">微信号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span12"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">QQ号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member3span13"/></div>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">从业执照：</label> 
+					<img src="" id="member3img1" class="img-responsive center-block" style="width: 400px; height: 200px; margin-left: 25px;" />
+					<section class="form-control mx-sm-3 img-section" style="width: 231px;">
+						<div class="z_photo upimg-div clear counselor-workImg">
+							<section class="z_file fl counselor-workImg">
+								<input type="file" id="file_counselor-workImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+				<div class="form-group row member3">
+					<label class="col-sm-2 col-form-label">形象照：</label> 
+					<img src="" id="member3img2" class="img-responsive center-block" style="width: 400px; height: 200px; margin-left: 25px;" />
+					<section class="form-control mx-sm-3 img-section" style="width: 231px;">
+						<div class="z_photo upimg-div clear personImg">
+							<section class="z_file fl personImg">
+								<input type="file" id="file_personImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">单位全称：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span1"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">单位代码：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span2"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">注册地址：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span3"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">办公地址：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span4"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">邮箱：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span5"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">联系人姓名：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span6"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">联系人微信号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span7"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">联系人QQ号：</label>
+					<div class="col-sm-5"><input class="form-control mx-sm-3 disabled-on-off" id="member2span8"/></div>
+				</div>
+				<div class="form-group row member2">
+					<label class="col-sm-2 col-form-label">工商营业执照：</label> 
+					<img src="" id="member2img1" class="img-responsive center-block" style="width: 400px; height: 200px; margin-left: 25px;" />
+					<section class="form-control mx-sm-3 img-section" style="width: 231px;">
+						<div class="z_photo upimg-div clear company-workImg">
+							<section class="z_file fl company-workImg">
+								<input type="file" id="file_company-workImg" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+							</section>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="modal-body check">
+				<div class="form-check form-check-inline" style="margin-left: 60px;">
+					<label class="form-check-label mx-sm-3">审核结果</label> 
+					<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio1" value="1" checked="checked" onclick="nocheckShow('1')"> 
+					<label class="form-check-label">通过</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio0" value="0" onclick="nocheckShow('0')"> 
+					<label class="form-check-label">不通过</label>
+				</div>
+				<input type="text" id="id_examine" style="display: none;" tabindex="1">
+			</div>
+			<div class="modal-body" id="nocheckshow" style="display: none;">
+				<div class="form-check form-check-inline" style="margin-left: 60px;">
+					<label class="form-check-label mx-sm-3">不通过原因</label> 
+					<input type="text" id="nocheckreason" style="width: 300px;">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary check" onclick="saveResult()">保存</button>
+				<button type="button" class="btn btn-primary edit" onclick="editResult()">修改</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="outerdiv" style="position: fixed; top: 0; left: 0; background: rgba(0, 0, 0, 0.7); z-index: 2000; width: 100%; height: 100%; display: none;">
+	<div id="innerdiv" style="position: absolute;">
+		<img id="bigimg" style="border: 5px solid #fff;" src="" />
+	</div>
+</div>
+<link href="upload/img.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf8" src="upload/imgUpload.js"></script>
+<style>
+	.form-group {margin-bottom: 0.2rem;}
+	.col-sm-2.col-form-label {
+		flex: 0 0 23.666667%;
+		max-width: 23.666667%;
+	}
+	input.form-control.mx-sm-3 {border: 0px solid #ced4da;}
+	.showSpeciality {
+		margin-left: 1rem !important;
+		flex: 0 0 72.666667%;
+		max-width: 72.666667%;
+	}
+</style>
+<script>
+	$("#file_idCardFront").takungaeImgup({
+		formData : {
+			"name" : 'idCardFront'
+		},
+		imageNum : 1,
+		success : function(data) {
+		},
+		error : function(err) {
+			alert(err.msg);
+		}
+	});
+	$("#file_idCardBack").takungaeImgup({
+		formData : {
+			"name" : 'idCardBack'
+		},
+		imageNum : 1,
+		success : function(data) {
+		},
+		error : function(err) {
+			alert(err.msg);
+		}
+	});
+	$("#file_company-workImg").takungaeImgup({
+		formData : {
+			"name" : 'company-workImg'
+		},
+		imageNum : 1,
+		success : function(data) {
+		},
+		error : function(err) {
+			alert(err.msg);
+		}
+	});
+	$("#file_counselor-workImg").takungaeImgup({
+		formData : {
+			"name" : 'counselor-workImg'
+		},
+		imageNum : 1,
+		success : function(data) {
+		},
+		error : function(err) {
+			alert(err.msg);
+		}
+	});
+	$("#file_personImg").takungaeImgup({
+		formData : {
+			"name" : 'personImg'
+		},
+		imageNum : 1,
+		success : function(data) {
+		},
+		error : function(err) {
+			alert(err.msg);
+		}
+	});
+	function delImg() {
+		$(".close-upimg").click(function() {
+			$(this).parent().siblings().css('display', 'block');
+			$(this).parent().remove();
+			//$(".z_file.fl.idCardFront").css('display','block');
+		});
+	}
+
+	function changeProvince(province, city) {
+		var provinceId = $('#' + province).val();
+		if (provinceId == '') {
+			$('#' + city).empty();
+		} else {
+			Yajax({
+				type : 'POST',
+				url : requestUrl + "address/cityListByProvince/" + provinceId,
+				async : false,
+				success : function(data) {
+					console.log(data);
+					if (data.code == 1) {
+						var cityList = data.data;
+						$('#' + city).empty();
+						for ( var i in cityList) {
+							var selecthtml = '<option value="'+cityList[i].cityId+'">' + cityList[i].cityName + '</option>';
+							$('#' + city).append(selecthtml);
+						}
+					}
+				},
+				fail : function(data) {
+					console.log(data);
+				}
+			});
+		}
+	}
+
+	//查找按钮
+	function search() {
+		if ($("#id_input").val() != "" && (isNaN($("#id_input").val()) || $("#id_input").val() <= 0)) {
+			alert("ID请输入正整数");
+			$("#id_input").val("");
+		} else {
+			memberDT.ajax.reload();
+		}
+	}
+
+	function reload() {
+		var table = $('#memberDT').DataTable();
+		table.draw(false); //  重新绘制维护当前分页位置的表格。
+	}
+
+	//重置按钮
+	function reset() {
+		$("#id_input").val("");
+		$("#mobile").val("");
+		$("#realName").val("");
+		$("#userType").val("0");
+		$("#isAuthentication").val("");
+		$("#userState").val("");
+	}
+
+	//显示审核对话框
+	function toExamine(id, type, num) {
+		console.log(type);
+		$("#id_examine").val(id);
+		$("#user-Type").val(type);
+		$("#examine").modal("show");
+		$(".form-group.row.member1").hide();
+		$(".form-group.row.member2").hide();
+		$(".form-group.row.member3").hide();
+		$(".up-section.fl").remove();
+		$(".z_file.fl").css('display', 'none');
+		$("input:radio[value='1']").prop("checked", "checked");
+		$("#nocheckshow").css('display', 'none');
+		$(".img-responsive").attr("src", "");
+		if (num == '0') {//修改
+			$(".btn.btn-primary.edit").show();
+			$(".btn.btn-primary.check").hide();
+			$(".modal-body.check").hide();
+			$(".disabled-on-off").attr("disabled", false);
+			$(".disabled-on-off").css("border", "1px solid #ced4da");
+			$("#member1span2").attr("disabled", true);
+			$("#member1span2").css("border", "0px solid #ced4da");
+			$("#member1span2").css("background-color", "#fff");
+			$(".img-section").show();
+			$(".text-section").show();
+			$(".text-responsive").hide();
+			$(".img-responsive").hide();
+		} else if (num == '1') {//审核、查看
+			$(".btn.btn-primary.edit").hide();
+			$(".btn.btn-primary.check").show();
+			$(".modal-body.check").show();
+			$(".disabled-on-off").attr("disabled", true);
+			$(".disabled-on-off").css("border", "0px solid #ced4da");
+			$(".disabled-on-off").css("background-color", "#fff");
+			$(".img-section").hide();
+			$(".text-section").hide();
+			$(".text-responsive").show();
+			$(".img-responsive").show();
+		}
+		if (type == 1) {//个人咨询者
+			$(".form-group.row.member1").show();
+			$(".modal-body.check").hide();
+			$(".btn.btn-primary.check").hide();
+			consultant(id);
+		} else if (type == 2) {//咨询师
+			$(".form-group.row.member3").show();
+			counselor(id);
+		} else if (type == 3) {//企业咨询者
+			$(".form-group.row.member2").show();
+			company(id);
+		}
+		$("img").click(function() {
+			var _this = $(this);//将当前的img元素作为_this传入函数  
+			imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+		});
+	}
+
+	//获取会员信息（个人咨询者）
+	function consultant(userId) {
+		var parameter = new FormData();
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/info/consultant/' + userId,
+			data : parameter,
+			async : false,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					var userInfo = data.data;
+					console.log(userInfo);
+					$("#member1span1").val(userInfo.realName);
+					$("#member1span2").val(userInfo.userId);
+					$("#member1span3").val(userInfo.idCard);
+					if (userInfo.idCardFront != "") {
+						$("#member1img1").attr("src", requestUrl_img + userInfo.idCardFront);
+						$(".z_photo.upimg-div.clear.idCardFront").append(
+							'<section class="up-section fl"><i class="close-upimg"></i>' + 
+								'<img class="up-img" src="'+requestUrl_img+userInfo.idCardFront+'">' + 
+								'<input type="hidden" name="idCardFront" value="'+userInfo.idCardFront+'"></section>'
+						);
+						delImg();
+					} else {
+						$(".z_file.fl.idCardFront").css('display', 'block');
+					}
+					if (userInfo.idCardBack != "") {
+						$("#member1img2").attr("src", requestUrl_img + userInfo.idCardBack);
+						$(".z_photo.upimg-div.clear.idCardBack").append(
+							'<section class="up-section fl"><i class="close-upimg"></i>' + 
+								'<img class="up-img" src="'+requestUrl_img+userInfo.idCardBack+'">' + 
+								'<input type="hidden" name="idCardBack" value="'+userInfo.idCardBack+'"></section>'
+						);
+						delImg();
+					} else {
+						$(".z_file.fl.idCardBack").css('display', 'block');
+					}
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取会员信息失败");
+			}
+		});
+	}
+
+	//获取会员信息（咨询师信息）
+	function counselor(userId) {
+		var parameter = new FormData();
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/info/counselor/' + userId,
+			data : parameter,
+			async : false,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					var userInfo = data.data;
+					console.log(userInfo);
+					$("#member3span1").val(userInfo.realName);
+					$("#member3span2").val(userInfo.provinceDescription + '' + userInfo.cityDescription);
+					$("#select_province").val(userInfo.province);
+					changeProvince('select_province', 'select_city');
+					$("#select_city").val(userInfo.city);
+					var jobInfo = '';
+					if (userInfo.job == 1) { jobInfo = '律师'; } 
+					else if (userInfo.job == 2) { jobInfo = '法官'; } 
+					else if (userInfo.job == 3) { jobInfo = '法学专家'; } 
+					else if (userInfo.job == 4) { jobInfo = '检察官'; } 
+					else if (userInfo.job == 5) { jobInfo = '警察'; } 
+					else if (userInfo.job == 6) { jobInfo = '税务师'; } 
+					else if (userInfo.job == 7) { jobInfo = '法医'; } 
+					else if (userInfo.job == 8) { jobInfo = '鉴定师'; } 
+					else if (userInfo.job == 9) { jobInfo = '人民法院'; } 
+					else if (userInfo.job == 10) { jobInfo = '律师事务所'; }
+					$("#member3span3").val(jobInfo);
+					$("#select_job").val(userInfo.job);
+					showSpeciality();
+					if (userInfo.speciality.length > 0) {
+						for ( var i in userInfo.speciality) {
+							$(".showSpeciality").find("input[type='checkbox'][value='" + userInfo.speciality[i].typeId + "']").prop('checked', true);
+						}
+					}
+					$("#member3span4").val(userInfo.licenseNum);
+					$("#member3span5").val(userInfo.bankAccount);
+					$("#member3span6").val(userInfo.bankName);
+					$("#member3span7").val(userInfo.bankAccountName);
+					$("#member3span8").val(userInfo.companyName);
+					$("#member3span9").val(userInfo.registerAddress);
+					$("#member3span10").val(userInfo.workAddress);
+					$("#member3span11").val(userInfo.email);
+					$("#member3span12").val(userInfo.wechat);
+					$("#member3span13").val(userInfo.qq);
+					if (userInfo.workImg != "") {
+						$("#member3img1").attr("src", requestUrl_img + userInfo.workImg);
+						$(".z_photo.upimg-div.clear.counselor-workImg").append(
+							'<section class="up-section fl"><i class="close-upimg"></i>' + 
+								'<img class="up-img" src="'+requestUrl_img+userInfo.workImg+'">' + 
+								'<input type="hidden" name="counselor-workImg" value="'+userInfo.workImg+'"></section>'
+						);
+						delImg();
+					} else {
+						$(".z_file.fl.counselor-workImg").css('display', 'block');
+					}
+					if (userInfo.personImg != "") {
+						$("#member3img2").attr("src",requestUrl_img + userInfo.personImg);
+						$(".z_photo.upimg-div.clear.personImg").append(
+							'<section class="up-section fl"><i class="close-upimg"></i>' + 
+								'<img class="up-img" src="'+requestUrl_img+userInfo.personImg+'">' + 
+								'<input type="hidden" name="personImg" value="'+userInfo.personImg+'"></section>'
+						);
+						delImg();
+					} else {
+						$(".z_file.fl.personImg").css('display', 'block');
+					}
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取会员信息失败");
+			}
+		});
+	}
+	function showSpeciality() {
+		$(".showSpeciality").empty();
+		var jsonstr = '{"code":1,"data":[{"caseId":1,"caseName":"立案问题"},{"caseId":2,"caseName":"行政处罚"},{"caseId":3,"caseName":"婚姻家庭"},{"caseId":4,"caseName":"知识产权"},'+
+			'{"caseId":5,"caseName":"刑事侦查"},{"caseId":6,"caseName":"行政审批"},{"caseId":7,"caseName":"交通事故"},{"caseId":8,"caseName":"侵权责任"},'+
+			'{"caseId":9,"caseName":"刑事诉讼"},{"caseId":10,"caseName":"行政诉讼"},{"caseId":11,"caseName":"民间借贷"},{"caseId":12,"caseName":"公司纠纷"},'+
+			'{"caseId":13,"caseName":"监所问题"},{"caseId":14,"caseName":"民事执行"},{"caseId":15,"caseName":"房地产"},{"caseId":16,"caseName":"担保纠纷"},'+
+			'{"caseId":17,"caseName":"治安案件"},{"caseId":18,"caseName":"劳动争议"},{"caseId":19,"caseName":"合同纠纷"},{"caseId":20,"caseName":"拆迁纠纷"},'+
+			'{"caseId":21,"caseName":"税务问题"},{"caseId":22,"caseName":"法医鉴定"},{"caseId":23,"caseName":"其它鉴定"},{"caseId":24,"caseName":"其它民商事"}]}';
+		var data = JSON.parse(jsonstr);
+		for ( var i in data.data) {
+			$(".showSpeciality").append('<label style="width:90px;"><input type="checkbox" name="cases" value="'+data.data[i].caseId+'" class="cases">' + data.data[i].caseName + '</label>');
+			if((Number(i)+1)%4==0){$(".showSpeciality").append('</br>');}
+		}
+	}
+
+	//获取会员信息（企业咨询者）
+	function company(userId) {
+		var parameter = new FormData();
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/info/company/' + userId,
+			data : parameter,
+			async : false,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					var userInfo = data.data;
+					console.log(userInfo);
+					$("#member2span1").val(userInfo.companyName);
+					$("#member2span2").val(userInfo.companyCode);
+					$("#member2span3").val(userInfo.registerAddress);
+					$("#member2span4").val(userInfo.workAddress);
+					$("#member2span5").val(userInfo.email);
+					$("#member2span6").val(userInfo.realName);
+					$("#member2span7").val(userInfo.weChat);
+					$("#member2span8").val(userInfo.qq);
+					if (userInfo.workImg != "") {
+						$("#member2img1").attr("src",requestUrl_img + userInfo.workImg);
+						$(".z_photo.upimg-div.clear.company-workImg").append(
+							'<section class="up-section fl"><i class="close-upimg"></i>' + 
+								'<img class="up-img" src="'+requestUrl_img+userInfo.workImg+'">' + 
+								'<input type="hidden" name="company-workImg" value="'+userInfo.workImg+'"></section>'
+						);
+						delImg();
+					} else {
+						$(".z_file.fl.company-workImg").css('display', 'block');
+					}
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取会员信息失败");
+			}
+		});
+	}
+
+	function nocheckShow(a) {
+		var nocheckshow = document.getElementById("nocheckshow");
+		if (a == '0') {
+			nocheckshow.style.display = "block";
+		} else if (a == '1') {
+			nocheckshow.style.display = "none";
+			$("#nocheckreason").val("");
+		}
+	}
+
+	//审核按钮
+	function saveResult() {
+		var is_pass = $("input[name='examineRadio']:checked").val();
+		$("#examine").modal("hide");
+		//alert(is_pass);
+		var parameter = new FormData();
+		parameter.append("id", $("#id_examine").val());
+		var tempUrl = "";
+		if (is_pass == 1) {
+			tempUrl = "user/check/" + $("#id_examine").val();
+		} else {
+			tempUrl = "user/uncheck/" + $("#id_examine").val();
+		}
+		//$("#id_examine").val(0);//重置
+		Yajax({
+			type : 'POST',
+			url : requestUrl + tempUrl,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				if (is_pass == '0') {
+					sendMessage();
+				}
+				reload();
+				alert("审核成功");
+				showCounts();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("审核失败");
+			}
+		});
+	}
+
+	//修改信息
+	function editResult() {
+		var parameter = {};
+		var userType = $("#user-Type").val();
+		if (userType == '1') {//个人咨询者
+			parameter = {
+				userId : $("#id_examine").val(),
+				realName : $("#member1span1").val(),
+				idCard : $("#member1span3").val(),
+				idCardFront : $("input[name='idCardFront']").val(),
+				idCardBack : $("input[name='idCardBack']").val()
+			};
+		} else if (userType == '2') {//咨询师
+			var speciality = [];
+			$(".showSpeciality").find('input[name="cases"]:checked').each(
+				function() { //遍历，将所有选中的值放到数组中
+					speciality.push($(this).val());
+				}
+			);
+			parameter = {
+				userId : $("#id_examine").val(),
+				realName : $("#member3span1").val(),
+				province : $("#select_province").val(),
+				city : $("#select_city").val(),
+				job : $("#select_job").val(),
+				speciality : speciality,
+				licenseNum : $("#member3span4").val(),
+				bankAccount : $("#member3span5").val(),
+				bankName : $("#member3span6").val(),
+				bankAccountName : $("#member3span7").val(),
+				companyName : $("#member3span8").val(),
+				registerAddress : $("#member3span9").val(),
+				workAddress : $("#member3span10").val(),
+				email : $("#member3span11").val(),
+				wechat : $("#member3span12").val(),
+				qq : $("#member3span13").val(),
+				workImg : $("input[name='counselor-workImg']").val(),
+				personImg : $("input[name='personImg']").val()
+			};
+		} else if (userType == '3') {//企业咨询者
+			parameter = {
+				userId : $("#id_examine").val(),
+				companyName : $("#member2span1").val(),
+				companyCode : $("#member2span2").val(),
+				registerAddress : $("#member2span3").val(),
+				workAddress : $("#member2span4").val(),
+				email : $("#member2span5").val(),
+				realName : $("#member2span6").val(),
+				weChat : $("#member2span7").val(),
+				qq : $("#member2span8").val(),
+				workImg : $("input[name='company-workImg']").val()
+			};
+		}
+		console.log(parameter);
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/updateInfo/' + userType,
+			data : parameter,
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					alert("修改成功");
+					reload();
+					$("#examine").modal("hide");
+				} else {
+					alert(data.error);
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("审核失败");
+			}
+		});
+	}
+
+	//发站内消息
+	function sendMessage() {
+		var nocheckreason = $("#nocheckreason").val();
+		var messageContent = '';
+		if (nocheckreason == '') {
+			messageContent = '您的认证信息未通过审核。';
+		} else {
+			messageContent = '您的认证信息未通过审核：' + nocheckreason;
+		}
+		Yajax({
+			type : 'POST',
+			url : requestUrl + "message/messageSend",
+			data : {
+				userId : $("#id_examine").val(),
+				messageContent : messageContent,
+				businessType : 1,
+				businessId : $("#id_examine").val(),
+				messageType : "会员认证"
+			},
+			success : function(data) {
+				console.log(data);
+			},
+			fail : function(data) {
+				console.log(data);
+			}
+		});
+	}
+
+	//取消签约
+	function unContract(userId) {
+		var parameter = new FormData();
+		parameter.append("userId", userId);
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/uncontract/' + userId,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				alert("取消签约成功");
+				reload();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取取消数据失败");
+			}
+		});
+	}
+
+	//签约
+	function contract(userId) {
+		var parameter = new FormData();
+		parameter.append("userId", userId);
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/contract/' + userId,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				alert("签约成功");
+				reload();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取签约数据失败");
+			}
+		});
+	}
+
+	//推荐
+	function recommend(userId) {
+		var parameter = new FormData();
+		parameter.append("userId", userId);
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/push/' + userId,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				alert("推荐成功");
+				reload();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取推荐数据失败");
+			}
+		});
+	}
+
+	//撤销
+	function push(userId) {
+		var parameter = new FormData();
+		parameter.append("userId", userId);
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/unpush/' + userId,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				alert("撤销成功");
+				reload();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("获取撤销数据失败");
+			}
+		});
+	}
+
+	//禁用
+	function disabledUser(userId) {
+		var parameter = new FormData();
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/disabled/' + userId,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				alert("禁用成功");
+				reload();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("禁用失败");
+			}
+		});
+	}
+
+	//启用
+	function enable(userId) {
+		var parameter = new FormData();
+		Yajax({
+			type : 'POST',
+			url : requestUrl + 'user/enable/' + userId,
+			data : parameter,
+			processData : false, // 告诉jQuery不要去处理发送的数据
+			contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+			success : function(data) {
+				console.log(data);
+				alert("启用成功");
+				reload();
+			},
+			fail : function(data) {
+				console.log(data);
+				alert("启用失败");
+			}
+		});
+	}
+
+	var memberDT;
+	$(function() {
+		if (sessionStorage.getItem("member_type") != '') {
+			$('#isAuthentication').val(sessionStorage.getItem("member_type"));
+		} else {
+			reset();
+		}
+		memberDT = $('#memberDT').DataTable({
+			//-------------固定配置，不用改--------------
+			"ordering" : false,
+			"serverSide" : true,
+			"pagingType" : "numbers",
+			"searching" : false,
+			"processing" : true,
+			"pageLength" : 10,
+			"lengthChange" : false,
+			"language" : {
+				"sProcessing" : "处理中...",
+				"sLengthMenu" : "显示 _MENU_ 项结果",
+				"sZeroRecords" : "没有匹配结果",
+				"sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty" : "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered" : "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix" : "",
+				"sSearch" : "搜索:",
+				"sEmptyTable" : "表中数据为空",
+				"sLoadingRecords" : "载入中...",
+				"sInfoThousands" : ",",
+				"oPaginate" : {
+					"sFirst" : "首页",
+					"sPrevious" : "上页",
+					"sNext" : "下页",
+					"sLast" : "末页"
+				},
+				"oAria" : {
+					"sSortAscending" : ": 以升序排列此列",
+					"sSortDescending" : ": 以降序排列此列"
+				}
+			},
+			"aoColumns" : [
+				//ID
+				{"data" : "userId",
+					"visible" : true,
+					"render" : function(data, type, full) {
+						if (full.userId != null && full.userId != "") {
+							if (full.userType == 2) {
+								return '<a href="#" onclick="RedirectToPC(\'home_index.html?userId=' + full.userId + '\')">' + full.userId + '</a>';
+							}
+							return full.userId;
+						}
+						return "";
+					}
+				},
+				//手机号
+				{"data" : "mobile" },
+				//呢称
+				{"data" : "nickName" },
+				//用户名
+				{"data" : "userName" },
+				//真实姓名
+				{"data" : "realName" },
+				//所在地区
+				{"data" : "cityDescription" },
+				//会员类型
+				{"data" : "userTypeDescription" },
+				//会员等级
+				{"data" : "vipLevel",
+					"visible" : true,
+					"render" : function(data, type, full) {
+						if (full.vipLevel == 0) { return "普通会员"; } 
+						else if (full.vipLevel == 1) { return "黄金会员"; } 
+						else if (full.vipLevel == 2) { return "白金会员"; } 
+						else if (full.vipLevel == 3) { return "钻石会员"; }
+					}
+				},
+				//车辆类型
+				{"data" : "carTypeDescription" },
+				//微信帐号
+				{"data" : "weChat" },
+				//QQ帐号
+				{"data" : "qq" },
+				//新浪微博
+				{"data" : "weiBo" },
+				//积分
+				{"data" : "userScore" },
+				//注册时间
+				{"data" : "registerTime",
+					"visible" : true,
+					"render" : function(data, type, full) {
+						if (full.registerTime != null && full.registerTime != "") {  
+						    var date = new Date(full.registerTime);
+						    var yyyy = date.getFullYear();  
+						    var MM = date.getMonth() + 1;  
+						    var dd = date.getDate();  
+						    var HH = date.getHours();
+						    var mm = date.getMinutes();
+						    var ss = date.getSeconds();
+						    MM = MM < 10 ? ('0' + MM) : MM;  
+						    dd = dd < 10 ? ('0' + dd) : dd;  
+						    HH = HH < 10 ? ('0' + HH) : HH;
+						    mm = mm < 10 ? ('0' + mm) : mm;  
+						    ss = ss < 10 ? ('0' + ss) : ss; 
+						    return yyyy + '-' + MM + '-' + dd+' ' + HH + ':' + mm + ':' + ss;
+						}
+						return "";
+					}
+				},
+				//认证
+				{"data" : "isAuthenticationDescription" },
+				//状态
+				{"data" : "userStateDescription" },
+				//是否签约
+				{"data" : "isContractDescription",
+					"visible" : true,
+					"render" : function(data, type, full) {
+						if (full.isContractDescription != null && full.isContractDescription != "") {
+							if (full.userType == 2) {
+								return full.isContractDescription;
+							}
+							return "";
+						}
+						return "";
+					}
+				},
+				//操作
+				{"data" : null,
+					"visible" : true,
+					"render" : function(data, type, full) {
+						var texta = "";
+						var textb = "";
+						var textc = "";
+						var textd = "";
+						var texte = "";
+						if (full.isAuthentication == 1) {
+							texta = '<input type="button" class="btn btn-success" value="审核" onclick="toExamine(\'' + full.userId + '\',\'' + full.userType + '\',\'1\')"/>&nbsp;';
+							if (full.userType == 1) {
+								texta = '<input type="button" class="btn btn-success" value="查看" onclick="toExamine(\'' + full.userId + '\',\'' + full.userType + '\',\'1\')"/>&nbsp;';
+							}
+						} else if (full.isAuthentication == 2 && full.userType == 2) {
+							texta = '<input type="button" class="btn btn-success" value="重审" onclick="toExamine(\'' + full.userId + '\',\'' + full.userType + '\',\'1\')"/>&nbsp;';
+						}
+						if (full.userType == 2 && full.isAuthentication == 2 && full.isContract == 1) {
+							textb = '<input type="button" class="btn btn-success" value="取消签约" onclick="unContract(\'' + full.userId + '\')"/>&nbsp;';
+						} else if (full.userType == 2 && full.isAuthentication == 2 && full.isContract == 0) {
+							textb = '<input type="button" class="btn btn-success" value="签约" onclick="contract(\'' + full.userId + '\')"/>&nbsp;';
+						}
+						if (full.userType == 2 && full.isAuthentication == 2 && full.is_push == 0) {
+							textc = '<input type="button" class="btn btn-success" value="推荐" onclick="recommend(\'' + full.userId + '\')"/>&nbsp;';
+						} else if (full.userType == 2 && full.isAuthentication == 2 && full.is_push == 1) {
+							textc = '<input type="button" class="btn btn-success" value="撤回" onclick="push(\'' + full.userId + '\')"/>&nbsp;';
+						}
+						if (full.userState == 0) {
+							textd = '<input type="button" class="btn btn-success" value="启用" onclick="enable(\'' + full.userId + '\')"/>&nbsp;';
+						} else if (full.userState == 1) {
+							textd = '<input type="button" class="btn btn-success" value="禁用" onclick="disabledUser(\'' + full.userId + '\')"/>&nbsp;';
+						}
+						texte = '<input type="button" class="btn btn-success" value="修改" onclick="toExamine(\'' + full.userId + '\',\'' + full.userType + '\',\'0\')"/>&nbsp;';
+						return texta + textb + textc + textd + texte;
+					}
+				} 
+			],
+			"fnServerData" : function(sSource, aoData,fnCallback) {
+				aoData.push({'name' : 'userId','value' : $('#id_input').val()});
+				aoData.push({'name' : 'mobile','value' : $('#mobile').val()});
+				aoData.push({'name' : 'realName','value' : $('#realName').val()});
+				aoData.push({'name' : 'isAuthentication','value' : $('#isAuthentication').find("option:selected").val()});
+				aoData.push({'name' : 'userState','value' : $('#userState').find("option:selected").val()});
+				aoData.push({'name' : 'userType','value' : $('#userType').find("option:selected").val()});
+				Yajax({
+					"dataType" : 'json',
+					"type" : "POST",
+					"url" : requestUrl + 'user/list',
+					"data" : aoData,
+					"success" : fnCallback
+				});
+			}
+		});
+		$("img").click(function() {
+			var _this = $(this);//将当前的img元素作为_this传入函数  
+			imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+		});
+	});
+	function imgShow(outerdiv, innerdiv, bigimg, _this) {
+		var src = _this.attr("src");//获取当前点击的pimg元素中的src属性  
+		$(bigimg).attr("src", src);//设置#bigimg元素的src属性  
+		/*获取当前点击图片的真实大小，并显示弹出层及大图*/
+		$("<img/>").attr("src", src).on('load', function() {
+			var windowW = $(window).width();//获取当前窗口宽度  
+			var windowH = $(window).height();//获取当前窗口高度  
+			var realWidth = this.width;//获取图片真实宽度  
+			var realHeight = this.height;//获取图片真实高度  
+			var imgWidth, imgHeight;
+			var scale = 1;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放  
+
+			if (realHeight > windowH * scale) {//判断图片高度  
+				imgHeight = windowH * scale;//如大于窗口高度，图片高度进行缩放  
+				imgWidth = imgHeight / realHeight * realWidth;//等比例缩放宽度
+				if (imgWidth > windowW * scale) {//如宽度扔大于窗口宽度  
+					imgWidth = windowW * scale;//再对宽度进行缩放  
+				}
+			} else if (realWidth > windowW * scale) {//如图片高度合适，判断图片宽度  
+				imgWidth = windowW * scale;//如大于窗口宽度，图片宽度进行缩放  
+				imgHeight = imgWidth / realWidth * realHeight;//等比例缩放高度
+			} else {//如果图片真实高度和宽度都符合要求，高宽不变  
+				imgWidth = realWidth;
+				imgHeight = realHeight;
+			}
+			$(bigimg).css("width", imgWidth);//以最终的宽度对图片缩放  
+			
+			var w = (windowW - imgWidth)/2;//计算图片与窗口左边距
+			var h = (windowH - imgHeight)/2;//计算图片与窗口上边距
+			$(innerdiv).css({
+				"top" : h,
+				"left" : w
+			});//设置#innerdiv的top和left属性  
+			$(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg  
+		});
+
+		$(outerdiv).click(function() {//再次点击淡出消失弹出层  
+			$(this).fadeOut("fast");
+		});
+	}
+</script>
+

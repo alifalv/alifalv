@@ -1,0 +1,372 @@
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-12 col-sm-6 col-md-2" style="width: 350px;">
+							<div class="info-box mb-3">
+								<div class="row">
+									<font class="styleone">会员人数:</font> 
+									<font class="styletwo" id="numberOfMembers">1000</font>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-sm-6 col-md-2" style="margin-left: 25px; width: 350px;">
+							<div class="info-box mb-3">
+								<div class="row">
+									<font class="styleone">当前续费VIP:</font> 
+									<font class="styletwo" id="currentRenewalFeeVip">1000</font>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-sm-6 col-md-2" style="margin-left: 25px; width: 350px;">
+							<div class="info-box mb-3">
+								<div class="row">
+									<font class="styleone">咨询问题:</font> 
+									<font class="styletwo" id="numbersOfAdvice">1000</font>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-sm-6 col-md-2" style="margin-left: 25px; width: 350px;">
+							<div class="info-box mb-3">
+								<div class="row">
+									<font class="styleone">案件委托:</font> 
+									<font class="styletwo" id="numbersOfCaseDepute">1000</font>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-sm-6 col-md-2" style="margin-left: 25px; width: 350px;">
+							<div class="info-box mb-3">
+								<div class="row">
+									<font class="styleone">法律文书制作:</font> 
+									<font class="styletwo" id="numbersOfLegalDocumentProduction">1000</font>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-6">
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">会员统计</h3>
+								</div>
+								<div class="card-body" style="height: 400px; width: 480px;" id="bar_gl">
+								
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">VIP统计</h3>
+								</div>
+								<div class="card-body" style="height: 400px; width: 480px;" id="pie_gl">
+								
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-6">
+							<div class="card" style="OVERFLOW-Y: auto; OVERFLOW-X: hidden;">
+								<div class="card-header">
+									<h3 class="card-title">咨询问题统计</h3>
+								</div>
+								<div class="card-body adviceType" style="height: 400px; width: 480px;">
+
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="card" style="OVERFLOW-Y: auto; OVERFLOW-X: hidden;">
+								<div class="card-header">
+									<h3 class="card-title">案件委托统计</h3>
+								</div>
+								<div class="card-body caseDepute" style="height: 400px; width: 480px;">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+.styleone {margin-top: 20px; margin-left: 25px; font-size: 12px; color: #8e908c;}
+.styletwo {margin-top: 20px; margin-left: 15px; font-size: 12px; color: #ff151d;}
+.stylethree {margin-left: 100px; font-size: 12px; color: #8e908c;}
+.stylefour {margin-left: 124px; font-size: 12px; color: #ff151d;}
+.stylefive {margin-top: 10px; margin-left: 100px; font-size: 12px; color: #8e908c;}
+.stylesix {margin-top: 10px; margin-left: 100px; font-size: 12px; color: #ff151d;}
+</style>
+<script>
+	$(function() {
+		overviewCount();
+		consultingProblemStatistics();
+		caseCommissionStatistics();
+		memberStatistics();
+		VIPStatistics();
+	});
+
+	function overviewCount() {
+		tempUrl = "overview/overviewCount";
+		Yajax({
+			type : 'GET',
+			url : requestUrl + tempUrl,
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					$("#numberOfMembers").text(data.data.numberOfMembers);
+					$("#currentRenewalFeeVip").text(data.data.currentRenewalFeeVip);
+					$("#numbersOfAdvice").text(data.data.numbersOfAdvice);
+					$("#numbersOfCaseDepute").text(data.data.numbersOfCaseDepute);
+					$("#numbersOfLegalDocumentProduction").text(data.data.numbersOfLegalDocumentProduction);
+				} else {
+					alert(data.msg);
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+			}
+		});
+	}
+
+	function consultingProblemStatistics() {
+		tempUrl = "overview/consulting/problem/statistics";
+		Yajax({
+			type : 'GET',
+			url : requestUrl + tempUrl,
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					var adviceType0 = '<div class="row"><font class="stylethree">' + data.data[0].caseTypeDesc + 
+						'</font>' + '<font class="stylefour">' + data.data[0].caseTypeNum + '</font></div>';
+					$(".adviceType").append(adviceType0);
+					for (var i = 1; i < data.data.length; i++) {
+						var adviceTypei = '<div class="row"><font class="stylefive">' + data.data[i].caseTypeDesc + '</font>'
+							+ '<font class="stylesix" id="adviceType'+data.data[i].caseType+'">' + data.data[i].caseTypeNum + '</font></div>';
+						$(".adviceType").append(adviceTypei);
+					}
+					$("#adviceType13").css("margin-left", "112px");
+					$("#adviceType24").css("margin-left", "88px");
+				} else {
+					alert(data.msg);
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+			}
+		});
+	}
+
+	function caseCommissionStatistics() {
+		tempUrl = "overview/case/commission/statistics";
+		Yajax({
+			type : 'GET',
+			url : requestUrl + tempUrl,
+			success : function(data) {
+				console.log(data);
+				if (data.code == 1) {
+					var casetype0 = '<div class="row"><font class="stylethree">' + data.data[0].caseTypeDesc
+							+ '</font>' + '<font class="stylefour">' + data.data[0].caseTypeNum + '</font></div>';
+					$(".caseDepute").append(casetype0);
+					for (var i = 1; i < data.data.length; i++) {
+						var casetypei = '<div class="row"><font class="stylefive">' + data.data[i].caseTypeDesc + '</font>'
+								+ '<font class="stylesix" id="caseType'+data.data[i].caseType+'">' + data.data[i].caseTypeNum + '</font></div>';
+						$(".caseDepute").append(casetypei);
+					}
+					$("#caseType13").css("margin-left", "112px");
+					$("#caseType24").css("margin-left", "88px");
+				} else {
+					alert(data.msg);
+				}
+			},
+			fail : function(data) {
+				console.log(data);
+			}
+		});
+	}
+
+	function memberStatistics() {
+		var myChart = echarts.init(document.getElementById('bar_gl'));
+		tempUrl = "overview/member/statistics";
+		Yajax({
+			type : 'GET',
+			url : requestUrl + tempUrl,
+			success : function(data) {
+				console.log(data);
+				var option = {
+					color : [ '#3398DB' ],
+					tooltip : {
+						trigger : 'axis',
+						axisPointer : { // 坐标轴指示器，坐标轴触发有效
+							type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid : {
+						left : '3%',
+						right : '4%',
+						bottom : '3%',
+						containLabel : true
+					},
+					xAxis : [ {
+						type : 'category',
+						data : [ '总人数', '个人咨询者', '企业咨询者', '咨询师' ],
+						axisTick : {
+							alignWithLabel : true
+						}
+					} ],
+					yAxis : [ {
+						type : 'value'
+					} ],
+					series : [ {
+						name : '人数',
+						type : 'bar',
+						itemStyle : {
+							normal : {
+								//好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+								color : function(params) {
+									// build a color map as your need.
+									var colorList = [ 
+										'#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+										'#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD', 
+										'#D7504B','#C6E579', '#F4E001', '#F0805A', '#26C0C0' ];
+									return colorList[params.dataIndex]
+								},
+								//以下为是否显示，显示位置和显示格式的设置了
+								label : {
+									show : true,
+									position : 'top',
+									//formatter: '{c}'
+									formatter : '{b}\n{c}'
+								}
+							}
+						},
+						barWidth : '60%',
+						data : [ data.data.total_num, data.data.personal_num, 
+							data.data.company_num, data.data.counselor_num ]
+					} ]
+				}
+				myChart.setOption(option);
+			}
+		});
+	}
+
+	function VIPStatistics() {
+		var myChart = echarts.init(document.getElementById('pie_gl'));
+		tempUrl = "overview/vip/statistics";
+		Yajax({
+			type : 'GET',
+			url : requestUrl + tempUrl,
+			success : function(data) {
+				console.log(data);
+				var option = {
+					tooltip : {
+						trigger : 'item',
+						formatter : "{a} <br/>{b}: {c} ({d}%)"
+					},
+					legend : {
+						orient : 'vertical',
+						x : 'left',
+						data : [ '黄金会员', '白金会员', '钻石会员' ]
+					},
+					series : [{
+						name : '访问来源',
+						type : 'pie',
+						selectedMode : 'single',
+						radius : [ 0, '30%' ],
+						label : {
+							normal : {
+								position : 'inner'
+							}
+						},
+						labelLine : {
+							normal : {
+								show : false
+							}
+						},
+						data : [ {
+							value : data.data.goldMember,
+							name : '黄金会员',
+							selected : true
+						}, {
+							value : data.data.platinumMember,
+							name : '白金会员'
+						}, {
+							value : data.data.diamondMembership,
+							name : '钻石会员'
+						} ]
+					},
+					{	name : '访问来源',
+						type : 'pie',
+						radius : [ '40%', '55%' ],
+						label : {
+							normal : {
+								formatter : '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+								backgroundColor : '#eee',
+								borderColor : '#aaa',
+								borderWidth : 1,
+								borderRadius : 4,
+								// shadowBlur:3,
+								// shadowOffsetX: 2,
+								// shadowOffsetY: 2,
+								// shadowColor: '#999',
+								// padding: [0, 7],
+								rich : {
+									a : {
+										color : '#999',
+										lineHeight : 22,
+										align : 'center'
+									},
+									// abg: {
+									//     backgroundColor: '#333',
+									//     width: '100%',
+									//     align: 'right',
+									//     height: 22,
+									//     borderRadius: [4, 4, 0, 0]
+									// },
+									hr : {
+										borderColor : '#aaa',
+										width : '100%',
+										borderWidth : 0.5,
+										height : 0
+									},
+									b : {
+										fontSize : 16,
+										lineHeight : 33
+									},
+									per : {
+										color : '#eee',
+										backgroundColor : '#334455',
+										padding : [ 2, 4 ],
+										borderRadius : 2
+									}
+								}
+							}
+						},
+						data : [
+						//{value:335, name:'直达'},
+						//{value:310, name:'邮件营销'},
+						//{value:234, name:'联盟广告'},
+						//{value:135, name:'视频广告'},
+						//{value:1048, name:'百度'},
+						//{value:251, name:'谷歌'},
+						//{value:147, name:'必应'},
+						{
+							value : data.data.VIPMember,
+							name : 'VIP'
+						} ]
+					} ]
+				};
+				myChart.setOption(option);
+			}
+		});
+	}
+</script>
+</body>
+</html>

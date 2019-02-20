@@ -1,0 +1,179 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+
+/*@font-face {
+    font-family: "PingFang SC Medium";
+    src:url("../fonts/PingFang Medium.woff") format("woff");
+}*/
+
+html,
+body {
+    color: #333333;
+    padding: 0;
+    margin: 0;
+    line-height: inherit;
+}
+
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+th,
+td,
+button {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    list-style: none;
+}
+
+a,
+a:hover,
+a:active,
+a:visited,
+a:link,
+a:focus {
+    color: #333333;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    background: none;
+    text-decoration: none;
+    outline: none;
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow-y: visible;
+}
+
+
+/*webkit scrollbar css*/
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+/*初始化*/
+
+.mui-bar {
+    background-color: rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0 1px 6px #eeedea;
+    box-shadow: 0 1px 6px #eeedea;
+}
+
+.mui-bar h1 {
+    color: #333333;
+}
+
+.mui-bar .mui-tab-item.mui-active {
+    color: #e02e24;
+}
+
+.footer .mui-icon {
+    font-size: 0;
+}
+
+.footer .mui-icon:before {
+    content: '';
+}
+
+.footer .mui-icon {
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.footer .mui-icon-home {
+    background-image: url(../images/nav/icon-homeh@2x.png);
+}
+
+.footer .mui-icon-classfy {
+    background-image: url(../images/nav/icon-faguih@2x.png);
+}
+
+.footer .mui-icon-znls {
+    background-image: url(../images/nav/icon-zhinengh@2x.png);
+}
+
+.footer .mui-icon-trolley {
+    background-image: url(../images/nav/icon-richengh@2x.png);
+}
+
+.footer .mui-icon-mine {
+    background-image: url(../images/nav/icon-wodeh@2x.png);
+}
+
+.footer .mui-active .mui-icon-home {
+    background-image: url(../images/nav/icon-home@2x.png);
+}
+
+.footer .mui-active .mui-icon-classfy {
+    background-image: url(../images/nav/icon-fagui@2x.png);
+}
+
+.footer .mui-active .mui-icon-znls {
+    background-image: url(../images/nav/icon-zhineng@2x.png);
+}
+
+.footer .mui-active .mui-icon-trolley {
+    background-image: url(../images/nav/icon-richeng@2x.png);
+}
+
+.footer .mui-active .mui-icon-mine {
+    background-image: url(../images/nav/icon-wode@2x.png);
+}
+
+.footer .mui-badge.hide {
+    display: none;
+}
+
+.mui-bar-tab .mui-tab-item .mui-icon-plus {
+    width: 45px;
+    height: 45px;
+    top: -6px;
+    background-image: url(../images/nav/foot_plus.png);
+}
+
+.mui-bar-tab .mui-tab-item {
+    overflow: visible;
+}
+
+html,
+body {
+    background: transparent;
+}

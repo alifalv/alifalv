@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BusinessOrder">
+    <resultMap id="BaseResultMap" type="BusinessOrder" >
+        <id column="businessOrder" property="businessOrder" jdbcType="INTEGER" />
+        <result column="orderName" property="orderName" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="userImg" property="userImg" jdbcType="VARCHAR" />
+        <result column="businessType" property="businessType" jdbcType="VARCHAR" />
+        <result column="orderNum" property="orderNum" jdbcType="INTEGER" />
+        <result column="orderPrice" property="orderPrice" jdbcType="DECIMAL" />
+        <result column="connectionId" property="connectionId" jdbcType="INTEGER" />
+        <result column="orderTime" property="orderTime" jdbcType="TIMESTAMP" />
+        <result column="checkTime" property="checkTime" jdbcType="TIMESTAMP" />
+        <result column="bankCardNumber" property="bankCardNumber" />
+        <result column="bank" property="bank" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        select a.businessOrder,a.orderName,a.userId,a.businessType,a.orderNum,
+        		a.orderPrice,a.connectionId,a.orderTime,a.checkTime,a.orderState,a.orderType,a.payment,
+        		b.userName,b.userImg,b.mobile,b.userType,
+            acs.realName as consultant_realName,
+            ac.realName as counselor_realName,
+            acom.realName as company_realName
+        from ali_business_order a left join ali_user b on a.userId=b.userId 
+        left join ali_consultant acs on b.userId = acs.userId
+        left join ali_counselor ac on b.userId = ac.userId
+        left join ali_company acom on b.userId = acom.userId
+        <where>
+            <if test="createTimeStart != null and createTimeStart != ''">
+                and orderTime &gt;= #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and orderTime &lt; #{createTimeEnd}
+            </if>
+            <if test="true">
+                and orderState != 2
+            </if>
+            <if test="content != null and content != ''">
+                and (businessOrder like '%${content}%' or orderName like '%${content}%' or b.mobile like '%${content}%')
+            </if>
+            <if test="businessType != null and businessType != ''">
+                and businessType = #{businessType,jdbcType=VARCHAR}
+            </if>
+            <if test="orderType != null">
+                and orderType = #{orderType,jdbcType=INTEGER}
+            </if>
+            <if test="payment != null and payment != ''">
+                and payment = #{payment,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY businessOrder DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        select count(businessOrder) 
+        from ali_business_order a left join ali_user b on a.userId=b.userId 
+        <where>
+            <if test="createTimeStart != null and createTimeStart != ''">
+                and orderTime &gt;= #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and orderTime &lt; #{createTimeEnd}
+            </if>
+            <if test="true">
+                and orderState != 2
+            </if>
+            <if test="content != null and content != ''">
+                and (businessOrder like '%${content}%' or orderName like '%${content}%' or b.mobile like '%${content}%')
+            </if>
+            <if test="businessType != null and businessType != ''">
+                and businessType = #{businessType,jdbcType=VARCHAR}
+            </if>
+            <if test="orderType != null">
+                and orderType = #{orderType,jdbcType=INTEGER}
+            </if>
+            <if test="payment != null and payment != ''">
+                and payment = #{payment,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="BusinessOrderSelectParam" resultMap="BaseResultMap">
+        select * from ali_business_order
+        <where>
+            <if test="businessOrder != null and businessOrder != ''">
+                businessOrder = #{businessOrder}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="BusinessOrderSelectParam" >
+        update ali_business_order
+        <set >
+            <if test="orderState != null" >
+                orderState = #{orderState,jdbcType=INTEGER},
+            </if>
+            <if test="checkTime != null" >
+                checkTime = #{checkTime,jdbcType=INTEGER},
+            </if>
+            <if test="bank != null" >
+                bank = #{bank},
+            </if>
+            <if test="bankCardNumber != null" >
+                bankCardNumber = #{bankCardNumber},
+            </if>
+        </set>
+        where businessOrder = #{businessOrder}
+    </update>
+    <select id="totalCount" parameterType="map" resultType="int">
+        select sum(orderPrice) as totalPrice
+        from ali_business_order a left join ali_user b on a.userId=b.userId 
+        <where>
+            <if test="createTimeStart != null and createTimeStart != ''">
+                and orderTime &gt;= #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and orderTime &lt; #{createTimeEnd}
+            </if>
+            <if test="orderState != null">
+                and orderState = #{orderState}
+            </if>
+            <if test="content != null and content != ''">
+                and (businessOrder like '%${content}%' or orderName like '%${content}%' or b.mobile like '%${content}%')
+            </if>
+            <if test="businessType != null and businessType != ''">
+                and businessType = #{businessType}
+            </if>
+            <if test="orderType != null">
+                and orderType = #{orderType}
+            </if>
+            <if test="isPay != null and isPay != ''">
+                and isPay = #{isPay}
+            </if>
+            <if test="payment != null and payment != ''">
+                and payment = #{payment}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysMapping">
+    <resultMap id="BaseResultMap" type="SysMapping">
+        <id column="mappingId" property="mappingId" jdbcType="INTEGER"/>
+        <result column="roleId" property="roleId" jdbcType="INTEGER"/>
+        <result column="premissonId" property="premissonId" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+          *
+        FROM
+          ali_sys_mapping
+        <where>
+            <if test="roleId != null">
+                and roleId = #{roleId,jdbcType=INTEGER}
+            </if>
+        </where>
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+          count(mappingId)
+        FROM
+          ali_sys_mapping
+        <where>
+            <if test="roleId != null">
+                and roleId = #{roleId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="SysMapping" resultMap="BaseResultMap">
+        select * from ali_sys_mapping
+        <where>
+            <if test="roleId != null">
+                and roleId = #{roleId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="SysMapping" useGeneratedKeys="true" keyProperty="mappingId">
+      insert into ali_sys_mapping (roleId, premissonId)
+      values (#{roleId,jdbcType=INTEGER},#{premissonId,jdbcType=INTEGER})
+    </insert>
+    <update id="update" parameterType="SysMapping">
+        update ali_sys_mapping
+        <set>
+            <if test="roleId != null">
+                roleId = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="premissonId != null">
+                premissonId = #{premissonId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where mappingId = #{mappingId,jdbcType=INTEGER}
+    </update>
+    <delete id="delete" parameterType="SysMapping">
+        delete from ali_sys_mapping
+        <where>
+            <if test="roleId != null">
+                and roleId = #{roleId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </delete>
+    <select id="rolemapping" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+          a.*,b.premissonUri 
+        FROM
+          ali_sys_mapping a left join ali_sys_premisson b on a.premissonId=b.premissonId
+          left join ali_sys_role c on a.roleId=c.sys_roleId
+        Where c.is_delete is null and c.sys_state=0
+    </select>
+</mapper>

@@ -1,0 +1,2502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+	<sql id="column_list">
+	   userId,
+	   userName,
+	   mobile,
+	   userPwd,
+	   nickName,
+	   userType,
+	   userImg,
+	   vipLevel,
+	   registerTime,
+	   inVipTime,
+	   expireTime,
+	   isWeChat,
+	   isWeiBo,
+	   isQQ,
+	   userState,
+	   isAuthentication,
+	   pushCode,
+	   equipmentType,
+	   is_push,
+	   is_contract,
+	   integral
+	</sql>
+
+	<!-- 根据用户名或手机号码获取用户信息 -->
+	<select id="findUserByUserNameOrMobile" resultType="map" parameterType="java.lang.String"  timeout="10" >
+		select 
+		 <include refid="column_list"></include>
+		 from ali_user
+		  where
+		  userState = 1 and 
+		  userName = #{userName} or mobile = #{userName}
+	</select>
+	
+	<update id="updateUserIntegral" parameterType="map">
+		update ali_user set integral = #{integral} where userId = #{userId}
+	</update>
+	
+	<select id="listCounselor"  resultType="map"  parameterType="map">
+		SELECT
+			us.*,
+		  cou.*
+		FROM
+			ali_counselor AS cou 
+		INNER JOIN
+		  ali_user as us  on us.userId = cou.userId
+		WHERE
+			cou.city = #{city}
+	</select>
+	
+	<select id="findUserByUserId" resultType="map" parameterType="int">
+		select *
+		<!--  <include refid="column_list"></include> -->
+		 from ali_user
+		  where
+		  userId = #{userId}
+	</select>
+	
+	<select id="findUserBasicInfoByUserId" resultType="map" parameterType="int">
+		select 
+		 userId,nickName,userImg,mobile
+		 from ali_user
+		  where
+		  userId = #{userId}
+	</select>
+	
+	
+	<!-- 检查此用户名是否注册过 -->
+	<select id="findUserCountByUserName" parameterType="java.lang.String" resultType="int">
+		select COUNT(userId) from ali_user where userName = #{userName}
+	</select>
+	
+	<!-- 检查此手机号是否注册过 -->
+	<select id="findUserCountByMobile" parameterType="java.lang.String" resultType="int">
+		select COUNT(userId) from ali_user where mobile = #{mobile}
+	</select>
+	
+	<select id="findConsultantByUserId" parameterType="int" resultType="map">
+		select * from ali_consultant where userId = #{userId}
+	</select>
+	 
+	
+	<!-- 获取用户公司信息 -->
+	<select id="findUserCompanyInfo" parameterType="map" resultType="map">
+				SELECT
+						*
+					FROM
+						(
+					
+								select 
+									u.userId,
+									u.userType,
+									c.companyName,
+									c.contactName
+								 from 
+										ali_companyinfo as c
+								 LEFT JOIN
+										ali_user as u on c.userId = u.userId
+								where 
+									 u.userId = #{userId}  
+								UNION ALL
+								 select 
+									u.userId,
+									u.userType,
+									com.companyName,
+									com.realName as  contactName 
+									FROM
+											ali_company as com
+					        LEFT JOIN
+											ali_user  as  u on com.userId = u.userId
+									where u.userId =#{userId} 
+					)as b
+	</select>
+
+	<select id="findCompanyByUserId" parameterType="int" resultType="map">
+		select * from ali_company where userId = #{userId}
+	</select>
+	
+	<select id="findCounselorByUserId" parameterType="int" resultType="map">
+		select * from ali_counselor where userId = #{userId}
+	</select>
+	
+	<select id="findCounselorByUserIdForOrder" parameterType="int" resultType="map">
+		select b.*,a.* from ali_user a,ali_counselor b where a.userId =b.userId   and a.userId = #{userId}
+	</select>
+	
+	<insert id="addCommonUser" parameterType="map" useGeneratedKeys="true" keyProperty="userId">
+		insert into ali_user (
+		   userName,
+		   mobile,
+		   userPwd,
+		   nickName,
+		   userType,
+		   userImg,
+		   vipLevel,
+		   registerTime,
+		   inVipTime,
+		   expireTime,
+		   isWeChat,
+		   isWeiBo,
+		   isQQ,
+		   userState,
+		   isAuthentication,
+		   pushCode,
+		   equipmentType,
+		   is_push,
+		   is_contract,
+		   integral 
+		) values 
+		(
+			#{userName},
+			#{mobile},
+			#{userPwd},
+			#{nickName},
+			#{userType},
+			#{userImg},
+			#{vipLevel},
+			NOW(),
+			#{inVipTime},
+			#{expireTime},
+			#{isWeChat},
+			#{isWeiBo},
+			#{isQQ},
+			#{userState},
+			#{isAuthentication},
+			#{pushCode},
+			#{equipmentType},
+			#{is_push},
+			#{is_contract},
+			#{integral}
+		)
+	</insert>
+	
+ 	
+	
+	<insert id="addConsultantInfo" parameterType="map">
+		insert into ali_consultant 
+		  (userId,carType,realName,idCard,idCardFront,idCardBack,freeNum)
+		  values
+		  (#{userId},#{carType},#{realName},#{idCard},#{idCardFront},#{idCardFront},#{freeNum})
+	</insert>
+	
+	<insert id="addCompanyInfo" parameterType="map">
+		insert into ali_company 
+		  (userId,companyCode,companyName,adviceNum,followingNum,collectionNum,freeNum)
+		  values
+		  (#{userId},#{companyCode},#{companyName},#{adviceNum},#{followingNum},#{collectionNum},#{freeNum})
+	</insert>
+	
+	<insert id="addCounselorInfo" parameterType="map">
+		insert into ali_counselor
+		  (userId,province,city,job,realName,adviceNum,freeNum,
+		  followingNum,collectionNum,makeNum,complateAdviceNum,entrustNum,
+		  levelScore,attitudeScore,sourceScore,chargeScore,readNum,userScore,userBalance,
+		  goodNum,commonScore,middleNum,badNum)
+		  values
+		  (#{userId},#{province},#{city},#{job},#{realName},#{adviceNum},
+		  #{freeNum},#{followingNum},#{collectionNum},#{makeNum},#{complateAdviceNum},
+		  #{entrustNum},#{levelScore},#{attitudeScore},#{sourceScore},#{chargeScore},
+		  #{readNum},#{userScore},#{userBalance},#{goodNum},#{commonScore},${middleNum},${badNum})
+	</insert>
+	
+	<insert id="addCounselorCaseList" parameterType="map">
+		insert into ali_speciality (userId,typeId)
+		  values
+		  <foreach collection="cases" item="caseId" separator=",">
+		  	(#{userId},#{caseId})
+		  </foreach>
+	</insert>
+	
+	<select id="findCasesByUserId" resultType="map" parameterType="int">
+		select typeId from  ali_speciality where userId = #{userId}
+	</select>
+	
+	<delete id="deleteCasesByUserId" parameterType="int">
+		delete from ali_speciality where userId = #{userId}
+	</delete>
+	
+	<update id="editUserVipTime" parameterType="map">
+		update ali_user
+		  	<set>
+		  		<if test="vipLevel != null and vipLevel != ''">
+				vipLevel = #{vipLevel},
+			</if>
+			<if test="inVipTime != null and inVipTime != ''">
+				inVipTime = #{inVipTime},
+			</if>
+			<if test="expireTime != null and expireTime != ''">
+				expireTime = #{expireTime},
+			</if>
+			<!-- 积分 -->
+			<if test="integral != null ">
+				integral = #{integral},
+			</if>
+			
+			</set>
+			 where userId = #{userId}
+	</update>
+	
+	
+	<update id="editUserInfo" parameterType="map">
+		update ali_user 
+		<set>
+			<if test="isAuthentication != null and isAuthentication != ''">
+				isAuthentication = #{isAuthentication},
+			</if>
+			<if test="userImg != null and userImg != ''">
+				userImg = #{userImg},
+			</if>
+			<if test="userType != null and userType != ''">
+				userType = #{userType},
+			</if>
+			<if test="typeState != null and typeState != ''">
+				typeState = #{typeState},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<select id="getConsultantInfo" resultType="map" parameterType="map">
+		select * from  ali_consultant where userId = #{userId}
+	</select>
+	
+	<select id="getCounselorInfo" resultType="map" parameterType="map">
+		select * from  ali_counselor where userId = #{userId}
+	</select>
+
+	<update id="editConsultantInfo" parameterType="map">
+		update ali_consultant 
+		<set>
+			<if test="carType != null and carType != ''">
+				carType = #{carType},
+			</if>
+			<if test="idCardFront != null and idCardFront != ''">
+				idCardFront = #{idCardFront},
+			</if>
+			<if test="idCardBack != null and idCardBack != ''">
+				idCardBack = #{idCardBack},
+			</if>
+			<if test="realName != null and realName != ''">
+				realName = #{realName},
+			</if>
+			<if test="idCard != null and idCard != ''">
+				idCard = #{idCard},
+			</if>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+		<update id="editcompanyInfo" parameterType="map">
+		update ali_companyInfo
+		<set>
+			<if test="companyName != null and companyName != ''">
+				companyName = #{companyName},
+			</if>
+			<if test="companySize != null  and companySize != ''">
+				companySize = #{companySize},
+			</if>
+			<if test="companyUrl != null  and companyUrl != ''">
+				companyUrl = #{companyUrl},
+			</if>
+			<if test="province != null  and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null  and  city !=''">
+				city = #{city},
+			</if>
+			<if test="companyAddress != null and companyAddress != ''">
+				companyAddress = #{companyAddress},
+			</if>
+			<if test="contactName != null and contactName != ''">
+				contactName = #{contactName},
+			</if>
+			<if test="contactMobile != null and contactMobile != ''">
+				contactMobile = #{contactMobile},
+			</if>
+			<if test="companyDesc != null and companyDesc != ''">
+				companyDesc = #{companyDesc},
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<update id="editCompany" parameterType="map">
+		update ali_company
+		<set>
+			<if test="companyCode != null and companyCode != ''">
+				companyCode = #{companyCode},
+			</if>
+			<if test="companyName != null and companyName != ''">
+				companyName = #{companyName},
+			</if>
+			<if test="registerAddress != null and registerAddress != ''">
+				registerAddress = #{registerAddress},
+			</if>
+			<if test="realName != null and realName != ''">
+				realName = #{realName},
+			</if>
+			<if test="workAddress != null and workAddress != ''">
+				workAddress = #{workAddress},
+			</if>
+			<if test="workImg != null and workImg != ''">
+				workImg = #{workImg},
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email},
+			</if>
+			<if test="weChat != null and weChat != ''">
+				weChat = #{weChat},
+			</if>
+			<if test="qq != null and qq != ''">
+				qq = #{qq},
+			</if>
+			<if test="province != null  and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null  and  city !=''">
+				city = #{city},
+			</if>
+			<if test="companyUrl != null  and companyUrl != ''">
+				companyUrl = #{companyUrl},
+			</if>
+			<if test="companySize != null  and companySize != ''">
+				companySize = #{companySize},
+			</if>
+			<if test="companySize != null  and companySize != ''">
+				companySize = #{companySize},
+			</if>
+			<if test="companyDesc != null  and companyDesc != ''">
+				companyDesc = #{companyDesc},
+			</if>
+			
+		</set>
+		where userId = #{userId}
+	</update>
+	<!-- 修改咨询师的余额 -->
+	<update id="updateCounselorBalance"  parameterType="map">
+		update ali_counselor set userBalance = #{userBalance}    where userId = #{userId}
+	</update>
+	
+	<update id="counselorAuthentication" parameterType="map">
+		update ali_counselor
+		<set> 
+			<if test="bankAccount != null and bankAccount != null">
+				bankAccount = #{bankAccount},
+			</if>
+			<if test="bankName != null and bankName != null">
+				bankName = #{bankName},
+			</if>
+			<if test="bankAccountName != null and bankAccountName != null">
+				bankAccountName = #{bankAccountName},
+			</if>
+			<if test="personImg != null and personImg != null">
+				personImg = #{personImg},
+			</if>
+			<if test="workImg != null and workImg != null">
+				workImg = #{workImg},
+			</if>
+			<if test="companyName != null and companyName != null">
+				companyName = #{companyName},
+			</if>
+			<if test="registerAddress != null and registerAddress != null">
+				registerAddress = #{registerAddress},
+			</if>
+			<if test="realName != null and realName != null">
+				realName = #{realName},
+			</if>
+			<if test="workAddress != null and workAddress != null">
+				workAddress = #{workAddress},
+			</if>
+			<if test="workImg != null and workImg != null">
+				workImg = #{workImg},
+			</if>
+			<if test="email != null and email != null">
+				email = #{email},
+			</if>
+			<if test="weChat != null and weChat != null">
+				weChat = #{weChat},
+			</if>
+			<if test="qq != null and qq != null">
+				qq = #{qq},
+			</if>
+			<if test="province != null">
+				province = #{province},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+			<if test="job != null">
+				job = #{job},
+			</if>
+			<if test="goodNum != null">
+				goodNum = #{goodNum},
+			</if>
+			<if test="badNum != null">
+				badNum = #{badNum},
+			</if>
+			<if test="middleNum != null">
+				middleNum = #{middleNum},
+			</if>
+			<if test="levelScore != null">
+				levelScore = #{levelScore},
+			</if>
+			<if test="attitudeScore != null">
+				attitudeScore = #{attitudeScore},
+			</if>
+			<if test="sourceScore != null">
+				sourceScore = #{sourceScore},
+			</if>
+			<if test="chargeScore != null">
+				chargeScore = #{chargeScore},
+			</if>
+			<if test="commonScore != null">
+				commonScore = #{commonScore},
+			</if>
+			<if test="openid != null and openid !=''">
+				openid = #{openid},
+			</if>
+			<if test="licenseNum != null and licenseNum !=''">
+				licenseNum = #{licenseNum},
+			</if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<select id="findFreeCount" resultType="int" parameterType="int">
+		select freeNum from ali_consultant where userId = #{userId}
+	</select>
+	 
+	<!-- 更新咨询者免费次数 -->
+	<update id="updateFreeCount" parameterType="map">
+		update ali_consultant set freeNum = (freeNum +#{freeNum})  where userId = #{userId}
+	</update>
+	<!-- 更新咨询师的免费次数 -->
+	<update id="updateCounselorFreeCount" parameterType="map">
+		update ali_counselor  set freeNum =  (freeNum +#{freeNum}) where userId = #{userId}
+	</update>
+	<!-- 更新企业者的免费次数 -->
+	<update id="updateCompanyFreeCount" parameterType="map">
+		update ali_company  set freeNum =  (freeNum +#{freeNum}) where userId = #{userId}
+	</update>
+	
+	
+	<select id="isFollow" parameterType="map" resultType="int">
+		select count(followId) from ali_follow where 
+			userId = #{userId}
+			and counselorId = #{counselorId}
+	</select>
+	
+	<insert id="addBrowse" parameterType="map" >
+		insert into ali_access_log (userId,counselorId,browseTime)
+		  values 
+		  (#{userId},#{counselorId},NOW())
+	</insert>
+	
+	<insert id="addFollow" parameterType="map" >
+		insert into ali_follow (userId,counselorId,browseTime)
+		  values 
+		  (#{userId},#{counselorId},NOW())
+	</insert>
+	
+	<select id="findBrowseList" parameterType="map" resultType="map">
+	select 
+	  a.*,
+      b.*,
+      (select GROUP_CONCAT(typeId) from ali_speciality where userId=a.userId) as specialityType  ,
+       (select case when count(*) > 0 then "取消关注" else "关注" end  from ali_follow where userId =#{userId} and counselorId = a.userId) as isfollow
+        from ali_user a inner join
+		  ali_counselor b on a.userId = b.userId
+		  inner join ali_access_log c 
+		   on  a.userId = c.counselorId
+		  where c.userId = #{userId}
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+		 <!-- 
+		select a.userId,a.userName,a.userImg,b.characterSign,
+		  b.complateAdviceNum,b.entrustNum,b.makeNum
+		  from ali_user a inner join
+		  ali_counselor b on a.userId = b.userId
+		  inner join ali_access_log c 
+		   on  a.userId = c.counselorId
+		  where c.userId = #{userId}
+		  limit #{PAGE_START},#{PAGE_LENGTH}
+		  -->
+	</select>
+			 
+	
+	<select id="findBrowseList_COUNT_TOTAL" parameterType="map" resultType="int">
+		select count(1)
+		  from ali_user a inner join
+		  ali_counselor b on a.userId = b.userId
+		  inner join ali_access_log c 
+		   on  a.userId = c.counselorId
+		  where c.userId = #{userId}
+	</select>
+
+	<select id="findFollowList" parameterType="int" resultType="map">
+		select 
+			a.userId,a.userName,a.userImg,b.characterSign,
+		  b.complateAdviceNum,b.entrustNum,b.makeNum
+		  from ali_user a inner join
+		  ali_counselor b on a.userId = b.userId
+		  inner join ali_follow c on
+		  a.userId = c.counselorId
+		  where c.userId = #{userId}
+	</select>
+	
+	<select id="findMyAdviceConsultant" parameterType="map" resultType="map">
+		SELECT
+			  us.*,
+				c.*,
+			  (select GROUP_CONCAT(typeId) from ali_speciality where userId=us.userId) as specialityType, 
+			   (select case when count(*) > 0 then "取消关注" else "关注" end  from ali_follow where userId = #{userId} and counselorId = us.userId) as isfollow
+			  
+			FROM
+				ali_counselor c
+			INNER JOIN (
+				SELECT DISTINCT
+					a.userId
+				FROM
+					ali_advice_reply a
+				INNER JOIN ali_advice b ON a.adviceId = b.adviceId
+				WHERE
+					b.userId =  #{userId}
+			) t ON c.userId = t.userId
+			LEFT JOIN ali_user as us on us.userId = c.userId
+			   limit #{PAGE_START},#{PAGE_LENGTH}
+	
+	    <!-- 
+		select c.* from ali_counselor c inner join 
+			(select distinct a.userId from ali_advice_reply a 
+		  inner join 
+		  ali_advice b on a.adviceId = b.adviceId
+		  where b.userId = #{userId}) t on c.userId = t.userId
+		   limit #{PAGE_START},#{PAGE_LENGTH}
+		   -->
+	</select>
+	
+	<select id="findMyAdviceConsultant_COUNT_TOTAL" parameterType="map" resultType="int">
+		select count(1) from ali_counselor c inner join 
+			(select distinct a.userId from ali_advice_reply a 
+		  inner join 
+		  ali_advice b on a.adviceId = b.adviceId
+		  where b.userId = #{userId}) t on c.userId = t.userId
+	</select>
+	<update id="updateThreeInfo" parameterType="map">
+		update ali_user set 
+		<choose>
+			<when test="openType == 'WECHAT'">
+				isWeChat = 1
+			</when>
+			<when test="openType == 'QQ'">
+				isQQ = 1
+			</when>
+			<when test="openType == 'WEIBO'">
+				isWeiBo = 1
+			</when>
+		</choose>
+		
+		where userId = #{userId}
+	</update>
+	
+	<insert id="addThreeInfo_wechat" parameterType="map">
+		insert into ali_wechat (userId,wechat,authorityId) values (
+			#{userId},#{accountNo},#{openId}
+		)
+	</insert>
+	
+	<insert id="addThreeInfo_weibo" parameterType="map">
+		insert into ali_weibo (userId,weibo,authorityId) values (
+			#{userId},#{accountNo},#{openId}
+		)
+	</insert>
+	
+	<insert id="addThreeInfo_qq" parameterType="map">
+		insert into ali_qq (userId,qq,authorityId) values (
+			#{userId},#{accountNo},#{openId}
+		)
+	</insert>
+	
+	<insert id="addUserCompanyInfo" parameterType="map" useGeneratedKeys="true" keyProperty="companyId">
+		insert into ali_companyInfo (
+		    userId,companyName,companySize,province,city,companyAddress,
+		    contactMobile,contactName,companyDesc,email,companyUrl
+		) values (
+			#{userId},#{companyName},#{companySize},#{province},
+			#{city},#{companyAddress},#{contactMobile},#{contactName},
+			#{companyDesc},#{email},#{companyUrl}
+		) 
+	</insert>
+	
+	<select id="getCompanyInfo" parameterType="string" resultType="map">
+		select a.companyCode as companyId, a.userId,a.companyName,a.province,a.city,a.registerAddress as companyAddress,b.mobile as contactMobile
+		,a.companySize,a.email,a.companyDesc,a.companyUrl,a.realName as contactName
+		 from ali_company a,ali_user b
+		where a.userId = b.userId and  a.userId = #{userId}
+		union ALL
+		select a.companyId,a.userId,a.companyName,a.province,a.city,a.companyAddress,a.contactMobile
+		,a.companySize,a.email,a.companyDesc,a.companyUrl,a.contactName from ali_companyInfo a where a.userId = #{userId}
+	</select>
+	
+	<select id="findResumeInfoByUserId" parameterType="int" resultType="map">
+		select * from ali_user_resume where userId = #{userId}
+	</select>
+	
+	<insert id="deliverResume" parameterType="map" >
+		insert into ali_resume_mapping (resumeId,advertiseId,companyId,consultantId,sendTime,state) 
+		values 
+		(#{resumeId},#{advertiseId},#{companyId},#{consultantId},NOW(),'1')
+	</insert>
+	
+	<insert id="addResumeInfo" parameterType="map" >
+		insert into ali_user_resume (userId,resumeName,job,sal,city,province,workExperience,qualification,state,type,selfAssessment,major,mobile,time,userName,school,sex,birthDate) 
+		values 
+		(#{userId},#{resumeName},#{job},#{sal},#{city},#{province},#{workExperience},#{qualification},'1',#{type},#{selfAssessment},#{major},#{mobile},#{time},#{userName},#{school},#{sex},#{birthDate})
+	</insert>
+	
+	<insert id="addWorkExperience">
+		insert into ali_user_experience (userId,jobType,jobName,inDate,outDate,
+		deptName,workContent,companyName)
+		 values
+		<foreach collection="list" item="w" separator=",">
+			(#{w.userId},#{w.jobType},#{w.jobName},#{w.inDate},
+			#{w.outDate},#{w.deptName},#{w.workContent},#{w.companyName})
+		</foreach>
+	</insert>
+	
+	<insert id="addEdu">
+		insert into ali_user_edu (userId,schoolName,major,qualification,inDate,
+		outDate,schoolDesc)
+		 values
+		<foreach collection="list" item="edu" separator=",">
+			(#{edu.userId},#{edu.schoolName},#{edu.major},#{edu.qualification},#{edu.inDate},
+			#{edu.outDate},#{edu.schoolDesc})
+		</foreach>
+	</insert>
+	
+	<insert id="addResumeFile">
+		insert into ali_user_file (userId,fileName) values 
+		<foreach collection="list" item="f">
+			(#{f.userId},#{f.fileName})
+		</foreach>
+	</insert>
+	
+	<update id="changeUserProfile" parameterType="map">
+		update ali_user set userImg = #{userImg} where userId = #{userId}
+	</update>
+	
+	<select id="getUserIdByPersonUrl" parameterType="java.lang.String" resultType="int">
+		select userId from ali_counselor where personUrl = #{url}	
+	</select>
+	
+	<select id="getPushCodeByUserId" parameterType="int" resultType="java.lang.String">
+		select pushCode from ali_user where userId = #{userId}
+	</select>
+	
+	<update id="updateUserPushCode" parameterType="map">
+		update ali_user set pushCode = #{pushCode} where userId = #{userId}
+	</update>
+	
+	<select id="getThreeLoginFlag" parameterType="map" resultType="int">
+		select userId from  
+		<choose>
+			<when test="openType == 'WEIBO'">
+				ali_weibo
+			</when>
+			<when test="openType == 'WECHAT'">
+				ali_wechat
+			</when>
+			<when test="openType == 'QQ'">
+				ali_qq
+			</when>
+		</choose>
+		where  authorityId = #{openId}
+	</select>
+	
+	<select id="countThreeLoginFlag" parameterType="map" resultType="int">
+		select count(1) from  
+		<choose>
+			<when test="openType == 'WEIBO'">
+				ali_weibo
+			</when>
+			<when test="openType == 'WECHAT'">
+				ali_wechat
+			</when>
+			<when test="openType == 'QQ'">
+				ali_qq
+			</when>
+		</choose>
+		where  authorityId = #{openId}
+	</select>
+	
+	<insert id="bindThreeLoginFlagweibo" parameterType="map">
+		INSERT INTO ali_weibo (userId, weibo, authorityId) VALUES ( #{userId}, '', #{openId})
+ 	</insert>
+ 	
+ 	<insert id="bindThreeLoginFlagwechat" parameterType="map">
+		INSERT INTO ali_wechat (userId, wechat, authorityId) VALUES ( #{userId}, '', #{openId})
+ 	</insert>
+ 	
+ 	<insert id="bindThreeLoginFlagqq" parameterType="map">
+		INSERT INTO ali_qq (userId, qq, authorityId) VALUES ( #{userId}, '', #{openId})
+ 	</insert>
+ 	
+	 <update id="updateUseThreeLoginrWeChat" parameterType="map">
+		update ali_user set isWeChat = #{isWeChat}  where userId = #{userId}
+	</update>
+	 <update id="updateUseThreeLoginrWeiBo" parameterType="map">
+		update ali_user set isWeiBo = #{isWeiBo}   where userId = #{userId}
+	</update>
+	 <update id="updateUseThreeLoginrQQ" parameterType="map">
+		update ali_user set isQQ = #{isQQ}   where userId = #{userId}
+	</update>
+	
+	
+	<delete id="unbindThreeLoginFlagweibo" parameterType="map">
+		DELETE from ali_weibo where userid  = #{userId}
+ 	</delete>
+ 	
+ 	<delete id="unbindThreeLoginFlagwechat" parameterType="map">
+		DELETE from ali_wechat where userid  = #{userId}
+ 	</delete>
+ 	
+ 	<delete id="unbindThreeLoginFlagqq" parameterType="map">
+		DELETE from ali_qq where userid  = #{userId}
+ 	</delete>
+	
+	
+	<select id="getResumeInfoByUserId" parameterType="int" resultType="map">
+		select a.*,b.userImg from ali_user_resume a LEFT JOIN ali_user b on
+		a.userId = b.userId  where a.userId = #{userId}
+	</select>
+	
+	<select id="getExperienceListByUserId" parameterType="int" resultType="map">
+		select * from ali_user_experience where userId = #{userId}
+	</select>
+	
+	<select id="getEduListByUserId" parameterType="int" resultType="map">
+		select * from ali_user_edu where userId = #{userId}
+	</select>
+	
+	<select id="getResumeFileListByUserId" parameterType="int" resultType="map">
+		select * from ali_user_file where userId = #{userId}
+	</select>
+	
+	<select id="getPasswordByUserId" parameterType="int" resultType="java.lang.String">
+		select userPwd from ali_user where userId = #{userId}
+	</select>
+	
+	<update id="editPassword" parameterType="map">
+		update ali_user set userPwd = #{newPassword} where userId = #{userId}
+	</update>
+	
+	<update id="editMobile" parameterType="map">
+		update ali_user set mobile = #{newMobile} where userId = #{userId}
+	</update>
+	
+	<update id="editPasswordByMobile" parameterType="map">
+		update ali_user set userPwd = #{newPassword} where mobile = #{mobile}
+	</update>
+		
+
+	<update id="updateUserInfo" parameterType="map">
+		update
+		 ali_user
+		 <set>
+		 		<if test="userName !=null and userName != '' ">
+		 			userName =#{userName},
+		 		</if>
+		 		<if test="nickName !=null and nickName != '' ">
+		 			nickName =#{nickName},
+		 		</if>
+		 		<if test="inVipTime !=null and inVipTime != '' ">
+		 			inVipTime =#{inVipTime},
+		 		</if>
+		 		<if test="expireTime !=null and expireTime != '' ">
+		 			expireTime =#{expireTime},
+		 		</if>
+		 		<if test="isAuthentication !=null and isAuthentication != '' ">
+		 			isAuthentication =#{isAuthentication},
+		 		</if>
+		 		<if test="integral !=null  ">
+		 			integral =#{integral},
+		 		</if>
+		 		<if test="vipLevel !=null  ">
+		 			vipLevel =#{vipLevel},
+		 		</if>
+		 </set> 
+		 where userId = #{userId}
+	</update>
+	
+	<insert id="insertCounselorInfo" parameterType="map">
+	 	insert into ali_counselor(userId,province,city,realName) values (#{userId},#{province},#{city},#{realName})
+	</insert>
+	
+	
+	<update id="updateCounselorInfo" parameterType="map">
+		update ali_counselor 
+			<set>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="realName != null and realName != ''">
+				realName = #{realName},
+			</if>
+			<if test="idCardBack != null and idCardBack != ''">
+				idCardBack = #{idCardBack},
+			</if>
+			<if test="idCardFront != null and idCardFront != ''">
+				idCardFront = #{idCardFront},
+			</if>
+			<if test="idCard != null and idCard != ''">
+				idCard = #{idCard},
+			</if>
+			<if test="carType != null and carType != ''">
+				carType = #{carType},
+			</if>
+			</set>
+	 where userId = #{userId}
+	</update>
+	
+	<update id="updateCounselorMakeNumInfo" parameterType="map">
+		update ali_counselor set makeNum = makeNum+1 where userId = #{userId}
+	</update>
+
+	<update id="updateConsultantInfo" parameterType="map">
+		update ali_consultant 
+			<set>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="realName != null and realName != ''">
+				realName = #{realName},
+			</if>
+			<if test="idCardBack != null and idCardBack != ''">
+				idCardBack = #{idCardBack},
+			</if>
+			<if test="idCardFront != null and idCardFront != ''">
+				idCardFront = #{idCardFront},
+			</if>
+			<if test="idCard != null and idCard != ''">
+				idCard = #{idCard},
+			</if>
+			</set>
+	 where userId = #{userId}
+	</update>
+	
+	
+	<select id="getMyCollectionConsultant" resultType="map" parameterType="map">
+	  <!-- 
+	   select 
+	   	a.*,b.followId from ali_counselor a ,ali_follow b
+	   	  where a.userId = b.counselorId and b.userId = #{userId}
+	   	  -->
+	   	  SELECT
+			a.*,
+		  b.followId,
+		  u.*,
+		  (select GROUP_CONCAT(typeId) from ali_speciality where userId=a.userId) as specialityType,
+		  '取消关注' as isfollow
+		FROM
+			ali_counselor a
+		LEFT JOIN
+			ali_follow b on a.userId = b.counselorId   
+		LEFT JOIN 
+		  ali_user u on u.userId = a.userId
+		WHERE
+		b.userId = #{userId}
+	  limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="getMyCollectionConsultant_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1) from ali_counselor a ,ali_follow b  where a.userId = b.counselorId and b.userId = #{userId}
+	</select>
+
+	<select id="collectionResumeList" resultType="map" parameterType="map">
+	 select a.collectionId, a.resumeId, b.userId,
+			a.collectionTime,b.resumeName,b.job,b.userName,b.province,b.city,b.qualification,b.workExperience,b.major,b.mobile
+			from ali_collection_resume a,
+			ali_user_resume b,ali_user c 
+		where b.userId = c.userId  and a.resumeId = b.resumeId and a.userId = #{userId}
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="collectionResumeList_COUNT_TOTAL" resultType="int" parameterType="map">
+	 select count(1)
+			from ali_collection_resume a,
+			ali_user_resume b,ali_user c 
+		where b.userId = c.userId  and a.resumeId = b.resumeId and a.userId= #{userId}
+	</select>
+	
+	
+	<insert id="sendJob"  parameterType="map"   useGeneratedKeys="true" keyProperty="advertiseId">
+	 	insert into  ali_advertise (jobName, sal, city,province, workExperience, qualification, jobDesc, state, userId,type,linkman,phone,companyName,userType,sendTime,jobNum,isComplain) 
+		VALUES (#{jobName}, #{sal}, #{city},#{province}, #{workExperience}, #{qualification}, #{jobDesc}, #{state},#{userId},#{type},#{linkman},#{phone},#{companyName},#{userType},NOW(),#{jobNum},#{isComplain});
+	</insert>
+	
+	<select id="collectionJobList" resultType="map" parameterType="map">
+	select  a.collectionId ,a.collectionTime,b.jobName,c.companyName,b.advertiseId ,c.userId
+			from ali_collection_job a ,ali_advertise b , ali_company c
+			where a.advertiseId=b.advertiseId AND b.userId = c.userId  and a.userId = #{userId}
+ 	  UNION all
+	select a.collectionId ,a.collectionTime,b.jobName,c.companyName,b.advertiseId,c.userId
+			from ali_collection_job a ,ali_advertise b , ali_companyinfo c
+			where a.advertiseId=b.advertiseId AND b.userId = c.userId  and a.userId = #{userId}
+			limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="collectionJobList_COUNT_TOTAL" resultType="int" parameterType="map">
+			select count(1) from (	select  a.collectionId ,a.collectionTime,b.jobName,c.companyName
+			from ali_collection_job a ,ali_advertise b , ali_company c
+			where a.advertiseId=b.advertiseId AND b.userId = c.userId  and a.userId = #{userId}
+ 	  UNION all
+	select a.collectionId ,a.collectionTime,b.jobName,c.companyName
+			from ali_collection_job a ,ali_advertise b , ali_companyinfo c
+			where a.advertiseId=b.advertiseId AND b.userId = c.userId  and a.userId = #{userId}
+ 		)a
+	</select>
+	
+	<select id="collecResumeList" resultType="map" parameterType="map">
+	select a.id as collectionId,b.jobName ,b.advertiseId,c.resumeName ,a.sendTime,c.province,c.city,c.qualification,c.workExperience,c.major,c.userName,c.mobile,c.userId
+		from ali_resume_mapping a ,ali_advertise b , ali_user_resume c,ali_user d 
+		 where a.advertiseId=b.advertiseId AND c.userId = d.userId and a.resumeId = c.resumeId and a.state='1' and
+		b.userId = #{userId} 
+		<if test="advertiseId != null and advertiseId !='' ">
+		 and   a.advertiseId  = #{advertiseId}
+		</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+
+	<select id="collecResumeList_COUNT_TOTAL" resultType="int" parameterType="int">
+		select count(1) 
+		from ali_resume_mapping a ,ali_advertise b , ali_user_resume c,ali_user d 
+		 where a.advertiseId=b.advertiseId AND c.userId = d.userId and a.resumeId = c.resumeId and a.state='1' and b.userId = #{userId}
+		<if test="advertiseId != null and advertiseId !='' ">
+		 and  a.advertiseId  = #{advertiseId}
+		</if>
+	</select>
+	
+	<select id="businessOrderList" resultType="map" parameterType="map">
+		select a.businessOrder, a.orderName, a.userId, a.userName, a.userImg, a.businessType, a.orderNum, 
+		a.orderPrice, a.connectionId, a.orderTime, a.orderState, a.mobile, a.orderType, a.checkTime, a.bankCardNumber,
+		 a.bank,b.payId, b.appId, b.mchId, b.orderTime, b.totalFee, b.tradeResult
+		from ali_business_order a ,ali_pay_order b
+		 where a.businessOrder=b.outTradeNo   
+			and a.userId = #{userId}  			
+		<if test="orderState != null  and orderState != ''">
+			 and a.orderState = #{orderState}
+		</if>
+		<if test="businessOrder != null and businessOrder != ''">
+			 and a.businessOrder = #{businessOrder}
+		</if>
+	</select>
+	
+	<select id="newJobList" resultType="map"> 
+		 select 
+		 	a.*,(select count(b.advertiseId) from  ali_resume_mapping  b
+		where b.advertiseId=a.advertiseId) as resumeCount 
+		  from
+		   ali_advertise a
+		  <where>
+		  <!-- 		<if test="other !=null  and  other ==1">
+		  			 and userType != 0
+		  		</if> -->
+		  		<if test="advertiseId != null and advertiseId !='' ">
+		  		       and   a.advertiseId  = #{advertiseId}
+		  		</if>
+		  		<if test="userId != null and userId !='' ">
+		  		       and   a.userId  = #{userId}
+		  		</if>
+		  		<if test="userType != null and userType !='' ">
+		  		       and   a.userType  = #{userType}
+		  		</if>
+		  		<if test="state != null and state !='' ">
+		  		       and  a.state  = #{state}
+		  		</if>
+				<if test="jobName != null and jobName != ''">
+					and  a.jobName like  CONCAT('%',#{jobName},'%')
+				</if>
+				<if test="companyName != null and companyName != ''">
+					and  a.companyName like  CONCAT('%',#{companyName},'%')
+				</if>
+				<if test="startTime !=null and startTime !='' ">
+			         <![CDATA[ and a.sendTime  >=  #{startTime}  ]]>
+			    </if>
+			    <if test="endTime !=null and endTime!='' "  >
+			         <![CDATA[ and a.sendTime <=  #{endTime}  ]]>
+			    </if>
+		  </where>
+		  order by a.sendTime desc
+			limit #{PAGE_START},#{PAGE_LENGTH}
+	<!-- 
+	 select * from (select a.userId,a.advertiseId,b.companyCode as companyId,b.companyName,a.jobName,a.sendTime 
+			 from ali_advertise a ,ali_company b 
+			where a.userId = b.userId
+		<if test="userId != null and userId != ''">
+			 and a.userId = #{userId}
+		</if>
+		UNION ALL
+		SELECT a.userId, c.advertiseId,b.companyId,b.companyName,c.jobName,c.sendTime
+		FROM ali_counselor a ,ali_companyInfo b, ali_advertise c
+		WHERE a.userId = b.userId AND a.userId = c.userId
+		<if test="userId != null and userId != ''">
+			 and a.userId = #{userId}
+		</if>
+		 ) a order by sendTime desc
+			limit #{PAGE_START},#{PAGE_LENGTH}
+			 -->
+	</select>
+	 <select id="newJobList_COUNT_TOTAL" resultType="int">
+	 
+	 		select count(*)
+	 		 from  ali_advertise
+	 		  <where>
+		  		<if test="other !=null  and  other ==1">
+		  			 and userType != 0
+		  		</if>
+		  		<if test="advertiseId != null and advertiseId !='' ">
+		  		       and   advertiseId  = #{advertiseId}
+		  		</if>
+		  		<if test="userId != null and userId !='' ">
+		  		       and   userId  = #{userId}
+		  		</if>
+		  		<if test="userType != null and userType !='' ">
+		  		       and   userType  = #{userType}
+		  		</if>
+				<if test="jobName != null and jobName != ''">
+				and  jobName like  CONCAT('%',#{jobName},'%')
+				</if>
+				<if test="companyName != null and companyName != ''">
+				and  companyName like  CONCAT('%',#{companyName},'%')
+				</if>
+				<if test="startTime !=null and startTime !='' ">
+			         <![CDATA[ and sendTime  >=  #{startTime}  ]]>
+			    </if>
+			    <if test="endTime !=null and endTime!='' "  >
+			         <![CDATA[ and sendTime <=  #{endTime}  ]]>
+			    </if>
+		  </where>
+	 
+	   <!-- 
+	 
+			select count(1) from (
+			select a.advertiseId,b.companyName,a.jobName,a.sendTime 
+			 from ali_advertise a ,ali_company b 
+			where a.userId = b.userId
+		<if test="userId != null and userId != ''">
+			 and a.userId = #{userId}
+		</if>
+		UNION ALL
+		SELECT c.advertiseId,b.companyName,c.jobName,c.sendTime
+		FROM ali_counselor a ,ali_companyInfo b, ali_advertise c
+		WHERE a.userId = b.userId AND a.userId = c.userId
+		<if test="userId != null and userId != ''">
+			 and a.userId = #{userId}
+		</if>
+			)a
+			 -->
+ 	</select>
+ 
+ 		 
+    <select id="specialityList" resultType="map" parameterType="map">
+   		 select * from ali_speciality where userId= #{userId}
+ 	</select>
+ 	
+ 
+ 	
+	<select id="counselorListcommonScore" resultType="com.legal.app.model.ConselorInfo" parameterType="map">
+	select a.userId, a.userName as userName,a.userImg,a.isAuthentication,a.is_contract,a.mobile,
+		b.province,b.city,b.levelScore,b.attitudeScore,b.sourceScore,b.complateAdviceNum,
+		b.entrustNum,b.goodNum,b.job,b.realName
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+<!-- 			 and (b.realName = #{name} or b.userId = #{name} or a.nickName =  #{name}) -->
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+		<if test="sortType != null and sortType != ''">
+     		ORDER BY commonScore desc
+		</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="counselorListcommonScore_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1)
+			from ali_user a,ali_counselor b
+		where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+ 	</select>
+ 	
+ 	
+ 	<select id="counselorListchargeScore" resultType="com.legal.app.model.ConselorInfo" parameterType="map">
+	select a.userId, a.userName as userName,a.userImg,a.isAuthentication,a.is_contract,a.mobile,
+		b.province,b.city,b.levelScore,b.attitudeScore,b.sourceScore,b.complateAdviceNum,
+		b.entrustNum,b.goodNum,b.job,b.realName
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+		<if test="sortType != null and sortType != ''">
+     		ORDER BY b.chargeScore desc
+		</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="counselorListchargeScore_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1)
+			from ali_user a,ali_counselor b
+		where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<select id="counselorListreadNum" resultType="com.legal.app.model.ConselorInfo" parameterType="map">
+	select a.userId, a.userName as userName,a.userImg,a.isAuthentication,a.is_contract,a.mobile,
+		b.province,b.city,b.levelScore,b.attitudeScore,b.sourceScore,b.complateAdviceNum,
+		b.entrustNum,b.goodNum,b.job,b.realName
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+		<if test="sortType != null and sortType != ''">
+     		ORDER BY b.goodNum desc
+		</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="counselorListreadNum_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1)
+			from ali_user a,ali_counselor b
+		where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+ 	</select>
+ 	
+ 		
+ 	
+ 	<select id="counselorListlevelScore" resultType="com.legal.app.model.ConselorInfo" parameterType="map">
+	select a.userId, a.userName as userName,a.userImg,a.isAuthentication,a.is_contract,a.mobile,
+		b.province,b.city,b.levelScore,b.attitudeScore,b.sourceScore,b.complateAdviceNum,
+		b.entrustNum,b.goodNum,b.job,b.realName
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+		<if test="sortType != null and sortType != ''">
+     		ORDER BY b.levelScore desc
+		</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="counselorListlevelScore_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1)
+			from ali_user a,ali_counselor b
+		where a.userId = b.userId
+	    <if test="province != null and province != ''">
+			 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			 and b.city = #{city}
+		</if>
+		<if test="job != null and job != ''">
+			 and b.job = #{job}
+		</if>
+		<if test="name != null and name != ''">
+			 and (b.realName like  CONCAT('%',#{name},'%') or b.userId LIKE CONCAT('%',#{name},'%') or a.nickName LIKE CONCAT('%',#{name},'%'))
+		</if>
+		<if test="speciality != null and speciality != ''">
+			 and b.userId in (select userId from ali_speciality where typeId = #{speciality} ) 
+		</if>
+ 	</select>
+
+ 	 <select id="seacherJob" resultType="map" parameterType="map">
+		select * from ali_advertise  where userId = #{userId}   limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	 <select id="seacherJob_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1) from ali_advertise  where userId = #{userId}
+ 	</select>
+ 	
+ 	 <select id="seacherJobDetail" resultType="map" parameterType="map">
+ 	 	select a.*,b.companyCode as companyId from ali_advertise a ,ali_company b where a.userId = b.userId  and a.advertiseId =#{advertiseId}
+ 	 	<if test="userId !=null  and userId !='' ">
+ 	 			and a.userId=#{userId}
+ 	 	</if>
+		union ALL
+		select a.*,b.companyId  from ali_advertise a ,ali_companyinfo b where a.userId = b.userId and a.advertiseId =#{advertiseId}
+		<if test="userId !=null  and userId !='' ">
+ 	 			and a.userId=#{userId}
+ 	 	</if>
+			union ALL
+		select a.*, '' as companyId  from ali_advertise a where  a.advertiseId =#{advertiseId} 
+		<if test="userId !=null  and userId !='' ">
+ 	 			and a.userId=#{userId}
+ 	 	</if>
+	</select>
+
+ 	 <select id="seacherisCollectionJob" resultType="map" parameterType="map">
+  		select b.* from ali_advertise a ,ali_collection_job b where a.advertiseId = b.advertiseId and  b.userId = #{userId} and a.advertiseId =#{advertiseId}
+	</select>
+	
+	
+ 	 <select id="seacherisResumeJob" resultType="map" parameterType="map">
+  		select b.* from ali_advertise a ,ali_resume_mapping b
+		 where a.advertiseId = b.advertiseId and  b.consultantId = #{userId} and a.advertiseId =#{advertiseId}
+	</select>
+	
+	
+	 <select id="seacherisCollectionResume" resultType="map" parameterType="map">
+		select b.* from ali_user_resume a ,ali_collection_resume b where a.resumeId = b.resumeId and  b.userId = #{userId} and a.resumeId =#{resumeId}
+	</select>
+
+ 	<insert id="freeCaseDeclare" parameterType="map" >
+		insert into ali_cast_reply (userId,replyState,replyTime,type) values (#{userId},#{replyState},#{replyTime},#{type})		
+	</insert>
+	
+	<select id="voucherCount" resultType="map" parameterType="map">
+		select count(1) as voucherCount  from ali_voucher where userId = #{userId}
+			<if test="state != null and state != ''">
+			 and state = #{state}
+			</if>
+	</select>
+	
+	
+	<select id="getVoucherListByUserId" resultType="map" parameterType="map">
+		select * from ali_voucher where userId = #{userId}
+			<if test="state != null and state != ''">
+			 and state = #{state}
+			</if>
+		 limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	 <select id="getVoucherListByUserId_COUNT_TOTAL" parameterType="map" resultType="int">
+			select count(1) from ali_voucher where userId = #{userId} 
+			<if test="state != null and state != ''">
+			 and state = #{state}
+			</if>
+ 	</select>
+ 	
+	<update id="publishResumeInfo" parameterType="map">
+			update ali_user_resume SET state =#{state} where userId = #{userId}
+	</update>
+	
+	<update id="updateResumeInfo" parameterType="map">
+		update ali_user_resume
+		<set>
+			<if test="major != null and major != ''">
+				major = #{major},
+			</if>
+			<if test="mobile != null and mobile != ''">
+				mobile = #{mobile},
+			</if>
+			<if test="resumeName != null and resumeName != ''">
+				resumeName = #{resumeName},
+			</if>
+			<if test="selfAssessment != null and selfAssessment != ''">
+				selfAssessment = #{selfAssessment},
+			</if>
+			<if test="job != null and job != ''">
+				job = #{job},
+			</if>
+			<if test="sal != null and sal != ''">
+				sal = #{sal},
+			</if>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="workExperience != null and workExperience != ''">
+				workExperience = #{workExperience},
+			</if>
+			<if test="companyName != null and companyName != ''">
+				companyName = #{companyName},
+			</if>
+			<if test="qualification != null and qualification != ''">
+				qualification = #{qualification},
+			</if>
+			<if test="type != null and type != ''">
+				type = #{type},
+			</if>
+			<if test="userName != null and userName != ''">
+				userName = #{userName},
+			</if>
+			<if test="school != null and school != ''">
+				school = #{school},
+			</if>
+			<if test="sex != null and sex != ''">
+				sex = #{sex},
+			</if>
+			<if test="birthDate != null and birthDate != ''">
+				birthDate = #{birthDate},
+			</if>
+		</set>
+		where userId = #{userId} and resumeId = #{resumeId}
+	</update>
+
+	<update id="updateEdu" parameterType="java.util.List">
+		update ali_user_edu
+		 <trim prefix="set" suffixOverrides=",">
+            <trim prefix="schoolName =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.schoolName != null and item.schoolName != ''">
+                   	  when educationId=#{item.educationId} then #{item.schoolName}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="major =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.major != null and item.major != ''">
+                   	  when educationId=#{item.educationId} then #{item.major}	
+                     </if>
+                </foreach>
+            </trim>            
+             <trim prefix="qualification =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.qualification != null and item.qualification != ''">
+                   	  when educationId=#{item.educationId} then #{item.qualification}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="inDate =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.inDate != null and item.inDate != ''">
+                   	  when educationId=#{item.educationId} then #{item.inDate}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="outDate =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.outDate != null and item.outDate != ''">
+                   	  when educationId=#{item.educationId} then #{item.outDate}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="schoolDesc =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.schoolDesc != null and item.schoolDesc != ''">
+                   	  when educationId=#{item.educationId} then #{item.schoolDesc}	
+                     </if>
+                </foreach>
+            </trim>                                                  
+        </trim>
+        where educationId in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.educationId,jdbcType=BIGINT}
+        </foreach>
+ 	</update>
+ 	
+ 	<update id="updateWorkExperience" parameterType="java.util.List">
+		update ali_user_experience
+		 <trim prefix="set" suffixOverrides=",">
+            <trim prefix="jobType =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.jobType != null and item.jobType != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.jobType}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="jobName =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.jobName != null and item.jobName != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.jobName}	
+                     </if>
+                </foreach>
+            </trim>   
+            
+		 <trim prefix="companyName =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.companyName != null and item.companyName != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.companyName}	
+                     </if>
+                </foreach>
+            </trim>            
+          
+            <trim prefix="inDate =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.inDate != null and item.inDate != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.inDate}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="outDate =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.outDate != null and item.outDate != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.outDate}	
+                     </if>
+                </foreach>
+            </trim>
+            <trim prefix="deptName =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.deptName != null and item.deptName != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.deptName}	
+                     </if>
+                </foreach>
+            </trim>
+			<trim prefix="workContent =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.workContent != null and item.workContent != ''">
+                   	  when experienceId=#{item.experienceId} then #{item.workContent}	
+                     </if>
+                </foreach>
+            </trim> 
+        </trim>
+        where experienceId in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.experienceId,jdbcType=BIGINT}
+        </foreach>
+ 	</update>
+	<update id="updateResumeFile" parameterType="java.util.List">
+		update ali_user_file
+		 <trim prefix="set" suffixOverrides=",">
+            <trim prefix="fileName =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                	<if test="item.fileName != null and item.fileName != ''">
+                   	  when fileId=#{item.fileId} then #{item.fileName}	
+                     </if>
+                </foreach>
+            </trim>
+        </trim>
+        where fileId in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.fileId,jdbcType=BIGINT}
+        </foreach>
+ 	</update>
+
+    <delete id="deleteUser_resume" parameterType="int">
+		DELETE from ali_user_resume where userId = #{userId}
+	</delete>
+	   <delete id="deleteUser_experience" parameterType="int">
+		DELETE from ali_user_experience where userId = #{userId}
+	</delete>
+	<delete id="deleteUser_edu" parameterType="int">
+		DELETE from ali_user_edu where userId = #{userId}
+	</delete>
+	<delete id="deleteUser_file" parameterType="int">
+		DELETE from ali_user_file where userId = #{userId}
+	</delete>
+	
+	<delete id="deleteAliFollow" parameterType="string">
+		DELETE from ali_follow WHERE followId = #{followId}
+	</delete>
+
+ 	<insert id="insertAliFollow" parameterType="map"  useGeneratedKeys="true"  keyProperty="followId"   keyColumn="followId">
+ 		INSERT INTO  ali_follow (userId, counselorId, followTime) VALUES (#{userId}, #{counselorId}, #{followTime});
+	</insert>
+ 
+  	<select id="seacherAliFollow" resultType="map" parameterType="map">
+		select * from ali_follow where userId =#{userId} and counselorId =#{counselorId}
+	</select>
+ 
+ 	<select id="getUserConsultantState" resultType="map" parameterType="int">
+		select a.*,b.* from ali_user a ,ali_consultant b
+		 where a.userId = b.userId and a.userId = #{userId}
+	</select>
+	
+	<select id="getUserConsultantInfo" resultType="map" parameterType="map">
+		select * from ali_counselor where personUrl = #{personUrl}
+	</select>
+	
+	
+	<update id="updateJob" parameterType="map">
+		update ali_advertise 
+		<set>
+				<if test="1==1">
+				sendTime =NOW(),
+				</if>
+			<if test="jobName != null and jobName != ''">
+				jobName = #{jobName},
+			</if>
+			<if test="type != null and type != ''">
+				type = #{type},
+			</if>
+			<if test="sal != null and sal != ''">
+				sal = #{sal},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="workExperience != null and workExperience != ''">
+				workExperience = #{workExperience},
+			</if>
+			<if test="qualification != null and qualification != ''">
+				qualification = #{qualification},
+			</if>
+			<if test="jobDesc != null and jobDesc != ''">
+				jobDesc = #{jobDesc},
+			</if>
+			<if test="state != null and state != ''">
+				state = #{state},
+			</if>
+		 
+			<if test="linkman != null and linkman != ''">
+				linkman = #{linkman},
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone},
+			</if>
+			<if test="companyName != null and companyName != ''">
+				companyName = #{companyName},
+			</if>
+			<if test="userType != null and userType != ''">
+				userType = #{userType},
+			</if>
+			<if test="jobNum != null and jobNum != ''">
+				jobNum = #{jobNum},
+			</if>
+			
+		</set>
+		where userId = #{userId} and  advertiseId = #{advertiseId}
+	</update>
+	
+	<delete id="deleteJob" parameterType="map">
+		delete from ali_advertise	where userId = #{userId} and advertiseId = #{advertiseId}
+	</delete>
+		<insert id="collectionJob"  parameterType="map"   useGeneratedKeys="true" keyProperty="collectionId">
+ 		INSERT INTO  ali_collection_job (advertiseId, userId, collectionTime) VALUES (#{advertiseId}, #{userId}, #{collectionTime});
+	</insert>
+
+	<insert id="collectionResume" parameterType="map"  useGeneratedKeys="true"  keyProperty="collectionId"  >
+ 		INSERT INTO ali_collection_resume (resumeId, userId, collectionTime) VALUES  (#{resumeId}, #{userId}, #{collectionTime});
+	</insert>
+	
+	<select id="recommendResume" resultType="map">
+	  SELECT a.userId, b.userName,a.age,a.sex,a.userImg,b.workExperience,b.qualification,b.major,b.time
+		FROM ali_user a,ali_user_resume b
+		where a.userId = b.userId  
+		order by b.time desc
+		LIMIT 0,10;
+	</select>
+	
+	<select id="userSendAdvertise" resultType="map" parameterType="map">
+		SELECT a.id,a.sendTime,c.advertiseId,c.jobName,e.companyId,e.companyName ,e.userId FROM ali_resume_mapping a,
+		ali_advertise c,ali_companyInfo e
+		where a.advertiseId = c.advertiseId and a.companyId = e.companyId
+		and a.consultantId = #{consultantId}
+		 UNION all
+		SELECT a.id,a.sendTime,c.advertiseId,c.jobName,e.companyCode as companyId,e.companyName ,e.userId FROM ali_resume_mapping a,
+		ali_advertise c,ali_company e
+		where a.advertiseId = c.advertiseId and a.companyId = e.companyCode
+		and a.consultantId = #{consultantId}
+		 UNION all
+		SELECT a.id,a.sendTime,c.advertiseId,c.jobName, '' as companyId,c.companyName ,c.userId FROM ali_resume_mapping a,
+			ali_advertise c
+			where a.advertiseId = c.advertiseId  
+			and a.consultantId =  #{consultantId}
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	 <select id="userSendAdvertise_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1)   FROM (
+			SELECT a.id,a.sendTime,c.advertiseId,c.jobName,e.companyId,e.companyName ,e.userId FROM ali_resume_mapping a,
+		ali_advertise c,ali_companyInfo e
+		where a.advertiseId = c.advertiseId and a.companyId = e.companyId
+		and a.consultantId = #{consultantId}
+		 UNION all
+		SELECT a.id,a.sendTime,c.advertiseId,c.jobName,e.companyCode as companyId,e.companyName ,e.userId FROM ali_resume_mapping a,
+		ali_advertise c,ali_company e
+		where a.advertiseId = c.advertiseId and a.companyId = e.companyCode
+		and a.consultantId = #{consultantId}
+		)a
+ 	</select>
+	
+	<delete id="userDelSendAdvertise"   parameterType="string">
+		DELETE from ali_resume_mapping where Id = #{Id}
+	</delete>
+	
+	<delete id="deleteCollectionJobList"   parameterType="string">
+		DELETE from ali_collection_job where collectionId = #{collectionId}
+	</delete>
+	
+	<update id="companyDelSendAdvertise" parameterType="string">
+		update ali_resume_mapping set state = '0' where id = #{Id}
+	</update>
+
+	<update id="msgSettingReplylMsg" parameterType="map">
+		update ali_user set is_accept_replylMsg =  #{state} where userId = #{userId}
+	</update>
+	
+	<update id="msgSettingSysMsg" parameterType="map">
+		update ali_user set is_accept_sysMsg =  #{state} where userId = #{userId}
+	</update>
+
+	<select id="counselorRecommendList" resultType="map" parameterType="map">
+		select a.city,a.province,a.userId,a.userName,a.userImg,a.vipLevel,a.mobile,
+			a.commonScore,
+			a.makeNum,
+			a.complateAdviceNum,
+			a.entrustNum,
+			a.zscore,
+			a.job from (
+			select b.city,b.province, a.userId,b.realName as userName,a.userImg,a.vipLevel,a.mobile,b.commonScore,b.makeNum,
+			b.complateAdviceNum,b.entrustNum,b.commonScore+b.makeNum+b.complateAdviceNum+b.entrustNum as zscore,b.job
+				from ali_user a ,ali_counselor b
+				WHERE a.userId = b.userId
+				<if test="city != null and city != ''">
+					and b.city= #{city} 
+				</if>
+				ORDER BY a.vipLevel DESC ,zscore desc
+		) a
+	</select>
+	
+	
+	<select id="adminRecommendCounselorList" resultType="map" parameterType="map">
+		select a.city,a.province,a.userId,a.userName,a.userImg,a.vipLevel,a.mobile,
+			a.commonScore,
+			a.makeNum,
+			a.complateAdviceNum,
+			a.entrustNum,
+			a.zscore,
+			a.job,a.realName
+			 from (
+			select b.city,b.province, a.userId,a.userName,a.userImg,a.vipLevel,a.mobile,b.commonScore,b.makeNum,
+			b.complateAdviceNum,b.entrustNum,b.commonScore+b.makeNum+b.complateAdviceNum+b.entrustNum as zscore,b.job,b.realName
+				from ali_user a ,ali_counselor b
+				WHERE a.userId = b.userId and a.is_Push='1'
+				ORDER BY b.pushTime DESC
+		) a
+	</select>
+	
+ 	<update id="publishOrCloseJob" parameterType="map">
+ 		update ali_advertise a set a.state = #{state} where  a.userId = #{userId} and a.advertiseId = #{advertiseId};
+	</update>
+	
+	<delete id="deleteCollectionResumeList"   parameterType="string">
+		DELETE from ali_collection_resume where collectionId = #{collectionId}
+	</delete>
+	
+	<insert id="userSuggest" parameterType="map">
+ 		INSERT INTO  ali_suggest (suggestTitle, suggestContent, userId, suggestTime, isComplate,  suggestName, isDelete, mobile)
+ 	    VALUES (#{suggestTitle},#{suggestContent},#{userId},#{suggestTime},#{isComplate},#{suggestName},#{isDelete},#{mobile});
+	</insert>
+
+	<select id="advertiseSearch" resultType="map" parameterType="map">
+	 select * from (select  a.userId, a.advertiseId,a.jobName,b.companyId,b.companyName,a.province,a.city,a.jobNum,a.sendTime
+		  from ali_advertise a ,ali_companyinfo b 
+		where  a.userId=b.userId and  a.state = '1'
+		<if test="type != null and type != ''">
+			and a.type = #{type}
+		</if>
+		<if test="province != null and province != ''">
+			and a.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			and a.city= #{city} 
+		</if>
+		<if test="sal != null and sal != ''">
+			and a.sal  <![CDATA[ >= ]]> #{sal}
+		</if>
+		<if test="qualification != null and qualification != ''">
+			and a.qualification <![CDATA[ >= ]]> #{qualification}
+		</if>
+		<if test="workExperience != null and workExperience != ''">
+			and a.workExperience <![CDATA[ >= ]]> #{workExperience}
+		</if>
+		<if test="companyName != null and companyName != ''">
+			and b.companyName  like CONCAT('%',#{companyName},'%')
+		</if>
+		<if test="jobName != null and jobName != ''">
+		    and a.jobName like CONCAT('%',#{jobName},'%')
+		</if>
+		<if test="startTime !=null and startTime !='' ">
+         <![CDATA[ and a.sendTime  >=  #{startTime}  ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!='' "  >
+	         <![CDATA[ and a.sendTime <=  #{endTime}  ]]>
+	    </if>
+		union all
+	  select a.userId,a.advertiseId,a.jobName,b.companyCode as companyId,b.companyName,a.province,a.city,a.jobNum,a.sendTime
+		  from ali_advertise a ,ali_company b 
+		 where  a.userId=b.userId and  a.state = '1'
+		<if test="type != null and type != ''">
+			and a.type = #{type}
+		</if>
+		<if test="province != null and province != ''">
+			and a.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			and a.city= #{city} 
+		</if>
+		<if test="sal != null and sal != ''">
+			and a.sal  <![CDATA[ >= ]]> #{sal}
+		</if>
+		<if test="qualification != null and qualification != ''">
+			and a.qualification <![CDATA[ >= ]]> #{qualification}
+		</if>
+		<if test="workExperience != null and workExperience != ''">
+			and a.workExperience <![CDATA[ >= ]]> #{workExperience}
+		</if>
+		<if test="companyName != null and companyName != ''">
+			and b.companyName  like CONCAT('%',#{companyName},'%')
+		</if>
+		<if test="jobName != null and jobName != ''">
+		    and a.jobName like CONCAT('%',#{jobName},'%')
+		</if>
+		<if test="startTime !=null and startTime !='' ">
+         <![CDATA[ and a.sendTime  >=  #{startTime}  ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!='' "  >
+	         <![CDATA[ and a.sendTime <=  #{endTime}  ]]>
+	    </if>) a
+	    ORDER BY sendTime DESC
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	 <select id="advertiseSearch_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1)
+		  from (select a.advertiseId,a.jobName,b.companyId,b.companyName,a.province,a.city,a.jobNum,a.sendTime
+		  from ali_advertise a ,ali_companyinfo b 
+		where  a.userId=b.userId and  a.state = '1'
+		<if test="type != null and type != ''">
+			and a.type = #{type}
+		</if>
+		<if test="province != null and province != ''">
+			and a.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			and a.city= #{city} 
+		</if>
+		<if test="sal != null and sal != ''">
+			and a.sal  <![CDATA[ >= ]]> #{sal}
+		</if>
+		<if test="qualification != null and qualification != ''">
+			and a.qualification <![CDATA[ >= ]]> #{qualification}
+		</if>
+		<if test="workExperience != null and workExperience != ''">
+			and a.workExperience <![CDATA[ >= ]]> #{workExperience}
+		</if>
+		<if test="companyName != null and companyName != ''">
+			and b.companyName  like CONCAT('%',#{companyName},'%')
+		</if>
+		<if test="jobName != null and jobName != ''">
+		    and a.jobName like CONCAT('%',#{jobName},'%')
+		</if>
+		<if test="startTime !=null and startTime !='' ">
+         <![CDATA[ and a.sendTime  >=  #{startTime}  ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!='' "  >
+	         <![CDATA[ and a.sendTime <=  #{endTime}  ]]>
+	    </if>
+		union all
+	  select a.advertiseId,a.jobName,b.companyCode as companyId,b.companyName,a.province,a.city,a.jobNum,a.sendTime
+		  from ali_advertise a ,ali_company b 
+		where  a.userId=b.userId and  a.state = '1'
+		<if test="type != null and type != ''">
+			and a.type = #{type}
+		</if>
+		<if test="province != null and province != ''">
+			and a.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			and a.city= #{city} 
+		</if>
+		<if test="sal != null and sal != ''">
+			and a.sal  <![CDATA[ >= ]]> #{sal}
+		</if>
+		<if test="qualification != null and qualification != ''">
+			and a.qualification <![CDATA[ >= ]]> #{qualification}
+		</if>
+		<if test="workExperience != null and workExperience != ''">
+			and a.workExperience <![CDATA[ >= ]]> #{workExperience}
+		</if>
+		<if test="companyName != null and companyName != ''">
+			and b.companyName  like CONCAT('%',#{companyName},'%')
+		</if>
+		<if test="jobName != null and jobName != ''">
+		    and a.jobName like CONCAT('%',#{jobName},'%')
+		</if>
+		<if test="startTime !=null and startTime !='' ">
+         <![CDATA[ and a.sendTime  >=  #{startTime}  ]]>
+	    </if>
+	    <if test="endTime !=null and endTime!='' "  >
+	         <![CDATA[ and a.sendTime <=  #{endTime}  ]]>
+	    </if>) a
+		
+ 	</select>
+ 	
+	<select id="userResumeSearch" resultType="map" parameterType="map">
+	  select b.resumeId, b.userName,b.sex,a.age,b.qualification,b.workExperience,b.sal,b.city,b.province,b.type,b.time,b.userId,a.userImg,
+	  (select collectionId from ali_collection_resume c where c.userId= #{userId} and c.resumeId=b.resumeId) as isCollectionId
+		from ali_user a,ali_user_resume b
+		where a.userId = b.userId 
+		<if test="job != null and job != ''">
+			and b.job  like CONCAT('%',#{job},'%')
+		</if>
+		<if test="type != null and type != ''">
+			and b.type = #{type}
+		</if>
+		<if test="province != null and province != ''">
+			and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			and b.city= #{city} 
+		</if>
+		<if test="sal != null and sal != ''">
+			and b.sal  <![CDATA[ >= ]]> #{sal}
+		</if>
+		<if test="qualification != null and qualification != ''">
+			and b.qualification <![CDATA[ >= ]]> #{qualification}
+		</if>
+		<if test="workExperience != null and workExperience != ''">
+			and b.workExperience <![CDATA[ >= ]]> #{workExperience}
+		</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+  <select id="userResumeSearch_COUNT_TOTAL" resultType="int" parameterType="map">
+	  select count(1) from
+		 ali_user a,ali_user_resume b
+		where a.userId = b.userId 
+		<if test="job != null and job != ''">
+			and b.job  like CONCAT('%',#{job},'%')
+		</if>
+		<if test="type != null and type != ''">
+			and b.type = #{type}
+		</if>
+		<if test="province != null and province != ''">
+			and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+			and b.city= #{city} 
+		</if>
+		<if test="sal != null and sal != ''">
+			and b.sal  <![CDATA[ >= ]]> #{sal}
+		</if>
+		<if test="qualification != null and qualification != ''">
+			and b.qualification <![CDATA[ >= ]]> #{qualification}
+		</if>
+		<if test="workExperience != null and workExperience != ''">
+			and b.workExperience <![CDATA[ >= ]]> #{workExperience}
+		</if>
+	</select>  
+	
+	<select id="getAdvertisingById" resultType="map" parameterType="string">
+		SELECT * from ali_advertising WHERE place = #{id}
+	</select>
+		
+	<select id="getVoucherIdById" resultType="map" parameterType="string">
+		SELECT * from ali_voucher WHERE voucherId = #{voucherId}
+	</select>
+	
+	<select id="queryVoucher" resultType="map" >
+		SELECT * from ali_voucher where state ='0'
+	</select>
+	
+	<select id="listVoucher" parameterType="map" resultType="map">
+			select * from ali_voucher 
+			  <where>
+			  		<if test="startTime != null and startTime !=''">
+			  				and startTime = #{startTime}
+			  		</if>
+			  		<if test="endTime != null and endTime !=''">
+			  				and endTime = #{endTime}
+			  		</if>
+			  		<if test="userId != null and userId !=''">
+			  				and userId = #{userId}
+			  		</if>
+			  </where> 
+	</select>
+	
+	
+	<insert  id="saveVoucher"  parameterType="map"  useGeneratedKeys="true"  keyProperty="voucherId"   keyColumn="voucherId">
+		INSERT INTO ali_voucher ( 
+					 voucherDesc,
+					 userId,
+					 startTime,
+					 endTime,
+					 state
+				)
+				VALUES
+					( 
+						#{voucherDesc},
+					  #{userId},
+					  #{startTime},
+					  #{endTime},
+					  #{state}
+					)
+	</insert>
+	
+	<update id="updateVoucher" parameterType="map">
+		UPDATE ali_voucher 
+			 <set>
+			 	 <if  test="voucherDesc !=null  and voucherDesc !=''">
+			 	 		  voucherDesc  = #{voucherDesc},
+			 	 </if>
+			 	 <if  test="userId !=null  and userId !=''">
+			 	 		  userId  = #{userId},
+			 	 </if>
+			 	 <if  test="startTime !=null  and startTime !=''">
+			 	 		  startTime  = #{startTime},
+			 	 </if>
+			 	 <if  test="endTime !=null  and endTime !='' ">
+			 	 		  endTime  = #{endTime},
+			 	 </if>
+			 	  <if  test="state !=null  and state !='' ">
+			 	 		  state  = #{state},
+			 	 </if> 
+			  </set>
+			WHERE
+				 voucherId  = #{voucherId}
+	</update>
+	
+	<insert id="freeMakevoucher" parameterType="map" >
+		insert into ali_cast_reply (userId,replyState,replyTime,type,voucherId) values (#{userId},#{replyState},#{replyTime},#{type},#{voucherId})
+	</insert>
+	
+ 
+	 <select id="localSearch" resultType="map" parameterType="map">
+	select * from (select a.adviceId as articleId, a.userId,a.userName,a.sendTime,a.title,a.adviceContent,'' as sendUnit, a.columnCode,'1' as type,'' as effectLevel from ali_advice a
+	 where a.privateUserId =0 and a.state=0
+		<if test="searchKeywords != null and searchKeywords != ''">
+		 and (a.title like  CONCAT('%',#{searchKeywords},'%')<!--  or  a.userName like  CONCAT('%',#{searchKeywords},'%')  -->or  a.adviceContent like  CONCAT('%',#{searchKeywords},'%'))
+		</if>
+		UNION all
+		select i.articleId,i.userId,i.realName as userName,i.sendTime,i.title,i.articleContent,j.sendUnit,i.columnCode ,'2' as type,j.effectLevel
+		 from  ali_article i,ali_legislation j
+	 where  i.articleId = j.articleId and i.isDelete!=1 and i.isPush =1
+		<if test="searchKeywords != null and searchKeywords != ''">
+			and(  i.title like  CONCAT('%',#{searchKeywords},'%')  <!-- or  i.realName like  CONCAT('%',#{searchKeywords},'%') --> <!-- or  i.articleContent like  CONCAT('%',#{searchKeywords},'%') --> )
+		</if>
+		
+		UNION all
+		SELECT a.userId AS articleId,
+					a.userId,
+					a.userName,
+					a.registerTime,
+					a.nickName AS title,
+					b.personDesc,
+					a.isAuthentication,
+					'16' as columnCode,
+					a.userType,
+					a.userId AS sendUnit
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId   
+		<if test="searchKeywords != null and searchKeywords != ''">
+	 and (b.realName like  CONCAT('%',#{searchKeywords},'%') or  a.nickName LIKE CONCAT('%',#{searchKeywords},'%'))
+		</if>
+		) a order by a.sendTime desc
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="localSearch_COUNT_TOTAL" resultType="int" parameterType="map">
+	  select count(1)
+			from ( select a.userName,a.sendTime,a.title,a.adviceContent,'' as sendUnit from ali_advice a
+		  where a.privateUserId =0
+		<if test="searchKeywords != null and searchKeywords != ''">
+			and (a.title like  CONCAT('%',#{searchKeywords},'%') 	<!-- or  a.userName like  CONCAT('%',#{searchKeywords},'%')  --> or  a.adviceContent like  CONCAT('%',#{searchKeywords},'%'))
+		</if>
+		UNION all
+		select i.realName as userName,i.sendTime,i.title,i.articleContent,j.sendUnit 
+		 from  ali_article i,ali_legislation j
+	 where  i.articleId = j.articleId and i.isDelete!=1 and i.isPush =1
+		<if test="searchKeywords != null and searchKeywords != ''">
+			and(  i.title like  CONCAT('%',#{searchKeywords},'%') <!--  or  i.realName like  CONCAT('%',#{searchKeywords},'%') --> <!-- or  i.articleContent like  CONCAT('%',#{searchKeywords},'%') --> )
+		</if>
+		UNION all
+		SELECT 
+					a.userId,
+					a.userName,
+					a.registerTime,
+					a.nickName AS title,
+					b.personDesc
+					
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId   
+		<if test="searchKeywords != null and searchKeywords != ''">
+	 and (b.realName like  CONCAT('%',#{searchKeywords},'%') or  a.nickName LIKE CONCAT('%',#{searchKeywords},'%'))
+		</if>
+		) a
+	</select>
+	
+	
+	 <select id="localAdviceSearch" resultType="map" parameterType="map">
+		select a.adviceId as articleId, a.userId,a.userName,a.sendTime,a.title,a.adviceContent,'' as sendUnit,a.columnCode from ali_advice a
+	 	  where a.privateUserId =0 and a.state=0
+		<if test="searchKeywords != null and searchKeywords != ''">
+			and (a.title like  CONCAT('%',#{searchKeywords},'%') <!-- or  a.userName like  CONCAT('%',#{searchKeywords},'%') --> or  a.adviceContent like  CONCAT('%',#{searchKeywords},'%'))
+		</if>
+		 order by a.sendTime desc
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="localAdviceSearch_COUNT_TOTAL" resultType="int" parameterType="map">
+		select 
+			count(*)
+ from ali_advice a
+	 	  where a.privateUserId =0 and a.state=0
+		<if test="searchKeywords != null and searchKeywords != ''">
+			and (a.title like  CONCAT('%',#{searchKeywords},'%') <!-- or  a.userName like  CONCAT('%',#{searchKeywords},'%') --> or  a.adviceContent like  CONCAT('%',#{searchKeywords},'%'))
+		</if>
+	</select>
+	
+	
+	 <select id="localLegislationSearch" resultType="map" parameterType="map">
+		select i.articleId,i.userId,i.realName as userName,i.sendTime,i.title,i.articleContent,j.sendUnit,i.columnCode,j.effectLevel
+			 from  ali_article i,ali_legislation j
+		 where  i.articleId = j.articleId and i.isDelete!=1 and i.isPush =1 
+			<if test="searchKeywords != null and searchKeywords != ''">
+				and(  i.title like  CONCAT('%',#{searchKeywords},'%'))
+			</if>
+			 order by i.sendTime desc
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	
+	
+	 <select id="localSearchLvshi" resultType="map" parameterType="map">
+			SELECT a.userId AS articleId,
+					a.userId,
+					a.userName,
+					a.registerTime,
+					a.nickName AS title,
+					b.personDesc as adviceContent,
+					a.isAuthentication,
+					'16' as columnCode,
+					a.userType,
+					a.userId AS sendUnit
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId   
+		<if test="searchKeywords != null and searchKeywords != ''">
+	 and (b.realName like  CONCAT('%',#{searchKeywords},'%') or  a.nickName LIKE CONCAT('%',#{searchKeywords},'%'))
+			</if>
+			 order by a.registerTime desc
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	
+	 <select id="localSearchLvshi_COUNT_TOTAL" resultType="int" parameterType="map">
+			SELECT count(*)
+		from ali_user a,ali_counselor b
+	where a.userId = b.userId   
+		<if test="searchKeywords != null and searchKeywords != ''">
+	 and (b.realName like  CONCAT('%',#{searchKeywords},'%') or  a.nickName LIKE CONCAT('%',#{searchKeywords},'%'))
+			</if>
+			
+		
+	</select>
+
+	<select id="localLegislationSearch_COUNT_TOTAL" resultType="int" parameterType="map">
+		select count(1) from (
+		select i.realName as userName,i.sendTime,i.title,i.articleContent,j.sendUnit 
+		 from  ali_article i,ali_legislation j 
+	 where  i.articleId = j.articleId  and  i.isDelete!=1 and i.isPush =1
+		<if test="searchKeywords != null and searchKeywords != ''">
+			and(  i.title like  CONCAT('%',#{searchKeywords},'%') <!--  or  i.realName like  CONCAT('%',#{searchKeywords},'%') --> <!-- or  i.articleContent like  CONCAT('%',#{searchKeywords},'%') --> )
+		</if>
+		) a
+	</select>
+
+
+	<select id="messageSearch" resultType="map" parameterType="map">
+		select * from ali_message a where 1=1 and a.isDelete ='0'
+		<if test="userId != null and userId != ''">
+			and a.userId= #{userId} 
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and a.businessType= #{businessType} 
+		</if>
+		order by sendTime desc
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="messageSearch_COUNT_TOTAL"  parameterType="map" resultType="int">
+		select count(1) from ali_message a where 1=1 and a.isDelete ='0'
+		<if test="userId != null and userId != ''">
+			and a.userId= #{userId} 
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and a.businessType= #{businessType} 
+		</if>
+ 	</select>
+ 	
+	<select id="messageDetailsSearch" resultType="map" parameterType="string">
+	select * from ali_message a where a.messageId= #{messageId}
+		<if test="userId != null and userId != ''">
+				and a.userId= #{userId} 
+		</if>
+		</select>
+	<select id="nextmessageDetailsSearch" resultType="map" parameterType="string">
+	select * from ali_message WHERE userId = #{userId}  and messageId &gt; #{messageId}  ORDER BY messageId   LIMIT 0,1;  
+	</select>
+	<select id="upmessageDetailsSearch" resultType="map" parameterType="string">
+		select * from ali_message WHERE userId = #{userId}  and messageId &lt; #{messageId}  ORDER BY messageId  DESC  LIMIT 0,1;  
+	</select>
+	
+	<select id="messageTypeCount" resultType="map" parameterType="map">
+		select count(1) as msgCount from ali_message a where 1=1 and isdelete='0'
+			<if test="userId != null and userId != ''">
+				and a.userId= #{userId} 
+			</if>
+			<if test="isRead != null and isRead != ''">
+				and a.isRead= #{isRead} 
+			</if>
+			<if test="businessType != null and businessType != ''">
+				and a.businessType= #{businessType} 
+			</if>
+	</select>
+	
+ 	<insert id="insertSchedule"  parameterType="map"  useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO ali_schedule (userId, name, content,state)VALUES( #{userId}, #{name}, #{content},'1');
+	<selectKey resultType="int" keyProperty="id" order="AFTER">
+        SELECT LAST_INSERT_ID()
+    </selectKey>
+	</insert>
+	
+	<insert id="insertScheduleReminderTime" parameterType="map">
+		insert into ali_schedule_remindertime (scheduleId,gregorianCalendar,lunarCalendar,week)
+		 values
+		<foreach collection="scheduleList" item="w" separator=",">
+			(#{w.scheduleId},#{w.gregorianCalendar},#{w.lunarCalendar},#{w.week})
+		</foreach>
+	</insert>
+	
+	<select id="scheduleSearch" resultType="map">
+	 select  a.id,a.userId,a.name,a.content,b.id as scheduleId,
+	b.gregorianCalendar,b.lunarCalendar,b.week
+	 from ali_schedule a, ali_schedule_remindertime b
+	where a.id = b.scheduleId and a.userId =  #{userId}
+	<if test="content != null and content != ''">
+			and  a.content like  CONCAT('%',#{content},'%')
+	</if>
+	<if test="startTime !=null and startTime !='' ">
+         <![CDATA[ and b.gregorianCalendar  >=  #{startTime}  ]]>
+    </if>
+    <if test="endTime !=null and endTime!='' "  >
+         <![CDATA[ and b.gregorianCalendar <=  #{endTime}  ]]>
+    </if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="scheduleSearchALL" resultType="map">
+	 select  a.id,a.userId,a.name,a.content,b.id as scheduleId,
+	b.gregorianCalendar,b.lunarCalendar,b.week
+	 from ali_schedule a, ali_schedule_remindertime b
+	where a.id = b.scheduleId and a.userId =  #{userId}
+	<if test="content != null and content != ''">
+			and  a.content like  CONCAT('%',#{content},'%')
+	</if>
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	<select id="scheduleSearchALL_COUNT_TOTAL" resultType="int">
+	 select  count(1)
+	 from ali_schedule a, ali_schedule_remindertime b
+	where a.id = b.scheduleId and a.userId =  #{userId}
+	<if test="content != null and content != ''">
+			and  a.content like  CONCAT('%',#{content},'%')
+	</if>
+	</select>
+	
+	<select id="scheduleSearch_COUNT_TOTAL" resultType="int">
+	select count(1)  from ali_schedule a, ali_schedule_remindertime b
+	where a.id = b.scheduleId and a.userId =  #{userId}
+	<if test="content != null and content != ''">
+			and  a.content like  CONCAT('%',#{content},'%')
+	</if>
+	<if test="startTime !=null and startTime !='' ">
+         <![CDATA[ and b.gregorianCalendar  >=  #{startTime}  ]]>
+    </if>
+    <if test="endTime !=null and endTime!='' "  >
+         <![CDATA[ and b.gregorianCalendar <=  #{endTime}  ]]>
+    </if>
+ 	</select>
+ 	
+	<delete id="deleteScheduleReminderTimeById" parameterType="string">
+		delete from ali_schedule_remindertime where id = #{id}
+	</delete>
+	<delete id="deleteSchedule" parameterType="string">
+		delete from ali_schedule where id = #{id}
+	</delete>
+	<delete id="deleteScheduleReminderTimeByScheduleId" parameterType="string">
+		delete from ali_schedule_remindertime where scheduleId = #{id}
+	</delete>
+
+	<update id="updateSchedule" parameterType="map">
+		update ali_schedule
+		  	<set>
+		  		<if test="name != null and name != ''">
+				name = #{name},
+			</if>
+			<if test="content != null and content != ''">
+				content = #{content},
+			</if>
+			</set>
+			 where id = #{id}
+	</update>
+	<select id="getUserInfo" resultType="map" parameterType="string">
+		select * from ali_user where userId = #{userId}
+	</select>
+	
+	<select id="getSysUserInfo"  resultType="map" parameterType="string">
+	    select * from ali_sys_user  where sys_userId =#{userId}
+	</select>
+	
+	<select id="getUserInfoByMobileOruserName" resultType="map" parameterType="map">
+	select * from ali_user
+	where 1=1 
+		<if test="mobile != null and mobile != ''">
+		 and	mobile = #{mobile}
+		</if>
+		<if test="userName != null and userName != ''">
+		and userName = #{userName}
+		</if>
+		<if test="nickName != null and nickName != ''">
+		and	nickName = #{nickName}
+		</if>
+		<if test="userType != null and userType != ''">
+		and	userType = #{userType}
+		</if>
+	
+	</select>
+	
+	<select id="getConsultantOrCounselorInfo" resultType="map" parameterType="map">
+		select carType,realName from ali_consultant where userId = #{userId}
+		union ALL
+		select carType,realName from ali_counselor where userId = #{userId}	
+	</select>
+	<select id="getScheduleRemindertime" resultType="map">
+		select a.name,a.content,b.gregorianCalendar,c.pushCode,b.id from ali_schedule a ,ali_schedule_remindertime b,ali_user c
+		where a.id = b.scheduleId  and a.userId = c.userId and b.state ='1'
+	</select>
+	<update id="updateScheduleRemindertime" parameterType="map">
+		update ali_schedule_remindertime  set state = '0' where id = #{id}
+	</update>
+	
+	<update id="deleteMessage" parameterType="map">
+		update  ali_message set isDelete = '1' where messageId in
+	<foreach   collection="messageIds" item="messageIds" open="(" separator="," close=")" >
+            #{messageIds}
+	 </foreach>
+	</update>
+	
+	<update id="updateMessage" parameterType="map">
+		update ali_message set isRead ='1'  where userId = #{userId}
+			<if test="messageId != null and messageId != ''">
+				and messageId = #{messageId}
+			</if>	
+	</update>
+	
+	<update id="updateCounselorPersonInfo" parameterType="map">
+		update ali_counselor
+ 		 	<set>
+		  		<if test="personUrl != null and personUrl != ''">
+				personUrl = #{personUrl},
+			</if>
+			<if test="personDesc != null and personDesc != ''">
+				personDesc = #{personDesc},
+			</if>
+			<if test="characterSign != null and characterSign != ''">
+				characterSign = #{characterSign},
+			</if>
+			<if test="codeImg != null and codeImg != ''">
+				codeImg = #{codeImg},
+			</if>
+			</set>
+		 where userId = #{userId}
+	</update>
+	
+	<insert id="messageSend"  parameterType="map">
+		INSERT INTO ali_message 
+		(userId, messageContent, businessId, businessType, sendTime, messageType, isRead, messageTitle, addresser,
+		 messageState, isDelete,is_send, create_time) VALUES (#{userId},#{messageContent},#{businessId}
+		 ,#{businessType},#{sendTime},#{messageType},#{ isRead},#{messageTitle},#{addresser},#{messageState},
+		 #{ isDelete},#{ is_send},#{ create_time})
+	</insert>
+	
+	
+	<select id="bannerSearch" resultType="map" parameterType="map">
+		select * from ali_banner
+		<where>
+			<if test="type != null and type != ''">
+				type = #{type}
+			</if>
+			<if test="is_available != null and is_available != ''">
+				is_available = #{is_available}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getUserEvaluate" resultType="map" parameterType="string">
+	  select a.levelScore,a.attitudeScore,a.sourceScore,a.chargeScore,a.makeNum
+		,a.complateAdviceNum,a.entrustNum,a.goodNum,a.middleNum,a.badNum,b.evaluateldContent,
+		b.evaluateTime,b.evaluateUserId
+		from ali_counselor a,ali_evaluate b 
+		where a.userId = b.userId
+		and a.userId = #{userId}
+		ORDER BY b.evaluateTime DESC
+	</select>
+	
+	<update id="complainJob" parameterType="map">
+		update ali_advertise 
+ 		 	<set>
+			<if test="isComplain != null and isComplain != ''">
+				isComplain = #{isComplain}
+			</if>
+			</set>
+		 where advertiseId = #{advertiseId}
+	</update>
+
+	<insert id="insertReport" parameterType="map">
+		insert into ali_report (reportTitle,reportType,userId,userName,reportTime,mobile,isDelete,reportBusinessId)
+		 values (#{reportTitle},#{reportType},#{userId},#{userName},#{reportTime},#{mobile},#{isDelete},#{reportBusinessId})
+	</insert>
+	
+	
+	<select id="findConsultantByUserNickName" resultType="map" parameterType="map">
+		select a.* from ali_user a , ali_consultant b
+	where 	a.userId=b.userId
+		<if test="province != null and province != ''">
+		 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+		and b.city = #{city}
+		</if>
+		<if test="nickName != null and nickName != ''">
+		and	a.nickName = #{nickName}
+		</if>
+		<if test="userType != null and userType != ''">
+		and	a.userType = #{userType}
+		</if>
+	</select>
+	
+	<select id="findCounselorByUserNickName" resultType="map" parameterType="map">
+		select a.* from ali_user a , ali_counselor b
+	where 	a.userId=b.userId
+		<if test="province != null and province != ''">
+		 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+		and b.city = #{city}
+		</if>
+		<if test="nickName != null and nickName != ''">
+		and	a.nickName = #{nickName}
+		</if>
+		<if test="userType != null and userType != ''">
+		and	a.userType = #{userType}
+		</if>
+	</select>
+	
+	<select id="findCompanyByUserNickName" resultType="map" parameterType="map">
+		select a.* from ali_user a , ali_company b
+	where 	a.userId=b.userId
+		<if test="province != null and province != ''">
+		 and b.province = #{province}
+		</if>
+		<if test="city != null and city != ''">
+		and b.city = #{city}
+		</if>
+		<if test="nickName != null and nickName != ''">
+		and	a.nickName = #{nickName}
+		</if>
+		<if test="userType != null and userType != ''">
+		and	a.userType = #{userType}
+		</if>
+	</select>
+	
+</mapper>

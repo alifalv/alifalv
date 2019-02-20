@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysRole">
+    <resultMap id="BaseResultMap" type="SysRole">
+        <id column="sys_roleId" property="sys_roleId" jdbcType="INTEGER"/>
+        <result column="sys_roleName" property="sys_roleName" jdbcType="VARCHAR"/>
+        <result column="sys_state" property="sys_state" jdbcType="INTEGER"/>
+        <result column="sys_desc" property="sys_desc" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="is_delete" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        ali_sys_role
+        <where>
+            <if test="true">
+                and is_delete is null
+            </if>
+            <if test="sys_roleId != null">
+                and sys_roleId = #{sys_roleId,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY sys_roleId DESC
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(sys_roleId)
+        FROM
+        ali_sys_role
+        <where>
+            <if test="true">
+                and is_delete is null
+            </if>
+            <if test="sys_roleId != null">
+                and sys_roleId = #{sys_roleId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="SysRole" resultMap="BaseResultMap">
+        select * from ali_sys_role
+        <where>
+            <if test="sys_roleId != null">
+                and sys_roleId = #{sys_roleId,jdbcType=INTEGER}
+            </if>
+            <if test="sys_roleName != null">
+                and sys_roleName = #{sys_roleName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="SysRole" useGeneratedKeys="true" keyProperty="sys_roleId" >
+      insert into ali_sys_role (sys_roleName, sys_state,sys_desc)
+      values (#{sys_roleName,jdbcType=VARCHAR}, 0,#{sys_desc,jdbcType=VARCHAR})
+    </insert>
+    <update id="update" parameterType="SysRole">
+        update ali_sys_role
+        <set>
+            <if test="sys_roleName != null">
+                sys_roleName = #{sys_roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="sys_state != null">
+                sys_state = #{sys_state,jdbcType=INTEGER},
+            </if>
+            <if test="sys_desc != null">
+                sys_desc = #{sys_desc,jdbcType=VARCHAR},
+            </if>
+            <if test="is_delete != null">
+                is_delete = #{is_delete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sys_roleId = #{sys_roleId,jdbcType=INTEGER}
+    </update>
+</mapper>

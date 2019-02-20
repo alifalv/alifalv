@@ -1,0 +1,373 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>意见反馈</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+				  <form class="form-inline">
+					  <div class="form-group">
+						<label class="control-label" for="addTimeStart">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="addTimeStart" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="addTimeEnd" readonly>
+						</div>
+					  </div>
+			            <label class="my-1 mr-2" >状态</label>
+			            <select class="form-control my-1 mr-sm-2" id="isComplate" title="">
+			              <option selected value="">全部</option>
+			              <option value="0">未处理</option>
+			              <option value="1">已处理</option>
+			            </select>
+					  <div class="form-group">
+						<input type="text" id="suggestContent" class="form-control mx-sm-4" aria-describedby="passwordHelpInline" placeholder="内容关键词">
+					  </div>
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered table-hover" id="table_id" style="width:100%">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>反馈信息</th>
+								<th>姓名</th>
+								<th>联系方式</th>
+								<th>时间</th>
+								<th>状态</th>
+								<th>处理时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">回复处理</h5>
+        		<input type="text" id="id_update" style="display:none;"/>
+        		<input type="text" id="id_userId" style="display:none;"/>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row" style="margin-top: 20px;">
+						<label class="col-sm-2 col-form-label">姓名：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="userName" readonly="readonly"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">联系方试：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="mobile" readonly="readonly"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">反馈时间：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="suggestTime" readonly="readonly"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">反馈内容：</label>
+						<div class="col-sm-5">
+							<textarea rows="3" cols="50" id="content" readonly="readonly"></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">回复：</label>
+						<div class="col-sm-5">
+							<textarea rows="3" cols="50" id="replyContent"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary save" onclick="ensureReply()">确认回复</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" >删除提醒</h6>
+        <input type="text" id="id_del" style="display:none;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <span class="nav-link">确认删除？</span>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="delResult()">确认</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#addTimeStart").jeDate(start);
+	$("#addTimeEnd").jeDate(end);
+	//时间控件 结束
+
+	var tableData;
+	$(document).ready(function () {
+	    	if(sessionStorage.getItem("opinion_type")!=''){
+	    		$('#isComplate').val(sessionStorage.getItem("opinion_type"));
+	    	}else{reset();}
+		tableData = showdata(false);
+	});
+	
+	function showdata(TorF){
+		return $('#table_id').DataTable({
+			"destroy": TorF,
+	    	//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 5,
+			"lengthChange": false,
+			"language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	   			url:requestUrl+"suggest/list",
+	   			type:'POST',
+                data:function(d){
+                    d.suggestTimeStart=$("#addTimeStart").val();
+                    d.suggestTimeEnd=$("#addTimeEnd").val();
+                    d.isComplate=$("#isComplate").val();
+                    d.suggestContent=$("#suggestContent").val();
+                }
+	   		}, 
+	   		columns: [
+	           	{ "data": "suggestId" },
+	           	{ "data": "suggestContent" },
+	           	{ "data": "userName" },
+	           	{ "data": "mobile" },
+	           	{ "data": "suggestTime" },
+	           	{ "data": "stateDescription" },
+	           	{ "data": "complateTime" },
+	           	{ "data":null,
+	           		"visible": true,
+	                "render":function(data,type,full){
+	                	var ReplyOrNot = "";
+	                	if(full.isComplate!="1"){
+	                		ReplyOrNot = '<input type="button" class="btn btn-success" value="回复" onclick="toReply(\''+full.suggestId+'\')"/>&nbsp;';
+	                	}
+	                	return  ReplyOrNot +
+								'<input type="button" class="btn btn-success" value="删除" onclick="toDelete(\''+full.suggestId+'\')"/>';
+					}
+				}
+			]
+		});
+	}
+	
+	//查询
+	function search(){
+		tableData = showdata(true);
+	}
+    function reload(){
+		var table = $('#table_id').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//重新加载
+	function reset(){
+		$("#addTimeStart").val("");
+		$('#addTimeEnd').val("");
+		$('#isComplate').val("");
+		$('#suggestContent').val("");
+	}
+	
+	//回复
+	function toReply(suggestId){
+        $("#dialogModal").modal("show");
+        $("#id_update").val(suggestId);
+        $('#userName').val("");
+        $('#mobile').val("");
+        $('#suggestTime').val("");
+        $('#content').val("");
+        Yajax({
+            type:'GET',
+            url:requestUrl+"suggest/info/"+suggestId,
+            success : function(data) {
+                console.log(data);
+                $('#userName').val(data.data.userName);
+                $('#id_userId').val(data.data.userId);
+                $('#mobile').val(data.data.mobile);
+                $('#suggestTime').val(data.data.suggestTime);
+                $('#content').val(data.data.suggestContent);
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("请求失败");
+            }
+        });
+	}
+	//确认回复
+	function ensureReply(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"suggest/reply",
+            data:JSON.stringify({
+	            	"suggestId":$("#id_update").val(),
+	            	"replyContent":$('#replyContent').val()
+            }),
+            contentType : "application/json;charset=utf-8", // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                    alert("回复成功");
+                    $("#dialogModal").modal("hide");
+                    reload();//刷新表格
+                    sendMessage();
+            			showCounts();
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("回复失败");
+            }
+        });
+	}
+	
+	//发站内消息
+	function sendMessage(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:$('#replyContent').val(),
+	            	businessType:1,
+	            	businessId:$("#id_update").val(),
+	            	messageType:"意见反馈"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+	
+	//删除
+	function toDelete(suggestId){
+        $("#id_del").val(suggestId);
+        $("#mySmallModalLabel").modal("show");
+	}
+    //确认删除
+    function delResult(){
+        var suggestId = $("#id_del").val();
+        $("#mySmallModalLabel").modal("hide");
+        $("#id_del").val("");//重置
+        Yajax({
+	        type:'GET',
+	        url:requestUrl+"suggest/remove/"+suggestId,
+	        success : function(data) {
+	            console.log(data);
+	            alert("删除成功");
+    				showCounts();
+	            reload();//刷新表格
+	        },
+	        fail:function (data) {
+	            console.log(data);
+	            alert("删除失败");
+	        }
+	    });
+    }
+</script>
+

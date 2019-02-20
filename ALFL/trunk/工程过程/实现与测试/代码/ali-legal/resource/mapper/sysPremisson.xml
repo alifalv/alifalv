@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysPremisson">
+    <select id="queryAll" resultType="SysPremisson">
+        select * from ali_sys_premisson
+    </select>
+
+    <select id="userList" resultType="SysPremisson" parameterType="SysUser">
+        select *
+        from ali_sys_premisson asp
+        where asp.premissonId in (select asm.premissonId
+                                  from ali_sys_mapping asm
+                                  where asm.roleId in (select asu.sys_roleId
+                                                       from ali_sys_user asu
+                                                       where sys_userId = #{sys_userId}))
+    </select>
+
+    <select id="roleList" resultType="SysPremisson" parameterType="SysUser">
+        select *
+        from ali_sys_premisson asp
+        where asp.premissonId in (select asm.premissonId
+                                  from ali_sys_mapping asm
+                                  where asm.roleId  = #{sys_roleId})
+    </select>
+
+    <select id="parentSysPremissonList" resultType="SysPremisson">
+        select *
+        from ali_sys_premisson
+        where parentId = 0
+    </select>
+
+    <select id="childSysPremissonList" resultType="SysPremisson">
+        select *
+        from ali_sys_premisson
+        where parentId != 0
+    </select>
+
+    <select id="getChildSysPremissonList" resultType="SysPremisson" parameterType="java.lang.Integer">
+        select *
+        from ali_sys_premisson
+        where parentId = #{parentId}
+    </select>
+</mapper>

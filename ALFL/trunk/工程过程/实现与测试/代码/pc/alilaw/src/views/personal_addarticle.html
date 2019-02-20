@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 发布文章</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/img.css" rel="stylesheet">
+    <style>
+        .edui-editor-toolbarbox {
+            display: block!important;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-30">
+        <div class="ui-regpanel">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ui-regform ui-padding-lr-80 ui-padding-l-no ui-margin-t-30">
+                        <form class="form-horizontal" id="form">
+                            <div class="form-group ui-margin-b-40">
+                                <div class="col-xs-offset-1 col-xs-10 ui-size-18"><img src="../img/img-flwszz.png" class="ui-margin-r-5" width="28" height="28">发布文章 - <span id="articleType"></span></div>
+                            </div>
+
+                            <!--<div class="form-group ui-margin-b-30">-->
+                                <!--<label for="caseType" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>类型：</label>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<select class="form-control" name="caseType" id="caseType" data-rule="类型:required">-->
+                                        <!--<script id="case_tmpl" type="text/html">-->
+                                            <!--{{each data value i}}-->
+                                            <!--<option value="{{value.caseId}}">{{value.caseName}}</option>-->
+                                            <!--{{/each}}-->
+                                        <!--</script>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="form-group ui-margin-b-30">
+                                <label for="title" class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>标题：</label>
+                                <div class="col-xs-10">
+                                    <input type="text" name="title" class="form-control" id="title" placeholder="请输入标题（5-100个字符）" data-rule="标题:required;length(5~100, true)">
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30 ui-hide" id="neirong">
+                                <label class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>内容：</label>
+                                <div class="col-xs-10">
+                                    <script id="adviceContent" name="articleContent" placeholder="文章内容" type="text/plain" data-rule="内容:required"></script>
+                                    <!--<textarea class="form-control" rows="8" placeholder="请完整描述您申报的案情"></textarea>-->
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30 ui-hide" id="fengmian">
+                                <label class="col-xs-2 control-label"><span class="ui-color-red ui-margin-r-5">*</span>封面：</label>
+                                <div class="col-xs-10">
+                                    <section class="img-section">
+                                        <div class="z_photo upimg-div clear" >
+                                            <section class="z_file fl">
+                                                <input type="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                            </section>
+                                        </div>
+                                    </section>
+                                    <span class="ui-size-12 ui-color-gray"><i class="iconfont icon-deng"></i>图片文件后缀支持jpg、png、gif、jpeg格式，单张图片大小建议在4M以下</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group ui-margin-b-30">
+                                <div class="col-xs-offset-2 col-xs-2">
+                                    <button type="submit" class="btn btn-block ui-btn-red">发布</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

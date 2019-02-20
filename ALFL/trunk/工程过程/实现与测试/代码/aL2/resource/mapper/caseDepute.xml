@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CaseDepute">
+	
+	<select id="findCaseDepute" parameterType="map"  resultType="map">
+			select * from ali_case_depute
+			<where>
+				<if  test="null !=caseId ">
+				      and caseId = #{caseId}
+				</if>
+				<if test="null != userId">
+						and  userId = ${userId}
+				</if>
+			</where>
+	</select>
+	
+	<update id="deleteCase"  parameterType="int" >
+		update   ali_case_depute  set is_delete=1 where caseId = #{caseId}
+	</update>
+	
+	<update id="updateCase" parameterType="map">
+			UPDATE  ali_case_depute
+				<set>
+					<if test="caseId !=null and caseId !='' ">
+						 caseId = #{caseId},
+					</if>
+					<if test="caseTitle !=null and caseTitle !='' ">
+						 caseTitle = #{caseTitle},
+					</if>
+					<if test="caseDesc !=null and caseDesc !='' ">
+						 caseDesc = #{caseDesc},
+					</if>
+					<if test="caseHope !=null and caseHope !='' ">
+						 caseHope = #{caseHope},
+					</if>
+					<if test="caseHope !=null and caseHope !='' ">
+						 caseHope = #{caseHope},
+					</if>
+					<if test="caseAsk !=null and caseAsk !='' ">
+						 caseAsk = #{caseAsk},
+					</if>
+					<if test="province !=null and province !='' ">
+						 province = #{province},
+					</if>
+					<if test="city !=null and city !='' ">
+						 city = #{city},
+					</if>
+					<if test="caseType !=null and caseType !='' ">
+						 caseType = #{caseType},
+					</if>
+					<if test="mobile !=null and mobile !='' ">
+						 mobile = #{mobile},
+					</if>
+					<if test="offerType !=null and offerType !='' ">
+						 offerType = #{offerType},
+					</if>
+					<if test="offerMoney !=null and offerMoney !='' ">
+						 offerMoney = #{offerMoney},
+					</if>
+					<if test="caseState !=null and caseState !='' ">
+						 caseState = #{caseState},
+					</if>
+					<if test="offerMoney !=null and offerMoney !='' ">
+						 offerMoney = #{offerMoney},
+					</if>
+				</set>
+				where   caseId = #{caseId} 
+	</update>
+	
+	<select id="listCaseOffer" parameterType="int" resultType="map">
+      select * from  	ali_case_offer where caseId = #{caseId}
+	</select>
+	
+	<select id="list" parameterType="map" resultType="map">
+				 select  	*     from  	ali_case_offer 
+				 <where >
+				 	<if test="null != caseId">
+				 		and  caseId = #{caseId}
+				 	</if>
+				 	 <if test="null != userId">
+				 		and  userId = #{userId}
+				 	</if>
+				 	 <if test="null != offerId">
+				 		and  offerId = #{offerId}
+				 	</if> 
+				 	 <if test="null != isSuccess">
+				 		 and  isSuccess = #{isSuccess}
+				 	</if>
+				 </where> 
+	</select>
+	
+
+
+   <select  id="myCaseList"  parameterType="map" resultType="map">
+       select 
+			a.* ,
+		  u.userName,
+		  u.nickName,
+		  u.userType,
+		  u.userImg, u.vipLevel, u.userState, u.isAuthentication,
+		  (
+				select count(DISTINCT userId) from ali_case_offer as re where  re.caseId = a.caseId 
+			) as counts
+		from 
+			ali_case_depute  as a
+		LEFT JOIN
+		  ali_user as u on u.userId = a.userId
+		where 
+			a.userId = #{userId}
+		and 
+		  a.is_delete = 0 
+		ORDER BY a.deputeTime DESC 
+		limit #{PAGE_START},#{PAGE_LENGTH}
+   </select>
+   
+   <select  id="myCaseList_COUNT_TOTAL"  parameterType="map" resultType="int">
+         select 
+			count(*) 
+		from 
+			ali_case_depute  as a 
+		where 
+			a.userId = #{userId}
+		and 
+		  a.is_delete = 0   
+   </select>
+
+
+	<insert id="saveCaseDepute" useGeneratedKeys="true" keyProperty="caseId" parameterType="map">
+		insert into ali_case_depute 
+		  (caseTitle,caseDesc,caseHope,caseAsk,province,city,caseType,mobile,
+		  offerType,offerMoney,caseState,deputeTime,userId,userName,userImg,is_delete,caseImgs)
+		  values 
+		  (#{caseTitle},#{caseDesc},#{caseHope},#{caseAsk},#{province},#{city}
+		  ,#{caseType},#{mobile},#{offerType},#{offerMoney},0,NOW()
+		  ,#{userId},#{userName},#{userImg},0,#{caseImgs})
+	</insert>
+	
+	<insert id="saveCaseDeputeImgs" parameterType="map">
+		insert into ali_case_img (caseId,img)
+		values
+		<foreach collection="caseImgs" item="img" separator="," >
+			(#{caseId},#{img})
+		</foreach>
+	</insert>
+	
+	
+	<select id="findCaseList" parameterType="map" resultType="map">
+		select a.caseId,caseTitle,caseType,offerType,offerMoney,
+		  province,city,deputeTime,caseState,userId,userName,userImg,ifnull(counts,0) as counts
+		  from ali_case_depute a left join (select caseId,count(*) as counts from ali_case_offer GROUP BY caseId) b on a.caseId=b.caseId where is_delete = 0 
+			<if test="city!=null and city !='' ">
+				and city = #{city}
+			</if>
+			<if test="caseType!=null and caseType !='' ">
+				and caseType = #{caseType}
+			</if>
+			<if test="caseTitle!=null and  caseTitle !='' ">
+			and caseTitle  like CONCAT('%',#{caseTitle},'%')
+			</if>
+			<if test="province and  province !='' ">
+				and province = #{province}
+			</if>
+			order by deputeTime desc
+			limit #{PAGE_START},#{PAGE_LENGTH}
+	</select>
+	
+	<select id="findCaseList_COUNT_TOTAL" parameterType="map" resultType="int">
+		select COUNT(caseId)
+		  from ali_case_depute where is_delete = 0 
+		     <if test="city!=null and city !='' ">
+				and city = #{city}
+			</if>
+			<if test="caseType!=null and caseType !='' ">
+				and caseType = #{caseType}
+			</if>
+			<if test="caseTitle!=null and  caseTitle !='' ">
+			and caseTitle  like CONCAT('%',#{caseTitle},'%')
+			</if>
+			<if test="province and  province !='' ">
+				and province = #{province}
+			</if>
+	</select>
+	
+	<!-- 查询案源的详情，并返回上一页与下一页的标题和Id -->
+	<select   id="caseDetails"   resultType="map"    parameterType="map" > 
+			SELECT
+				a.*,
+			  (SELECT count(*) from (select userId from ali_case_offer where caseId = #{caseId} GROUP BY  userId) as s ) as counts,
+			  (SELECT CONCAT_WS("8m_m_8",IFNULL(caseId,""),IFNULL(caseTitle,""))   from 	ali_case_depute where   caseId &gt; #{caseId}  and is_delete =0  ORDER BY caseId  LIMIT 0,1) as gt,
+			  (SELECT CONCAT_WS("8m_m_8",IFNULL(caseId,""), IFNULL(caseTitle,""))   from 	ali_case_depute where   caseId &lt; #{caseId}  and is_delete =0  ORDER BY caseId  DESC LIMIT 0,1) as lt
+			from
+				ali_case_depute as  a
+			WHERE
+				caseId =#{caseId}
+	</select>
+	
+	<select id="findCaseDetailsById" parameterType="int" resultType="map">
+		select a.*,
+			(select count(b.offerId) from ali_case_offer b where b.caseId = a.caseId) as offerNum
+		 from ali_case_depute a where caseId = #{caseId}
+	</select>
+	
+	<select id="findCaseImgs"  resultType="map">
+		select caseId,img from ali_case_img where caseId in 
+		  <foreach collection="array" open="(" close=")" separator="," item="caseId">
+		  	#{caseId}
+		  </foreach>
+	</select>
+	
+	
+	<!-- 获取案件详情  上一章  下一章 -->
+	<select id="findCaseDetailsPreAndNext" parameterType="map" resultType="map">
+		
+		select 'pre' as infoType,caseId,caseTitle from ali_case_depute where
+		  caseId &lt; #{caseId} 
+		  <if test="city!=null">
+		      and city = #{city}
+		  </if>
+		  <if test="caseType!=null">
+		      and caseType = #{caseType}
+		  </if>
+		  limit 1
+		  union all
+		 select 'next' as infoType,caseId,caseTitle from ali_case_depute where
+		  caseId &gt; #{caseId} 
+		  <if test="city!=null">
+		      and city = #{city}
+		  </if>
+		  <if test="caseType!=null">
+		      and caseType = #{caseType}
+		  </if>
+		  limit 1
+	</select>
+	
+	<insert id="offerCase" parameterType="map"   useGeneratedKeys="true"     keyProperty="offerId"   keyColumn="offerId">
+		insert into ali_case_offer 
+		  (caseId,userId,nickName,userImg,effect,thinking,offerMoney,mobile,isSuccess,offerTime,sendPerson)
+		  values
+		  (#{caseId},#{userId},#{nickName},#{userImg},#{effect},#{thinking},#{offerMoney},#{mobile},0,NOW(),#{sendPerson})
+	</insert>
+	
+	<update id="employ" parameterType="int">
+		update ali_case_offer set isSuccess = 1 where offerId = #{offerId}
+	</update>
+	
+	<select id="findCaseListByUserId" parameterType="int" resultType="map">
+		select a.*,b.isAuthentication,b.vipLevel from ali_case_depute a 
+		  inner join ali_user b on a.userId = b.userId
+		  where a.userId = #{userId}
+	</select>
+	
+	<!-- 查询竞拍的列表 -->
+	<select id="findOfferList"  parameterType="map" resultType="map">
+			SELECT
+					r.*,
+				  u.userName,
+				  u.nickName,
+				  u.userImg,
+				  u.vipLevel, 
+				  u.isAuthentication,
+				  u.is_contract,
+				  u.userType,  
+				  z.* 
+				FROM
+					ali_case_offer as r
+				LEFT JOIN
+				   ali_user as u on u.userId = r.userId 
+				LEFT JOIN
+				   ali_counselor as z on z.userid = u.userid 
+				   
+				WHERE
+					r.caseId = #{caseId}
+					 <if test="userId !=null">
+					  and  u.userId = #{userId}
+					</if>
+					
+				ORDER BY
+					offerTime DESC
+			  limit #{PAGE_START},#{PAGE_LENGTH} 
+	</select>
+		<!-- 查询竞拍的列表 -->
+	<select id="findOfferList_COUNT_TOTAL"  parameterType="map" resultType="int">
+			SELECT
+				 count(*)
+				FROM
+					ali_case_offer as r
+				LEFT JOIN
+				   ali_user as u on u.userId = r.userId   
+				WHERE
+					r.caseId = #{caseId}
+					 <if test="userId !=null">
+					  and  u.userId = #{userId}
+					</if> 
+	</select>
+	
+		<!-- 查询竞拍的列表 中的回复 -->
+	<select id="findOfferListNextReply"  parameterType="map" resultType="map">
+				SELECT
+					r.*,
+					 u.userName,
+				 u.nickName, 
+				  u.userImg, 
+				  u.vipLevel,
+		          u.isAuthentication,
+		           u.is_contract,
+		           u.userType, 
+		           g.carType as gCarType,
+		           z.carType as zCarType,
+				  z.job	  
+				FROM
+					ali_common_reply as r
+				LEFT JOIN
+						   ali_user as u on u.userId = r.userId
+				LEFT JOIN
+						   ali_consultant as g on g.userid = u.userid
+				LEFT JOIN
+						   ali_counselor as z on z.userid = u.userid    
+				WHERE
+					 businessType = #{businessType} 
+					AND isDelete = 0
+					AND upId = 0
+					AND relativeId in (
+							select * from (
+									SELECT
+												off.offerId  
+											FROM
+												ali_case_offer as off 
+												 
+											WHERE
+												caseId = #{caseId}
+												 <if test="userId !=null">
+													  and  userId = #{userId}
+												</if>
+											ORDER BY
+												offerTime DESC 
+							) as x 
+					)
+				ORDER BY
+					replyTime DESC 
+	</select>
+	
+	
+	<select id="myOfferCase" parameterType="map" resultType="map">
+		 select 
+				a.*,
+      ( select  count(distinct userId)  from ali_case_offer as c where c.caseId =a.caseId ) as counts
+      from ali_case_depute as a where a.caseId in (
+			  select  distinct  caseId  from ali_case_offer where userId = #{userId}
+   		 ) ORDER BY deputeTime DESC
+		limit #{PAGE_START},#{PAGE_LENGTH}
+	   <!--  
+		select a.* from ali_case_depute a 
+		  inner join 
+		  ali_case_offer b on a.caseId = b.caseId
+		  where b.userId = #{userId}
+		limit #{PAGE_START},#{PAGE_LENGTH}
+		-->
+	</select>
+	<select id="myOfferCase_COUNT_TOTAL" parameterType="map" resultType="int">
+		 select 
+				count(*) 
+     		 from ali_case_depute as a where a.caseId in (
+			  select  distinct  caseId  from ali_case_offer where userId = #{userId}
+   				 )
+	<!--   
+		select count(1) from ali_case_depute a 
+		  inner join 
+		  ali_case_offer b on a.caseId = b.caseId
+		  where b.userId = #{userId}
+		  -->
+	</select>
+</mapper>

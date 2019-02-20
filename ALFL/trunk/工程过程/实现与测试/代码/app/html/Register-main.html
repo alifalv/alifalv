@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="Login Register-main">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>注册</title>
+		<link href="mui/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script src="js/fastclick.js"></script>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Login Register-main">
+		<!--主体 begin-->
+		<div class="Conter page-slideright" id="app">
+			<div class="main-top">
+				<span class="close mui-action-back"></span>
+			</div>
+			<div class="main-bd">
+				<!--输入部分-->
+				<div class="inputbox">
+					<img class="login-logo" src="images/loginregister/register-logo.png"/>
+				</div>
+				
+				<div class="selectplayer">
+					<h3>选择身份</h3>
+					<a href="Register-askman-1.html">咨询者注册</a>
+					<a href="Register-ansman.html">咨询师注册</a>
+					<a href="Register-qiye-1.html">企业会员注册</a>
+				</div>
+				<p class="alreadyhas"><a href="Login.html">已有账号？去登录{{ziliao}}</a></p>
+			</div>
+		</div>
+		<!--主体 end-->
+
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="vue/vant-min.js"></script>
+		<script src="js/mui.slideright.js"></script>
+	<script>
+
+        new Vue({
+            el:'#app',
+            data:{
+                ziliao:'未提交'
+            },
+            mounted : function(){
+                var that = this;
+
+
+            },
+            methods:{
+
+
+            }
+
+        });
+
+	</script>
+	</body>
+
+</html>

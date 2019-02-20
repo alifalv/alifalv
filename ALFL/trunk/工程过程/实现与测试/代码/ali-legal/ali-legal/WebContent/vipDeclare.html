@@ -1,0 +1,452 @@
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><span id="免费文书制作">法律文书申报</span>&nbsp;&nbsp;
+            		<span id="免费交通案件">交通事故案件申报</span></h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+				  <form class="form-inline">
+					  <!-- <div  style="display:inline;text-align: center; margin-left:20px;text-align:center;margin:0 auto;" >-->
+					  <div class="form-group">
+						<!-- <div style="display:inline;width:100px;font-size:16px;color:#999999;margin-left:20px;">时间</div>-->
+						<label class="control-label" for="starttime">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="starttime" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="endtime" readonly>
+						</div>
+					  </div>
+					  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">类型</label>
+					   <select class="form-control my-1 mr-sm-2" id="type">
+						<option selected value="">全部</option>
+						<option value="免费文书制作">免费法律文书制作</option>
+						<option value="免费交通案件">免费交通事故案件</option>
+					  </select>
+					  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">状态</label>
+					   <select class="form-control my-1 mr-sm-2" id="replyState">
+						<option selected value="">全部</option>
+						<option value="0">待审核</option>
+						<option value="1">已通过</option>
+						<option value="2">未通过</option>
+					  </select>
+					  <div class="form-group">
+						<input type="text" id="id_input" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" placeholder="ID号、真实姓名、联系电话">
+					  </div>
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="vdDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>ID号</th>
+				  <th>真实姓名</th>
+				  <th>联系电话</th>
+                  <th>类型</th>
+                  <th>申请时间</th>
+                  <th>审核时间</th>
+				  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+	<div class="modal fade" id="examine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">审核</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-check form-check-inline" style="margin-left: 60px;">
+						<label class="form-check-label mx-sm-3" >审核结果</label>
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio1" value="1" checked="checked">
+						<label class="form-check-label" >通过</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="examineRadio" id="examineRadio0" value="2">
+						<label class="form-check-label" >不通过</label>
+					</div>
+					<input type="text" id="id_examine" style="display:none;" tabindex="1">
+					<input type="text" id="id_userId" style="display:none;" tabindex="1">
+					<input type="text" id="id_type" style="display:none;" tabindex="1">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" onclick="saveResult()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title" >删除提醒</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav justify-content-center">
+						<li class="nav-item">
+							<span class="nav-link">确认删除?</span>
+						</li>
+					</ul>
+					<input type="text" id="id_del" style="display:none;">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+	$("#outstarttime").jeDate(start);
+	$("#outendtime").jeDate(end);
+	$("#intime").jeDate(intime);
+	$("#addRecordTime").jeDate(addRecordTime);
+	//时间控件 结束
+	
+	//刷新表格
+    function reload(){
+		var table = $('#vdDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//查找按钮
+	function search(){
+		vdDT.ajax.reload();
+	} 
+	
+	//重置按钮
+	function reset(){
+		$("#id_input").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
+		$("#type").val("");
+		$("#replyState").val("");
+	} 
+
+	//切换类型
+	/* function changeTpye(type){
+		console.log(type);
+		$(this).css("color","#FFF");
+		reset();
+		$("#type").val(type);
+		search();
+	} */
+	$('h1 span').click(function(e){
+		$(this).css('font-weight','bold'); 
+		$(this).siblings('span').css('font-weight','normal');
+		reset();
+		$("#type").val(this.id);
+		search();
+	})
+    //显示审核对话框
+    function toExamine(id,userId,type){
+        $("#id_examine").val(id);
+        $("#id_userId").val(userId);
+        $("#id_type").val(type);
+        $("#examine").modal("show");
+    }
+
+    //审核按钮
+    function saveResult(){
+        var is_pass = $("input[name='examineRadio']:checked").val();
+        $("#examine").modal("hide");
+        //alert(is_pass);
+        var parameter = new FormData();
+        parameter.append("id",$("#id_examine").val());
+        var tempUrl = "";
+        if( is_pass == 1){
+            tempUrl = "cast/reply/check/"+$("#id_examine").val();
+        }else{
+            tempUrl = "cast/reply/uncheck/"+$("#id_examine").val();
+        }
+        //$("#id_examine").val(0);//重置
+        Yajax({
+            type:'GET',
+            url:requestUrl+tempUrl,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                reload();
+                sendMessage(is_pass);
+                alert("审核成功");
+    				showCounts();
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("审核失败");
+            }
+        });
+    }
+	
+	//发站内消息
+	function sendMessage(is_pass){
+		var type = '';
+		if(($('#id_type').val()).indexOf("免费交通案件") != -1){
+			type = '交通事故案件申报';
+		}else if(($('#id_type').val()).indexOf("免费文书制作") != -1){
+			type = '法律文书申报';
+		}
+		var messageContent = '';
+		if(is_pass=='1'){messageContent = type+'审核已通过，稍后会有专属咨询师联系您，请耐心等待！';}
+		else if(is_pass=='2'){messageContent = type+'审核不通过';}
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:messageContent,
+	            	businessType:1,
+	            	businessId:$("#id_examine").val(),
+	            	messageType:type
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+</script>
+<script type="application/javascript" charset="utf-8">
+var vdDT;
+$(document).ready(function(){
+	if(sessionStorage.getItem("vipDeclare_type")!=''){
+		$('#replyState').val("0");
+		$('#type').val(sessionStorage.getItem("vipDeclare_type"));
+	}else{reset();}
+	vdDT=$('#vdDT').DataTable( {
+			//-------------固定配置，不用改--------------
+			"ordering": false,
+			"serverSide": true,
+			"pagingType":"numbers",
+			"searching": false,
+			"processing": true,
+			"pageLength": 5,
+			"lengthChange": false,
+			"language": {
+				"sProcessing": "处理中...",
+				"sLengthMenu": "显示 _MENU_ 项结果",
+				"sZeroRecords": "没有匹配结果",
+				"sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+				"sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+				"sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+				"sInfoPostFix": "",
+				"sSearch": "搜索:",
+				"sEmptyTable": "表中数据为空",
+				"sLoadingRecords": "载入中...",
+				"sInfoThousands": ",",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sPrevious": "上页",
+					"sNext": "下页",
+					"sLast": "末页"
+				},
+				"oAria": {
+					"sSortAscending": ": 以升序排列此列",
+					"sSortDescending": ": 以降序排列此列"
+				}
+			},
+			//----------------------------------------------
+			ajax:{
+				//url:requestUrl_pc+"api/article/adviceQuestionList",
+				type:'POST',
+				data:{
+					"start": 0,
+					"length": 5
+				}
+			},
+			"aoColumns": [
+				//编号
+				{ "data":"id",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.id  != null && full.id  !=""){
+							return full.id ;
+						}
+						return "";
+					}
+				},		
+				//ID号
+				{ "data":"userId",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.userId  != null && full.userId  !=""){
+							return full.userId ;
+						}
+						return "";
+					}
+				},		
+				//真实姓名
+				{ "data":"userName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.userName  != null && full.userName  !=""){
+							return full.userName ;
+						}
+						return "";
+					}
+				},
+				//联系电话
+				{ "data":"mobile ",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.mobile  != null && full.mobile  !=""){
+							return full.mobile ;
+						}
+						return "";
+					}
+				},
+				//类型
+				{ "data":"type",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.type != null && full.type!=""){
+							return full.type;
+						}
+						return "";
+					}
+				},
+				//申请时间
+				{ "data":"replyTime",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.replyTime != null && full.replyTime!=""){
+							return full.replyTime;
+						}
+						return "";
+					}
+				},
+				//审核时间
+				{ "data":"completeTime",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.completeTime != null && full.completeTime!=""){
+							return full.completeTime;
+						}
+						return "";
+					}
+				},
+				//状态
+				{ "data":"replyStateDescription",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.replyStateDescription != null && full.replyStateDescription!=""){
+							return full.replyStateDescription;
+						}
+						return "";
+					}
+				},
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						if(full.replyState==0){
+							return  '<input type="button" class="btn btn-success" value="审核" onclick="toExamine(\''+full.id+'\',\''+full.userId+'\',\''+full.type+'\')"/>';
+						}else{
+							return  '';
+						}
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+				aoData.push({'name':'createTimeStart','value':$('#starttime').val()});
+				aoData.push({'name':'createTimeEnd','value':$('#endtime').val()});
+				aoData.push({'name':'type','value':$('#type').val()});
+				aoData.push({'name':'replyState','value':$('#replyState').val()});
+				aoData.push({'name':'content','value':$('#id_input').val()});
+
+			    Yajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl+"cast/reply/list",
+					"data": aoData,
+					"success": fnCallback
+				} );
+			}
+		} );
+	//}
+});
+</script>
+</body>
+</html>

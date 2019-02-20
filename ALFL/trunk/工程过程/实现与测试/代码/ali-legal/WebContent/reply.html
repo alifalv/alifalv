@@ -1,0 +1,412 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>回复管理</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="id_input">ID</label> 
+							<input type="text" id="id_input" class="form-control mx-sm-3"
+								aria-describedby="passwordHelpInline" style="width: 100px;">
+						</div>
+						<label class="my-1 mr-2">会员类型</label> 
+						<select class="form-control my-1 mr-sm-2" id="userType">
+							<option selected value="0">全部</option>
+							<option value="1">个人咨询者</option>
+							<option value="3">企业咨询者</option>
+							<option value="2">咨询师</option>
+						</select> 
+						<label class="my-1 mr-2">回复类型</label> 
+						<select class="form-control my-1 mr-sm-2" id="businessType">
+							<option selected value="0">全部</option>
+							<option value="3">法律咨询</option>
+							<option value="4">案件委托</option>
+							<option value="1">百姓吐槽</option>
+							<option value="2">阿里裁判</option>
+						</select>
+						<div class="form-group">
+							<input type="text" id="content" class="form-control mx-sm-3"
+								aria-describedby="passwordHelpInline" placeholder="名称、回复内容">
+						</div>
+						<div class="form-group">
+							<label class="control-label">时间:</label>
+							<div style="display: inline; margin-left: 10px; margin-right: 10px;">
+								<input type="text" style="border: 1px solid #ccc;" value="" id="addTimeStart" readonly> 到 
+								<input type="text" style="border: 1px solid #ccc;" value="" id="addTimeEnd" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table id="replyDT" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>呢称</th>
+								<th>会员类型</th>
+								<th>服务名称</th>
+								<th>回复类型</th>
+								<th>回复内容</th>
+								<th>添加时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除?</span></li>
+				</ul>
+				<input type="text" id="id_del" style="display: none;"> 
+				<input type="text" id="id_userId" style="display: none;" /> 
+				<input type="text" id="id_origin" style="display: none;" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">回复详情</h5>
+				<input type="text" id="id_update" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row showzero">
+						<label class="col-sm-2 col-form-label">内容详情：</label>
+						<div class="col-sm-5">
+							<span class="form-control mx-sm-3" id="show-replyContent"></span>
+						</div>
+					</div>
+					<div class="form-group row showfour">
+						<label class="col-sm-2 col-form-label">可能效果：</label>
+						<div class="col-sm-5">
+							<span class="form-control mx-sm-3" id="show-effect"></span>
+						</div>
+					</div>
+					<div class="form-group row showfour">
+						<label class="col-sm-2 col-form-label">解决思路：</label>
+						<div class="col-sm-5">
+							<span class="form-control mx-sm-3" id="show-thinking"></span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#addTimeStart").jeDate(start);
+	$("#addTimeEnd").jeDate(end);
+	//时间控件 结束
+	
+	//查找按钮
+	function search(){
+		if($("#id_input").val()!="" && (isNaN($("#id_input").val()) || $("#id_input").val()<=0)){
+			alert("ID请输入正整数");
+	        $("#id_input").val("");
+		}else{
+			replyDT.ajax.reload();
+		}
+	} 
+    function reload(){
+		var table = $('#replyDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//重置按钮
+	function reset(){
+		$("#id_input").val("");
+		$("#content").val("");
+		$("#addTimeEnd").val("");
+		$("#addTimeStart").val("");
+		$("#userType").val("0");
+		$("#businessType").val("0");
+	}
+
+    //显示删除对话框
+    function delMsg(id,userId,origin){
+        $("#id_del").val(id);
+        $("#id_userId").val(userId);
+        $("#id_origin").val(origin);
+        $("#mySmallModalLabel").modal("show");
+    }
+
+    //删除按钮
+    function delResult(){
+        $("#mySmallModalLabel").modal("hide");
+        var id = $("#id_del").val();
+        var origin = $("#id_origin").val();
+        var parameter = new FormData();
+        Yajax({
+            type:'GET',
+            url:requestUrl+"reply/remove/"+id+"/"+origin,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+                    reload();
+                    alert("删除成功");
+                    sendMessage();
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+        });
+    }
+	
+	//发站内消息
+	function sendMessage(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:"回复内容违规已删除",
+	            	businessType:1,
+	            	businessId:$("#id_del").val(),
+	            	messageType:"回复管理"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+	
+	//fullMsg 详情   /reply/info/{replyId}
+	function fullMsg(replyId,origin,replyContent,effect,thinking) {
+	    $("#dialogModal").modal("show");
+	    if(origin==4){
+	    		$(".showfour").show();
+	    		$(".showzero").hide();
+	    }else{
+	 		$(".showfour").hide();
+	 		$(".showzero").show();
+	    }
+	    $("#show-replyContent").text(replyContent);
+	    $("#show-effect").text(effect);
+	    $("#show-thinking").text(thinking);
+	}
+</script>
+<script type="application/javascript" charset="utf-8">
+	var replyDT;
+	$(document).ready(function(){
+		replyDT=$('#replyDT').DataTable( {
+	        //-------------固定配置，不用改--------------
+	        "ordering": false,
+	        "serverSide": true,
+	        "pagingType":"numbers",
+	        "searching": false,
+	        "processing": true,
+	        "pageLength": 10,
+	        "lengthChange": false,
+	        "language": {
+	            "sProcessing": "处理中...",
+	            "sLengthMenu": "显示 _MENU_ 项结果",
+	            "sZeroRecords": "没有匹配结果",
+	            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+	            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+	            "sInfoPostFix": "",
+	            "sSearch": "搜索:",
+	            "sEmptyTable": "表中数据为空",
+	            "sLoadingRecords": "载入中...",
+	            "sInfoThousands": ",",
+	            "oPaginate": {
+	                "sFirst": "首页",
+	                "sPrevious": "上页",
+	                "sNext": "下页",
+	                "sLast": "末页"
+	            },
+	            "oAria": {
+	                "sSortAscending": ": 以升序排列此列",
+	                "sSortDescending": ": 以降序排列此列"
+	            }
+	        },
+	        //----------------------------------------------
+	        ajax:{
+	            type:'POST',
+	            data:{
+	                "start": 0,
+	                "length": 10
+	            }
+	        },
+			"aoColumns": [
+				//ID
+				{ "data":"replyId" },		
+				//呢称
+				{ "data":"nickName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.nickName != null && full.nickName !=""){
+							return full.nickName;
+						}
+						return "";
+					}
+				},
+				//会员类型
+				{ "data":"userType",
+					"visible": true,
+					"render":function(data,type,full){
+					   if( full.userType != null && full.userType == 1){
+							return "个人咨询者";
+					   }
+					   if( full.userType != null && full.userType == 3){
+						   return "企业咨询者";
+					   }
+					   if( full.userType != null && full.userType == 2){
+						   return "咨询师";
+					   }
+					   return "";
+					}
+				},
+				//服务名称
+				{ "data":"serviceName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.serviceName != null && full.serviceName!=""){
+						   if(full.businessTypeDescription=='法律咨询'){
+  								return '<a href="#" onclick="RedirectToPC(\'articles_consultinfo.html?articleId='+full.relativeId+'\')">'+full.serviceName+'</a>';
+						   }else if(full.businessTypeDescription=='案件委托'){
+  								return '<a href="#" onclick="RedirectToPC(\'casebiddinginfo.html?caseId='+full.relativeId+'\')">'+full.serviceName+'</a>';
+						   }else if(full.businessTypeDescription=='百姓吐槽'){
+  								return '<a href="#" onclick="RedirectToPC(\'complaininfo.html?articleId='+full.relativeId+'\')">'+full.serviceName+'</a>';
+						   }else if(full.businessTypeDescription=='阿里裁判'){
+  								return '<a href="#" onclick="RedirectToPC(\'referee_info.html?articleId='+full.relativeId+'\')">'+full.serviceName+'</a>';
+						   }
+						}
+						return "";
+					}
+				},
+				//回复类型
+				{ "data":"businessTypeDescription" },
+				//回复内容
+				{ "data":"replyContent",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.replyContent != null && full.replyContent!=""){
+						   if(full.replyContent.length<=10){
+								return '<a href="#" onclick="fullMsg(\''+full.replyId+'\',\''+full.origin+'\',\''+full.replyContent+'\',\''+full.effect+'\',\''+full.thinking+'\')">'+full.replyContent+'</a>';
+						   }else{
+								return '<a href="#" onclick="fullMsg(\''+full.replyId+'\',\''+full.origin+'\',\''+full.replyContent+'\',\''+full.effect+'\',\''+full.thinking+'\')">'+full.replyContent.substring(0,10)+'...'+'</a>';
+						   }
+						}
+						return "";
+					}
+				},
+				//添加时间
+				{ "data":"replyTime" },
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						return '<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.replyId+'\',\''+full.userId+'\',\''+full.origin+'\')"/>&nbsp;' +
+					       '<input type="button" class="btn btn-success" value="详情" onclick="fullMsg(\''+full.replyId+'\',\''+full.origin+'\',\''+full.replyContent+'\',\''+full.effect+'\',\''+full.thinking+'\')"/>';
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+	            aoData.push({'name':'replyId','value':$('#id_input').val()});
+	            aoData.push({'name':'content','value':$('#content').val()});
+	            aoData.push({'name':'addTimeEnd','value':$('#addTimeEnd').val()});
+	            aoData.push({'name':'addTimeStart','value':$('#addTimeStart').val()});
+	            aoData.push({'name':'userType','value':$('#userType').val()});
+	            aoData.push({'name':'businessType','value':$('#businessType').val()});
+   			    Yajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl+"reply/list",
+					"data": aoData,
+					"success": fnCallback
+				} );
+			}
+		} );
+	});
+</script>
+<style>
+span.form-control {
+	border: 1px #ced4da;
+}
+</style>

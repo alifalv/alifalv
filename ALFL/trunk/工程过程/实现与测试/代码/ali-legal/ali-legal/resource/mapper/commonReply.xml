@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommonReply">
+    <resultMap id="BaseResultMap" type="CommonReply" >
+        <id column="replyId" property="replyId" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="userType" property="userType" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="userImg" property="userImg" jdbcType="VARCHAR" />
+        <result column="serviceName" property="serviceName" jdbcType="VARCHAR" />
+        <result column="businessType" property="businessType" jdbcType="INTEGER" />
+        <result column="replyContent" property="replyContent" jdbcType="VARCHAR" />
+        <result column="replyTime" property="replyTime" jdbcType="TIMESTAMP" />
+        <result column="relativeId" property="relativeId" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT a.*
+        FROM (SELECT au.replyId,au.userId,au.serviceName,au.businessType,au.replyContent,au.replyTime,adviceId as relativeId,au.upId,
+			  au.isDelete,am.userType,am.userName,am.nickName,am.userImg,'' as effect,'' as thinking,0 as origin
+			FROM ali_common_reply au left join ali_user am on au.userId=am.userId left join ali_advice_reply ap on au.relativeId=ap.replyId
+			where (au.isDelete is null or au.isDelete != 1) and businessType=3
+			UNION ALL
+			SELECT au.replyId,au.userId,au.serviceName,au.businessType,au.replyContent,au.replyTime,caseId as relativeId,au.upId,
+			  au.isDelete,am.userType,am.userName,am.nickName,am.userImg,'' as effect,'' as thinking,0 as origin
+			FROM ali_common_reply au left join ali_user am on au.userId=am.userId left join ali_case_offer ap on au.relativeId=ap.offerId
+			where (au.isDelete is null or au.isDelete != 1) and businessType=4
+			UNION ALL
+			SELECT au.replyId,au.userId,au.serviceName,au.businessType,au.replyContent,au.replyTime,relativeId,au.upId,
+			  au.isDelete,am.userType,am.userName,am.nickName,am.userImg,'' as effect,'' as thinking,0 as origin
+			FROM ali_common_reply au left join ali_user am on au.userId=am.userId 
+			where (au.isDelete is null or au.isDelete != 1) and businessType not in (3,4)
+			UNION ALL
+			SELECT offerId as replyId,ac.userId,caseTitle as serviceName,4 as businessType,thinking as replyContent,offerTime as replyTime,
+				ac.caseId as relativeId,0 as upId,isDelete,ai.userType,ai.userName,ac.nickName,ac.userImg,effect,thinking,4 as origin
+			FROM ali_case_offer ac left join ali_case_depute ad on ac.caseId=ad.caseId left join ali_user ai on ac.userId=ai.userId
+			where (ac.isDelete is null or ac.isDelete != 1)
+			UNION ALL
+			SELECT detailsId as replyId,aar.userId,title as serviceName,3 as businessType,replyContent,replyTime,
+				aar.adviceId as relativeId,0 as upId,isDelete,au.userType,au.userName,aar.nickName,aar.userImg,'' as effect,'' as thinking,3 as origin
+			FROM ali_advice_details aad left join ali_advice_reply aar on aad.replyId=aar.replyId 
+				left join ali_advice ad on aar.adviceId=ad.adviceId left join ali_user au on aar.userId=au.userId
+			where (aad.isDelete is null or aad.isDelete != 1)) a
+        <where>
+            <if test="replyId != null">
+                and replyId = #{replyId,jdbcType=INTEGER}
+            </if>
+            <if test="businessType != null and businessType != 0">
+                and businessType = #{businessType,jdbcType=INTEGER}
+            </if>
+            <if test="userType != null and userType != 0">
+                and userType = #{userType,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and replyTime &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd !=''">
+                and replyTime &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (userName like '%${content}%' or replyContent like '%${content}%')
+            </if>
+        </where>
+        ORDER BY replyTime DESC 
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+          count(replyId)
+        FROM (SELECT
+			  au.replyId,au.userId,au.serviceName,au.businessType,au.replyContent,au.replyTime,au.relativeId,au.upId,
+			  au.isDelete,am.userType,am.userName,am.nickName,am.userImg,'' as effect,'' as thinking,0 as origin
+			FROM ali_common_reply au left join ali_user am on au.userId=am.userId
+			where (au.isDelete is null or au.isDelete != 1)
+			UNION ALL
+			SELECT offerId as replyId,ac.userId,caseTitle as serviceName,4 as businessType,thinking as replyContent,offerTime as replyTime,
+				ac.caseId as relativeId,0 as upId,isDelete,ai.userType,ai.userName,ac.nickName,ac.userImg,effect,thinking,4 as origin
+			FROM ali_case_offer ac left join ali_case_depute ad on ac.caseId=ad.caseId left join ali_user ai on ac.userId=ai.userId
+			where (ac.isDelete is null or ac.isDelete != 1)
+			UNION ALL
+			SELECT detailsId as replyId,aar.userId,title as serviceName,3 as businessType,replyContent,replyTime,
+				aar.adviceId as relativeId,0 as upId,isDelete,au.userType,au.userName,aar.nickName,aar.userImg,'' as effect,'' as thinking,3 as origin
+			FROM ali_advice_details aad left join ali_advice_reply aar on aad.replyId=aar.replyId 
+				left join ali_advice ad on aar.adviceId=ad.adviceId left join ali_user au on aar.userId=au.userId
+			where (aad.isDelete is null or aad.isDelete != 1)) a
+        <where>
+            <if test="replyId != null">
+                and replyId = #{replyId,jdbcType=INTEGER}
+            </if>
+            <if test="businessType != null and businessType != 0">
+                and businessType = #{businessType,jdbcType=INTEGER}
+            </if>
+            <if test="userType != null and userType != 0">
+                and userType = #{userType,jdbcType=INTEGER}
+            </if>
+            <if test="addTimeStart != null and addTimeStart != ''">
+                and replyTime &gt;= #{addTimeStart}
+            </if>
+            <if test="addTimeEnd != null and addTimeEnd !=''">
+                and replyTime &lt; #{addTimeEnd}
+            </if>
+            <if test="content != null and content != ''">
+                and (userName like '%${content}%' or replyContent like '%${content}%')
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="CommonReply" resultMap="BaseResultMap">
+        select * from ali_common_reply
+        <where>
+            <if test="replyId != null">
+                and replyId = #{replyId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="CommonReply" >
+        update ali_common_reply
+        <set >
+            <if test="userId != null" >
+                userId = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                userName = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userImg != null" >
+                userImg = #{userImg,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceName != null" >
+                serviceName = #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null" >
+                businessType = #{businessType,jdbcType=INTEGER},
+            </if>
+            <if test="replyContent != null" >
+                replyContent = #{replyContent,jdbcType=VARCHAR},
+            </if>
+            <if test="replyTime != null" >
+                replyTime = #{replyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="relativeId != null" >
+                relativeId = #{relativeId,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where replyId = #{replyId,jdbcType=INTEGER}
+    </update>
+    <update id="updatethree" parameterType="CommonReply" >
+        update ali_advice_details
+        <set >
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where detailsId = #{replyId,jdbcType=INTEGER}
+    </update>
+    <update id="updatefour" parameterType="CommonReply" >
+        update ali_case_offer
+        <set >
+            <if test="isDelete != null" >
+                isDelete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where offerId = #{replyId,jdbcType=INTEGER}
+    </update>
+</mapper>

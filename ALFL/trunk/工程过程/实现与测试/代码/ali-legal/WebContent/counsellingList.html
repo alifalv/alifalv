@@ -1,0 +1,395 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>咨询列表</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<form class="form-inline">
+						<label class="my-1 mr-2">类型</label> 
+						<select class="form-control my-1 mr-sm-2" id="type">
+							<option selected value="0">全部</option>
+							<option value="1">立案问题</option>
+							<option value="2">刑事侦查</option>
+							<option value="3">刑事诉讼</option>
+							<option value="4">监所问题</option>
+							<option value="5">行政处罚</option>
+							<option value="6">行政审批</option>
+							<option value="7">行政诉讼</option>
+							<option value="8">婚姻家庭</option>
+							<option value="9">交通事故</option>
+							<option value="10">民间借贷</option>
+							<option value="11">劳动争议</option>
+							<option value="12">公司纠纷</option>
+							<option value="13">房地产</option>
+							<option value="14">担保纠纷</option>
+							<option value="15">治安案件</option>
+							<option value="16">合同纠纷</option>
+							<option value="17">侵权责任</option>
+							<option value="18">知识产权</option>
+							<option value="19">税务问题</option>
+							<option value="20">拆迁争议</option>
+							<option value="21">法医鉴定</option>
+							<option value="22">其他鉴定</option>
+							<option value="23">民事执行</option>
+							<option value="24">其他民商事</option>
+						</select>
+						<div class="form-group">
+							<label class="control-label" for="starttime">时间:</label>
+							<div style="display: inline; margin-left: 10px; margin-right: 10px;">
+								<input type="text" style="border: 1px solid #ccc;" value="" id="starttime" readonly> 到 
+								<input type="text" style="border: 1px solid #ccc;" value="" id="endtime" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="text" id="id_input" class="form-control mx-sm-3"
+								aria-describedby="passwordHelpInline" placeholder="标题、发布人">
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" onclick="search()">查询</button>
+							<button type="button" class="btn btn-success" style="margin-left: 10px;" onclick="reset()">重置</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<table id="consultDT" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>标题</th>
+								<th>赏金(元)</th>
+								<th>类型</th>
+								<th>发布人</th>
+								<th>添加时间</th>
+								<th>状态</th>
+								<th>回复人数</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<input type="text" id="id_del" style="display: none;" /> 
+				<input type="text" id="id_userId" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除文章</span></li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" aria-hidden="true" id="dialogModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">咨询列表</h5>
+				<input type="text" id="id_update" style="display: none;" />
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row" style="margin-top: 20px;">
+						<label class="col-sm-2 col-form-label">标题：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control mx-sm-3" id="title" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">内容：</label>
+						<div class="col-sm-5">
+							<textarea rows="3" cols="50" id="adviceContent" readonly="readonly"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+	$("#outstarttime").jeDate(start);
+	$("#outendtime").jeDate(end);
+	$("#intime").jeDate(intime);
+	$("#addRecordTime").jeDate(addRecordTime);
+	//时间控件 结束
+	
+	//查找按钮
+	function search(){
+		consultDT.ajax.reload();
+	} 
+    function reload(){
+		var table = $('#consultDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//重置按钮
+	function reset(){
+		$("#type").val("0");
+		$("#starttime").val("");
+	    $("#endtime").val("");
+	    $("#id_input").val("");
+	}
+
+    //显示删除对话框
+    function delMsg(id,userId){
+        $("#id_del").val(id);
+        $("#id_userId").val(userId);
+        $("#mySmallModalLabel").modal("show");
+    }
+
+    //删除按钮
+    function delResult(){
+        $("#mySmallModalLabel").modal("hide");
+        var id = $("#id_del").val();
+        var parameter = new FormData();
+        Yajax({
+            type:'GET',
+            url:requestUrl+"advice/remove/"+id,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                alert("删除成功");
+                    sendMessage();
+        				reload();
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+        });
+    }
+	
+	//发站内消息
+	function sendMessage(){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:$('#id_userId').val(),
+	            	messageContent:"咨询内容违规已删除",
+	            	businessType:1,
+	            	businessId:$("#id_del").val(),
+	            	messageType:"咨询内容"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+	
+	//fullMsg 详情   /evaluate/info/{replyId}
+	function fullMsg(id) {
+		var parameter = new FormData();
+        //parameter.append("replyId",userId);
+        Yajax({
+            type:'GET',
+            url:requestUrl+'advice/info/'+id,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                //alert("获取信息成功");
+                $("#dialogModal").modal("show");
+                $("#title").val(data.data.title);
+                $("#adviceContent").val(data.data.adviceContent);
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("获取详情失败");
+            }
+        });
+	}
+</script>
+<script type="application/javascript" charset="utf-8">
+	var consultDT;
+	$(document).ready(function(){
+		consultDT=$('#consultDT').DataTable( {
+            //-------------固定配置，不用改--------------
+            "ordering": false,
+            "serverSide": true,
+            "pagingType":"numbers",
+            "searching": false,
+            "processing": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            //----------------------------------------------
+            ajax:{
+                type:'POST',
+                data:{
+                    "start": 0,
+                    "length": 10
+                }
+            },
+			"aoColumns": [
+				//ID
+				{ "data":"adviceId" },		
+				//标题
+				{ "data":"title",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.title != null && full.title !=""){
+							return '<a href="#" onclick="RedirectToPC(\'articles_consultinfo.html?articleId='+full.adviceId+'\')">'+full.title+'</a>';
+						}
+						return "";
+					}
+				},
+				//赏金(元)
+				{ "data":"reward ",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.reward != null && full.reward !=""){
+							return full.reward;
+						}
+						return "";
+					}
+				},
+				//类型
+				{ "data":"caseTypeDescription" },
+				//发布人
+				{ "data":"userName",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.userName != null && full.userName != ""){
+							return full.userName;
+						}
+						return "";
+					}
+				},
+				//添加时间
+				{ "data":"sendTime" },
+				//状态
+				{ "data":"stateDescription" },
+				//回复人数
+				{ "data":"replyNumber",
+					"visible": true,
+					"render":function(data,type,full){
+					   if(full.replyNumber != null && full.replyNumber!=""){
+							return full.replyNumber;
+						}
+						return 0;
+					}
+				},
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						return '<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.adviceId+'\',\''+full.userId+'\')"/>&nbsp;' +
+					            '<input type="button" class="btn btn-success" value="详情" onclick="fullMsg(\''+full.adviceId+'\')"/>';
+					}
+				}
+			],
+            "fnServerData": function ( sSource, aoData, fnCallback ) {
+                aoData.push({'name':'content','value':$('#id_input').val()});
+                aoData.push({'name':'sendTimeEnd','value':$('#endtime').val()});
+                aoData.push({'name':'sendTimeStart','value':$('#starttime').val()});
+                aoData.push({'name':'caseType','value':$('#type').val()});
+		        Yajax( {
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": requestUrl+"advice/list",
+                    "data": aoData,
+                    "success": fnCallback
+                } );
+            }
+		} );
+	});
+</script>

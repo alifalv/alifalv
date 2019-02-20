@@ -1,0 +1,902 @@
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>法律培训</h1>
+          </div>
+		  <div class="form-group" >
+			  <button type="button" class="btn btn-success" style="margin-left:10px;" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="publishContent()">发布内容</button>
+		  </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content" id="content" style="display:block">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+				  <form class="form-inline">
+					  <div class="form-group">
+						<!-- <div style="display:inline;width:100px;font-size:16px;color:#999999;margin-left:20px;">时间</div>-->
+						<label class="control-label" for="starttime">时间:</label>
+						<div  style="display:inline;margin-left:10px; margin-right:10px;">
+							<input type="text" style="border:1px solid #ccc;"  value="" id="starttime" readonly>
+							到
+							<input type="text" style="border:1px solid #ccc;"  value="" id="endtime" readonly>
+						</div>
+					  </div>
+					  <div class="form-group">
+						  <label class="my-2 mr-2">地址:</label>
+						  <select class="form-control my-1 mr-sm-2" id="select_province" onchange="changeProvince('select_province','select_city')">
+							<option value="">请选择省份</option><option value="1">北京市</option><option value="2">天津市</option><option value="3">上海市</option><option value="4">重庆市</option><option value="5">河北省</option>
+						  <option value="6">山西省</option><option value="7">台湾省</option><option value="8">辽宁省</option><option value="9">吉林省</option><option value="10">黑龙江省</option>
+						  <option value="11">江苏省</option><option value="12">浙江省</option><option value="13">安徽省</option><option value="14">福建省</option><option value="15">江西省</option>
+						  <option value="16">山东省</option><option value="17">河南省</option><option value="18">湖北省</option><option value="19">湖南省</option><option value="20">广东省</option>
+						  <option value="21">甘肃省</option><option value="22">四川省</option><option value="23">贵州省</option><option value="24">海南省</option><option value="25">云南省</option>
+						  <option value="26">青海省</option><option value="27">陕西省</option><option value="28">广西壮族自治区</option><option value="29">西藏自治区</option><option value="30">宁夏回族自治区</option>
+						  <option value="31">新疆维吾尔自治区</option><option value="32">内蒙古自治区</option><option value="33">澳门特别行政区</option><option value="34">香港特别行政区</option>
+						  </select>
+						  <select class="form-control my-1 mr-sm-2" id="select_city">
+							
+						  </select>
+				      </div>
+					  <div class="form-group">
+		  				  <label class="my-1 mr-2" >来源</label>
+						   <select class="form-control my-1 mr-sm-2" id="isofficial">
+							<option value="">全部</option>
+							<option value="0">后台</option>
+							<option value="1">PC</option>
+						  </select>	
+					  </div>
+					  <div class="form-group">
+						  <label class="my-1 mr-2" >状态</label>
+						   <select class="form-control my-1 mr-sm-2" id="isPush">
+							<option value="">全部</option>
+							<option value="0">待发布</option>
+							<option value="1">已通过</option>
+							<option value="2">未通过</option>
+						  </select>
+					  </div>
+
+					  <div class="form-group">
+						<input type="text" id="conditionValue" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" placeholder="培训主题、机构">
+					  </div>
+
+					  <div class="form-group" >
+						  <button type="button" class="btn btn-success" onclick="search()">查询</button>
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" onclick="reset()">重置</button>
+					  </div>
+				   </form>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="flpxDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>标题</th>
+				  <th>培训机构</th>
+				  <th>地址</th>
+				  <th>费用（元）</th>
+                  <th>添加时间</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    
+    <!-- Main content -->
+    <section class="content" id="fabu" style="display:none">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="modalLabelOne">发布内容</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancel()">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+            <div class="card-header">
+             	<input type="hidden" name="articleId" value="">
+             	<input type="hidden" name="trainId" value="">
+             	<input type="hidden" name="userId" value="">
+            	  <form class="form-inline">
+						  <label class="save-edit">类型</label>
+						  <select class="form-control mx-sm-3" id="select_type_publish" disabled="disabled"  style="margin-top:10px;width:160px;">
+							<option value="7">法律培训</option>
+						  </select>
+           		  </form>
+           		  
+				  <form class="form-inline">
+						<label class="save-edit">标题</label>
+						<input type="text" id="title_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline"  placeholder="请输入标题内容"   style="margin-top:10px;width:80%;">
+				   </form>
+
+				   <form class="form-inline">
+						<label class="save-edit">发布人</label>
+						<input type="text" id="userName_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+				   </form>
+
+				   <form class="form-inline">
+						<label class="save-edit">培训机构</label>
+						<input type="text" id="trainName_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+				   </form>
+
+				   <form class="form-inline">
+						<label class="save-edit">培训地点</label>
+						  <select class="form-control mx-sm-3" id="province_publish" onchange="changeProvince('province_publish','city_publish')"  style="margin-top:10px;">
+							<option value="">请选择省份</option><option value="1">北京市</option><option value="2">天津市</option><option value="3">上海市</option><option value="4">重庆市</option><option value="5">河北省</option>
+						  <option value="6">山西省</option><option value="7">台湾省</option><option value="8">辽宁省</option><option value="9">吉林省</option><option value="10">黑龙江省</option>
+						  <option value="11">江苏省</option><option value="12">浙江省</option><option value="13">安徽省</option><option value="14">福建省</option><option value="15">江西省</option>
+						  <option value="16">山东省</option><option value="17">河南省</option><option value="18">湖北省</option><option value="19">湖南省</option><option value="20">广东省</option>
+						  <option value="21">甘肃省</option><option value="22">四川省</option><option value="23">贵州省</option><option value="24">海南省</option><option value="25">云南省</option>
+						  <option value="26">青海省</option><option value="27">陕西省</option><option value="28">广西壮族自治区</option><option value="29">西藏自治区</option><option value="30">宁夏回族自治区</option>
+						  <option value="31">新疆维吾尔自治区</option><option value="32">内蒙古自治区</option><option value="33">澳门特别行政区</option><option value="34">香港特别行政区</option>
+						  </select>
+						  <select class="form-control mx-sm-3" id="city_publish"  style="margin-top:10px;">
+							
+						  </select>
+						<input type="text" id="trainAddress_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;"  placeholder="请输入详细地址" >
+                   </form>
+                   
+                   <form class="form-inline">
+						<label class="save-edit">培训费</label>
+						<input type="text" id="cost_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+                   </form>
+                   
+                   <form class="form-inline">
+						<label class="save-edit">联系电话</label>
+						<input type="text" id="mobile_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+                   </form>
+                   
+                   <form class="form-inline">
+						<label class="save-edit">培训时间</label>
+						<input type="text" id="trainTime_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+                   </form>
+                   
+                   <form class="form-inline">
+						<label class="save-edit">培训规模</label>
+						<input type="text" id="size_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+                   </form>
+                   
+                   <form class="form-inline">
+						<label class="save-edit">电子邮箱</label>
+						<input type="text" id="email_publish" class="form-control mx-sm-3" aria-describedby="passwordHelpInline" style="margin-top:10px;">
+                   </form>
+                   
+                   <form class="form-inline" id="articleContent_editer">
+                    <label class="save-edit">内容</label>
+					<!-- style给定宽度可以影响编辑器的最终宽度 -->
+					<script type="text/plain" id="myEditor" class="form-control mx-sm-3" style="width:800px;height:400px;"></script>
+					<!-- 实例化编辑器 -->
+					<script type="text/javascript">UM.delEditor('myEditor');var um = UM.getEditor('myEditor');</script>
+                   </form>
+				   
+				   <form class="form-inline center">
+						<button type="button" class="btn btn-primary action-one" onclick="passOn()">通过</button>&nbsp;
+						<button type="button" class="btn btn-primary action-one" onclick="passOff()">不通过</button>&nbsp;
+						<button type="button" class="btn btn-primary save" onclick="savePublish()">保存</button>&nbsp;
+						<button type="button" class="btn btn-primary edit" onclick="editPublish()">修改</button>&nbsp;
+						<button type="button" class="btn btn-primary" onclick="cancel()">取消</button>&nbsp;
+				   </form>
+
+            </div>
+            
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">审核</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<div class="form-check form-check-inline">
+				  <label class="form-check-label mx-sm-3" for="inlineRadio1">审核结果</label>
+				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+				  <label class="form-check-label" for="inlineRadio1">通过</label>
+				</div>
+				<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+				  <label class="form-check-label" for="inlineRadio2">不通过</label>
+				</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>&nbsp;
+			<button type="button" class="btn btn-primary">Save changes</button>&nbsp;
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title" >删除提醒</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav justify-content-center">
+						<li class="nav-item">
+							<span class="nav-link">确认删除?</span>
+						</li>
+					</ul>
+					<input type="text" id="id_del" style="display:none;">
+        		<input type="text" id="id_userId" style="display:none;"/>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>&nbsp;
+					<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- fabu script -->
+<script type="application/javascript" charset="utf-8">
+	function publishContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.edit").hide();
+	    $(".btn.btn-primary.action-one").hide();
+        $("#title_publish").val("");
+        $("#userName_publish").val("");
+        $("#trainName_publish").val("");
+        $("#province_publish").val("");
+        $("#city_publish").val("");
+        $("#trainAddress_publish").val("");
+        $("#cost_publish").val("");
+        $("#size_publish").val("");
+        $("#mobile_publish").val("");
+        $("#trainTime_publish").val("");
+        $("#email_publish").val("");
+        UM.getEditor('myEditor').setContent("");
+	}
+	function editContent(){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+	    $(".btn.btn-primary").show();
+	    $(".btn.btn-primary.save").hide();
+	    $(".btn.btn-primary.action-one").hide();
+	}
+	function cancel(){
+		$("#fabu").css('display','none');
+	    $("#content").css('display','block');
+	}
+	function savePublish(){
+		if($("#province_publish").val()==''){
+			alert("请选择省份");
+		}else{
+			var parameter = {
+			    userId:sessionStorage.getItem('sys_userId'),// from login msg
+	    	    		isofficial:0,
+		        title:$("#title_publish").val(),
+		        realName:$("#userName_publish").val(),
+		        trainName:$("#trainName_publish").val(),
+		        province:$("#province_publish").val(),
+		        city:$("#city_publish").val(),
+		        trainAddress:$("#trainAddress_publish").val(),
+		        cost:$("#cost_publish").val(),
+		        size:$("#size_publish").val(),
+		        mobile:$("#mobile_publish").val(),
+		        trainTime:$("#trainTime_publish").val(),
+		        email:$("#email_publish").val(),
+		        trainDesc:UM.getEditor('myEditor').getContent()
+			}
+			console.log(parameter);
+			tempUrl = "api/article/sendLegalTrain";
+			$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                alert("发布成功");
+		                $("#title_publish").val("");
+		                $("#userName_publish").val("");
+		                $("#trainName_publish").val("");
+		                $("#province_publish").val("");
+		                $("#city_publish").val("");
+		                $("#trainAddress_publish").val("");
+		                $("#cost_publish").val("");
+		                $("#size_publish").val("");
+		                $("#mobile_publish").val("");
+		                $("#trainTime_publish").val("");
+		                $("#email_publish").val("");
+		                UM.getEditor('myEditor').setContent("");
+		                $("#fabu").css('display','none');
+		                $("#content").css('display','block');
+		                reload();
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("发布失败");
+	            }
+		    });
+		}
+	}
+</script>
+	  
+<script type="application/javascript" charset="utf-8">
+	//时间控件
+	var start = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+		}
+	};
+	var end = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : $.nowDate(0), //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+		}
+	};
+	var intime = {
+		format : 'YYYY-MM-DD hh:mm:ss',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	var addRecordTime = {
+		format : 'YYYY-MM-DD',
+		//minDate : '2016-01-01', //设定最小日期为当前日期
+		//isinitVal:true,
+		//maxDate : $.nowDate(0), //最大日期
+		choosefun : function(elem, datas) {
+			end.minDate = datas; //开始日选好后，重置结束日的最小日期
+			choiceInTime();
+		}
+	};
+	$("#starttime").jeDate(start);
+	$("#endtime").jeDate(end);
+	$("#outstarttime").jeDate(start);
+	$("#outendtime").jeDate(end);
+	$("#intime").jeDate(intime);
+	$("#addRecordTime").jeDate(addRecordTime);
+	$("#trainTime_publish").jeDate(addRecordTime);
+	//时间控件 结束
+	
+	//发布按钮  表格操作
+	function publish(id,trainId){
+		var parameter = {
+			articleId:id,
+			trainId:trainId,
+			columnCode:7,
+			isPush:1
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                reload();
+		                alert("发布成功");
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("发布失败");
+	            }
+	      });
+	}
+	
+	//撤销按钮  表格操作
+	function revoke(id,trainId){
+		var parameter = {
+			articleId:id,
+			trainId:trainId,
+			columnCode:7,
+			isPush:0
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                reload();
+		                alert("撤销成功");
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("撤销失败");
+	            }
+	      });
+	}
+	
+	//编辑按钮  表格操作
+	function setEdit(userId,articleId,trainId,action){
+	    $("#fabu").css('display','block');
+	    $("#content").css('display','none');
+		if(action=='action-one'){
+		    $(".btn.btn-primary").hide();
+		    $(".btn.btn-primary.action-one").show();
+		}else{
+		    $(".btn.btn-primary").show();
+		    $(".btn.btn-primary.save").hide();
+		    $(".btn.btn-primary.action-one").hide();
+		}
+		var parameter = {
+			columnCode:7
+		};
+		tempUrl = "api/article/articleDetails/"+userId+"/"+articleId;
+		$.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            //processData : false, // 告诉jQuery不要去处理发送的数据
+	            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+	                		//editContent();
+				        $("input[name='articleId']").val(data.data.articleId);
+    	                		$("input[name='trainId']").val(trainId);
+    	                		$("input[name='userId']").val(userId);
+	    	                $("#title_publish").val(data.data.title);
+	    	                $("#userName_publish").val(data.data.realName);
+	    	                $("#trainName_publish").val(data.data.trainName);
+	    	                $("#province_publish").val(data.data.province);
+	    	                changeProvince('province_publish','city_publish');
+	    	                $("#city_publish").val(data.data.city);
+	    	                $("#trainAddress_publish").val(data.data.trainAddress);
+	    	                $("#cost_publish").val(data.data.cost);
+	    	                $("#size_publish").val(data.data.size);
+	    	                $("#mobile_publish").val(data.data.mobile);
+	    	                $("#trainTime_publish").val(data.data.trainTime);
+	    	                $("#email_publish").val(data.data.email);
+	    	                UM.getEditor('myEditor').setContent(data.data.trainDesc);
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	            }
+	      });
+	}
+	
+	//审核通过
+	function passOn(){
+		var parameter = {
+			articleId:$("input[name='articleId']").val(),
+			trainId:$("input[name='trainId']").val(),
+			columnCode:7,
+			isPush:1
+		};
+		var tempUrl = "api/article/updateArticle";
+		$.ajax({
+            type:'POST',
+            url:requestUrl_pc+tempUrl,
+            data:parameter,
+            //processData : false, // 告诉jQuery不要去处理发送的数据
+            //contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                alert("审核通过成功");
+		        		$("#fabu").css('display','none');
+		        	    $("#content").css('display','block');
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("操作失败");
+            }
+      	});
+	}
+	//审核不通过
+	function passOff(){
+		var id = $("input[name='articleId']").val();
+		var userId = $("input[name='userId']").val();
+		var parameter = new FormData();
+        $.ajax({
+            type:'POST',
+            url:requestUrl_pc+"api/article/deleteArticle/"+id,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                if(data.code==1){
+	                reload();
+	                alert("审核不通过，已删除");
+	                sendMessage(userId,id);
+		        		$("#fabu").css('display','none');
+		        	    $("#content").css('display','block');
+                }else{
+                		alert(data.msg);
+                }
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+      	});
+	}
+	
+	//修改
+	function editPublish(){
+		if($("#province_publish").val()==''){
+			alert("请选择省份");
+		}else{
+			var parameter = {
+				articleId:$("input[name='articleId']").val(),
+				trainId:$("input[name='trainId']").val(),
+				columnCode:7,
+		        isofficial:0,
+		        title:$("#title_publish").val(),
+		        realName:$("#userName_publish").val(),
+		        trainName:$("#trainName_publish").val(),
+		        province:$("#province_publish").val(),
+		        city:$("#city_publish").val(),
+		        trainAddress:$("#trainAddress_publish").val(),
+		        cost:$("#cost_publish").val(),
+		        size:$("#size_publish").val(),
+		        mobile:$("#mobile_publish").val(),
+		        trainTime:$("#trainTime_publish").val(),
+		        email:$("#email_publish").val(),
+		        trainDesc:UM.getEditor('myEditor').getContent()
+			}
+			console.log(parameter);
+			tempUrl = "api/article/updateArticle";
+	        $.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+tempUrl,
+	            data:parameter,
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                alert("修改成功");
+		                $("#title_publish").val("");
+		                $("#userName_publish").val("");
+		                $("#trainName_publish").val("");
+		                $("#province_publish").val("");
+		                $("#city_publish").val("");
+		                $("#trainAddress_publish").val("");
+		                $("#cost_publish").val("");
+		                $("#size_publish").val("");
+		                $("#mobile_publish").val("");
+		                $("#trainTime_publish").val("");
+		                $("#email_publish").val("");
+		                UM.getEditor('myEditor').setContent("");
+		                $("#fabu").css('display','none');
+		                $("#content").css('display','block');
+		                reload();
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("修改失败");
+	            }
+    			});
+		}
+	}
+	
+	//显示删除对话框
+	function delMsg(id,userId){
+		$("#id_del").val(id);
+        $("#id_userId").val(userId);
+		$("#mySmallModalLabel").modal("show");
+	}
+	
+	//删除按钮
+	function delResult(){
+		var id = $("#id_del").val();
+        var userId = $("#id_userId").val();
+		$("#mySmallModalLabel").modal("hide");
+		var parameter = new FormData();
+        $.ajax({
+	            type:'POST',
+	            url:requestUrl_pc+"api/article/deleteArticle/"+id,
+	            data:parameter,
+	            processData : false, // 告诉jQuery不要去处理发送的数据
+	            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+	            success : function(data) {
+	                console.log(data);
+	                if(data.code==1){
+		                reload();
+		                alert("删除成功");
+		                sendMessage(userId,id);
+	                }else{
+	                		alert(data.msg);
+	                }
+	            },
+	            fail:function (data) {
+	                console.log(data);
+	                alert("删除失败");
+	            }
+	      });
+	}
+	
+	//发站内消息
+	function sendMessage(userId,businessId){
+        Yajax({
+            type:'POST',
+            url:requestUrl+"message/messageSend",
+            data:{
+	            	userId:userId,
+	            	messageContent:"培训内容违规已删除",
+	            	businessType:1,
+	            	businessId:businessId,
+	            	messageType:"法律培训"
+            },
+            success : function(data) {
+                console.log(data);
+            },
+            fail:function (data) {
+                console.log(data);
+            }
+        });
+	}
+	
+	//刷新表格
+    function reload(){
+		var table = $('#flpxDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+	
+	//查找按钮
+	function search(){
+		flpxDT.ajax.reload();
+	} 
+	
+	//重置按钮
+	function reset(){
+		$("#conditionValue").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
+	} 
+</script>
+<script type="application/javascript" charset="utf-8">
+var flpxDT;
+$(document).ready(function(){
+	/* //获取省份城市信息
+	getProvinceList();
+	$("#select_province").val("19"); 
+	//获取湖南省城市信息
+	getCityListByProvinceId(19);
+	$("#select_city").val("199");  */
+	
+	flpxDT=$('#flpxDT').DataTable( {
+        //-------------固定配置，不用改--------------
+        "ordering": false,
+        "serverSide": true,
+        "pagingType":"numbers",
+        "searching": false,
+        "processing": true,
+        "pageLength": 5,
+        "lengthChange": false,
+			"language": {
+		        "sProcessing": "处理中...",
+		        "sLengthMenu": "显示 _MENU_ 项结果",
+		        "sZeroRecords": "没有匹配结果",
+		        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+		        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+		        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+		        "sInfoPostFix": "",
+		        "sSearch": "搜索:",
+		        "sUrl": "",
+		        "sEmptyTable": "表中数据为空",
+		        "sLoadingRecords": "载入中...",
+		        "sInfoThousands": ",",
+		        "oPaginate": {
+		            "sFirst": "首页",
+		            "sPrevious": "上页",
+		            "sNext": "下页",
+		            "sLast": "末页"
+		        },
+		        "oAria": {
+		            "sSortAscending": ": 以升序排列此列",
+		            "sSortDescending": ": 以降序排列此列"
+		        }
+		    },
+            //----------------------------------------------
+            ajax:{
+                //url:requestUrl_pc+"api/article/sendBookMakeModel",
+                type:'POST',
+                data:{
+                    "start": 0,
+                    "length": 5
+                }
+            },
+			"aoColumns": [
+				//编号
+				{ "data":"articleId",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.articleId  != null && full.articleId  !=""){
+							return full.articleId ;
+						};
+						return "";
+					}
+				},		
+				//标题
+				{ "data":"title",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.title  != null && full.title  !=""){
+							return '<a href="#" onclick="RedirectToPC(\'lawtraininginfo.html?articleId='+full.articleId+'\')">'+full.title+'</a>';
+						};
+						return "";
+					}
+				},	
+				//培训机构
+				{ "mData":"trainName",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.trainName != null && full.trainName !=""){
+							return full.trainName;
+						};
+						return "";
+					}
+				},
+				//地址
+				{ "data":"province",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.province  != null && full.province  !=""){
+							return full.provinceName+full.cityName;
+						};
+						return "";
+					}
+				},
+				//费用（元）
+				{ "data":"cost ",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.cost  != null && full.cost  !=""){
+							return full.cost ;
+						};
+						return "";
+					}
+				},
+				//添加时间
+				{ "data":"sendTime",
+					"visible": true,
+					"mRender":function(data,type,full){
+					   if(full.sendTime != null && full.sendTime!=""){
+							return full.sendTime;
+						};
+						return "";
+					}
+				},
+				//操作
+				{ "data":null,
+					"visible": true,
+					"render":function(data,type,full){
+						var texta = "";
+						var textb = "";
+						if(full.isPush==0 && full.isofficial==0){
+							texta = '<input type="button" class="btn btn-success" value="发布" onclick="publish(\''+full.articleId+'\',\''+full.trainId+'\')"/>&nbsp;';
+						}else if(full.isPush==1 && full.isofficial==0){
+							texta = '<input type="button" class="btn btn-success" value="撤销" onclick="revoke(\''+full.articleId+'\',\''+full.trainId+'\')"/>&nbsp;';
+						}
+						if(full.isPush==0 && full.isofficial==1){
+							texta = '<input type="button" class="btn btn-success" value="审核" onclick="setEdit(\''+full.userId+'\',\''+full.articleId+'\',\''+full.trainId+'\',\'action-one\')"/>&nbsp;';
+						}
+						if(full.isofficial==0){
+							textb = '<input type="button" class="btn btn-success" value="编辑" onclick="setEdit(\''+full.userId+'\',\''+full.articleId+'\',\''+full.trainId+'\',\'action-two\')"/>&nbsp;';
+						}
+						return  texta+textb+
+							'<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.articleId+'\',\''+full.userId+'\')"/>';
+					}
+				}
+			],
+			"fnServerData": function ( sSource, aoData, fnCallback ) {
+				aoData.push({'name':'conditionValue','value':$('#conditionValue').val()});
+				aoData.push({'name':'province','value':$('#select_province').val()});
+				aoData.push({'name':'city','value':$('#select_city').val()});
+				aoData.push({'name':'endTime','value':$('#endtime').val()});
+				aoData.push({'name':'startTime','value':$('#starttime').val()});
+				aoData.push({'name':'isDelete','value':0});
+				aoData.push({'name':'model','value':3});
+                aoData.push({'name':'isofficial','value':$('#isofficial').val()});
+                aoData.push({'name':'isPush','value':$('#isPush').val()});
+                var oTable = $('#flpxDT').dataTable();
+	        		var tableSetings=oTable.fnSettings();  
+	        		var paging_length=tableSetings._iDisplayLength;//当前每页显示多少  
+	        		var page_start=tableSetings._iDisplayStart;//当前页开始  
+	        		var pageNo = (page_start / paging_length)+1; //得到页码值
+	        		$.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": requestUrl_pc+"api/article/legalTrainList/"+pageNo+"/5",
+					"data": aoData,
+					"success": fnCallback
+				});
+			}
+		} );
+	//}
+});
+
+function changeProvince(province,city){
+	var provinceId = $('#'+province).val();
+	if(provinceId==''){
+		$('#'+city).empty();
+	}else{
+		Yajax({
+		    type:'POST',
+		    url:requestUrl+"address/cityListByProvince/"+provinceId,
+	        async: false,
+		    success : function(data) {
+		        console.log(data);
+		        if(data.code==1){
+		        		var cityList = data.data;
+		        		$('#'+city).empty();
+		        	    for(var i in cityList){
+		        		 	var selecthtml = '<option value="'+cityList[i].cityId+'">'+cityList[i].cityName+'</option>';
+		        		 	$('#'+city).append(selecthtml);
+		        		}
+		        }
+		    },
+		    fail:function (data) {
+		        console.log(data);
+		    }
+		});
+	}
+}
+</script>
+</body>
+</html>

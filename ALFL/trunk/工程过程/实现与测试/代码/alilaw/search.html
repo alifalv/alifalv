@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 搜索</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+    <div><script class="header" type="text/html" src="../tmpl/header.html"></script></div>
+</header>
+<div class="ui-content ui-padding-b-40">
+    <div class="container ui-padding-tb-30">
+        <div class="ui-regpanel" id="searchList">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form method="post" pagination="searchForm">
+                        <div class="ui-panel-top ui-margin-lr-10">
+                            <label class="ui-panel-tab"><input type="radio" name="type" value="0" checked pagination="searchBtn"><span>全站</span></label>
+                            <label class="ui-panel-tab"><input type="radio" name="type" value="1" pagination="searchBtn"><span>法律咨询</span></label>
+                            <label class="ui-panel-tab"><input type="radio" name="type" value="2" pagination="searchBtn"><span>法律法规</span></label>
+                            <label class="ui-panel-tab"><input type="radio" name="type" value="3" pagination="searchBtn"><span>律师</span></label>
+                        </div>
+                    </form>
+                    <!-- Tab panes -->
+                    <div class="tab-content ui-person-panel-content ui-margin-lr-20" >
+                        <div role="tabpanel" class="tab-pane active ui-block">
+                            <div class="ui-margin-lr-60" >
+                                <div class="row" pagination="mask">
+                                    <script id="searchListTmpl" type="text/html">
+                                        <div class="col-xs-12"><div class="ui-color-gray ui-size-12 ui-margin-t-30 ui-margin-b-30">为您找到相关结果约{{records}}个</div></div>
+                                        {{if (getLength(rows) > 0)}}
+                                        {{each rows value i}}
+                                        <div class="col-xs-12">
+                                            <div>
+                                                <p class="ui-cut-2">{{@ value.title | searchLightKey searchKey}}</p>
+                                                <p class="ui-color-gray ui-size-12 ui-cut-2 ui-line-height-25">{{@ value.adviceContent | removeHtmlTag | searchLightKey searchKey}}</p>
+                                                <p class="ui-cut-1"><a class="ui-color-greed" href="{{value.columnCode | getArticleUrlByColumnCode value.articleId value.userId}}">{{value.columnCode | getArticleUrlByColumnCode value.articleId value.userId}}</a><span class="ui-color-greed ui-margin-l-30">{{value.sendTime}}</span></p>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                        {{else}}
+                                        <div class="col-xs-12">
+                                            <div class="ui-color-gray text-center">{{error || '暂无记录'}}</div>
+                                        </div>
+                                        {{/if}}
+                                    </script>
+                                </div>
+                                <nav aria-label="Page navigation" class="text-center ui-margin-t-20" pagination="page"></nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+</footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>

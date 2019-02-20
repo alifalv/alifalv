@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>案源竞拍</title>
+		<link rel="stylesheet" href="mui/mui.min.css" />
+		<link rel="stylesheet" href="vue/vant-min.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<style>
+			.mui-control-content {
+				height: -webkit-fill-available;
+				height: -moz-fill-available;
+				height: -moz-available;    /* FireFox目前这个生效 */
+				height: fill-available;;
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body class="Lawsearch Lawask">
+		<!--公共头部 begin-->
+		<div class="header">
+			<div class="goback">
+				<a class="mui-action-back mui-icon mui-icon-back" href="javascript:void(0);" onclick="javascript:history.back(-1);"></a>
+			</div>
+			<h2>案源竞拍</h2>
+		</div>
+		<!--公共头部 end-->
+
+		<!--主体 begin-->
+		<div class="Conter idx-band5" id="app" v-cloak>
+			<div class="newsBox-tit flex_Horizontal mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#newAsk">竞拍的案件</a>
+				<a class="mui-control-item" href="#newCase">委托的案件</a>
+			</div>
+			<div class="newsBox page-slideright">
+				<div id="newAsk" class="mui-control-content mui-active">
+					<div id="list1" class="mui-content mui-scroll-wrapper" v-cloak>
+						<div class="mui-scroll">
+							<ul>
+								<li :href="'Lawbuy-Info.html?caseId=' + item.caseId" class="flex_Horizontal" v-for="(item, index) in list1List" :key="index">
+									<div class="left">
+										<img :src="item.userImg | createImgUrl" />
+									</div>
+									<div class="right">
+										<div class="t">
+											<span>{{item.userName}}</span>
+											<p>
+												<span>{{item.provinceName}}{{item.cityName}}</span>
+												<span>{{item.deputeTime | subDay}}</span>
+											</p>
+										</div>
+										<div class="c">
+											<h4>{{item.caseTypeName}}｜{{item.caseTitle}}</h4>
+											<p class="greyfont">{{item.adviceContent}}</p>
+										</div>
+										<div class="b">
+											<p class="redfont">
+												报价：<span v-if="item.offerType == '2'">面议</span><span v-else>￥{{item.offerMoney}}</span>
+												竞拍人数：<span>{{item.counts}}</span>
+											</p>
+											<span class="ui-color-gray" v-if="item.caseState == '1'">处理中</span>
+											<span class="ui-color-greed" v-else-if="item.caseState == '2'">已结案</span>
+										</div>
+									</div>
+								</li>
+								<li v-if="list1IsNot" class="ui-nolist">没有找到数据</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="newCase" class="mui-control-content">
+					<div id="list2" class="mui-content mui-scroll-wrapper" v-cloak>
+						<div class="mui-scroll">
+							<ul>
+								<li :href="'Lawbuy-Info.html?caseId=' + item.caseId" class="flex_Horizontal" v-for="(item, index) in list2List" :key="index">
+									<div class="left">
+										<img :src="item.userImg | createImgUrl"/>
+									</div>
+									<div class="right">
+										<div class="t">
+											<span>{{item.userName}}</span>
+											<p>
+												<span>{{item.provinceName}}{{item.cityName}}</span>
+												<span>{{item.deputeTime | subDay}}</span>
+											</p>
+										</div>
+										<div class="c">
+											<h4>{{item.caseTypeName}}｜{{item.caseTitle}}</h4>
+											<p class="greyfont">{{item.adviceContent}}</p>
+										</div>
+										<div class="b">
+											<p class="redfont">
+												报价：<span v-if="item.offerType == '2'">面议</span><span v-else>￥{{item.offerMoney}}</span>
+												竞拍人数：<span>{{item.counts}}</span>
+											</p>
+											<p class="statusbar">
+												<span class="ui-color-gray" v-if="item.caseState == '1'">处理中</span>
+												<span class="ui-color-greed" v-else-if="item.caseState == '2'">已结案</span>
+												<span class="deletebtn" :data-caseid="item.caseId"></span>
+											</p>
+										</div>
+									</div>
+								</li>
+								<li v-if="list2IsNot" class="ui-nolist">没有找到数据</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+		<!--主体 end-->
+
+			</div>
+		</div>
+		<script src="mui/mui.min.js"></script>
+		<script src="vue/vue.js"></script>
+		<script src="js/store.js"></script>
+		<script src="js/rest.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/ajax/commonfuc.js"></script>
+		<script src="js/mui.slideright.js"></script>
+		<script src="js/lib/My-Lawbuy2.js"></script>
+	</body>
+
+</html>

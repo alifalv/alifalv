@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Banner">
+    <resultMap id="BaseResultMap" type="Banner" >
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="column_type" jdbcType="INTEGER" property="columnType" />
+        <result column="place" jdbcType="VARCHAR" property="place" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="is_available" jdbcType="INTEGER" property="isAvailable" />
+        <result column="images" jdbcType="VARCHAR" property="images" />
+    </resultMap>
+    <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+          ali_banner 
+        <where>
+            <if test="true">
+                and is_available=0
+            </if>
+            <if test="type != null and type != 0">
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+        </where>
+        limit #{PAGE_START},#{PAGE_LENGTH}
+    </select>
+    <select id="selectPageList_COUNT_TOTAL" parameterType="map" resultType="int">
+        SELECT
+        count(id)
+        FROM
+          ali_banner 
+        <where>
+            <if test="true">
+                and is_available=0
+            </if>
+            <if test="type != null and type != 0">
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="queryInfo" parameterType="Banner" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        ali_banner 
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="Banner" useGeneratedKeys="true" keyProperty="id" >
+      insert into ali_banner (`name`, url,column_type, place, `type`,content,images,is_available)
+        values (#{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+          #{columnType,jdbcType=INTEGER}, #{place,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+          #{content,jdbcType=LONGVARCHAR},#{images,jdbcType=VARCHAR},0)
+    </insert>
+    <update id="update" parameterType="Banner" >
+        update ali_banner
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="images != null">
+                images = #{images},
+            </if>
+            <if test="columnType != null">
+                column_type = #{columnType,jdbcType=INTEGER},
+            </if>
+            <if test="place != null">
+                place = #{place,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="isAvailable != null">
+                is_available = #{isAvailable,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

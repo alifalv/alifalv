@@ -1,0 +1,166 @@
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>分类管理</h1>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-success">添加分类</button>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<table id="flDT" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>编号</th>
+								<th>分类名称</th>
+								<th>分类nid</th>
+								<th>分类排序</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mySmallModalLabel">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">删除提醒</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav justify-content-center">
+					<li class="nav-item"><span class="nav-link">确认删除?</span></li>
+				</ul>
+				<input type="text" id="id_del" style="display: none;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="delResult()">确认删除</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" charset="utf-8">
+    var flDT;
+    $(function(){
+        flDT=$('#flDT').DataTable( {
+            //-------------固定配置，不用改--------------
+            "ordering": false,
+            "serverSide": true,
+            "pagingType":"numbers",
+            "searching": false,
+            "processing": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            //----------------------------------------------
+            ajax:{
+                type:'POST',
+                data:{
+                    "start": 0,
+                    "length": 10
+                }
+            },
+            "aoColumns": [
+                //编号
+                { "data": "columnId" },
+                //名称
+                { "data": "columnName" },
+                //nid
+                { "data": "columnCode" },
+                //分类排序
+                { "data": "columnType" },
+                //操作
+                { "data":null,
+                    "visible": true,
+                    "render":function(data,type,full){
+                        return '<input type="button" class="btn btn-success" value="删除" onclick="delMsg(\''+full.columnId+'\')"/>';
+                    }
+                }
+            ],
+            "fnServerData": function ( sSource, aoData, fnCallback ) {
+                Yajax({
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": requestUrl+'column/sys/list',
+                    "data": aoData,
+                    "success": fnCallback
+                });
+            }
+        });
+    });
+	
+	//查找按钮
+	function search(){
+		flDT.ajax.reload();
+	} 
+    function reload(){
+		var table = $('#flDT').DataTable();
+		table.draw(false);  //  重新绘制维护当前分页位置的表格。
+    }
+
+    //显示删除对话框
+    function delMsg(id){
+        $("#id_del").val(id);
+        $("#mySmallModalLabel").modal("show");
+    }
+
+    //删除按钮
+    function delResult(){
+        $("#mySmallModalLabel").modal("hide");
+        var id = $("#id_del").val();
+        $("#id_del").val("");//重置
+        var parameter = new FormData();
+        Yajax({
+            type:'GET',
+            url:requestUrl+"column/sys/remove/"+id,
+            data:parameter,
+            processData : false, // 告诉jQuery不要去处理发送的数据
+            contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data) {
+                console.log(data);
+                reload();
+                alert("删除成功");
+            },
+            fail:function (data) {
+                console.log(data);
+                alert("删除失败");
+            }
+        });
+    }
+</script>

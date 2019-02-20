@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - 案源竞拍 - 案源详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <script class="top" type="text/html" src="../tmpl/top.html"></script>
+        </div>
+        <div>
+            <script class="header" type="text/html" src="../tmpl/header.html"></script>
+        </div>
+    </header>
+
+    <div class="ui-content ui-content-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <dl class="ui-breadcrumb">
+                        <dt>当前位置：</dt>
+                        <dd><a href="index.html">首页</a></dd>
+                        <dd><a href="casebidding.html">案源竞拍</a></dd>
+                        <dd>案源详情</dd>
+                    </dl>
+                </div>
+                <div class="col-xs-9">
+                    <div class="ui-article">
+                        <script id="activeTmpl" type="text/html">
+                            <div class="ui-article-top">
+                                <h3>{{data.caseTitle}}</h3>
+                                <div class="ui-margin-tb-20 ui-article-from"><span class="ui-margin-r-10">来自:{{data.userName || '无'}}</span> | <span class="ui-margin-lr-10">案源类型：{{data.caseTypeName}}</span> | <span class="ui-margin-l-10">案源地区：{{data.provinceName}}{{data.cityName}}</span> <span class="ui-article-time">{{data.deputeTime}}</span></div>
+                                <div class="ui-padding-b-20 ui-block">
+                                    <span class="ui-left"><i class="iconfont icon-newshang ui-color-lightblue ui-margin-r-10"></i>报价：<span class="ui-color-red">{{if (data.offerType == '2')}}面议{{else}}{{data.offerMoney}}元{{/if}}</span></span>
+                                    <span class="ui-right"><i class="iconfont icon-yonghu ui-color-lightblue "></i><span class="ui-color-red ui-margin-lr-10">{{data.counts}}</span>位律师竞拍</span>
+                                </div>
+                            </div>
+                            <div class="ui-article-content">
+                                <div class="ui-article-text ui-padding-b-40">
+                                    {{@ data.caseDesc}}
+                                </div>
+
+                                <div class="ui-article-text ui-padding-b-40">
+                                    <span class="ui-size-18 ui-padding-tb-10 ui-color-lightblue ui-margin-r-10">期 望</span> {{data.caseHope}}
+                                </div>
+
+                                <div class="ui-article-text ui-padding-b-40">
+                                    <span class="ui-size-18 ui-padding-tb-10 ui-color-lightblue ui-margin-r-10">要 求</span> {{data.caseAsk}}
+                                </div>
+
+                                <div class="ui-border-b-1"><span class="ui-color-lightblue ui-size-18 ui-padding-tb-10 ui-inline-block">相关证据</span> <span class="ui-right ui-color-gray ui-size-12 ui-padding-tb-10">点击可查看大图</span></div>
+                                <div class="ui-article-text">
+
+                                    <ul class="ui-imglist" id="img_viewer">
+                                        {{@ data.caseImgs | createImgs}}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="ui-article-bottom">
+                                <div class="ui-article-page">
+                                    {{if (data.nextCaseTitle) }}
+                                    <p>上一条：<a href="casebiddinginfo.html?caseId={{data.nextCaseId}}">{{data.nextCaseTitle}}</a></p>{{/if}} {{if (data.lastCaseTitle) }}
+                                    <p>下一条：<a href="casebiddinginfo.html?caseId={{data.lastCaseId}}">{{data.lastCaseTitle}}</a></p>{{/if}}
+                                </div>
+                            </div>
+                        </script>
+
+                        <div class="ui-article-comment">
+                            <div>
+                                <div class="js-first-replybox">
+
+                                </div>
+
+                                <div id="commonReplyList">
+                                    <ul class="media-list">
+                                        <script id="commonReplyListTmpl" type="text/html">
+                                            {{if (getLength(rows) > 0)}} {{each rows value i}}
+                                            <li class="media ui-padding-tb-30 ui-border-b-1 ">
+                                                <div class="media-left">
+                                                    <a href="{{if (value.userType == '2')}}home_index.html?userId={{value.userId}}{{else}}javascript:void(0);{{/if}}" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                                                        <img class="media-object ui-img-fill img-circle" src="{{value.userImg | createImgUrl}}" alt="...">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading ui-line-height-40 ui-size-16">{{value.realName || value.userName}} {{if (value.is_contract == '1')}}
+                                                        <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                        <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                        <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                        <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (value.isAuthentication == '2')}}
+                                                        <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}}
+                                                        <span class="ui-size-14 ui-padding-lr-50">电话：{{value.mobile}}</span><span class="ui-size-14">报价：<span class="ui-color-red ui-size-14">{{value.offerMoney}}</span></span>
+                                                    </h4>
+                                                    <p class="ui-line-height-25">
+                                                        <span class="ui-color-gray ui-bold">预期效果：</span>{{value.effect}}
+                                                    </p>
+                                                    <p class="ui-padding-b-30 ui-line-height-25">
+                                                        <span class="ui-color-gray ui-bold">解决思路：</span>{{value.thinking}}
+                                                    </p>
+                                                    <div class="ui-color-gray">{{value.offerTime | dateDiff}} {{ if(caseState != '2')}}
+                                                        <span class="j-operbtn-box ui-hide">
+                                                                <a href="javascript:void(0);" data-offerid="{{value.offerId}}" class="j-pq-btn btn ui-btn-pink ui-right btn-xs ui-radius-14 ui-padding-lr-15">聘请ta</a>
+                                                                <a href="javascript:void(0)" data-info="{{value | toJSON}}" class="js-replybox-btn"><i class="iconfont icon-pinglun ui-color-pink ui-right ui-margin-lr-10 ui-size-30" style="margin-top: -9px;"></i></a>
+                                                            </span> {{/if}}
+                                                    </div>
+                                                    <div class="js-replybox"></div>
+                                                    <div class="js-replycontent ui-padding-tb-20">
+                                                        {{if(value.nextReplyListData) }} {{each value.nextReplyListData nextValue i}}
+                                                        <div class="media ui-bg-bluegray ui-padding-tb-30 ui-padding-lr-20">
+                                                            <div class="media-left">
+                                                                <a href="{{if (nextValue.userType == '2')}}home_index.html?userId={{nextValue.userId}}{{else}}javascript:void(0);{{/if}}" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                                                                    <img class="media-object ui-img-fill img-circle" src="{{author.userImg | createImgUrl}}" alt="...">
+                                                                </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h4 class="media-heading ui-line-height-40 ui-size-16">{{author.userName}} {{if (author.is_contract == '1')}}
+                                                                    <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                                    <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                                    <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                                    <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (author.isAuthentication == '2')}}
+                                                                    <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}}
+                                                                </h4>
+                                                                <p class="ui-padding-b-30 ui-line-height-25">{{nextValue.replyContent}}</p>
+                                                                <div class="ui-color-gray">{{nextValue.replyTime | dateDiff}}
+                                                                    <!--<i class="js-replybox-btn iconfont icon-pinglun ui-color-pink ui-right ui-margin-lr-10 ui-size-20"></i>-->
+                                                                </div>
+                                                                <!--<div class="js-replybox"></div>-->
+                                                            </div>
+                                                        </div>
+                                                        {{/each}} {{/if}}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {{/each}} {{else}}
+                                            <li class="text-center ui-color-gray">{{error || '暂无留言'}}</li>
+                                            {{/if}}
+                                        </script>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                    <div class="ui-panel">
+                        <div class="ui-panel-content ui-padding-t-10">
+                            <ul class="ui-tool-list">
+                                <li><a href="user_consult.html" title="免费法律咨询"><i class="icon-mfflzx"></i><p class="ui-size-16">免费法律咨询<i class="icon-hot"></i></p><p class="ui-color-gray">有疑问？马上咨询吧</p></a></li>
+                                <li><a href="user_case_entrusted.html" title=""><i class="icon-fbay"></i><p class="ui-size-16">发布案源</p><p class="ui-color-gray">我要打官司</p></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ui-panel">
+                        <div class="ui-content-row">
+                            <script ad="ayjpxq_right" type="text/html" src="../tmpl/ad.html"></script>
+                        </div>
+                    </div>
+
+                    <!-- 律师推荐 -->
+                    <div class="ui-panel" id="cityCounselorRecommendList">
+                        <div class="ui-panel-top"><span class="ui-panel-title ui-color-gray"><span class="j-citname"></span>律师推荐</span>
+                        </div>
+                        <div class="ui-panel-content">
+                            <script id="cityCounselorRecommendListTmpl" type="text/html">
+                                {{if (getLength(data) > 0)}} {{each data value i}}
+                                <div class="ui-law-recommended">
+                                    <a href="home_index.html?userId={{value.userId}}">
+                                        <div class="ui-law-recommended-head">
+                                            <img src="{{value.userImg | createImgUrl}}" alt="" class="img-responsive ui-img-height-fill">
+                                        </div>
+                                        <div class="ui-law-recommended-info">
+                                            <h4 class="ui-law-recommended-name">{{value.userName}} {{if (value.is_contract == '1')}}
+                                                <i class="ui-icon ui-icon-signed ui-margin-l-5" title="签约律师"></i> {{/if}} {{if (vipLevel == '1')}}
+                                                <i class="ui-icon ui-icon-vip-gold ui-margin-l-5" title="黄金会员"></i> {{else if (vipLevel == '2')}}
+                                                <i class="ui-icon-vip-pt ui-margin-l-5" title="白金会员"></i> {{else if (vipLevel == '3')}}
+                                                <i class="ui-icon-vip-masonry ui-margin-l-5" title="钻石会员"></i> {{/if}} {{if (value.isAuthentication == '2')}}
+                                                <i class="ui-icon ui-icon-certified ui-margin-l-5" title="已认证"></i> {{/if}}
+                                            </h4>
+                                            <p class="ui-law-recommended-phone">{{value.mobile}}</p>
+                                            <p class=" ui-cut-2" title="擅长：{{each value.specialityName sn i}}{{i == 0 ? '' : '，'}}{{sn.typeName}}{{/each}}">擅长： {{each value.specialityName sn i}} {{i == 0 ? '' : '，'}}{{sn.typeName}} {{/each}}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                {{/each}} {{else}}
+                                <div>
+                                    <div class="text-center ui-color-gray">{{error || '暂无内容'}}</div>
+                                </div>
+                                {{/if}}
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+    <script type="text/html" id="replyFirstBoxTmpl">
+        <div class="text-right ui-color-gray">
+
+            {{if(isLogin != true)}}
+            <i class="iconfont icon-deng ui-color-lightblue"></i>只限认证律师竞拍，竞拍之前清先<a class="ui-size-12 ui-color-blue" href="login.html">登录</a> {{else}} {{if (isNotAuthentication == true)}}
+            <i class="iconfont icon-deng ui-color-lightblue"></i>只限于认证律师，竞拍之前清先<a class="ui-size-12 ui-color-blue" href="personal_vipinfo_counselor.html">认证</a> {{/if}} {{/if}}
+        </div>
+
+        <ul class="media-list">
+            <li class="media ui-padding-tb-30 ui-border-b-1 ">
+                <div class="media-left">
+                    <a href="javascript:void(0);" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                        <img class="media-object ui-img-fill img-circle" src="../img/defalut-head.png" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <form id="first_reply_form" class="form-horizontal ui-padding-lr-no ui-padding-t-no" style="margin-left: -51px;margin-right: 10px;">
+                        <div class="form-group">
+                            <label for="effect" class="col-xs-2 control-label ui-normal">预期效果</label>
+                            <div class="col-xs-10">
+                                <textarea name="effect" id="effect" class="form-control" rows="3" placeholder="" data-rule="预期效果:required"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="thinking" class="col-xs-2 control-label ui-normal">解决思路</label>
+                            <div class="col-xs-10">
+                                <textarea id="thinking" name="thinking" class="form-control" rows="3" placeholder="" data-rule="解决思路:required"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="offerMoney" class="col-xs-2 control-label ui-normal">报价</label>
+                            <div class="col-xs-3">
+                                <input id="offerMoney" name="offerMoney" type="text" class="form-control" placeholder="" data-rule="报价:required">
+                            </div>
+
+                            <label for="mobile" class="col-xs-2 control-label ui-normal">联系方式</label>
+                            <div class="col-xs-3">
+                                <input id="mobile" name="mobile" type="text" class="form-control" placeholder="" data-rule="联系方式:required;mobile">
+                            </div>
+
+                            <div class="col-xs-2">
+                                <button class="j-jp-btn btn btn-block ui-btn-red">确认竞拍</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </script>
+
+    <script type="text/html" id="replyBoxTmpl">
+        <form id="reply_form" novalidate>
+            <input type="hidden" name="upId" value="{{upId}}">
+            <ul class="media-list">
+                <li class="media ui-padding-tb-30 ui-border-b-1 ">
+                    <div class="media-left">
+                        <a href="javascript:void(0);" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                            <img class="media-object ui-img-fill img-circle" src="{{userImg | createImgUrl}}" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <textarea name="replyContent" class="form-control" rows="4" placeholder="我来评论" data-rule="评论:required"></textarea>
+                        <div class="ui-color-gray ui-margin-t-17">
+                            <!--<i class="iconfont icon-deng ui-color-lightblue ui-margin-r-10"></i>只限于平台注册会员，解答之前请先<a class="ui-size-12 ui-color-blue" href="login.html">登录</a>-->
+                            <button type="submit" class="js-replysubmit-btn btn btn-sm ui-btn-red ui-right ui-padding-lr-24">提交评论</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </script>
+    <script type="text/html" id="replycontentTmpl">
+        <div class="media ui-padding-tb-30">
+            <div class="media-left">
+                <a href="{{data.userId}}" style="width: 66px;height: 66px;" class="ui-margin-r-10 ui-inline-block">
+                    <img class="media-object ui-img-fill img-circle" src="{{data.userImg | createImgUrl}}" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading ui-line-height-40 ui-size-16">胡先生 <i class="ui-icon ui-icon-vip-gold"></i> <i class="ui-icon ui-icon-certified"></i></h4>
+                <p class="ui-padding-b-30 ui-line-height-25">{{data.replyContent}}</p>
+                <div class="ui-color-gray">
+                    <!--{{data.replyTime}}-->
+                    <!--<i class="js-replybox-btn iconfont icon-pinglun ui-color-pink ui-right ui-margin-lr-10 ui-size-20"></i>-->
+                </div>
+                <!--<div class="js-replybox"></div>-->
+            </div>
+        </div>
+    </script>
+    <script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+
+</html>

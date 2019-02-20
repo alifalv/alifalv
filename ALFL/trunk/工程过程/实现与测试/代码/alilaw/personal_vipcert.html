@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>阿里法律 - vip证书</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link href="../css/reset.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personal.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div><script class="top" type="text/html" src="../tmpl/top.html"></script></div>
+        <div><script class="user_header" type="text/html" src="../tmpl/user_header.html"></script></div>
+    </header>
+    <div class="ui-person-wrapper">
+        <div><script class="user_wrapper" type="text/html" src="../tmpl/user_wrapper.html"></script></div>
+    </div>
+    <div class="ui-content ui-padding-b-30 ui-padding-t-30 ui-person-bg">
+        <div class="container ">
+            <div class="ui-padding-b-no">
+                <div class="row">
+                    <div class="col-xs-12 text-center ui-padding-b-50">
+                        <div class="ui-vipcert">
+                            <script id="vipCertTmpl" type="text/html">
+                                <div class="ui-vipcert-username">{{realName}}</div>
+                                <div class="ui-vipcert-viptype">
+                                    {{if (vipLevel == '1')}}
+                                    黄金会员
+                                    {{else if (vipLevel == '2')}}
+                                    白金会员
+                                    {{else if (vipLevel == '3')}}
+                                    钻石会员
+                                    {{/if}}
+                                </div>
+                                <div class="ui-vipcert-certno">
+                                    {{if (userType == '1')}}
+                                        {{idCard}}
+                                    {{else if (userType == '2')}}
+                                        {{licenseNum}}
+                                    {{else if (userType == '3')}}
+                                        {{companyCode}}
+                                    {{/if}}
+                                </div>
+                                <div class="ui-vipcert-endtime">{{expireTime}}</div>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script class="footer" type="text/html" src="../tmpl/footer.html"></script>
+    </footer>
+<script data-main="../js/config.js" src="../js/libs/require.js"></script>
+</body>
+</html>
